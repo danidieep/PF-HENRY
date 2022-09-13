@@ -1,8 +1,8 @@
 const { Router } = require("express");
-const nftsRouter = require("./artRouter");
+const artRouter = require("./artRouter");
 
 const router = Router();
 
-router.use("/nfts", nftsRouter);
+router.use("/artworks", artRouter);
 
 module.exports = router;

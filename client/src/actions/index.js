@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE,ORDER_BY_MORE_EXPENSIVE} from "./action-types.js"
+import {FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE,ORDER_BY_MORE_EXPENSIVE, SHOW_ALL_PRODUCTS} from "./action-types.js"
 
 
 
@@ -61,3 +61,24 @@ export const OrderByMoreExpensive = ()=>{
 
 }
 
+export const showAllProducts = ()=>{
+      return{
+            type:SHOW_ALL_PRODUCTS
+      }
+}
+
+export const getArtists = ()=>{
+      return async function(dispatch) {
+            let json = await axios.get('http://localhost:3001/artists')
+            return dispatch ({
+                  type: GET_ARTISTS,
+                  payload: json.data
+            })
+      }
+}
+
+export const filterByArtist = (payload) =>{
+      return{
+            type:FILTER_BY_ARTIST, payload
+      }
+} 

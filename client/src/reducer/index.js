@@ -1,10 +1,11 @@
 
-import {GET_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE, ORDER_BY_MORE_EXPENSIVE} from "../actions/action-types"
+import {FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE, ORDER_BY_MORE_EXPENSIVE} from "../actions/action-types"
 
 const initialState = {
     allProducts : [],
     productsFiltered:[],
     productDetails: [],
+    artistsList:[]
     
 }
 
@@ -22,7 +23,7 @@ switch (type) {
 
         return{
             ...state,
-            productsFiltered: payload
+            productsFiltered: payload,
         }
         
     }
@@ -51,6 +52,24 @@ switch (type) {
         return{
             ...state,
             productsFiltered:state.productsFiltered.sort(function(a,b){return Number(b.price) - Number(a.price)})
+        }
+    }
+    case SHOW_ALL_PRODUCTS:{
+        return{
+            ...state,
+            productsFiltered:state.allProducts
+        }
+    }
+    case GET_ARTISTS:{
+        return{
+            ...state,
+            artistsList:payload
+        }
+    }
+    case FILTER_BY_ARTIST:{
+        return{
+            ...state,
+            productsFiltered:state.allProducts.filter(element => element.artist === payload)
         }
     }
 

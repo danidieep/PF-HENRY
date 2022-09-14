@@ -1,6 +1,6 @@
 import  React from "react"
 import { useEffect } from "react"
-import {getProducts,OrderByMoreExpensive,OrderByLessExpensive} from "../actions"
+import {getProducts,OrderByMoreExpensive,OrderByLessExpensive,showAllProducts,getArtists,filterByArtist} from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -36,7 +36,7 @@ export default function MainPage(props){
    
     React.useEffect(()=>{
     dispatch(getProducts())
-   
+    dispatch(getArtists())
     },[])
 
 
@@ -76,6 +76,10 @@ export default function MainPage(props){
     if(tipo==="OrderByLessExpensive"){dispatch(OrderByLessExpensive())}
    }
 
+   const artistSelector = (name) => {
+    dispatch(filterByArtist(name))
+   }
+
  
    
   
@@ -89,7 +93,7 @@ export default function MainPage(props){
               <div className={styles.header}>
                   <button onClick={()=>{
                   dispatch(getProducts())
-                  props.state.productDetails = {}
+                  dispatch(showAllProducts())
                    }} className={styles.buttonsHeader}>Show all Products!</button>
                   <SearchBar handleReset={handleReset} ></SearchBar>
               </div>     
@@ -101,6 +105,18 @@ export default function MainPage(props){
                       <option disabled={true} value="base">-------</option>
                       <option  value="OrderByMoreExpensive">More expensive</option>
                       <option  value="OrderByLessExpensive">Less expensive</option>
+                    </select>
+                  </form>
+                  <form>
+                    <label>By Artist</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>artistSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.artistsList.map(element => {
+                        return( <option value={element.name}>{element.name}</option>)
+                      }
+                    )
+                  }
                     </select>
                   </form>
                </div>

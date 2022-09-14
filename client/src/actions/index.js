@@ -31,7 +31,14 @@ export const getProductByName = (payload)=>{
 
 
 export const getProductById = (id)=>{
-    
+    return async function (dispatch) {
+      let json = await axios.get('http://localhost:3001/artworks' + id)
+
+      return dispatch({
+            type: GET_PRODUCT_BY_ID,
+            payload: json.data
+      })
+    }
   
 }
 

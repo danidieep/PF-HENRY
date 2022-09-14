@@ -1,4 +1,6 @@
 const axios = require("axios");
+const db = require("../db");
+const Artist = require("../models/Artist");
 require("dotenv").config();
 const { API_KEY } = process.env;
 
@@ -37,6 +39,24 @@ const getArtists = async () => {
 
 // getArtists()
 
+// const getArtistInDb = async () =>{
+//   const artists = await getArtists()
+//   // console.log(artists)
+//   let db = artists.map(a=>{
+//     return {
+//       name:a.name
+//     }
+//   })
+//   console.log(db)
+//   db.forEach(g=>{
+//     Artist.findOrCreate({
+//       where:{name:g.name}
+//     })
+//   })
+// }
 
 
-  module.exports= getArtists
+// getArtistInDb()
+
+
+  module.exports= getArtists 

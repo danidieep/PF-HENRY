@@ -22,7 +22,7 @@ switch (type) {
 
         return{
             ...state,
-            allProducts: payload,
+            productsFiltered: payload,
         }
         
     }

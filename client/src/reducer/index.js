@@ -1,10 +1,10 @@
 
-import {GET_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, ORDER_BY_LESS_EXPENSIVE, ORDER_BY_MORE_EXPENSIVE} from "../actions/action-types"
+import {GET_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE, ORDER_BY_MORE_EXPENSIVE} from "../actions/action-types"
 
 const initialState = {
     allProducts : [],
     productsFiltered:[],
-    productDetails:{},
+    productDetails: [],
     
 }
 
@@ -32,6 +32,13 @@ switch (type) {
             ...state,
             productDetails: payload,
         }
+    }
+
+    case CLEAN_PRODUCT_ID: {
+        return{
+            ...state,
+            productDetails: []
+        }  
     }
     
     case ORDER_BY_LESS_EXPENSIVE:{

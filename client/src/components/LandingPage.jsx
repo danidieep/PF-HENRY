@@ -9,13 +9,18 @@ import styles from "./ModulesCss/LandingPage.module.css"
 export default function LandingPage(){
     return(
         <div className={styles.container}>
-        
+            <header>
+              <button>About us</button>
+              <button>Login</button>
+              <button>Register</button>
+            </header>
+            <body>
              <Link to = "/MainPage">
              <button className={styles.button}>
-               go to home
+              Go to gallery
              </button>
              </Link>
-         
+            </body>
         </div>
     )
 }

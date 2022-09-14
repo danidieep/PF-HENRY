@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 
 
-let ProductsPorPage = 6
+let ProductsPorPage = 9
 
 export default function MainPage(props){
 
@@ -98,6 +98,18 @@ export default function MainPage(props){
                   <SearchBar handleReset={handleReset} ></SearchBar>
               </div>     
             </header>
+            <div className={styles.carrusel}>
+              <div>
+               <ul>
+              {state.productsFiltered.slice(num1,num2).slice(0,5).map(element=>{
+                return(
+                  <li><img src={element.image}></img></li>
+                )
+              }
+                        )}
+                </ul>
+              </div>
+            </div>
                 <div className={styles.filter_box}>
                   <form>
                     <label>By price</label>
@@ -113,6 +125,7 @@ export default function MainPage(props){
                       <option disabled={true} value="base">-------</option>
                       {
                       state.artistsList.map(element => {
+                        
                         return( <option value={element.name}>{element.name}</option>)
                       }
                     )
@@ -146,7 +159,7 @@ export default function MainPage(props){
                           setNum2((i+1)*ProductsPorPage)
                           setCurrent(i+1)
                       }
-                   }className={styles.buttonsNavigation}>{i + 1}</button>
+                   }className={styles.buttonsNavigation} style={i+1===current?{color:"red"}:{color:"black"}}>{i + 1}</button>
                    
                    )
                   )
@@ -167,7 +180,7 @@ export default function MainPage(props){
       
                 </div>
             :
-              <div>No products</div>
+              <div>Loading...</div>
             }
         </div>   
     )

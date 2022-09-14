@@ -20,9 +20,10 @@ export default function CardDetails(props){
 
     
     useEffect(() => {
-      dispatch(getProductById(id))
       dispatch(cleanProductId())
-    },[dispatch, id])
+      dispatch(getProductById(id))
+     
+    },[])
 
      
     

@@ -1,0 +1,13 @@
+
+.cards{ 
+display: grid;
+grid-template-columns: 32% 32% 32% ;
+width: 100%;
+justify-content: center;
+
+}
+
+
+
+
+

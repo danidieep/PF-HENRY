@@ -22,6 +22,7 @@ const dispatch = useDispatch()
             <img className={styles.img} src={data.image} alt="product_img" />
             <div className={styles.types_container}>
             <h3 className={styles.types}>{data.category}</h3>
+            {console.log(data)}
             </div>
             </Link>
            </div>

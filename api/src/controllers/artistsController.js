@@ -1,6 +1,6 @@
 const axios = require("axios");
-const db = require("../db");
-const Artist = require("../models/Artist");
+// const db = require("../db");
+// const Artist = require("../models/Artist");
 require("dotenv").config();
 const { API_KEY } = process.env;
 

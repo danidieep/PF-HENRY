@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID} from "./action-types.js"
+import {GET_PRODUCTS, GET_PRODUCT_BY_NAME, GET_PRODUCT_BY_ID} from "./action-types.js"
 
 
 export function getProducts(){
@@ -15,8 +15,15 @@ export function getProducts(){
 
 
 
-export const getProductByName = (name)=>{
+export const getProductByName = (payload)=>{
+    return async function (dispatch) {
+      let json = await axios.get('http://localhost:3001/artworks?title=' + payload)
 
+      return dispatch({
+            type: GET_PRODUCT_BY_NAME,
+            payload: json.data
+      })
+    }
             
 }
 

@@ -38,21 +38,5 @@ const getArtists = async () => {
 // getArtists()
 
 
-// const getApi = async() =>{
-//     try {
-//         const api = await axios('https://stagingapi.artsy.net/api/artists?published_artworks', {
-//             headers: {
-//               "X-Xapp-Token": `${API_KEY}`,
-//             },
-//           })
-//         const apiData = api.data 
-//           console.log(apiData._embedded.artists)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-// getApi()
-
 
   module.exports= getArtists

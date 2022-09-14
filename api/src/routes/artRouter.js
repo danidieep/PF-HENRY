@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+
 router.get("/:idArtwork", async (req, res) => {
   try {
     const { idArtwork } = req.params;

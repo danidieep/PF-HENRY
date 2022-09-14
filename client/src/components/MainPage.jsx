@@ -99,8 +99,8 @@ export default function MainPage(props){
                     <label>By price</label>
                     <select  className={styles.filters} name="" id=""  onChange={(event)=>restSelector(event.target.value)} defaultValue="base">
                       <option disabled={true} value="base">-------</option>
-                      <option value="a-z">A-Z</option>
-                      <option value="z-a">Z-A</option>
+                      <option  value="OrderByMoreExpensive">More expensive</option>
+                      <option  value="OrderByLessExpensive">Less expensive</option>
                     </select>
                   </form>
                </div>

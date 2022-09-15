@@ -6,20 +6,20 @@ router.get("/", async (req, res) => {
   try {
     const { name } = req.query;
     const artists1 = await getArtists();
-    const artsName = artists1.map((e) => JSON.stringify(e));
-    const artists = [...new Set(artsName)];
-    let arr = [];
-    artists.map((e) =>
-      arr.push({ id: e.slice(9, 31), name: e.slice(41, e.length - 2) })
-    );
+    // const artsName = artists1.map((e) => JSON.stringify(e));
+    // const artists = [...new Set(artsName)];
+    // let arr = [];
+    // artists.map((e) =>
+    //   arr.push({ id: e.slice(9, 31), name: e.slice(41, e.length - 2) })
+    // );
     if (name) {
-      const artist = arr.filter((e) =>
+      const artist = artists1.filter((e) =>
         e.name.toUpperCase().includes(name.toUpperCase())
       );
       if (artist.length) res.send(artist);
       else res.status(400).json({ message: "Artist does not found" });
     }
-    res.status(200).send(arr);
+    res.status(200).send(artists1);
   } catch (error) {
     console.log(error);
   }

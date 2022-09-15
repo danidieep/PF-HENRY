@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
     const { title } = req.query;
     const getArtwork = await getArtworks();
     if (title) {
-      const artworkByName = getArtwork.filter((e) => e.title.includes(title));
+      const artworkByName = getArtwork.filter((e) => e.title.toUpperCase().includes(title.toUpperCase()));
       if (artworkByName.length) res.send(artworkByName);
       else res.status(400).send({ message: "Artwork does not found" });
     } else res.send(getArtwork);
@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
     res.status(404).send(error);
   }
 });
+
 
 router.get("/:idArtwork", async (req, res) => {
   try {

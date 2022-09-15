@@ -38,24 +38,4 @@ const getArtists = async () => {
   }
 };
 
-// getArtists()
-
-// const getArtistInDb = async () =>{
-//   const artists = await getArtists()
-//   // console.log(artists)
-//   let db = artists.map(a=>{
-//     return {
-//       name:a.name
-//     }
-//   })
-//   console.log(db)
-//   db.forEach(g=>{
-//     Artist.findOrCreate({
-//       where:{name:g.name}
-//     })
-//   })
-// }
-
-// getArtistInDb()
-
-module.exports = getArtists;
+  module.exports= getArtists 

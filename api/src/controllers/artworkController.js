@@ -1,8 +1,9 @@
 const axios = require("axios");
+const { Artwork } = require("../db");
 require("dotenv").config();
 const { API_KEY } = process.env;
 
-const getArtworks = async () => {
+const getApiArtworks = async () => {
   try {
     var art = [];
     var url = "https://stagingapi.artsy.net/api/artworks";
@@ -19,7 +20,7 @@ const getArtworks = async () => {
             "X-Xapp-Token": `${API_KEY}`,
           },
         });
-        
+
         let artistName = await artist.data._embedded.artists[0]?.name;
         art.push({
           id: r.id,
@@ -43,6 +44,24 @@ const getArtworks = async () => {
   }
 };
 
+const getDbArtworks = async () => {
+  try {
+    const getArtworkDb = await Artwork.findAll();
+    return getArtworkDb;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+const getArtworks = async () => {
+  try {
+    const apiInfo = await getApiArtworks();
+    const dbInfo = await getDbArtworks();
+    const infoTotal = apiInfo.concat(dbInfo);
+    return infoTotal;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 module.exports = getArtworks;

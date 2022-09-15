@@ -14,11 +14,12 @@ const getArtworks = async () => {
       });
       let apiArt = await apiData.data;
       apiArt._embedded.artworks.map(async (r) => {
-        let artist = await axios.get(r._links.artists.href, {
+        var artist = await axios.get(r._links.artists.href, {
           headers: {
             "X-Xapp-Token": `${API_KEY}`,
           },
         });
+        
         let artistName = await artist.data._embedded.artists[0]?.name;
         art.push({
           id: r.id,
@@ -41,5 +42,7 @@ const getArtworks = async () => {
     console.log(error);
   }
 };
+
+
 
 module.exports = getArtworks;

@@ -5,7 +5,7 @@ const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/artworks`,
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/art`,
   {
     logging: false, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
@@ -22,9 +22,7 @@ fs.readdirSync(path.join(__dirname, "/models"))
       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
   )
   .forEach((file) => {
-    if (typeof file === "function") {
-      modelDefiners.push(require(path.join(__dirname, "/models", file)));
-    }
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
 // Injectamos la conexion (sequelize) a todos los modelos
@@ -42,11 +40,21 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Artwork, Artist } = sequelize.models;
-console.log(sequelize.models);
+const { Artwork, Artist, Admin, User, Favourite } = sequelize.models;
+
 // Aca vendrian las relaciones
 
-// Artist.hasMany(Artwork);
+Artist.hasMany(Artwork);
+Artwork.belongsTo(Artist);
+
+Admin.hasMany(Artwork);
+Artwork.belongsTo(Admin);
+
+User.hasMany(Artwork);
+Artwork.belongsTo(User);
+
+User.hasMany(Favourite);
+Favourite.belongsTo(User);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

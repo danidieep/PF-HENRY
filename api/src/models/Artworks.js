@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      artist: {
+      creator: {
         type: DataTypes.STRING,
         allowNull: false,
       },

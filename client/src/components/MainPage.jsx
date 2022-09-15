@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 
 
-let ProductsPorPage = 9
+let ProductsPorPage = 6
 
 export default function MainPage(props){
 
@@ -86,19 +86,31 @@ export default function MainPage(props){
 
     return  (
         <div>
+
             {state.productsFiltered.length>0?
             <div id="container" className={styles.container}>
             <div className={styles.content}>
-            <header>  
-              <div className={styles.header}>
+            <header >  
+              <div className={styles.header} >
+                
+                <div>
                   <button onClick={()=>{
                   dispatch(getProducts())
                   dispatch(showAllProducts())
                    }} className={styles.buttonsHeader}>Show all Products!</button>
+                </div> 
+                <div> 
                   <SearchBar handleReset={handleReset} ></SearchBar>
-              </div>     
+                </div>  
+                <div>
+                  <button>MyProfile</button>
+                </div>
+              </div>  
+              <div className={styles.tapaHeader}>
+              </div>   
             </header>
-            <div className={styles.carrusel}>
+            {state.productsFiltered.length>5?
+            (<div className={styles.carrusel}>
               <div>
                <ul>
               {state.productsFiltered.slice(num1,num2).slice(0,5).map(element=>{
@@ -109,8 +121,15 @@ export default function MainPage(props){
                         )}
                 </ul>
               </div>
-            </div>
+            </div>):
+            (<div></div>)
+            }
+            
+             
+                <div className={styles.body}>
+             
                 <div className={styles.filter_box}>
+                 <div className={styles.filter_box_2} > 
                   <form>
                     <label>By price</label>
                     <select  className={styles.filters} name="" id=""  onChange={(event)=>restSelector(event.target.value)} defaultValue="base">
@@ -132,17 +151,17 @@ export default function MainPage(props){
                   }
                     </select>
                   </form>
+                  </div>
                </div>
-                <div className={styles.body}>
-                  
-                    
-                     
+
                         <div className ={styles.cards}>
                         {state.productsFiltered.slice(num1,num2).map(element=>(
                         <div id="card" ><Cards data={element} key={element.id} /></div>
                         )
                         )}
                         </div>
+                    
+                     
                       
                      
                    
@@ -159,7 +178,7 @@ export default function MainPage(props){
                           setNum2((i+1)*ProductsPorPage)
                           setCurrent(i+1)
                       }
-                   }className={styles.buttonsNavigation} style={i+1===current?{color:"red"}:{color:"black"}}>{i + 1}</button>
+                   }className={styles.buttonsNavigation} style={i+1===current?{fontSize:"1.3rem"}:{color:"black"}}>{i + 1}</button>
                    
                    )
                   )

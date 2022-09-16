@@ -1,6 +1,6 @@
 import  React from "react"
 import { useEffect } from "react"
-import {getProducts,OrderByMoreExpensive,OrderByLessExpensive} from "../actions"
+import {deleteMediumFromFilter,addFilterMedium,filterByMedium,deletePriceFromFilter,deleteArtistFromfilter,addFilterArtist,getProducts,OrderByPrice,showAllProducts,getArtists,filterByArtist,addPriceType} from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -35,8 +35,8 @@ export default function MainPage(props){
 
    
     React.useEffect(()=>{
-    dispatch(getProducts())
-   
+    if(state.productsFiltered.length===0)dispatch(getProducts())
+    if(state.artistsList.length===0)dispatch(getArtists())
     },[])
 
 
@@ -64,16 +64,41 @@ export default function MainPage(props){
     setCurrent(1)
    }
    
-
+   
    
 
   
    
 
-   const restSelector = (tipo)=>{
+   const OrderByPriceSelector = (type)=>{
+      dispatch(OrderByPrice(type))
+      dispatch(addPriceType(type))
+    }
+    const deletePriceFromFilter_ = (type)=>{
+      dispatch(deletePriceFromFilter())
+    }
+  
 
-    if(tipo==="OrderByMoreExpensive"){dispatch(OrderByMoreExpensive())}
-    if(tipo==="OrderByLessExpensive"){dispatch(OrderByLessExpensive())}
+   
+
+   const artistSelector = (name) => {
+    dispatch(filterByArtist(name))
+    dispatch(addFilterArtist(name))
+    handleReset()
+   }
+   const deleteArtistFromFilter_ = (name) => {
+    dispatch(deleteArtistFromfilter(name))
+   }
+
+ 
+   const mediumSelector = (type) => {
+    dispatch(filterByMedium(type))
+    dispatch(addFilterMedium(type))
+    handleReset()
+   }
+
+   const deleteMediumFromFilter_ = (name) => {
+    dispatch(deleteMediumFromFilter(name))
    }
 
  
@@ -82,38 +107,123 @@ export default function MainPage(props){
 
     return  (
         <div>
+
             {state.productsFiltered.length>0?
             <div id="container" className={styles.container}>
             <div className={styles.content}>
-            <header>  
-              <div className={styles.header}>
+            <header >  
+              <div className={styles.header} >
+                
+                <div>
                   <button onClick={()=>{
                   dispatch(getProducts())
-                  props.state.productDetails = {}
+                  dispatch(showAllProducts())
                    }} className={styles.buttonsHeader}>Show all Products!</button>
+                </div> 
+                <div> 
                   <SearchBar handleReset={handleReset} ></SearchBar>
-              </div>     
+                </div>  
+                <div>
+                  <button>MyProfile</button>
+                </div>
+              </div>  
+              <div className={styles.tapaHeader}>
+              </div>   
             </header>
+            {state.productsFiltered.length>5?
+            (<div className={styles.carrusel}>
+              <div>
+               <ul>
+              {state.productsFiltered.slice(num1,num2).slice(0,5).map(element=>{
+                return(
+                  <li><img src={element.image}></img></li>
+                )
+              }
+                        )}
+                </ul>
+              </div>
+            </div>):
+            (<div></div>)
+            }
+            
+             
+                <div className={styles.body}>
+             
                 <div className={styles.filter_box}>
+                 <div className={styles.filter_box_2} > 
                   <form>
                     <label>By price</label>
-                    <select  className={styles.filters} name="" id=""  onChange={(event)=>restSelector(event.target.value)} defaultValue="base">
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>OrderByPriceSelector(event.target.value)} defaultValue="base">
                       <option disabled={true} value="base">-------</option>
-                      <option value="a-z">A-Z</option>
-                      <option value="z-a">Z-A</option>
+                      <option  value="OrderByMoreExpensive">More expensive</option>
+                      <option  value="OrderByLessExpensive">Less expensive</option>
                     </select>
                   </form>
+                  <form>
+                    <label>By Artist</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>artistSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.artistsList.map(element => {
+                        
+                        return( <option value={element.name}>{element.name}</option>)
+                      }
+                    )
+                  }
+                 
+                    </select>
+                  </form>
+                  <form>
+                    <label>By medium</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>mediumSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.mediums.map(element => {
+                        
+                        return( <option value={element}>{element}</option>)
+                      }
+                    )
+                  }
+                 
+                    </select>
+                  </form>
+                  </div>
                </div>
-                <div className={styles.body}>
-                  
-                    
-                     
+
+                  {state.filterArtist.map(element => {
+                    return (
+                      <div>
+                      <button onClick={()=> deleteArtistFromFilter_(element)}>X</button>
+                      <span>{element}</span>
+                      </div>
+                    )
+                  })}
+                   {
+                    state.orderByPrice.map(element => {
+                      return(
+                        <div>
+                          <button  onClick={()=> deletePriceFromFilter_(element)} >X</button>
+                          <span>{element}</span>
+                        </div>
+                      )
+                    })
+                  }
+                   {state.filterMediums.map(element => {
+                    return (
+                      <div>
+                      <button onClick={()=> deleteMediumFromFilter_(element)}>X</button>
+                      <span>{element}</span>
+                      </div>
+                    )
+                  })}
                         <div className ={styles.cards}>
                         {state.productsFiltered.slice(num1,num2).map(element=>(
                         <div id="card" ><Cards data={element} key={element.id} /></div>
                         )
                         )}
                         </div>
+                    
+                     
                       
                      
                    
@@ -130,7 +240,7 @@ export default function MainPage(props){
                           setNum2((i+1)*ProductsPorPage)
                           setCurrent(i+1)
                       }
-                   }className={styles.buttonsNavigation}>{i + 1}</button>
+                   }className={styles.buttonsNavigation} style={i+1===current?{fontSize:"1.3rem"}:{color:"black"}}>{i + 1}</button>
                    
                    )
                   )
@@ -151,7 +261,26 @@ export default function MainPage(props){
       
                 </div>
             :
-              <div>No products</div>
+              <div>
+                <header >  
+              <div className={styles.header} >
+                
+                <div>
+                  <button onClick={()=>{
+                  dispatch(getProducts())
+                  dispatch(showAllProducts())
+                   }} className={styles.buttonsHeader}>Show all Products!</button>
+                </div> 
+                <div> 
+                  <SearchBar handleReset={handleReset} ></SearchBar>
+                </div>  
+                <div>
+                  <button>MyProfile</button>
+                </div>
+              </div>  
+              <div className={styles.tapaHeader}>
+              </div>   
+            </header>Loading...</div>
             }
         </div>   
     )

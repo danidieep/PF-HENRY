@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { Artist } = require("../db");
 const data = require("../dbArtists.json");
 require("dotenv").config();

@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 const axios = require("axios");
 // const db = require("../db");
 // const Artist = require("../models/Artist");
+=======
+const { Artist } = require("../db");
+const data = require("../dbArtists.json");
+>>>>>>> 7a0556fe626b6cbde583e4ae5c2549e564e61ff9
 require("dotenv").config();
-const { API_KEY } = process.env;
 
 const getArtists = async () => {
   try {
@@ -13,28 +17,40 @@ const getArtists = async () => {
     //       "X-Xapp-Token": `${API_KEY}`,
     //     },
     //   });
-      // let apiArtworks = await apiData.data;
-      // apiArtworks._embedded.artworks.map(async (r) => {
-      //   let artistsApiArtworks = await axios.get(r._links.artists.href, {
-      //     headers: {
-      //       "X-Xapp-Token": `${API_KEY}`,
-      //     },
-      //   });
-      //   if (artistsApiArtworks.data._embedded.artists[0]?.id) {
-      //     artist.push({
-      //       id: artistsApiArtworks.data._embedded.artists[0]?.id,
-      //       name: artistsApiArtworks.data._embedded.artists[0]?.name,
-      //       birthday: artistsApiArtworks.data._embedded.artists[0]?.birthday,
-      //       hometown: artistsApiArtworks.data._embedded.artists[0]?.hometown,
-      //     });
-      //   }
-      // });
-      // url = apiArtworks._links.next.href;
+    // let apiArtworks = await apiData.data;
+    // apiArtworks._embedded.artworks.map(async (r) => {
+    //   let artistsApiArtworks = await axios.get(r._links.artists.href, {
+    //     headers: {
+    //       "X-Xapp-Token": `${API_KEY}`,
+    //     },
+    //   });
+    //   if (artistsApiArtworks.data._embedded.artists[0]?.id) {
+    //     artist.push({
+    //       id: artistsApiArtworks.data._embedded.artists[0]?.id,
+    //       name: artistsApiArtworks.data._embedded.artists[0]?.name,
+    //       birthday: artistsApiArtworks.data._embedded.artists[0]?.birthday,
+    //       hometown: artistsApiArtworks.data._embedded.artists[0]?.hometown,
+    //     });
+    //   }
+    // });
+    // url = apiArtworks._links.next.href;
     // }
-    return data;
+    const getDb = data.map((el) => {
+      const { id, name, birthday, hometown } = el;
+      Artist.findOrCreate({
+        where: {
+          id: id,
+          name: name,
+          birthday: birthday,
+          hometown: hometown,
+        },
+      });
+    });
+    const artistsDb = await Artist.findAll();
+    return artistsDb;
   } catch (error) {
     console.log(error);
   }
 };
 
-  module.exports= getArtists 
+module.exports = getArtists;

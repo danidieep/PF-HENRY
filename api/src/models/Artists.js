@@ -8,9 +8,7 @@ module.exports = (sequelize) => {
     "artist",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        type: DataTypes.STRING,
         primaryKey: true,
       },
       name: {

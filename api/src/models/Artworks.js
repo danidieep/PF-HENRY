@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      collection_institution: {
+      collecting_institution: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       creator: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      dimensions: {
         type: DataTypes.STRING,
         allowNull: false,
       },

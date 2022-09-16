@@ -1,11 +1,11 @@
-<<<<<<< HEAD
+
 const axios = require("axios");
 // const db = require("../db");
 // const Artist = require("../models/Artist");
-=======
+
 const { Artist } = require("../db");
 const data = require("../dbArtists.json");
->>>>>>> 7a0556fe626b6cbde583e4ae5c2549e564e61ff9
+
 require("dotenv").config();
 
 const getArtists = async () => {

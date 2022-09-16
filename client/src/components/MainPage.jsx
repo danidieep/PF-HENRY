@@ -1,6 +1,6 @@
 import  React from "react"
 import { useEffect } from "react"
-import {deleteMediumFromFilter,addFilterMedium,filterByMedium,deletePriceFromFilter,deleteArtistFromfilter,addFilterArtist,getProducts,OrderByPrice,showAllProducts,getArtists,filterByArtist,addPriceType} from "../actions"
+import {filterByMedium,deletefilter,getProducts,OrderByPrice,showAllProducts,getArtists,filterByArtist, AddFilters} from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -37,7 +37,8 @@ export default function MainPage(props){
     React.useEffect(()=>{
     if(state.productsFiltered.length===0)dispatch(getProducts())
     if(state.artistsList.length===0)dispatch(getArtists())
-    },[])
+    applyFilter()
+    },[state.filters])
 
 
 
@@ -65,41 +66,51 @@ export default function MainPage(props){
    }
    
    
-   
+   const applyFilter = ()=>{
 
+    state.filters.forEach(element => {
+     
+     if(element.type === "artist"){
+      dispatch(filterByArtist(element.name))
+     }
+    
+  
+     if(element.type === "medium"){
+      dispatch(filterByMedium(element.name))
+     }
+    });
+
+    
+   
+   }
   
    
 
-   const OrderByPriceSelector = (type)=>{
-      dispatch(OrderByPrice(type))
-      dispatch(addPriceType(type))
+   const OrderByPriceSelector = (name)=>{
+      // dispatch(OrderByPrice(type))
+     dispatch(OrderByPrice(name))
+      
     }
-    const deletePriceFromFilter_ = (type)=>{
-      dispatch(deletePriceFromFilter())
-    }
-  
-
    
+  
 
    const artistSelector = (name) => {
-    dispatch(filterByArtist(name))
-    dispatch(addFilterArtist(name))
+    dispatch(AddFilters({type:"artist",name}))
     handleReset()
    }
-   const deleteArtistFromFilter_ = (name) => {
-    dispatch(deleteArtistFromfilter(name))
+   
+   const deleteFilter_ = (name) => {
+    dispatch(deletefilter(name))
    }
 
  
-   const mediumSelector = (type) => {
-    dispatch(filterByMedium(type))
-    dispatch(addFilterMedium(type))
+   const mediumSelector = (name) => {
+    dispatch(AddFilters({type:"medium",name}))
+    // dispatch(filterByMedium(type))
+    
     handleReset()
    }
 
-   const deleteMediumFromFilter_ = (name) => {
-    dispatch(deleteMediumFromFilter(name))
-   }
 
  
    
@@ -108,7 +119,7 @@ export default function MainPage(props){
     return  (
         <div>
 
-            {state.productsFiltered.length>0?
+            {state.productsFiltered.length>0&& !state.notFound.message?
             <div id="container" className={styles.container}>
             <div className={styles.content}>
             <header >  
@@ -190,32 +201,15 @@ export default function MainPage(props){
                   </div>
                </div>
 
-                  {state.filterArtist.map(element => {
+                  {state.filters.map(element => {
                     return (
                       <div>
-                      <button onClick={()=> deleteArtistFromFilter_(element)}>X</button>
-                      <span>{element}</span>
+                      <button onClick={()=> deleteFilter_(element)}>X</button>
+                      <span>{element.name}</span>
                       </div>
                     )
                   })}
-                   {
-                    state.orderByPrice.map(element => {
-                      return(
-                        <div>
-                          <button  onClick={()=> deletePriceFromFilter_(element)} >X</button>
-                          <span>{element}</span>
-                        </div>
-                      )
-                    })
-                  }
-                   {state.filterMediums.map(element => {
-                    return (
-                      <div>
-                      <button onClick={()=> deleteMediumFromFilter_(element)}>X</button>
-                      <span>{element}</span>
-                      </div>
-                    )
-                  })}
+                  
                         <div className ={styles.cards}>
                         {state.productsFiltered.slice(num1,num2).map(element=>(
                         <div id="card" ><Cards data={element} key={element.id} /></div>
@@ -260,7 +254,7 @@ export default function MainPage(props){
 
       
                 </div>
-            :
+            : state.productsFiltered.length===0 && state.filters.length===0?
               <div>
                 <header >  
               <div className={styles.header} >
@@ -278,9 +272,107 @@ export default function MainPage(props){
                   <button>MyProfile</button>
                 </div>
               </div>  
+              </header>
+              <div className={styles.tapaHeader}>
+              </div>  
+                 <div className={styles.filter_box}>
+                 <div className={styles.filter_box_2} > 
+                  <form>
+                    <label>By price</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>OrderByPriceSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      <option  value="OrderByMoreExpensive">More expensive</option>
+                      <option  value="OrderByLessExpensive">Less expensive</option>
+                    </select>
+                  </form>
+                  <form>
+                    <label>By Artist</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>artistSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.artistsList.map(element => {
+                        
+                        return( <option value={element.name}>{element.name}</option>)
+                      }
+                    )
+                  }
+                 
+                    </select>
+                  </form>
+                  <form>
+                    <label>By medium</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>mediumSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.mediums.map(element => {
+                        
+                        return( <option value={element}>{element}</option>)
+                      }
+                    )
+                  }
+                 
+                    </select>
+                  </form>
+                  {state.filters.map(element => {
+                    return (
+                      <div>
+                      <button onClick={()=> deleteFilter_(element)}>X</button>
+                      <span>{element.name}</span>
+                      </div>
+                    )
+                  })}
+                   
+                  </div>
+               </div> 
+            Loading...</div>
+            :state.notFound.message?
+            
+            <div>
+              <header >  
+                <div className={styles.header} >
+                <div>
+                <button onClick={()=>{
+                dispatch(getProducts())
+                dispatch(showAllProducts())
+                 }} className={styles.buttonsHeader}>Show all Products!</button>
+              </div> 
+              <div> 
+                <SearchBar handleReset={handleReset} ></SearchBar>
+              </div>  
+              <div>
+                <button>MyProfile</button>
+              </div>
+            </div>  
+            <div className={styles.tapaHeader}>
+            </div>   
+          </header>
+          <h1>Empty</h1>
+          </div>
+            :state.filters.length>0 && state.productsFiltered.length===0?
+            <div>
+             <header >  
+              <div className={styles.header} >
+                
+                <div>
+                  <button onClick={()=>{
+                  dispatch(getProducts())
+                  dispatch(showAllProducts())
+                   }} className={styles.buttonsHeader}>Show all Products!</button>
+                </div> 
+                <div> 
+                  <SearchBar handleReset={handleReset} ></SearchBar>
+                </div>  
+                <div>
+                  <button>MyProfile</button>
+                </div>
+              </div>  
               <div className={styles.tapaHeader}>
               </div>   
-            </header>Loading...</div>
+            </header>
+            <h1>sorry we dont have artworks with that filters</h1>  
+            </div>
+            :
+            <div></div>
             }
         </div>   
     )

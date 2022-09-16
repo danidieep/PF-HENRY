@@ -5,7 +5,6 @@ const artistRouter = require('./artistsRouter')
 const router = Router();
 
 router.use("/artworks", artRouter);
-router.use('/artists', artistRouter)
-
+router.use("/artists", artistRouter);
 
 module.exports = router;

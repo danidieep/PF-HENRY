@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const getArtworks = require("../controllers/artworkController");
 const createArtwork = require("../controllers/artworkPostController");
+const { Artwork } = require("../db");
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -61,5 +62,47 @@ router.post("/", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+router.put('/', async (req, res) =>{
+  const {id} = req.params
+  const {
+  title,
+  date,
+  collecting_institution,
+  image,
+  creator,
+  dimensions,
+  medio,
+  price} = req.body
+  try {
+     await Artwork.update({
+      title,
+      date,
+      collecting_institution,
+      image,
+      creator,
+      dimensions,
+      medio,
+      price}, {
+      where:id
+    })
+    res.status(200).send('se actualizo con exito la obra de arte')
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+})
+
+router.delete('/' , async(req, res) =>{
+  let id = req.params
+  try {
+    await Artwork.destroy({
+    where:{id}
+  })
+  res.send('eliminado con exito')
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+  
+})
 
 module.exports = router;

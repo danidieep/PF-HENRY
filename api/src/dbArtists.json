@@ -1,0 +1,219 @@
+[
+    {
+        "id": "4d8b92684eb68a1b2c00009e",
+        "name": "Leonardo da Vinci",
+        "birthday": "1452",
+        "hometown": "Anchiano, Italy",
+        "nationality": "Italian"
+    },
+    {
+        "id": "4d8b92b44eb68a1b2c0003fe",
+        "name": "Francisco de Goya",
+        "birthday": "1746",
+        "hometown": "Fuendetodos, Spain",
+        "nationality": "Spanish"
+    },
+    {
+        "id": "4d8b92b64eb68a1b2c000414",
+        "name": "Gustav Klimt",
+        "birthday": "1862",
+        "hometown": "Baumgarten, Austria",
+        "nationality": "Austrian"
+    },
+    {
+        "id": "4d8b929c4eb68a1b2c0002e2",
+        "name": "Rembrandt van Rijn",
+        "birthday": "1606",
+        "hometown": "Leiden, Netherlands",
+        "nationality": "Dutch"
+    },
+    {
+        "id": "4eaeed56ec5cf600010091d5",
+        "name": "Alexandre Cabanel",
+        "birthday": "1823",
+        "hometown": "Montpellier, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eaefa23ec5cf6000100c25d",
+        "name": "Gustave Courbet",
+        "birthday": "1819",
+        "hometown": "Ornans, Franche-Comté, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eaeec71bddaf7000100681b",
+        "name": "Sandro Botticelli",
+        "birthday": "1444",
+        "hometown": "Florence, Italy",
+        "nationality": "Italian"
+    },
+    {
+        "id": "4d8b92624eb68a1b2c000066",
+        "name": "Michelangelo Merisi da Caravaggio",
+        "birthday": "1571",
+        "hometown": "Caravaggio, Italy",
+        "nationality": "Italian"
+    },
+    {
+        "id": "4eaf0c6dec5cf6000100d84f",
+        "name": "Donatello",
+        "birthday": "1386/1387",
+        "hometown": "Florence, Italy",
+        "nationality": "Italian"
+    },
+    {
+        "id": "4eaf08816899c80001008a91",
+        "name": "Eugène Delacroix",
+        "birthday": "1798",
+        "hometown": "Charenton-Saint-Maurice, France",
+        "nationality": "French"
+    },
+    {
+        "id": "50ec6e2fde2538e308000ed6",
+        "name": "Théodore Géricault",
+        "birthday": "1791",
+        "hometown": "Rouen, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4d8b927e4eb68a1b2c000168",
+        "name": "Édouard Manet",
+        "birthday": "1832",
+        "hometown": "Paris, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eaf1cb0ec5cf6000100f69a",
+        "name": "William Hogarth",
+        "birthday": "1697",
+        "hometown": "London, United Kingdom",
+        "nationality": "British"
+    },
+    {
+        "id": "4eaf1de96899c80001009ce4",
+        "name": "Jean-Auguste-Dominique Ingres",
+        "birthday": "1780",
+        "hometown": "Montauban, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eaf1873d2a582000100bb7d",
+        "name": "Matthias Grünewald",
+        "birthday": "1475",
+        "hometown": "Wurzburg, Germany",
+        "nationality": "German"
+    },
+    {
+        "id": "4eb02539f21e2500010014a2",
+        "name": "Berthe Morisot",
+        "birthday": "1841",
+        "hometown": "Bourges, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4d8b92884eb68a1b2c0001dc",
+        "name": "Peter Paul Rubens",
+        "birthday": "1577",
+        "hometown": "Siegen, Westphalia",
+        "nationality": "Flemish"
+    },
+    {
+        "id": "4d8b929c4eb68a1b2c0002e0",
+        "name": "Pierre-Auguste Renoir",
+        "birthday": "1841",
+        "hometown": "Limoges, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4d8b92944eb68a1b2c000264",
+        "name": "Vincent van Gogh",
+        "birthday": "1853",
+        "hometown": "Zundert, Netherlands",
+        "nationality": "Dutch"
+    },
+    {
+        "id": "4eb07f28b19764000100e191",
+        "name": "Jean-Antoine Watteau",
+        "birthday": "1684",
+        "hometown": "Valenciennes, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eb192ad4bf5a90001000a61",
+        "name": "Basawan",
+        "birthday": "ca. 1556",
+        "hometown": "Uttar Pradesh, India",
+        "nationality": "Indian"
+    },
+    {
+        "id": "4d8b929e4eb68a1b2c0002f0",
+        "name": "Johannes Vermeer",
+        "birthday": "1632",
+        "hometown": "Delft, Netherlands",
+        "nationality": "Dutch"
+    },
+    {
+        "id": "4eb19570085cf50001001098",
+        "name": "Paolo Veronese",
+        "birthday": "1528",
+        "hometown": "Verona, Italy",
+        "nationality": "Italian"
+    },
+    {
+        "id": "4eb19400c8004a000100126a",
+        "name": "Louis Galloche",
+        "birthday": "1670",
+        "hometown": "Paris, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4dadd2177129f05924000c68",
+        "name": "Edgar Degas",
+        "birthday": "1834",
+        "hometown": "Paris, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eb19570085cf50001001098",
+        "name": "Paolo Veronese",
+        "birthday": "1528",
+        "hometown": "Verona, Italy",
+        "nationality": "Italian"
+    },
+    {
+        "id": "4eb1a3d3085cf50001002309",
+        "name": "William Henry Fox Talbot",
+        "birthday": "1800",
+        "hometown": "Dorset, United Kingdom",
+        "nationality": "British"
+    },
+    {
+        "id": "4eb1a88fc8004a00010046b1",
+        "name": "Alonso Cano",
+        "birthday": "1601",
+        "hometown": "Granada",
+        "nationality": "Spanish"
+    },
+    {
+        "id": "4eb1a966b89d900001004a93",
+        "name": "Master of Osma",
+        "birthday": "active first half of the 15th century",
+        "hometown": "There is no information",
+        "nationality": "Spanish"
+    },
+    {
+        "id": "4e9764016ba71200010022d9",
+        "name": "Auguste Rodin",
+        "birthday": "1840",
+        "hometown": "Paris, France",
+        "nationality": "French"
+    },
+    {
+        "id": "4eb02481f21e2500010013de",
+        "name": "Jean-François Millet",
+        "birthday": "1814",
+        "hometown": "Gruchy, France",
+        "nationality": "French"
+    }
+]

@@ -63,7 +63,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put('/', async (req, res) =>{
+router.put('/:idArtwork', async (req, res) =>{
   const {id} = req.params
   const {
   title,
@@ -92,7 +92,7 @@ router.put('/', async (req, res) =>{
   }
 })
 
-router.delete('/' , async(req, res) =>{
+router.delete('/:idArtwork' , async(req, res) =>{
   let id = req.params
   try {
     await Artwork.destroy({

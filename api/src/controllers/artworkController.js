@@ -3,7 +3,7 @@ const { Artwork } = require("../db");
 require("dotenv").config();
 const { API_KEY } = process.env;
 
-const getApiArtworks = async () => {
+const getArtworks = async () => {
   try {
     var art = [];
     var url = "https://stagingapi.artsy.net/api/artworks";
@@ -38,30 +38,45 @@ const getApiArtworks = async () => {
       });
       url = apiArt._links.next.href;
     }
-    return art;
+    // console.log(art)
+    const artInDb = art.map(async (a) => (await Artwork.findOrCreate({
+      where:{title: a.title,},
+      defaults:{
+          date: a.date,
+          collecting_institution: a.collecting_institution,
+          image: a.image,
+          creator: a.artist ? a.artist : 'unknown',
+          medio: a.medio,
+          dimensions: a.dimensions,
+          price: `${Math.floor(a.price)}0`,
+      }
+    })))
+    
+    // console.log(arts)
+    return artInDb
   } catch (error) {
     console.log(error);
   }
 };
 
-const getDbArtworks = async () => {
-  try {
-    const getArtworkDb = await Artwork.findAll();
-    return getArtworkDb;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// const getDbArtworks = async () => {
+//   try {
+//     const getArtworkDb = await Artwork.findAll();
+//     return getArtworkDb;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-const getArtworks = async () => {
-  try {
-    const apiInfo = await getApiArtworks();
-    const dbInfo = await getDbArtworks();
-    const infoTotal = apiInfo.concat(dbInfo);
-    return infoTotal;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// const getArtworks = async () => {
+//   try {
+//     const apiInfo = await getApiArtworks();
+//     const dbInfo = await getDbArtworks();
+//     const infoTotal = apiInfo.concat(dbInfo);
+//     return infoTotal;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 module.exports = getArtworks;

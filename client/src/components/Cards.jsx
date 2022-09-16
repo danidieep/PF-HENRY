@@ -14,8 +14,8 @@ const dispatch = useDispatch()
      return(
       <div>
          
-        { console.log(data.date)}
-            
+                
+            {console.log(data)}
            <div className={styles.card}>
              <Link to={`/Products/${data.id}`}>
              <h3 className={styles.name} >{data.title}</h3>

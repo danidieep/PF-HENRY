@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE,ORDER_BY_MORE_EXPENSIVE, SHOW_ALL_PRODUCTS} from "./action-types.js"
+import {DELETE_MEDIUM_FROM_FILTER,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,DELETE_PRICE_FROM_FILTER,ADD_PRICE_TYPE,DELETE_ARTIST_FROM_FILTER,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE} from "./action-types.js"
 
 
 
@@ -48,18 +48,12 @@ export const cleanProductId = () => {
       }
   }
 
-export const OrderByLessExpensive = ()=>{
+export const OrderByPrice = (payload)=>{
       return{
-            type:ORDER_BY_LESS_EXPENSIVE
+            type:ORDER_BY_PRICE,payload
       }
 }
 
-export const OrderByMoreExpensive = ()=>{
-      return{
-            type:ORDER_BY_MORE_EXPENSIVE
-      }
-
-}
 
 export const showAllProducts = ()=>{
       return{
@@ -82,3 +76,46 @@ export const filterByArtist = (payload) =>{
             type:FILTER_BY_ARTIST, payload
       }
 } 
+
+export const addFilterArtist = (payload) => {
+      return{
+            type:ADD_FILTER_ARTIST, payload
+      }
+}
+
+
+export const deleteArtistFromfilter = (payload)=>{
+      return{
+            type: DELETE_ARTIST_FROM_FILTER, payload
+      }
+}
+
+export const addPriceType = (payload) => {
+      return{
+            type:ADD_PRICE_TYPE, payload
+      }
+}
+
+export const deletePriceFromFilter = (payload) =>{
+      return{
+            type:DELETE_PRICE_FROM_FILTER,payload
+      }
+}
+
+export const filterByMedium = (payload) => {
+      return{
+            type:FILTER_BY_MEDIUM,payload
+      }
+}
+
+export const addFilterMedium = (payload) => {
+      return{
+            type:ADD_FILTER_MEDIUM, payload
+      }
+}
+
+export const deleteMediumFromFilter = (payload) => {
+      return{
+            type:DELETE_MEDIUM_FROM_FILTER, payload
+      }
+}

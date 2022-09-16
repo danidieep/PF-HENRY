@@ -119,47 +119,52 @@ export default function MainPage(props){
     return  (
         <div>
 
-            {state.productsFiltered.length>0&& !state.notFound.message?
-            <div id="container" className={styles.container}>
-            <div className={styles.content}>
+            {
+              //si hay productos filtras y no hay mensaje de error
+            state.productsFiltered.length>0&& !state.notFound.message?
+             <div id="container" className={styles.container}>
+             <div className={styles.content}>
+
             <header >  
-              <div className={styles.header} >
-                
+              <div className={styles.header} >  
                 <div>
                   <button onClick={()=>{
                   dispatch(getProducts())
                   dispatch(showAllProducts())
                    }} className={styles.buttonsHeader}>Show all Products!</button>
-                </div> 
-                <div> 
+                 </div> 
+                 <div> 
                   <SearchBar handleReset={handleReset} ></SearchBar>
-                </div>  
-                <div>
+                 </div>  
+                 <div>
                   <button>MyProfile</button>
                 </div>
-              </div>  
+               </div>  
               <div className={styles.tapaHeader}>
               </div>   
             </header>
-            {state.productsFiltered.length>5?
-            (<div className={styles.carrusel}>
-              <div>
-               <ul>
+
+            <carrusel>
+              {state.productsFiltered.length>5?
+               (<div className={styles.carrusel}>
+                <div>
+                 <ul>
               {state.productsFiltered.slice(num1,num2).slice(0,5).map(element=>{
                 return(
                   <li><img src={element.image}></img></li>
-                )
+                      )
+                    }
+                 )
               }
-                        )}
                 </ul>
               </div>
             </div>):
             (<div></div>)
             }
+            </carrusel>
             
-             
-                <div className={styles.body}>
-             
+             <body>
+               <div className={styles.body}>
                 <div className={styles.filter_box}>
                  <div className={styles.filter_box_2} > 
                   <form>
@@ -178,9 +183,9 @@ export default function MainPage(props){
                       state.artistsList.map(element => {
                         
                         return( <option value={element.name}>{element.name}</option>)
-                      }
-                    )
-                  }
+                            }
+                          )
+                        }
                  
                     </select>
                   </form>
@@ -200,16 +205,16 @@ export default function MainPage(props){
                   </form>
                   </div>
                </div>
-
                   {state.filters.map(element => {
                     return (
                       <div>
                       <button onClick={()=> deleteFilter_(element)}>X</button>
                       <span>{element.name}</span>
                       </div>
-                    )
-                  })}
-                  
+                            )
+                          }
+                       )
+                    }
                         <div className ={styles.cards}>
                         {state.productsFiltered.slice(num1,num2).map(element=>(
                         <div id="card" ><Cards data={element} key={element.id} /></div>
@@ -221,11 +226,13 @@ export default function MainPage(props){
                       
                      
                    
-                </div>
+                  </div>
+                </body>
+
                 <footer className={styles}>
                 <div>  
-                <button onClick={handlerPrev} className={styles.buttonsNavegation}><p className={styles.textInButtonNavegation}>{`<`}</p></button>
-                {
+                  <button onClick={handlerPrev} className={styles.buttonsNavegation}><p className={styles.textInButtonNavegation}>{`<`}</p></button>
+                  {
                   arrCountOf.map((e,i)=> (
                       
                    <button onClick={
@@ -235,12 +242,9 @@ export default function MainPage(props){
                           setCurrent(i+1)
                       }
                    }className={styles.buttonsNavigation} style={i+1===current?{fontSize:"1.3rem"}:{color:"black"}}>{i + 1}</button>
-                   
-                   )
-                  )
-
-
-                }   
+                          )
+                        )
+                      }   
                    <button  onClick={handlerNext} className={styles.buttonsNavegation}> <p className={styles.textInButtonNavegation}>{`>`}</p></button>
                 </div>
                 <div className={styles.footer_info}>
@@ -250,10 +254,9 @@ export default function MainPage(props){
                
                 </div>
                  </footer>
-                  </div>:
-
-      
+                  </div>
                 </div>
+                //Si no hay productos ni filtros...
             : state.productsFiltered.length===0 && state.filters.length===0?
               <div>
                 <header >  
@@ -324,9 +327,10 @@ export default function MainPage(props){
                    
                   </div>
                </div> 
-            Loading...</div>
+               <h1>Loading...</h1>
+            </div>
+            //Si hay un mensaje de no enontrado
             :state.notFound.message?
-            
             <div>
               <header >  
                 <div className={styles.header} >
@@ -348,6 +352,7 @@ export default function MainPage(props){
           </header>
           <h1>Empty</h1>
           </div>
+          //Si no hay obras y hay filtros
             :state.filters.length>0 && state.productsFiltered.length===0?
             <div>
              <header >  
@@ -369,6 +374,56 @@ export default function MainPage(props){
               <div className={styles.tapaHeader}>
               </div>   
             </header>
+            <div className={styles.filter_box}>
+              <div className={styles.filter_box_2} > 
+                <form>
+                    <label>By price</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>OrderByPriceSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      <option  value="OrderByMoreExpensive">More expensive</option>
+                      <option  value="OrderByLessExpensive">Less expensive</option>
+                    </select>
+                  </form>
+                  <form>
+                    <label>By Artist</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>artistSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.artistsList.map(element => {
+                        
+                        return( <option value={element.name}>{element.name}</option>)
+                      }
+                    )
+                  }
+                 
+                    </select>
+                  </form>
+                  <form>
+                    <label>By medium</label>
+                    <select  className={styles.filters} name="" id=""  onChange={(event)=>mediumSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                      state.mediums.map(element => {
+                        
+                        return( <option value={element}>{element}</option>)
+                      }
+                    )
+                  }
+                 
+                    </select>
+                  </form>
+                  {state.filters.map(element => {
+                    return (
+                      <div>
+                      <button onClick={()=> deleteFilter_(element)}>X</button>
+                      <span>{element.name}</span>
+                      </div>
+                    )
+                  })}
+                   
+                  </div>
+               </div> 
+            
             <h1>sorry we dont have artworks with that filters</h1>  
             </div>
             :

@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+.container{ 
+    width: 100%;
+    height: 940px; 
+    background: #DCB5B0;
+}
+.navLading{
+position: absolute;
+width: 100%;
+margin-top: 20px;
+
+}
+
+.aboutus {
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    border-width: 0px;
+    cursor: pointer;
+    float: left;
+    color: #000000;
+    margin-left: 80px;
+    margin-top: 20px;
+    background-color:#DCB5B0 ;
+}
+
+.aboutus:hover{
+    color: rgba(101, 53, 53, 1);
+}
+
+.login{
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    border-width: 0px;
+    cursor: pointer;
+    line-height: 36px;
+    color: #000000;
+    float: right;
+    margin-right: 40px;
+    margin-top: 20px;
+    background-color:#DCB5B0;
+    
+}
+.login:hover{
+    color: rgba(101, 53, 53, 1);
+}
+.register{
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    border-width: 0px;
+    cursor: pointer;
+    line-height: 36px;
+    float: right;
+    color: #000000;
+    margin-right: 80px;   
+    margin-top: 20px;
+    background-color:#DCB5B0;
+}
+
+.register:hover{
+    color: rgba(101, 53, 53, 1);
+}
+
+
+.contact{  
+    display: grid;
+    height: 60px;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    
+}
+.contactNumber{
+    grid-row: 1;
+    
+}
+
+.visaMaster{
+    grid-column: 3/3;
+    grid-row: 1;
+}
+
+.iconsRedes{
+    grid-column: 2/3;
+    grid-row: 1;
+}
+
+.logoButton{
+    
+    display: inline-grid;
+}
+
+.venus{
+    /* position: absolute; */
+    margin-top: 50px;
+    grid-column: 1/2;
+    grid-row: 1;
+    width: 630px;
+    height: 764px;
+    float: left;
+    }
+.logoLink{
+    
+    padding-top: 70%;
+    grid-column: 2/2;
+    grid-row: 1;
+}
+.goToGalery{
+    font-family: 'Merriweather', serif ;
+    font-style: normal;
+    font-weight: 800;
+    text-decoration: overline;
+    font-size: 55px;
+    border-width: 0px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 36px;
+    background-color:#DCB5B0;
+    margin-top: 80px;
+    color: rgba(101, 53, 53, 1);
+}
+.goToGalery:hover{
+  opacity: 0.7;
+}
+.logo{
+    font-family: 'Euphoria Script', cursive;
+    text-decoration-color: rgba(101, 53, 53, 1);
+    font-size: 200px;
+    font-weight: 400;
+    line-height: 51px;
+}
+.contactTittle{
+    font-family: 'Euphoria Script', cursive;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 51px;
+    color: #000000;
+}

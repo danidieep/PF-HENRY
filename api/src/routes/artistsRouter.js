@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const getArtists = require("../controllers/artistsController");
+const createArtist = require("../controllers/artistsPostController");
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -44,4 +45,16 @@ router.get("/:idArtist", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.post("/", async (req, res) => {
+  try {
+    const { id, name, birthday, hometown } = req.body;
+    createArtist(id, name, birthday, hometown);
+  } catch (error) {
+    res.send(400).send(error);
+  }
+});
+
+>>>>>>> 7a0556fe626b6cbde583e4ae5c2549e564e61ff9
 module.exports = router;

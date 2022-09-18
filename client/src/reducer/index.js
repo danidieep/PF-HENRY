@@ -25,6 +25,12 @@ switch (type) {
             mediums:payload.map(element => element.medio).filter((item,index)=>payload.map(element => element.medio).indexOf(item)===index)
         }
     }
+
+    case 'POST_USER':
+        return{
+            ...state
+    } 
+
     case GET_PRODUCT_BY_NAME:{    
 
         return{

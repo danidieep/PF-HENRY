@@ -56,17 +56,19 @@ const getDbArtworks = async () => {
     } = el;
     Artwork.findOrCreate({
       where: {
-        id: id,
         title: title,
+      },
+      defaults: {
+        id: id,
         date: date,
         collecting_institution: collecting_institution
           ? collecting_institution
-          : 'false',
+          : "false",
         image: image,
         creator: artist ? artist : "unknown",
         medio: medio,
         dimensions: dimensions,
-        price: iconicity ? iconicity : 'null',
+        price: iconicity ? iconicity : "null",
       },
     });
   });

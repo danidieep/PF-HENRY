@@ -8,6 +8,7 @@ const createArtist = async (id, name, birthday, hometown) => {
       birthday,
       hometown,
     });
+    resizeBy.send('Artist created succesfully')
   } catch (error) {
     console.log(error.message);
   }

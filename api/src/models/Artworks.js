@@ -8,9 +8,7 @@ module.exports = (sequelize) => {
     "artwork",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        type: DataTypes.STRING,
         primaryKey: true,
       },
       title: {
@@ -42,12 +40,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-      },
-      createdinDB: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
     },
     { timestamps: false, createdAt: false, updatedAt: false }

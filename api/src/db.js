@@ -61,15 +61,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Artwork, Artist, Admin, User, Favourite } = sequelize.models;
+const { Artwork, Artist, User, Favourite } = sequelize.models;
 
 // Aca vendrian las relaciones
 
 Artist.hasMany(Artwork);
 Artwork.belongsTo(Artist);
-
-Admin.hasMany(Artwork);
-Artwork.belongsTo(Admin);
 
 User.hasMany(Artwork);
 Artwork.belongsTo(User);

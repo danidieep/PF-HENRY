@@ -10,7 +10,6 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
         primaryKey: true,
       },
       title: {
@@ -42,12 +41,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-      },
-      createdinDB: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
     },
     { timestamps: false, createdAt: false, updatedAt: false }

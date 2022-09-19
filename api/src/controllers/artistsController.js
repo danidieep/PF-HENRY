@@ -1,5 +1,11 @@
+
+const axios = require("axios");
+// const db = require("../db");
+// const Artist = require("../models/Artist");
+
 const { Artist } = require("../db");
 const data = require("../dbArtists.json");
+
 require("dotenv").config();
 
 const getArtists = async () => {

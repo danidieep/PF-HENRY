@@ -1,0 +1,103 @@
+/* 
+
+.container{
+    
+    margin: 0px auto;
+  width: 90%;
+  background-color: white;
+  justify-content: center;
+}
+
+.header {
+ background-color: rgb(255, 255, 255);
+ padding: 0.5rem;
+ border-bottom: solid 1px;
+ border-color: #444;
+ background-image: linear-gradient(to right,  rgb(195, 186, 231),  rgb(229, 226, 233),  rgb(201, 190, 235))
+}
+
+.button{
+    font-size: large;
+  
+    border-color: transparent;
+    background-color:transparent;
+    border :0;
+    outline: none;
+    border: 0;
+    font-family: 'Quicksand', cursive;  
+    font-weight: 600;
+    color:  rgb(109, 58, 217);
+     border-radius: 9999px;
+    padding: 0.5rem;
+    width: 13rem;
+    
+}
+
+.button:hover{
+    font-size: large;
+   
+    border-color: transparent;
+    background-color:  rgb(115, 89, 171);
+    border :0;
+    outline: none;
+    border: 0;
+    font-family: 'Quicksand', cursive;  
+    font-weight: 600;
+    color:  rgb(255, 255, 255);
+    border-radius:9999px;
+    padding:0.5rem;
+    transition: .4s;
+     width: 13rem;
+     cursor: pointer;
+     background-image: linear-gradient(to right,  rgb(115, 89, 171),  rgb(130, 108, 178),  rgb(115, 89, 171))
+}
+
+img{
+    width: 30rem;
+   
+}
+
+.body{
+    display: grid;
+   grid-template-columns: 40% 60%;
+   background-image: linear-gradient(to right,  rgb(195, 186, 231),  rgb(229, 226, 233),  rgb(201, 190, 235))
+}
+.stats{
+    display: flex;
+    flex-direction: column;
+    
+    margin: 3rem;
+    color:  rgb(87, 47, 174);
+    font-size: 1.5rem;
+    
+}
+
+.stats span{
+  padding: 1rem;
+ 
+}
+
+.img_name{
+   display: grid;
+   padding: 3rem;
+    
+   
+}
+.img_name span{
+    color:  rgb(109, 58, 217);
+    font-size: 1.7rem;
+    font-weight: 600;
+  
+  
+}
+
+.footer{
+ background-color: rgb(65, 48, 116);
+   color: white;
+}
+
+
+.Loader{
+    padding: 1rem;
+    background-image: linear-gradient(to right,  rgb(195, 186, 231),  rgb(229, 226, 233),  rgb(201, 190, 235))
+} */

@@ -11,10 +11,7 @@ const initialState = {
     productsFiltered:[],
     productDetails: [],
     artistsList:[],
-
-  
     mediums: [],
-    
     notFound :[],
     filters:[]
     
@@ -80,9 +77,10 @@ switch (type) {
 
 
     case FILTER_BY_ARTIST:{
+
         return{
             ...state,
-            productsFiltered:state.productsFiltered.filter(element => element.artist === payload)
+            productsFiltered:state.productsFiltered.filter(element => element.creator === payload)
         }
     }
     case DELETE_FILTER:{

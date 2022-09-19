@@ -45,8 +45,7 @@ router.get("/:idArtist", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
+
 router.post("/", async (req, res) => {
   try {
     const { id, name, birthday, hometown } = req.body;
@@ -56,5 +55,5 @@ router.post("/", async (req, res) => {
   }
 });
 
->>>>>>> 7a0556fe626b6cbde583e4ae5c2549e564e61ff9
+
 module.exports = router;

@@ -35,7 +35,7 @@ export default function MainPage(props){
 
    
     React.useEffect(()=>{
-    if(state.productsFiltered.length===0)dispatch(getProducts())
+    if(state.allProducts.length===0)dispatch(getProducts())
     if(state.artistsList.length===0)dispatch(getArtists())
     applyFilter()
     },[state.filters])
@@ -79,14 +79,9 @@ export default function MainPage(props){
       dispatch(filterByMedium(element.name))
      }
     });
+}
 
-    
-   
-   }
-  
-   
-
-   const OrderByPriceSelector = (name)=>{
+  const OrderByPriceSelector = (name)=>{
       // dispatch(OrderByPrice(type))
      dispatch(OrderByPrice(name))
       

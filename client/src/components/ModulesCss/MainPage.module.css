@@ -26,7 +26,6 @@
     flex-flow: row wrap;
     justify-content: space-between;
 
-
 }
 
 .logo {
@@ -167,7 +166,7 @@
     font-family: 'Merriweather', serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 46px;
+    font-size: 29px;
     line-height: 36px;
     color: #000000;
     margin-right: 40px;

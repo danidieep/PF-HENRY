@@ -7,7 +7,7 @@ const getApiArtworks = async () => {
   try {
     var art = [];
     var url = "https://stagingapi.artsy.net/api/artworks";
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i < 10; i++) {
       const apiData = await axios(url, {
         headers: {
           "X-Xapp-Token": `${API_KEY}`,
@@ -40,7 +40,7 @@ const getApiArtworks = async () => {
     }
     return art;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
@@ -49,7 +49,7 @@ const getDbArtworks = async () => {
     const getArtworkDb = await Artwork.findAll();
     return getArtworkDb;
   } catch (error) {
-    console.error(error);
+    console.log(error.message);
   }
 };
 
@@ -58,9 +58,10 @@ const getArtworks = async () => {
     const apiInfo = await getApiArtworks();
     const dbInfo = await getDbArtworks();
     const infoTotal = apiInfo.concat(dbInfo);
-    return infoTotal;
+    console.log(apiInfo);
+    return apiInfo;
   } catch (error) {
-    console.error(error);
+    console.log(error.message);
   }
 };
 

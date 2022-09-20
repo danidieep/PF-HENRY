@@ -45,6 +45,6 @@ const getArtists = async () => {
   } catch (error) {
     console.log(error);
   }
+  ///////////////////////////
 };
-
 module.exports = getArtists;

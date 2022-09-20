@@ -9,7 +9,6 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.STRING,
-        allowNull: false,
         primaryKey: true,
       },
       name: {
@@ -23,10 +22,6 @@ module.exports = (sequelize) => {
       hometown: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      createdinDB: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
     },
     { timestamps: false, createdAt: false, updatedAt: false }

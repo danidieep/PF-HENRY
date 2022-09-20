@@ -1,19 +1,28 @@
-import react from "react"
-import MainPage from "./MainPage"
+
 import { Link } from "react-router-dom"
 
+
 import styles from "./ModulesCss/LandingPage.module.css"
+import LogIn from "./LogIn"
+import LogOut from "./LogOut"
 
 
 
 export default function LandingPage(){
+
+  
+
     return(
         <div className={styles.container}>
         
         <button className={styles.aboutus}>About us</button>
-        <button className={styles.register}>Register</button>
-        <button className={styles.login}>Log in</button>
+        <Link to = "/Register">
+             <button className={styles.register}>Register</button>
+             </Link>     
         
+          
+             <LogIn />
+             <LogOut />
         
         
         <div className={styles.logoButton}>

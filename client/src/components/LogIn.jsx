@@ -1,7 +1,4 @@
 import React from 'react'
-import { useState } from 'react'
-import { useDispatch } from "react-redux"
-import {LogInUser} from "../actions/index"
 import { useAuth0 } from "@auth0/auth0-react"
 import styles from "./ModulesCss/LogIn.module.css"
 

@@ -9,7 +9,6 @@ export default function Cards({ data }) {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  console.log(data);
   return (
     <div>
       <div className={styles.card}>

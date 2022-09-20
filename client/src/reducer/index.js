@@ -35,7 +35,7 @@ export default function Reducer(state = initialState, { type, payload }) {
           .map((element) => element.medio)
           .filter(
             (item, index) =>
-              payload.map((element) => element.medio).indexOf(item) === index
+              payload?.map((element) => element.medio).indexOf(item) === index
           ),
       };
     }

@@ -24,24 +24,34 @@ export default function SearchBar(props) {
     }
   }
 
+  function cons(event) {
+    event.preventDefault();
+    if (state.product.length > 0) {
+      props.handleReset();
+      dispatch(getProductByName(state.product));
+      document.getElementById("inputDeBusqueda").value = "";
+    }
+  }
+
   return (
-    <div className={styles.searchBar}>
+    <div id="wrap">
       <form
+        className="search-bar"
         onSubmit={(event) => {
           cons(event);
         }}
       >
         <input
+          type="text"
+          class="input-searched"
+          placeholder="Search"
           autoComplete="off"
-          id="inputDeBusqueda"
+          id="inputSearch"
           onChange={(event) => {
             subirAlState(event);
           }}
-          className={styles.input}
         />
-        <button className={styles.buttons} type="submit">
-          Search
-        </button>
+        <input id="search_submit" value="Rechercher" type="submit" />
       </form>
     </div>
   );

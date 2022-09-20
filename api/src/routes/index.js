@@ -11,5 +11,4 @@ router.use("/artists", artistRouter);
 router.use("/users", userRouter);
 router.use("/favourites", favsRouter);
 
-
 module.exports = router;

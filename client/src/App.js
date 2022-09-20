@@ -3,7 +3,7 @@ import LandingPage from "./components/LandingPage"
 import MainPage from "./components/MainPage"
 import CardDetails from "./components/CardDetails"
 import Register from "./components/Register"
-import LogIn from "./components/LogIn"
+
 
 import "./App.css";
 

@@ -31,13 +31,10 @@ export default function SearchBar(props){
 
     return(
        
-          <div className={styles.searchBar}>
-           <form onSubmit={(event)=>{cons(event)}}>
-            
-            
-             <input   autoComplete="off" id="inputDeBusqueda" onChange={(event) => {subirAlState(event)}} className={styles.input}/>
-             <button className={styles.buttons} type="submit">Search</button>
-
+          <div id='wrap'>
+           <form className="search-bar" onSubmit={(event)=>{cons(event)}}>
+            <input  type='text' class="input-searched" placeholder="Search" autoComplete="off" id="inputSearch" onChange={(event) => {subirAlState(event)}} />
+            <input id="search_submit" value="Rechercher" type="submit"/>
           </form>
           </div>    
          

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 
 import styles from "./ModulesCss/LandingPage.module.css"
+import LogIn from "./LogIn"
 
 
 
@@ -18,9 +19,10 @@ export default function LandingPage(){
              <button className={styles.register}>Register</button>
              </Link>     
         
-
-        <button className={styles.login} onClick={()=> loginWithRedirect()}>Log in</button>
-        
+             {/* <Link to = "/LogIn">
+        <button className={styles.login} >Log in</button>
+             </Link> */}
+             <LogIn />
         
         
         <div className={styles.logoButton}>

@@ -3,8 +3,11 @@ import LandingPage from "./components/LandingPage"
 import MainPage from "./components/MainPage"
 import CardDetails from "./components/CardDetails"
 import Register from "./components/Register"
+import LogIn from "./components/LogIn"
 
 import "./App.css";
+
+
 
 function App() {
   return (
@@ -13,7 +16,6 @@ function App() {
         <Route path="/MainPage" component={MainPage} />
         <Route path="/Products/:id" component={CardDetails}/>
         <Route path='/Register' component={Register}/>
-        
     </div>
   );
 }

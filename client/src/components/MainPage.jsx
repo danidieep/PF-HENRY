@@ -35,7 +35,7 @@ export default function MainPage(props){
 
    
     React.useEffect(()=>{
-    if(state.productsFiltered.length===0)dispatch(getProducts())
+    if(state.allProducts.length===0)dispatch(getProducts())
     if(state.artistsList.length===0)dispatch(getArtists())
     applyFilter()
     },[state.filters])

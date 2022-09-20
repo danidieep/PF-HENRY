@@ -36,7 +36,7 @@ export default function Register() {
           
         //   } else {
            dispatch(RegisterUser(input))
-           alert('Videojuego Creado')
+           alert('Usuario Creado')
         //   }
            setInput({
             name:'',

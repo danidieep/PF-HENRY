@@ -1,0 +1,11 @@
+{
+<<<<<<< HEAD
+  "devDependencies": {
+    "prettier": "2.7.1"
+=======
+  "dependencies": {
+    "@auth0/auth0-react": "^1.11.0",
+    "dotenv": "^16.0.2"
+>>>>>>> 8e15a322f9c098ff71f07f124dac0ae06c037ebd
+  }
+}

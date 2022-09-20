@@ -1,12 +1,15 @@
 import axios from 'axios'
 
-import {DELETE_MEDIUM_FROM_FILTER,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,DELETE_PRICE_FROM_FILTER,ADD_PRICE_TYPE,DELETE_ARTIST_FROM_FILTER,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE} from "./action-types.js"
+import {DELETE_FILTER,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,NOT_FOUND,ADD_FILTERS,
+
+
+} from "./action-types.js"
 
 
 
 export function getProducts(){
       return async function(dispatch) {
-            let json = await axios.get('http://localhost:3001/artworks')
+            let json = await axios.get('/artworks')
             return dispatch ({
                   type: GET_PRODUCTS,
                   payload: json.data
@@ -15,16 +18,32 @@ export function getProducts(){
 
 }
 
+export function RegisterUser(payload){
+      return async function(dispatch) {
+            let json = await axios.post('/user', payload)
+            return json
+      }
+}
+
 
 
 export const getProductByName = (payload)=>{
     return async function (dispatch) {
-      let json = await axios.get('http://localhost:3001/artworks?title=' + payload)
 
-      return dispatch({
-            type: GET_PRODUCT_BY_NAME,
-            payload: json.data
-      })
+      try {
+            let json = await axios.get('/artworks?title=' + payload)
+      
+            return dispatch({
+                  type: GET_PRODUCT_BY_NAME,
+                  payload: json.data
+            })
+            
+      } catch (error) {
+            return dispatch({
+                  type: NOT_FOUND,
+                  payload: error
+            })
+      }
     }
             
 }
@@ -32,7 +51,7 @@ export const getProductByName = (payload)=>{
 
 export const getProductById = (id)=>{
     return async function (dispatch) {
-      let json = await axios.get('http://localhost:3001/artworks/' + id)
+      let json = await axios.get('/artworks/' + id)
 
       return dispatch({
             type: GET_PRODUCT_BY_ID,
@@ -63,7 +82,7 @@ export const showAllProducts = ()=>{
 
 export const getArtists = ()=>{
       return async function(dispatch) {
-            let json = await axios.get('http://localhost:3001/artists')
+            let json = await axios.get('/artists')
             return dispatch ({
                   type: GET_ARTISTS,
                   payload: json.data
@@ -84,9 +103,9 @@ export const addFilterArtist = (payload) => {
 }
 
 
-export const deleteArtistFromfilter = (payload)=>{
+export const deletefilter = (payload)=>{
       return{
-            type: DELETE_ARTIST_FROM_FILTER, payload
+            type: DELETE_FILTER, payload
       }
 }
 
@@ -96,11 +115,6 @@ export const addPriceType = (payload) => {
       }
 }
 
-export const deletePriceFromFilter = (payload) =>{
-      return{
-            type:DELETE_PRICE_FROM_FILTER,payload
-      }
-}
 
 export const filterByMedium = (payload) => {
       return{
@@ -114,8 +128,11 @@ export const addFilterMedium = (payload) => {
       }
 }
 
-export const deleteMediumFromFilter = (payload) => {
+
+
+
+export const AddFilters = (payload)=>{
       return{
-            type:DELETE_MEDIUM_FROM_FILTER, payload
+            type:ADD_FILTERS, payload
       }
 }

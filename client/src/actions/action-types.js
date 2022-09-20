@@ -14,6 +14,7 @@ export const FILTER_BY_MEDIUM = "FILTER_BY_MEDIUM"
 export const ADD_FILTER_MEDIUM = "ADD_FILTER_MEDIUM"
 export const NOT_FOUND = 
 "NOT_FOUND"
+export const DELETE_ARTWORKS = "DELETE_ARTWORKS"
 
 
 export const ADD_FILTERS = "ADD_FILTERS"

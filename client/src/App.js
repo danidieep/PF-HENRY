@@ -3,6 +3,7 @@ import LandingPage from "./components/LandingPage"
 import MainPage from "./components/MainPage"
 import CardDetails from "./components/CardDetails"
 import Register from "./components/Register"
+import PutArtwork from "./components/PutArtwork"
 
 
 import "./App.css";
@@ -16,6 +17,7 @@ function App() {
         <Route path="/MainPage" component={MainPage} />
         <Route path="/Products/:id" component={CardDetails}/>
         <Route path='/Register' component={Register}/>
+        <Route path='/PutArtwork' component={PutArtwork}/>
     </div>
   );
 }

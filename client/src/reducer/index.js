@@ -1,8 +1,6 @@
 
 
-import {NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
-
-APPLY_FILTERS,
+import {DELETE_ARTWORKS, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
 ADD_FILTERS
 } from "../actions/action-types"
 
@@ -28,11 +26,21 @@ switch (type) {
             mediums:payload.map(element => element.medio).filter((item,index)=>payload?.map(element => element.medio).indexOf(item)===index)
         }
     }
-
+    case 'PUT_ARTWORK':
+            return{
+                ...state
+            }    
     case 'POST_USER':
         return{
             ...state
     } 
+
+    case DELETE_ARTWORKS:
+       return {
+        ...state,
+        productsFiltered: state.allProducts.filter( e=> e.id !== payload )
+       } 
+        
 
     case GET_PRODUCT_BY_NAME:{    
 

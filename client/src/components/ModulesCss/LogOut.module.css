@@ -1,0 +1,15 @@
+.logout{
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    border-width: 0px;
+    cursor: pointer;
+    line-height: 36px;
+    color: #000000;
+    float: right;
+    margin-right: 40px;
+    margin-top: 20px;
+    background-color:#DCB5B0;
+    
+}

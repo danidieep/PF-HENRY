@@ -16,9 +16,9 @@ export default function LandingPage(){
         <div className={styles.container}>
         
         <button className={styles.aboutus}>About us</button>
-        <Link to = "/Register">
+        {/* <Link to = "/Register">
              <button className={styles.register}>Register</button>
-             </Link>     
+             </Link>      */}
         
           
              <LogIn />

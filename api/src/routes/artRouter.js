@@ -30,11 +30,13 @@ try {
 });
 
 router.get("/:idArtwork", async (req, res) => {
-  const artworks = await getArtworks();
   try {
     const { idArtwork } = req.params;
-    const getArtwork = await Artwork.findOne({where:{id:idArtwork}});
-    res.send(getArtwork);
+    const getArtwork = await getArtworks();
+    const artworkById = getArtwork.filter((e) => e.id === idArtwork);
+    if (artworkById.length === 0)
+      res.status(400).send({ message: "Artwork does not found" });
+    else res.send(artworkById);
   } catch (error) {
     res.status(404).send(error);
   }

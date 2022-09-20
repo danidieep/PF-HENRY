@@ -25,7 +25,7 @@ switch (type) {
             ...state,
             allProducts: payload,
             productsFiltered: payload,
-            mediums:payload.map(element => element.medio).filter((item,index)=>payload.map(element => element.medio).indexOf(item)===index)
+            mediums:payload.map(element => element.medio).filter((item,index)=>payload?.map(element => element.medio).indexOf(item)===index)
         }
     }
 

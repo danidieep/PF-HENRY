@@ -1,12 +1,5 @@
 const { User } = require("../db");
+const bcrypt = require('bcrypt')
 
-const getUsers = async () => {
-  try {
-    const getUsers = await User.findAll();
-    return getUsers;
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 module.exports = getUsers;

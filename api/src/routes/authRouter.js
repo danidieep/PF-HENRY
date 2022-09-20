@@ -2,11 +2,6 @@
 // const { auth, requiresAuth } = require('express-openid-connect');
 // const server = express()
 
-// var webAuth = new auth0.WebAuth({
-//     domain:       'dev-5vxlb3fc.us.auth0.com',
-//     clientID:     'Ui6gc91ydpjzXrXvZDyEzI6J6z2lhn8j'
-//   });
-
 // const config = {
 //   authRequired: false,
 //   auth0Logout: true,
@@ -33,3 +28,4 @@
 //   res.send(JSON.stringify(req.oidc.user, null, 2));
 // });
 
+// module.exports = server

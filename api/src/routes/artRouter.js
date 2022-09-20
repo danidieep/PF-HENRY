@@ -101,11 +101,18 @@ router.put('/:idArtwork', async (req, res) =>{
 
 router.put('/delete/:idArtwork' , async(req, res) =>{
   const {idArtwork} = req.params
+  const artwork = Artwork.findByPk(idArtwork)
   try {
+    if(artwork.show){
     await Artwork.update({show:false}, {
     where:{id:idArtwork}}
   )
   res.send('eliminado con exito')
+}else{
+  await Artwork.update({show:true}, {
+  where:{id:idArtwork}})
+  res.send('reestablecido con exito')
+}
   }
   catch (error) {
     res.status(400).send(error.message)

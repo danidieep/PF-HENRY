@@ -10,19 +10,20 @@ export default function Cards({data}){
 const state = useSelector(state=>state)
 const dispatch = useDispatch()
 
-
+console.log(data)
      return(
       <div>
          
                 
-            {console.log(data)}
+           
            <div className={styles.card}>
              <Link to={`/Products/${data.id}`}>
              <h3 className={styles.name} >{data.title}</h3>
              <img className={styles.img} src={data.image} alt="product_img" />
              <div className={styles.types_container}>
-              <h3 className={styles.types}>{data.artist}</h3>
+              <h3 className={styles.types}>{data.creator}</h3>
               <h3 className={styles.types}>{`$${data.price}`}</h3>
+              
             </div>
             </Link>
            </div>

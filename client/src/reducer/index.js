@@ -1,16 +1,19 @@
 
 
-import {DELETE_MEDIUM_FROM_FILTER,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,DELETE_PRICE_FROM_FILTER,ADD_PRICE_TYPE,ORDER_BY_PRICE,DELETE_ARTIST_FROM_FILTER,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, ORDER_BY_LESS_EXPENSIVE, ORDER_BY_MORE_EXPENSIVE} from "../actions/action-types"
+import {NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+
+APPLY_FILTERS,
+ADD_FILTERS
+} from "../actions/action-types"
 
 const initialState = {
     allProducts : [],
     productsFiltered:[],
     productDetails: [],
     artistsList:[],
-    filterArtist:[],
-    orderByPrice:[],
     mediums: [],
-    filterMediums : []
+    notFound :[],
+    filters:[]
     
 }
 
@@ -25,6 +28,12 @@ switch (type) {
             mediums:payload.map(element => element.medio).filter((item,index)=>payload?.map(element => element.medio).indexOf(item)===index)
         }
     }
+
+    case 'POST_USER':
+        return{
+            ...state
+    } 
+
     case GET_PRODUCT_BY_NAME:{    
 
         return{
@@ -48,6 +57,42 @@ switch (type) {
         }  
     }
     
+    
+    case SHOW_ALL_PRODUCTS:{
+        return{
+            ...state,
+            productsFiltered:state.allProducts,
+            notFound:[],
+            filters:[]
+
+        }
+    }
+    case GET_ARTISTS:{
+        return{
+            ...state,
+            artistsList:payload
+        }
+    }
+
+
+
+    case FILTER_BY_ARTIST:{
+
+        return{
+            ...state,
+            productsFiltered:state.productsFiltered.filter(element => element.creator === payload)
+        }
+    }
+    case DELETE_FILTER:{
+        return{
+            ...state,
+            productsFiltered:state.allProducts,
+            filters:state.filters.filter(element => element !== payload)
+        }
+    }
+    
+
+
     case ORDER_BY_PRICE:{
         if(payload === "OrderByLessExpensive"){
           return{
@@ -61,73 +106,29 @@ switch (type) {
              
          }
     }
-    case SHOW_ALL_PRODUCTS:{
-        return{
-            ...state,
-            productsFiltered:state.allProducts
-        }
-    }
-    case GET_ARTISTS:{
-        return{
-            ...state,
-            artistsList:payload
-        }
-    }
-    case FILTER_BY_ARTIST:{
-        return{
-            ...state,
-            productsFiltered:state.productsFiltered.filter(element => element.artist === payload)
-        }
-    }
-    case ADD_FILTER_ARTIST:{
-        return{
-            ...state,
-            filterArtist:[payload]
-            
-        }
-    }
-    case DELETE_ARTIST_FROM_FILTER:{
-        return{
-            ...state,
-            productsFiltered:state.allProducts,
-            filterArtist:state.filterArtist.filter(element => element !== payload)
-        }
-    }
-    
-    case ADD_PRICE_TYPE:{
-        return{
-            ...state,
-            orderByPrice:[payload]
-        }
-    }
-
-    case DELETE_PRICE_FROM_FILTER:{
-        return{
-            ...state,
-           
-           orderByPrice:state.orderByPrice.filter(element => element === payload),
-           productsFiltered:state.allProducts,
-        }
-    }
 
     case FILTER_BY_MEDIUM:{
-        return{
-            ...state,
-            productsFiltered:state.productsFiltered.filter(element => element.medio === payload)
-        }
-    }
-    case ADD_FILTER_MEDIUM:{
-        return{
-            ...state,
-            filterMediums:[payload]
+       
+            
+            return{
+                ...state,
+                productsFiltered:state.productsFiltered.filter(element => element.medio ===payload )
+            }
             
         }
-    }
-    case DELETE_MEDIUM_FROM_FILTER:{
+
+    case NOT_FOUND:{
         return{
             ...state,
-            productsFiltered:state.allProducts,
-            filterMediums:state.filterMediums.filter(element => element !== payload)
+            notFound:payload
+        }
+    }
+
+    case ADD_FILTERS:{
+        return{
+            ...state,
+            filters:[...state.filters,payload]
+
         }
     }
     default:

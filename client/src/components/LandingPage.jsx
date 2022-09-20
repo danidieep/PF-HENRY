@@ -1,18 +1,25 @@
-import react from "react"
-import MainPage from "./MainPage"
+
 import { Link } from "react-router-dom"
+import { useAuth0 } from "@auth0/auth0-react"
 
 import styles from "./ModulesCss/LandingPage.module.css"
 
 
 
 export default function LandingPage(){
+
+  const { loginWithRedirect } = useAuth0()
+
     return(
         <div className={styles.container}>
         
         <button className={styles.aboutus}>About us</button>
-        <button className={styles.register}>Register</button>
-        <button className={styles.login}>Log in</button>
+        <Link to = "/Register">
+             <button className={styles.register}>Register</button>
+             </Link>     
+        
+
+        <button className={styles.login} onClick={()=> loginWithRedirect()}>Log in</button>
         
         
         

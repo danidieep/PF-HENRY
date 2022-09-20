@@ -35,9 +35,10 @@ export default function MainPage(props) {
 
 
   React.useEffect(() => {
-    if (state.productsFiltered.length === 0) dispatch(getProducts())
+    if (state.allProducts.length === 0) dispatch(getProducts())
     if (state.artistsList.length === 0) dispatch(getArtists())
-  }, [])
+    applyFilter()
+  }, [state.filters])
 
 
 
@@ -65,14 +66,20 @@ export default function MainPage(props) {
   }
 
 
+
+
+
+
+
   const OrderByPriceSelector = (type) => {
     dispatch(OrderByPrice(type))
     dispatch(addPriceType(type))
   }
-
   const deletePriceFromFilter_ = (type) => {
     dispatch(deletePriceFromFilter())
   }
+
+
 
 
   const artistSelector = (name) => {
@@ -91,207 +98,251 @@ export default function MainPage(props) {
     handleReset()
   }
 
-  const deleteMediumFromFilter_ = (name) => {
-    dispatch(deleteMediumFromFilter(name))
-  }
 
 
 
 
 
   return (
-    <div className={styles.container}>
+    <div>
 
+      {state.productsFiltered.length > 0 ?
+        <div id="container" className={styles.container}>
+          <div className={styles.content}>
+            <header >
+              <div className={styles.header} >
 
-      <div className={styles.content}>
-        <div className={styles.content2}>
-          <div className={styles.header}>
-            <div>
-              <button className={styles.Products}>About us</button>
-            </div>
-            <div>
-              <button onClick={() => {
-                dispatch(getProducts())
-                dispatch(showAllProducts())
-              }} className={styles.Products}>Show all Products</button>
-            </div>
-            <div>
-              <h1 className={styles.logo}>Artket</h1>
-            </div>
-            <button className={styles.buttonProfile}>Log in</button>
-            <div>
-              <button className={styles.buttonProfile}>Register</button>
-            </div>
-            <div className={styles.SearchBarHome}>
-              <SearchBar handleReset={handleReset} ></SearchBar>
-            </div>
-          </div>
-
-          <p className={styles.featured}>Featured</p>
-          {state.productsFiltered.length > 5 ?
-            (<div className={styles.carrusel}>
-              <div>
-
-                <ul>
-                  {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
-                    return (
-                      <li>
-                        <img src={element.image} height='640px' width='640px'></img>
-                        <p>{element.title}</p>
-                      </li>
-                    )
-                  }
-                  )}
-                </ul>
-              </div>
-            </div>) :
-            (<div></div>)
-          }
-
-          {/* FILTROS */}
-          <div className={styles.filtersDiv}>
-            {/* <p className={styles.filter}>Filters</p> */}
-            <div className={styles.select}>
-              <form>
-                <label>By price </label>
-                <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
-                  <option disabled={true} value="base">-------</option>
-                  <option value="OrderByMoreExpensive">More expensive</option>
-                  <option value="OrderByLessExpensive">Less expensive</option>
-                </select>
-              </form>
-            </div>
-
-            <div className={styles.select}>
-              <form>
-                <label>By Artist </label>
-                <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
-                  <option disabled={true} value="base">-------</option>
-                  {/* {
-                      state.artistsList?.map(element => {
-                        
-                        return( <option value={element.name}>{element.name}</option>)
-                      }
-                    )
-                  } */}
-
-                </select>
-              </form>
-            </div>
-
-            <div className={styles.select}>
-              <form>
-                <label>By medium </label>
-                <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
-                  <option disabled={true} value="base">-------</option>
-                  {
-                    state.mediums.map(element => {
-
-                      return (<option value={element}>{element}</option>)
-                    }
-                    )
-                  }
-
-                </select>
-              </form>
-            </div>
-          </div>
-
-          {/* LIMPIAR FILTROS */}
-          <div className={styles.clearFiters}>
-            {state.filterArtist.map(element => {
-              return (
                 <div>
-                  <button onClick={() => deleteArtistFromFilter_(element)}>X</button>
-                  <span>{element}</span>
+                  <button onClick={() => {
+                    dispatch(getProducts())
+                    dispatch(showAllProducts())
+                  }} className={styles.buttonsHeader}>Show all Products!</button>
                 </div>
-              )
-            })}
-            {
-              state.orderByPrice.map(element => {
+                <div>
+                  <SearchBar handleReset={handleReset} ></SearchBar>
+                </div>
+                <div>
+                  <button>MyProfile</button>
+                </div>
+              </div>
+              <div className={styles.tapaHeader}>
+              </div>
+            </header>
+            {state.productsFiltered.length > 5 ?
+              (<div className={styles.carrusel}>
+                <div>
+                  <ul>
+                    {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
+                      return (
+                        <li><img src={element.image}></img></li>
+                      )
+                    }
+                    )}
+                  </ul>
+                </div>
+              </div>) :
+              (<div></div>)
+            }
+
+
+            <div className={styles.body}>
+
+              <div className={styles.filter_box}>
+                <div className={styles.filter_box_2} >
+                  <form>
+                    <label>By price</label>
+                    <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      <option value="OrderByMoreExpensive">More expensive</option>
+                      <option value="OrderByLessExpensive">Less expensive</option>
+                    </select>
+                  </form>
+                  <form>
+                    <label>By Artist</label>
+                    <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                        state.artistsList.map(element => {
+
+                          return (<option value={element.name}>{element.name}</option>)
+                        }
+                        )
+                      }
+
+                    </select>
+                  </form>
+                  <form>
+                    <label>By medium</label>
+                    <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                        state.mediums.map(element => {
+
+                          return (<option value={element}>{element}</option>)
+                        }
+                        )
+                      }
+
+                    </select>
+                  </form>
+                </div>
+              </div>
+
+              {state.filterArtist.map(element => {
                 return (
                   <div>
-                    <button onClick={() => deletePriceFromFilter_(element)} >X</button>
+                    <button onClick={() => deleteArtistFromFilter_(element)}>X</button>
                     <span>{element}</span>
                   </div>
                 )
-              })
-            }
-            {state.filterMediums.map(element => {
-              return (
-                <div>
-                  <button onClick={() => deleteMediumFromFilter_(element)}>X</button>
-                  <span>{element}</span>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* CARDS  */}
-          <p className={styles.featured}>Galery</p>
-          <div className={styles.cards}>
-
-            {state.productsFiltered.slice(num1, num2).map(element => (
-              <div id="card" ><Cards data={element} key={element.id} /></div>
-            )
-            )}
-          </div>
-
-          {/* Paginado */}
-          <footer className={styles}>
-            <div>
-              <button onClick={handlerPrev} className={styles.buttonsNavegation}><p className={styles.textInButtonNavegation}>{`<`}</p></button>
+              })}
               {
-                arrCountOf.map((e, i) => (
-
-                  <button onClick={
-                    () => {
-                      setNum1(((i + 1) * ProductsPorPage) - ProductsPorPage)
-                      setNum2((i + 1) * ProductsPorPage)
-                      setCurrent(i + 1)
-                    }
-                  } className={styles.buttonsNavigation} style={i + 1 === current ? { fontSize: "1.3rem" } : { color: "black" }}>{i + 1}</button>
-
-                )
-                )
-
-
+                state.orderByPrice.map(element => {
+                  return (
+                    <div>
+                      <button onClick={() => deletePriceFromFilter_(element)} >X</button>
+                      <span>{element}</span>
+                    </div>
+                  )
+                })
               }
-              <button onClick={handlerNext} className={styles.buttonsNavegation}> <p className={styles.textInButtonNavegation}>{`>`}</p></button>
+              {state.filterMediums.map(element => {
+                return (
+                  <div>
+                    <button onClick={() => deleteMediumFromFilter_(element)}>X</button>
+                    <span>{element}</span>
+                  </div>
+                )
+              })}
+              <div className={styles.cards}>
+                {state.productsFiltered.slice(num1, num2).map(element => (
+                  <div id="card" ><Cards data={element} key={element.id} /></div>
+                )
+                )}
+              </div>
+
+
+
+
+
             </div>
-            <div className={styles.footer_info}>
-
-
-            </div>
-          </footer>
-        </div>:
-
-
-      </div >
-      {/* : false
+            <footer className={styles}>
               <div>
-                <header >  
-              <div className={styles.header} >
-                
-                <div>
-                  <button onClick={()=>{
+                <button onClick={handlerPrev} className={styles.buttonsNavegation}><p className={styles.textInButtonNavegation}>{`<`}</p></button>
+                {
+                  arrCountOf.map((e, i) => (
+
+                    <button onClick={
+                      () => {
+                        setNum1(((i + 1) * ProductsPorPage) - ProductsPorPage)
+                        setNum2((i + 1) * ProductsPorPage)
+                        setCurrent(i + 1)
+                      }
+                    } className={styles.buttonsNavigation} style={i + 1 === current ? { fontSize: "1.3rem" } : { color: "black" }}>{i + 1}</button>
+
+                  )
+                  )
+
+
+                }
+                <button onClick={handlerNext} className={styles.buttonsNavegation}> <p className={styles.textInButtonNavegation}>{`>`}</p></button>
+              </div>
+              <div className={styles.footer_info}>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. A debitis suscipit corporis ratione blanditiis, quae perferendis sapiente, exercitationem hic rerum unde! Quasi dolorem velit officiis corrupti aut in provident obcaecati!
+                </p>
+
+              </div>
+            </footer>
+          </div>:
+
+
+        </div>
+        :
+        <div>
+          <header >
+            <div className={styles.header} >
+
+              <div>
+                <button onClick={() => {
                   dispatch(getProducts())
                   dispatch(showAllProducts())
-                   }} className={styles.buttonsHeader}>Show all Products!</button>
-                </div> 
-                <div> 
-                  <SearchBar handleReset={handleReset} ></SearchBar>
-                </div>  
-              </div>  
-              <div className={styles.tapaHeader}>
-              </div>   
-            </header>Loading...</div>
-            
-        </div>    */}
-      {/* </div> </div> </div>  */}
-    </div >
+                }} className={styles.buttonsHeader}>Show all Products!</button>
+              </div>
+              <div>
+                <SearchBar handleReset={handleReset} ></SearchBar>
+              </div>
+              <div>
+                <button>MyProfile</button>
+              </div>
+            </div>
+            <div className={styles.tapaHeader}>
+            </div>
+          </header>Loading...</div>
+      }
+    </div>
   )
 }
+//             </header>
+//             <div className={styles.filter_box}>
+//               <div className={styles.filter_box_2} >
+//                 <form>
+//                     <label>By price</label>
+//                     <select  className={styles.filters} name="" id=""  onChange={(event)=>OrderByPriceSelector(event.target.value)} defaultValue="base">
+//                       <option disabled={true} value="base">-------</option>
+//                       <option  value="OrderByMoreExpensive">More expensive</option>
+//                       <option  value="OrderByLessExpensive">Less expensive</option>
+//                     </select>
+//                   </form>
+//                   <form>
+//                     <label>By Artist</label>
+//                     <select  className={styles.filters} name="" id=""  onChange={(event)=>artistSelector(event.target.value)} defaultValue="base">
+//                       <option disabled={true} value="base">-------</option>
+//                       {
+//                       state.artistsList.map(element => {
+
+//                         return( <option value={element.name}>{element.name}</option>)
+//                       }
+//                     )
+//                   }
+
+//                     </select>
+//                   </form>
+//                   <form>
+//                     <label>By medium</label>
+//                     <select  className={styles.filters} name="" id=""  onChange={(event)=>mediumSelector(event.target.value)} defaultValue="base">
+//                       <option disabled={true} value="base">-------</option>
+//                       {
+//                       state.mediums.map(element => {
+
+//                         return( <option value={element}>{element}</option>)
+//                       }
+//                     )
+//                   }
+
+//                     </select>
+//                   </form>
+//                   {state.filters.map(element => {
+//                     return (
+//                       <div>
+//                       <button onClick={()=> deleteFilter_(element)}>X</button>
+//                       <span>{element.name}</span>
+//                       </div>
+//                     )
+//                   })}
+
+//                   </div>
+//                </div>
+
+//             <h1>sorry we dont have artworks with that filters</h1>
+//             </div>
+//             :
+//             <div></div>
+//             }
+//         </div>
+//     )
+// >>>>>>> 8e15a322f9c098ff71f07f124dac0ae06c037ebd
+
 
 
 

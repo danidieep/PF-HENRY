@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 import styles from "./ModulesCss/LandingPage.module.css"
 import LogIn from "./LogIn"
+import LogOut from "./LogOut"
 
 
 
@@ -21,6 +22,7 @@ export default function LandingPage(){
         
           
              <LogIn />
+             <LogOut />
         
         
         <div className={styles.logoButton}>

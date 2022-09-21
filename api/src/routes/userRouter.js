@@ -5,7 +5,6 @@ const { getUserDB } = require("../controllers/getUserDB");
 var jwt = require("jsonwebtoken");
 
 const getUsers = require("../controllers/userController");
-const createUser = require("../controllers/userPostController");
 
 const router = Router();
 

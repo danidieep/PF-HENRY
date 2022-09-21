@@ -2,11 +2,16 @@
 import { useDispatch, useSelector } from "react-redux"
 import {deleteProductFromCarrito} from "../actions"
 import {Link} from "react-router-dom"
+import { useEffect } from "react"
 
 export default function ShopCart(){
 
     const state = useSelector(state => state)
     const dispatch = useDispatch()
+
+    useEffect(()=>{
+        
+    })
 
 
     if(!state.carrito.length){

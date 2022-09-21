@@ -15,7 +15,6 @@ router.use("/artists", artistRouter);
 router.use("/users", userRouter);
 router.use("/favourites", favsRouter);
 
-<<<<<<< HEAD
 
 router.use("/user", userRouter)
 
@@ -24,6 +23,4 @@ router.use("/favourites", favsRouter);
 
 
 
-=======
->>>>>>> 3f7dbeadc2bbf365021c0fc4ad3d668f681a65d0
 module.exports = router;

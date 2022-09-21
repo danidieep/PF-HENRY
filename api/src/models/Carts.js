@@ -13,9 +13,9 @@ module.exports = (sequelize) => {
         primaryKey: true,
     },
     totalPrice: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         defaultValue:0,
-        allowNull: false
+        // allowNull: false
     }
   }, { timestamps: false });
 };

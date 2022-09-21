@@ -1,10 +1,7 @@
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-<<<<<<< HEAD
-=======
 require("dotenv").config();
->>>>>>> 42f3b4d207c5b8692831ee8992a94123b531ed3f
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 let sequelize =
@@ -65,8 +62,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 const { Artwork, Artist, User, Favourite, Cart, Artworkincart } = sequelize.models;
-console.log(sequelize.models)
+// console.log(sequelize.models)
 // Aca vendrian las relaciones
+
+
 Cart.hasMany(Artworkincart);
 Artworkincart.belongsTo(Cart);
 

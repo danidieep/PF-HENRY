@@ -52,7 +52,7 @@ const getDbArtworks = async () => {
       artist,
       medio,
       dimensions,
-      iconicity,
+      price,
     } = el;
     Artwork.findOrCreate({
       where: {

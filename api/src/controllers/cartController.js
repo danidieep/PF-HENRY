@@ -1,20 +1,20 @@
-const { Cart, ArtworkInCart, User, Artwork } = require("../db");
+const { Cart, Artworkincart, User, Artwork } = require("../db");
 
 const getCart = async(cartId)=>{
     return await Cart.findOne({
         where:{
             id:cartId
         },
-        include: ArtworkInCart
+        include: Artworkincart
     })
 }
 
 const addArtworkInCart = async (artworkId)=>{
-    return await ArtworkInCart.create({artworkId})
+    return await Artworkincart.create({artworkId})
 }
 
 const deleteArtworkInCart = async(artworkInCartID)=>{
-    return await ArtworkInCart.destroy({
+    return await Artworkincart.destroy({
         where:{
             id:artworkInCartID
         }

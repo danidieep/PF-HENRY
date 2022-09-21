@@ -5,6 +5,7 @@ const { getUserDB } = require("../controllers/getUserDB");
 var jwt = require("jsonwebtoken");
 const router = Router();
 const getUsers = require("../controllers/userController");
+const {Cart} = require("../db");
 
 router.get("/", async (req, res) => {
   try {
@@ -19,21 +20,33 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role } = req.body;
   try {
-    const user = await createUser(
+    // let verify = User.findOne({where:email})
+    // if(verify.length) res.send('ya hay un usuario con ese email')
+    const userCartId = await Cart.create().then(
+      ({dataValues}) => dataValues.id
+    )
+    console.log(userCartId)
+    const user = await User.findOrCreate({
+      where:{
+      cartId: userCartId,
       name,
       lastname,
       email,
       password,
-      dateBorn,
       role
-    );
-    const tokenAdmin = jwt.sign(
-      { name, lastname, email, password, dateBorn, role },
-      "secret_token"
-    );
-    res.status(200).send(tokenAdmin);
+      }
+    }
+      
+    )
+    // const creado = await User.findOne({where:name})
+    // console.log(creado)
+    // const tokenAdmin = jwt.sign(
+    //   { name, lastname, email, password, dateBorn, role },
+    //   "secret_token"
+    // );
+    res.status(200).send(user);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.message);
   }
 });
 

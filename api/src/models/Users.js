@@ -57,37 +57,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-<<<<<<< HEAD
-
-=======
->>>>>>> 3f7dbeadc2bbf365021c0fc4ad3d668f681a65d0
       lastname: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-<<<<<<< HEAD
-
-=======
->>>>>>> 3f7dbeadc2bbf365021c0fc4ad3d668f681a65d0
       email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-<<<<<<< HEAD
-
-=======
->>>>>>> 3f7dbeadc2bbf365021c0fc4ad3d668f681a65d0
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-<<<<<<< HEAD
-
-      dateBorn: {
-       type: DataTypes.DATEONLY
-      },  
-      
-=======
       dateBorn: {
         type: DataTypes.DATEONLY,
       },
@@ -96,7 +77,6 @@ module.exports = (sequelize) => {
         defaultValue: false,
         allowNull: false,
       },
->>>>>>> 3f7dbeadc2bbf365021c0fc4ad3d668f681a65d0
     },
     { timestamps: false, createdAt: false, updatedAt: false }
   );

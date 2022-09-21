@@ -27,16 +27,11 @@ router.post("/", async (req, res) => {
       dateBorn,
       role
     );
-    if (role === true) {
-      const tokenAdmin = jwt.sign(
-        { name, lastname, email, password, dateBorn, role },
-        "admin_token",
-        (err, token) => {
-          res.json({ token });
-        }
-      );
-      // res.status(200).send("Admin created succesfully");
-    } else res.status(200).send("User created succesfully");
+    const tokenAdmin = jwt.sign(
+      { name, lastname, email, password, dateBorn, role },
+      "secret_token"
+    );
+    res.status(200).send(tokenAdmin);
   } catch (error) {
     res.status(400).send(error);
   }

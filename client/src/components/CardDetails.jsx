@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
-import { getProductById, cleanProductId } from "../actions/index"
-import React from "react"
+import { deletProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
+import React, { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import Loader from "./Loader"
 import Message from "./Message"
 import styles from "./ModulesCss/CardsDetails.module.css"
 import { useEffect } from 'react'
+import { useAuth0 } from "@auth0/auth0-react"
 
 
 
@@ -13,18 +14,43 @@ import { useEffect } from 'react'
 export default function CardDetails(props) {
 
   const { id } = useParams();
+  const {email} = useAuth0()
 
   const dispatch = useDispatch()
   const product = useSelector((state) => state.productDetails)
-
+  const state = useSelector(state => state)
+  const [cantCompr, setCantCompr] = useState(0)
 
 
   useEffect(() => {
     dispatch(cleanProductId())
     dispatch(getProductById(id))
     console.log(product[0]);
-
   }, [])
+
+
+  const addToCartOrDelete = ()=>{
+    const ArtInCuesiton = state.carrito.filter(element=> element===product[0].title)
+    if(ArtInCuesiton.length){
+      deletProductFromCarrito({artId:product[0].id, email})
+      alert("artWork deleted from cart")
+    }
+    else{
+      addProductToCarrito({artId:product[0].id, email})
+      alert("artWork added to cart")
+    }
+  }
+
+  // const addCount = (action) =>{
+  //  if(cantCompr>0){
+  //   if(action==="-")setCantCompr(cantCompr-1)
+  //   }
+  // if(cantCompr>=0){
+  //   if(action==="+")setCantCompr(cantCompr + 1) 
+  //   }
+  // }
+  
+
 
   return (
 
@@ -46,8 +72,11 @@ export default function CardDetails(props) {
           </div>
           <div></div>
           <div>
+            
             <button className={styles.btnUser}><img src="https://i.imgur.com/LtoCkNW.png" alt="" /></button>
+            <Link to="/ShopCart">
             <button className={styles.btnCarrito}><img src="https://i.imgur.com/WsQE0Cn.png" alt="" /></button>
+            </Link>
           </div>
 
         </div>
@@ -66,7 +95,18 @@ export default function CardDetails(props) {
                   <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
                   <h3 className={styles.detailsH3}>$ {product[0].price}</h3>
                   <div className={styles.buttonAddCartPos}>
-                    <button className={styles.buttonAddCart}>Add to cart</button>
+                    {/* <button onClick={()=>addCount("-")}>-</button> */}
+
+
+                    {!state.carrito.includes(product[0].title)?
+                   ( <button className={styles.buttonAddCart}
+                     onClick={addToCartOrDelete}>Add to cart</button>)
+                   : <button className={styles.buttonAddCart}
+                   onClick={addToCartOrDelete}>Delete from cart</button>
+                  
+                  }
+                    {/* <button onClick={()=>addCount("+")}>+</button> */}
+                    {/* <span>cantidad a comprar: {cantCompr}</span> */}
                   </div>
                 </div>
                 <div className={styles.imgDetails}>

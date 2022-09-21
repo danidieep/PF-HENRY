@@ -130,11 +130,7 @@ export const addFilterMedium = (payload) => {
 
 
 
-export const addProductToCarrito = (payload) =>{
-      return{
-            type:ADD_PRODUCT_TO_CARRITO, payload
-      }
-}
+
 
 export const deletProductFromCarrito = (payload)=>{
       return{
@@ -149,22 +145,31 @@ export const AddFilters = (payload)=>{
 }
 
 
-
 export const addProductToCarrito = (payload) =>{
-      return{
-            type:ADD_PRODUCT_TO_CARRITO, payload
-      }
+
+            fetch(`/cart/${payload.artId}`,{
+                  method: "POST",
+                  headers:{"Accept": "application/json",
+                 "Content-Type":"application/json"},            
+               body:JSON.stringify(payload.email)
+                  }
+              )
+      
+      
 }
+
 
 export const deleteProductFromCarrito = (payload)=>{
-      return{
-            type:DELETE_PRODUCT_FROM_CARRITO,payload
-      }
+
+            fetch(`/cart/${payload.artId}`,{
+                  method: "POST",
+                  headers:{"Accept": "application/json",
+                 "Content-Type":"application/json"},            
+               body:JSON.stringify(payload.email)
+                  }
+              )
+      
+      
 }
 
-export const changeCountProductFromCarrito = (payload)=>{
-      return{
-            type:CHANGE_COUNT_PRODUCT_FROM_CARRITO,payload
 
-      }
-}

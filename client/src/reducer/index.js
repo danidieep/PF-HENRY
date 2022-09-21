@@ -134,19 +134,7 @@ export default function Reducer(state = initialState, { type, payload }) {
             }
         }
     
-        case ADD_PRODUCT_TO_CARRITO:{
-            return{
-                ...state,
-                carrito:[...state.carrito,payload]
-            }
-        }
-    
-        case DELETE_PRODUCT_FROM_CARRITO:{
-            return{
-                ...state,
-                carrito:state.carrito.filter(element => element===payload)
-            }
-        }
+
         default:
             return state;
     }

@@ -22,37 +22,58 @@ export default function CardDetails(props) {
   useEffect(() => {
     dispatch(cleanProductId())
     dispatch(getProductById(id))
+    console.log(product[0]);
 
   }, [])
 
   return (
 
-    <div className={styles.container} key={id} >
+    <div className={styles.containerDetails} key={id} >
 
+      <header >
+        {/* <div className={styles.content2}> */}
+        <div className={styles.header}>
+          <div>
+            <Link to="/MainPage">
+              <button className={styles.btnHome}>
+                Home
+              </button>
+            </Link>
+          </div>
+          <div></div>
+          <div>
+            <h1 className={styles.logo}>Artket</h1>
+          </div>
+          <div></div>
+          <div>
+            <button className={styles.btnUser}><img src="https://i.imgur.com/LtoCkNW.png" alt="" /></button>
+            <button className={styles.btnCarrito}><img src="https://i.imgur.com/WsQE0Cn.png" alt="" /></button>
+          </div>
 
-      <div>
-        <Link to="/MainPage">
-          <button>
-            Return to main page
-          </button>
-        </Link>
+        </div>
+      </header>
 
-      </div>
-
-      <div>
+      <div id='conteinerDetail'>
         {
           product.length > 0 ?
             <div>
-              <h1>{product[0].title}</h1>
-              <img src={product[0].image ? product[0].image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="350px" height="300px" />
-              <h3> Created in year: {product[0].date}</h3>
+              <div className={styles.data}>
+                <h1 className={styles.artist}>{product[0].creator}</h1>
+                <div className={styles.detailsText}>
+                  <h3 className={styles.detailsTittle}> {product[0].title}, {product[0].date}</h3>
+                  <h3 className={styles.detailsH3}> {product[0].collecting_institution}</h3>
+                  <h3 className={styles.detailsH3}> {product[0].medio}</h3>
+                  <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
+                  <h3 className={styles.detailsH3}>$ {product[0].price}</h3>
+                  <div className={styles.buttonAddCartPos}>
+                    <button className={styles.buttonAddCart}>Add to cart</button>
+                  </div>
+                </div>
+                <div className={styles.imgDetails}>
+                  <img src={product[0].image ? product[0].image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="450px" height="400px" />
+                </div>
 
-              <h3> Paint ubication: {product[0].collecting_institution}</h3>
-              <h3> Artist: {product[0].artist}</h3>
-              <h3> {product[0].medio}</h3>
-              <h3> Dimensions: {product[0].dimensions}</h3>
-              <h3> Price{product[0].price}</h3>
-
+              </div>
             </div> : <div>{Loader}</div>
         }
       </div>

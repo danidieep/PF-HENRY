@@ -92,11 +92,15 @@
 }
 
 .cards {
-
     width: 80%;
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 5rem auto;
+}
+
+.cardsContainer {
+    height: auto;
+    background-color: red;
 }
 
 .carrusel {
@@ -168,28 +172,28 @@
 
 .featured {
     font-family: 'Merriweather', serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 29px;
+    font-style: italic;
+    font-size: 56px;
     line-height: 36px;
     color: #000000;
     margin-right: 40px;
-    margin-top: 20px;
+    margin-top: 40px;
     width: 100%;
-
 }
 
 .filtersDiv {
-
-
     font-family: 'Merriweather', serif;
     font-style: normal;
     display: flex;
-    height: 30px;
-    width: 30%;
-    margin: 10px auto;
+    height: 20px;
+    width: 100%;
+    margin: 50px auto;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.select {
+    margin: 4px;
 }
 
 .tapaHeader {
@@ -197,4 +201,62 @@
     height: 3.5rem;
     width: 100%;
 
+}
+
+.paginado {
+    width: 1220px;
+    display: inline-block;
+    margin: auto;
+}
+
+.button31P {
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    border-style: none;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 9px 20px 8px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-right: 5px;
+
+}
+
+.button31P:hover,
+.button31P:focus {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+form .formNewsletterBox {
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 10px;
+    height: 25px;
+    width: 200px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border-width: 0;
+}
+
+.newsletter {
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 36px;
+    color: #000000;
+    margin-right: 40px;
+    margin-top: 60px;
+    width: 100%;
 }

@@ -7,10 +7,10 @@ import {CHANGE_COUNT_PRODUCT_FROM_CARRITO,DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUC
 
 
 
-export function getProducts(){
-      return async function(dispatch) {
+export function getProducts() {
+      return async function (dispatch) {
             let json = await axios.get('/artworks')
-            return dispatch ({
+            return dispatch({
                   type: GET_PRODUCTS,
                   payload: json.data
             })
@@ -18,8 +18,8 @@ export function getProducts(){
 
 }
 
-export function RegisterUser(payload){
-      return async function(dispatch) {
+export function RegisterUser(payload) {
+      return async function (dispatch) {
             let json = await axios.post('/user', payload)
             return json
       }
@@ -27,98 +27,98 @@ export function RegisterUser(payload){
 
 
 
-export const getProductByName = (payload)=>{
-    return async function (dispatch) {
+export const getProductByName = (payload) => {
+      return async function (dispatch) {
 
-      try {
-            let json = await axios.get('/artworks?title=' + payload)
-      
-            return dispatch({
-                  type: GET_PRODUCT_BY_NAME,
-                  payload: json.data
-            })
-            
-      } catch (error) {
-            return dispatch({
-                  type: NOT_FOUND,
-                  payload: error
-            })
+            try {
+                  let json = await axios.get('/artworks?title=' + payload)
+
+                  return dispatch({
+                        type: GET_PRODUCT_BY_NAME,
+                        payload: json.data
+                  })
+
+            } catch (error) {
+                  return dispatch({
+                        type: NOT_FOUND,
+                        payload: error
+                  })
+            }
       }
-    }
-            
+
 }
 
 
-export const getProductById = (id)=>{
-    return async function (dispatch) {
-      let json = await axios.get('/artworks/' + id)
+export const getProductById = (id) => {
+      return async function (dispatch) {
+            let json = await axios.get('/artworks/' + id)
 
-      return dispatch({
-            type: GET_PRODUCT_BY_ID,
-            payload: json.data
-      })
-    }
-  
+            return dispatch({
+                  type: GET_PRODUCT_BY_ID,
+                  payload: json.data
+            })
+      }
+
 }
 
 export const cleanProductId = () => {
       return {
-          type: CLEAN_PRODUCT_ID
+            type: CLEAN_PRODUCT_ID
       }
-  }
+}
 
-export const OrderByPrice = (payload)=>{
-      return{
-            type:ORDER_BY_PRICE,payload
+export const OrderByPrice = (payload) => {
+      return {
+            type: ORDER_BY_PRICE, payload
       }
 }
 
 
-export const showAllProducts = ()=>{
-      return{
-            type:SHOW_ALL_PRODUCTS
+export const showAllProducts = () => {
+      return {
+            type: SHOW_ALL_PRODUCTS
       }
 }
 
-export const getArtists = ()=>{
-      return async function(dispatch) {
+export const getArtists = () => {
+      return async function (dispatch) {
             let json = await axios.get('/artists')
-            return dispatch ({
+            return dispatch({
                   type: GET_ARTISTS,
                   payload: json.data
             })
       }
 }
 
-export const filterByArtist = (payload) =>{
-      return{
-            type:FILTER_BY_ARTIST, payload
+export const filterByArtist = (payload) => {
+      return {
+            type: FILTER_BY_ARTIST, payload
       }
-} 
+}
 
 export const addFilterArtist = (payload) => {
-      return{
-            type:ADD_FILTER_ARTIST, payload
+      return {
+            type: ADD_FILTER_ARTIST, payload
       }
 }
 
 
-export const deletefilter = (payload)=>{
-      return{
+export const deletefilter = (payload) => {
+      return {
             type: DELETE_FILTER, payload
       }
 }
 
 export const addPriceType = (payload) => {
-      return{
-            type:ADD_PRICE_TYPE, payload
+      return {
+            type: ADD_PRICE_TYPE, payload
       }
 }
 
 
 export const filterByMedium = (payload) => {
-      return{
-            type:FILTER_BY_MEDIUM,payload
+      return {
+            type: FILTER_BY_MEDIUM, payload
       }
 }
 
@@ -130,6 +130,17 @@ export const addFilterMedium = (payload) => {
 
 
 
+export const addProductToCarrito = (payload) =>{
+      return{
+            type:ADD_PRODUCT_TO_CARRITO, payload
+      }
+}
+
+export const deletProductFromCarrito = (payload)=>{
+      return{
+            type:DELETE_PRODUCT_FROM_CARRITO,payload
+      }
+}
 
 export const AddFilters = (payload)=>{
       return{
@@ -145,7 +156,7 @@ export const addProductToCarrito = (payload) =>{
       }
 }
 
-export const deletProductFromCarrito = (payload)=>{
+export const deleteProductFromCarrito = (payload)=>{
       return{
             type:DELETE_PRODUCT_FROM_CARRITO,payload
       }

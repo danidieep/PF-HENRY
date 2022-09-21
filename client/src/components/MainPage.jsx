@@ -235,7 +235,7 @@ export default function MainPage(props) {
             </div>
 
         }
-
+        {/* PAGINADO */}
         <footer className={styles}>
           <div className={styles.paginado}>
 

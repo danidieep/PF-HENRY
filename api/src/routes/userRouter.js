@@ -3,10 +3,8 @@ const { User } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 var jwt = require("jsonwebtoken");
-
 const router = Router();
 const getUsers = require("../controllers/userController");
-const createUser = require("../controllers/userPostController");
 
 router.get("/", async (req, res) => {
   try {
@@ -32,9 +30,12 @@ router.post("/", async (req, res) => {
     if (role === true) {
       const tokenAdmin = jwt.sign(
         { name, lastname, email, password, dateBorn, role },
-        "admin_token"
+        "admin_token",
+        (err, token) => {
+          res.json({ token });
+        }
       );
-      res.status(200).send("Admin created succesfully");
+      // res.status(200).send("Admin created succesfully");
     } else res.status(200).send("User created succesfully");
   } catch (error) {
     res.status(400).send(error);

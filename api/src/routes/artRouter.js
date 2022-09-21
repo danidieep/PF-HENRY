@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const getArtworks = require("../controllers/artworkController");
 const createArtwork = require("../controllers/artworkPostController");
+const { Artwork } = require("../db");
 const router = Router();
 var jwt = require("jsonwebtoken");
 

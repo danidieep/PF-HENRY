@@ -1,9 +1,11 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import { deleteGame } from '../actions/index'
+import { putArtwork } from '../actions/index'
 import { useState, useEffect } from 'react'
 
 export default function PutArtwork(){
+
+  const dispatch = useDispatch()
 
   const [input, setInput] = useState({
     title:'',
@@ -21,22 +23,33 @@ export default function PutArtwork(){
       ...input,
       [e.target.name] : e.target.value
     })
-    //  setErrors(validate({
-    //   ...input,
-    //   [e.target.name] : e.target.value
-    //  }))
    }  
 
   
-    // setErrors(validate({
-    //   ...input,
-    //   platforms:[...input.platforms, e.target.value],
-    // }))
+    
+
+    function handleSubmit(e){
+      e.preventDefault()
+       dispatch(putArtwork(input))
+         alert('obra de arte actualizada')
+        
+         setInput({
+          title:'',
+          date:'',
+          collecting_institution:'',
+          image:'',
+          creator:'',
+          dimensions:'',
+          medio:'',
+          price:''
+      })
+      
+     }
    
  
     return(
         <div>
-          <form>
+          <form onSubmit={e => handleSubmit(e)} >
              {/* -------------------------   TITLE       */}
              <div>
                   <input  type='text' name="title" value={input.title} autoComplete="off" placeholder="Title..." onChange={e => {handleChange(e)}}/>

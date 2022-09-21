@@ -1,6 +1,6 @@
 
 
-import {NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+import {CHANGE_COUNT_PRODUCT_FROM_CARRITO,DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
 
 APPLY_FILTERS,
 ADD_FILTERS
@@ -13,7 +13,8 @@ const initialState = {
     artistsList:[],
     mediums: [],
     notFound :[],
-    filters:[]
+    filters:[],
+    carrito:[]
     
 }
 
@@ -131,7 +132,22 @@ switch (type) {
 
         }
     }
+
+    case ADD_PRODUCT_TO_CARRITO:{
+        return{
+            ...state,
+            carrito:[...state.carrito,payload]
+        }
+    }
+
+    case DELETE_PRODUCT_FROM_CARRITO:{
+        return{
+            ...state,
+            carrito:state.carrito.filter(element => element===payload)
+        }
+    }
     default:
         return state;
 }
 }
+

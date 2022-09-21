@@ -5,11 +5,13 @@ import { Link } from "react-router-dom"
 import styles from "./ModulesCss/LandingPage.module.css"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
+import GoToMyProfile from "./GoToMyProfile"
+
 
 
 
 export default function LandingPage(){
-
+ 
   
 
     return(
@@ -23,8 +25,8 @@ export default function LandingPage(){
           
              <LogIn />
              <LogOut />
-        
-        
+             <GoToMyProfile></GoToMyProfile>
+          
         <div className={styles.logoButton}>
           <div className={styles.logoLink}>
         <h1 className={styles.logo}>Artket</h1>

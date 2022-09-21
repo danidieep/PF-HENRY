@@ -1,7 +1,10 @@
-require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
+<<<<<<< HEAD
+=======
+require("dotenv").config();
+>>>>>>> 42f3b4d207c5b8692831ee8992a94123b531ed3f
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 let sequelize =
@@ -76,9 +79,6 @@ Artwork.belongsTo(User);
 
 User.hasMany(Favourite);
 Favourite.belongsTo(User);
-
-
-
 
 // Favourite.belongsToMany(Artwork,{ through: 'favourites'})
 // Artwork.belongsToMany(Favourite, { through: 'favourites'})

@@ -3,10 +3,18 @@ const { User } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 var jwt = require("jsonwebtoken");
-
+const router = Router();
 const getUsers = require("../controllers/userController");
 
-const router = Router();
+router.get("/", async (req, res) => {
+  try {
+    const getUser = await getUsers();
+    if (getUser.length === 0) res.send("Theres nobody");
+    else res.send(getUser);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role } = req.body;
@@ -19,13 +27,11 @@ router.post("/", async (req, res) => {
       dateBorn,
       role
     );
-    if (role === true) {
-      const tokenAdmin = jwt.sign(
-        { name, lastname, email, password, dateBorn, role },
-        "admin_token"
-      );
-      res.status(200).send("Admin created succesfully");
-    } else res.status(200).send("User created succesfully");
+    const tokenAdmin = jwt.sign(
+      { name, lastname, email, password, dateBorn, role },
+      "secret_token"
+    );
+    res.status(200).send(tokenAdmin);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -97,6 +103,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-
-
-  module.exports = router;
+module.exports = router;

@@ -5,6 +5,8 @@ import CardDetails from "./components/CardDetails"
 import Register from "./components/Register"
 import Profile from "./components/Profile"
 import ShopCart from "./components/ShopCart";
+import PutArtwork from "./components/PutArtwork"
+
 
 import "./App.css";
 
@@ -19,6 +21,7 @@ function App() {
         <Route path='/Register' component={Register}/>
         <Route path="/Profile" component={Profile}/>
         <Route path="/ShopCart" component={ShopCart}/>
+        <Route path='/PutArtwork/:id' component={PutArtwork}/>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 
 
-import {CHANGE_COUNT_PRODUCT_FROM_CARRITO,DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+import {
 
-    APPLY_FILTERS,
-    ADD_FILTERS
+DELETE_ARTWORKS, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+ADD_FILTERS
 } from "../actions/action-types"
 
 const initialState = {
@@ -36,6 +36,24 @@ export default function Reducer(state = initialState, { type, payload }) {
             }
 
         case GET_PRODUCT_BY_NAME: {
+    }
+    case 'PUT_ARTWORK':
+            return{
+                ...state
+            }    
+    case 'POST_USER':
+        return{
+            ...state
+    } 
+
+    case DELETE_ARTWORKS:
+       return {
+        ...state,
+        productsFiltered: state.allProducts.filter( e=> e.id !== payload )
+       } 
+        
+
+    case GET_PRODUCT_BY_NAME:{    
 
             return {
                 ...state,

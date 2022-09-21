@@ -1,47 +1,44 @@
-import {getProductByName} from "../actions/index"
-import { useDispatch} from "react-redux"
-import {Link} from "react-router-dom"
+import { getProductByName } from "../actions/index"
+import { useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
 import styles from "./ModulesCss/SearchBar.module.css"
 
 
 const state = {
-    product : ""
+    product: ""
 }
 
-export default function SearchBar(props){
+export default function SearchBar(props) {
 
     const dispatch = useDispatch()
 
- 
 
 
-    function subirAlState(event){
+
+    function subirAlState(event) {
         state.product = event.target.value.toLowerCase()
         console.log(state.product)
     }
 
-    function cons(event){
+    function cons(event) {
         event.preventDefault()
-        if(state.product.length>0){
-        props.handleReset()
-        dispatch(getProductByName(state.product)) 
-        document.getElementById("inputDeBusqueda").value=""
-      }
+        if (state.product.length > 0) {
+            props.handleReset()
+            dispatch(getProductByName(state.product))
+            document.getElementById("inputDeBusqueda").value = ""
+        }
     }
 
-    return(
-       
-          <div className={styles.searchBar}>
-           <form onSubmit={(event)=>{cons(event)}}>
-            
-            
-             <input   autoComplete="off" id="inputDeBusqueda" onChange={(event) => {subirAlState(event)}} className={styles.input}/>
-             <button className={styles.buttons} type="submit">Search</button>
+    return (
 
-          </form>
-          </div>    
-         
-       
+        <div id='wrap'>
+            <form className="search-bar" onSubmit={(event) => { cons(event) }}>
+                <input type='text' class="input-searched" placeholder="Search" autoComplete="off" id="inputSearch" onChange={(event) => { subirAlState(event) }} />
+                <input id="search_submit" value="Rechercher" type="submit" />
+            </form>
+        </div>
+
+
     )
 }
 

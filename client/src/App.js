@@ -17,7 +17,7 @@ function App() {
         <Route path="/MainPage" component={MainPage} />
         <Route path="/Products/:id" component={CardDetails}/>
         <Route path='/Register' component={Register}/>
-        <Route path='/PutArtwork' component={PutArtwork}/>
+        <Route path='/PutArtwork/:id' component={PutArtwork}/>
     </div>
   );
 }

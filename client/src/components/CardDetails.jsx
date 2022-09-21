@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 
 
 
+
 export default function CardDetails(props) {
 
   const { id } = useParams();
@@ -36,6 +37,8 @@ export default function CardDetails(props) {
             Return to main page
           </button>
         </Link>
+
+
 
       </div>
 

@@ -1,11 +1,11 @@
 import { useEffect } from "react"
 import {useSelector,useDispatch} from "react-redux"
 import React from "react"
-
+import { deleteArtwork, getProducts } from '../actions/index'
 import styles from "./ModulesCss/Cards.module.css"
 import { Link } from "react-router-dom"
 
-import { deleteArtwork, getProducts } from '../actions/index'
+
 
 
 
@@ -13,18 +13,19 @@ export default function Cards({data}){
 const state = useSelector(state=>state)
 const dispatch = useDispatch()
 
-
 function handleDelete(e){
   e.preventDefault()
   dispatch(deleteArtwork(e.target.name))
   dispatch(getProducts())
   
 }
+
      return(
       <div>
          <div>
           <button name={data.id} value={data.id} onClick={(e) => { handleDelete(e) }} >Eliminar</button>
-          <Link to = "/PutArtwork">
+
+          <Link to ={`/PutArtwork/${data.id}`} >
           <button>Modificar</button>
           </Link>
           

@@ -14,7 +14,7 @@ export function deleteArtwork(id){
 }
  export function putArtwork(payload) {
       return async function (dispatch){
-            let json = await axios.put('/artworks', payload)
+            let json = await axios.put('/artworks/' + payload.id, payload)
             return json
       }
  }

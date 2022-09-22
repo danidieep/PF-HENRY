@@ -190,7 +190,7 @@ export const addProductToCarrito = async (payload, token) => {
       }
     );
   } catch (error) {
-    console.log(error.message);
+    return error.message;
   }
 };
 
@@ -213,7 +213,7 @@ export const deleteProductFromCarrito = async (payload, token) => {
       }
     );
   } catch (error) {
-    console.log(error.message);
+    return error.message;
   }
 };
 

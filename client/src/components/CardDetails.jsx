@@ -27,17 +27,16 @@ export default function CardDetails(props) {
     dispatch(getProductById(id));
   }, []);
 
-  const addToCartOrDelete = () => {
+  const addToCartOrDelete = async () => {
     const token = getAccessTokenSilently();
     const ArtInCuesiton = state.carrito.filter(
       (element) => element === product[0].title
     );
     if (ArtInCuesiton.length) {
       deletProductFromCarrito({ artId: product[0].id, email }, token);
-      alert("artWork deleted from cart");
     } else {
-      addProductToCarrito({ artId: product[0].id, email }, token);
-      alert("artWork added to cart");
+      const add = await addProductToCarrito({ artId: product[0].id, email }, token);
+      alert(add);
     }
   };
 

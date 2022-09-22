@@ -6,10 +6,25 @@ import { useState } from "react"
 import styles from "./ModulesCss/MainPage.module.css"
 import { useSelector, useDispatch } from "react-redux"
 
+let ProductsPorPage = 6;
 
+export default function MainPage(props) {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
+  let CountOf = Math.ceil(state.productsFiltered.length / ProductsPorPage);
+  let arrCountOf = [];
+  arrCountOf = state.productsFiltered.slice(0, CountOf);
 
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(ProductsPorPage);
+  const [current, setCurrent] = useState(1);
 
+  React.useEffect(() => {
+    if (state.allProducts.length === 0) dispatch(getProducts());
+    if (state.artistsList.length === 0) dispatch(getArtists());
+    applyFilter();
+  }, [state.filters]);
 
 let ProductsPorPage = 6
 
@@ -97,6 +112,8 @@ export default function MainPage(props) {
     handleReset()
   }
 
+    handleReset();
+  };
 
   return (
     <div className={styles.container}>

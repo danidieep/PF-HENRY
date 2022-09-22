@@ -1,12 +1,14 @@
-const { Favourite } = require("../db");
+const { Favourite, Artworks, User } = require("../db");
 
-const getFavs = async () => {
-  try {
-    const getFavourites = await Favourite.findAll();
-    return getFavourites;
-  } catch (error) {
-    console.log(error.message);
-  }
+const getFavs = async (userId) => {
+  let favourites =await User.findOne({
+    where:{
+        id:userId
+    },
+    include:[{model:Favourite , include:Artworks}]
+});
+
+return favourites ? favourites.dataValues.Favorites:[]
 };
 
 module.exports = getFavs;

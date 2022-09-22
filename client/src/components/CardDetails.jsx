@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { deletProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
+import { deleteProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
 import React, { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import Loader from "./Loader"
@@ -23,21 +23,28 @@ export default function CardDetails(props) {
 
 
   useEffect(() => {
+   
     dispatch(cleanProductId())
     dispatch(getProductById(id))
     console.log(product[0]);
   }, [])
 
+  useEffect(()=>{
+  
+    localStorage.setItem("cart",JSON.stringify(state.carrito))
+  },[state.carrito])
 
-  const addToCartOrDelete = ()=>{
-    const ArtInCuesiton = state.carrito.filter(element=> element===product[0].title)
+  const addToCartOrDelete = async ()=>{
+    const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
     if(ArtInCuesiton.length){
-      deletProductFromCarrito({artId:product[0].id, email})
-      alert("artWork deleted from cart")
+      dispatch(deleteProductFromCarrito(product[0]))
+      // alert("artWork deleted from cart")
+      localStorage.setItem("cart",JSON.stringify(state.carrito))
     }
     else{
-      addProductToCarrito({artId:product[0].id, email})
-      alert("artWork added to cart")
+      dispatch(addProductToCarrito(product[0]))
+      // alert("artWork added to cart")
+     
     }
   }
 
@@ -98,7 +105,7 @@ export default function CardDetails(props) {
                     {/* <button onClick={()=>addCount("-")}>-</button> */}
 
 
-                    {!state.carrito.includes(product[0].title)?
+                    {!state.carrito.includes(product[0])?
                    ( <button className={styles.buttonAddCart}
                      onClick={addToCartOrDelete}>Add to cart</button>)
                    : <button className={styles.buttonAddCart}

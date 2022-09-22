@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux"
-import {deleteProductFromCarrito} from "../actions"
+import {deleteProductFromCarritoBoard} from "../actions"
 import {Link} from "react-router-dom"
 import { useEffect } from "react"
 
@@ -26,12 +26,11 @@ export default function ShopCart(){
             {state.carrito.map(element => {
                 return (
                     <div>
-                    <span>artWork: {element}</span>
+                    <span>artWork: {element.title}</span>
                     <button
-                    onClick={()=>dispatch(deleteProductFromCarrito(element))}
+                    onClick={()=>dispatch(deleteProductFromCarritoBoard(element))}
                     >X</button>
                
-                  
                     </div>
                 )
             })}

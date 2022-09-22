@@ -6,6 +6,7 @@ const getUserDB = async () => {
   const info = users.map((u) => {
     return {
       id: u.id,
+      cartId: u.cartId,
       name: u.name,
       lastname: u.lastname,
       email: u.email,

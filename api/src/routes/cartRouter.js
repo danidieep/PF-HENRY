@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const e = require("express");
 // const { User } = require("@auth0/auth0-react");
 const {
     getCart,
@@ -31,7 +32,6 @@ router.post('/:artworkId', async(req, res) =>{
         //     alert('esta obra ya esta en su carrito')
         // }else{
         await cart.addArtworkincarts(artworkInCart)
-        
         await updateCart(totalPrice, user.cartId)
         cart = await getCart(user.id)
         return res.json({cart})
@@ -40,6 +40,18 @@ router.post('/:artworkId', async(req, res) =>{
         console.log(err)
     }
 })
+
+// router.put('/artworkID', async(req, res) =>{
+//     const {idU} = req.body
+//     const{artworkId} = req.params
+//     try {
+//         let user = await User.findOne({where:{id:idU}})
+//         let cart= await getCart(user.cartId);
+//     } catch (error) {
+//         console.log(err)
+//     }
+// })
+
 
 router.get("/:userId", async (req, res) => {
     try {
@@ -59,7 +71,14 @@ router.get("/:userId", async (req, res) => {
     }
   });
 
-
+router.get('/', async (req, res)=>{
+    try {
+        let cart = await Cart.findAll()
+        res.send(cart)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 
 module.exports = router;

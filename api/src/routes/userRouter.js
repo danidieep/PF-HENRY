@@ -4,28 +4,19 @@ const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 var jwt = require("jsonwebtoken");
 const router = Router();
-const getUsers = require("../controllers/userController");
+const  getUserByID = require("../controllers/getUserByID");
 const {Cart} = require("../db");
 
-router.get("/", async (req, res) => {
-  try {
-    const getUser = await getUsers();
-    if (getUser.length === 0) res.send("Theres nobody");
-    else res.send(getUser);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-});
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role } = req.body;
   try {
-    // let verify = User.findOne({where:email})
-    // if(verify.length) res.send('ya hay un usuario con ese email')
+    let verify = User.findOne({where:email})
+    if(verify.length) res.send('ya hay un usuario con ese email')
     const userCartId = await Cart.create().then(
       ({dataValues}) => dataValues.id
     )
-    console.log(userCartId)
+    // console.log(userCartId)
     const user = await User.findOrCreate({
       where:{
       cartId: userCartId,
@@ -36,8 +27,7 @@ router.post("/", async (req, res) => {
       role
       }
     }
-      
-    )
+  )
     // const creado = await User.findOne({where:name})
     // console.log(creado)
     // const tokenAdmin = jwt.sign(
@@ -94,7 +84,7 @@ router.get("/", async (req, res) => {
 router.get('/:id', async (req, res) =>{
   try {
     const {id} = req.params
-    const userById = await User.findByPk(id)
+    const userById = await getUserByID(id)
     if(userById.length){
       res.send(userById)
     }

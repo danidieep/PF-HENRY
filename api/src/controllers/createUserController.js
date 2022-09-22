@@ -1,4 +1,3 @@
-const { Op } = require("sequelize");
 const { User } = require("../db")
 
 
@@ -8,6 +7,7 @@ const createUser = async (
          email,
          password,
          dateBorn,
+         role
   ) => {
     const userCreate = await User.create({
         name,
@@ -15,6 +15,7 @@ const createUser = async (
         email,
         password,
         dateBorn,
+        role
     });
 
 }

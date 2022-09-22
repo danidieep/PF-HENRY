@@ -1,23 +1,17 @@
-import { useDispatch, useSelector } from "react-redux"
-import { getProductById, cleanProductId } from "../actions/index"
-import React from "react"
-import { Link, useParams } from "react-router-dom"
-import Loader from "./Loader"
-import Message from "./Message"
-import styles from "./ModulesCss/CardsDetails.module.css"
-import { useEffect } from 'react'
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { getProductById, cleanProductId } from "../actions/index";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import Loader from "./Loader";
+import Message from "./Message";
+import styles from "./ModulesCss/CardsDetails.module.css";
+import { useEffect } from "react";
 
 export default function CardDetails(props) {
-
   const { id } = useParams();
 
-  const dispatch = useDispatch()
-  const product = useSelector((state) => state.productDetails)
-
-
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.productDetails);
 
   useEffect(() => {
     dispatch(cleanProductId())
@@ -76,8 +70,8 @@ export default function CardDetails(props) {
               </div>
             </div> : <div>{Loader}</div>
         }
-      </div>
 
+      </div>
     </div>
-  )
+  );
 }

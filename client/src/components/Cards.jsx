@@ -7,6 +7,11 @@ import { Link } from "react-router-dom"
 
 
 export default function Cards({ data }) {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+
+export default function Cards({ data }) {
      const state = useSelector(state => state)
      const dispatch = useDispatch()
 
@@ -31,3 +36,4 @@ export default function Cards({ data }) {
           </div>
      )
 }
+

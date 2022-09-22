@@ -1,20 +1,21 @@
-const { User } = require("../db")
+const { User } = require("../db");
 
 const getUserDB = async () => {
-  const users = await User.findAll()
-  
-  const info = users.map(u => {
+  const users = await User.findAll();
+
+  const info = users.map((u) => {
     return {
-        id: u.id,
-        name: u.name,
-        lastname: u.lastname,
-        email: u.email,
-        dateBorn: u.dateBorn,
-        password: u.password
+      id: u.id,
+      name: u.name,
+      lastname: u.lastname,
+      email: u.email,
+      dateBorn: u.dateBorn,
+      password: u.password,
+      role: u.role,
     }
-  })
+  });
 
-  return info
-}
+  return info;
+};
 
-module.exports = {getUserDB}
+module.exports = { getUserDB };

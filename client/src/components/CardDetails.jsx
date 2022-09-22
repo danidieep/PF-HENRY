@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { deletProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
+import { deletProductFromCarrito,addProductToCarrito,getProductById, cleanProductId, addCarrito } from "../actions/index"
 import React, { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import Loader from "./Loader"
@@ -20,8 +20,8 @@ export default function CardDetails(props) {
   const dispatch = useDispatch()
   const product = useSelector((state) => state.productDetails)
   const state = useSelector(state => state)
-  const [cantCompr, setCantCompr] = useState(0)
-
+ 
+ const [carrito, setCarrito] = useState({})
 
   useEffect(() => {
     dispatch(cleanProductId())
@@ -29,28 +29,12 @@ export default function CardDetails(props) {
     console.log(product[0]);
   }, [])
 
-
-  const addToCartOrDelete = ()=>{
-    const ArtInCuesiton = state.carrito.filter(element=> element===product[0].title)
-    if(ArtInCuesiton.length){
-      deletProductFromCarrito({artId:product[0].id, email})
-      alert("artWork deleted from cart")
-    }
-    else{
-      addProductToCarrito({artId:product[0].id, email})
-      alert("artWork added to cart")
-    }
-  }
-
-  // const addCount = (action) =>{
-  //  if(cantCompr>0){
-  //   if(action==="-")setCantCompr(cantCompr-1)
-  //   }
-  // if(cantCompr>=0){
-  //   if(action==="+")setCantCompr(cantCompr + 1) 
-  //   }
-  // }
+function handleClick(e){
+  e.preventDefault()
   
+  dispatch(addCarrito(product))
+}
+
 
 
   return (
@@ -95,24 +79,13 @@ export default function CardDetails(props) {
                   <h3 className={styles.detailsH3}> {product[0].medio}</h3>
                   <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
                   <h3 className={styles.detailsH3}>$ {product[0].price}</h3>
-                  <div className={styles.buttonAddCartPos}>
-                    {/* <button onClick={()=>addCount("-")}>-</button> */}
-
-
-                    {!state.carrito.includes(product[0].title)?
-                   ( <button className={styles.buttonAddCart}
-                     onClick={addToCartOrDelete}>Add to cart</button>)
-                   : <button className={styles.buttonAddCart}
-                   onClick={addToCartOrDelete}>Delete from cart</button>
                   
-                  }
-                    {/* <button onClick={()=>addCount("+")}>+</button> */}
-                    {/* <span>cantidad a comprar: {cantCompr}</span> */}
-                  </div>
                 </div>
                 <div className={styles.imgDetails}>
                   <img src={product[0].image ? product[0].image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="450px" height="400px" />
                 </div>
+
+                <div onClick={e => handleClick(e)}>Comprar</div>
 
               </div>
             </div> : <div>{Loader}</div>

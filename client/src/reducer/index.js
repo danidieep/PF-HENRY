@@ -21,6 +21,13 @@ const initialState = {
 
 export default function Reducer(state = initialState, { type, payload }) {
     switch (type) {
+
+        case 'POST_CARRITO': 
+        
+        return{
+            ...state,
+            carrito: [...state.carrito,payload]
+        }
         case GET_PRODUCTS: {
             return {
                 ...state,
@@ -35,16 +42,10 @@ export default function Reducer(state = initialState, { type, payload }) {
                 ...state
             }
 
-        case GET_PRODUCT_BY_NAME: {
-    }
     case 'PUT_ARTWORK':
             return{
                 ...state
             }    
-    case 'POST_USER':
-        return{
-            ...state
-    } 
 
     case DELETE_ARTWORKS:
        return {

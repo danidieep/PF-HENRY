@@ -4,7 +4,12 @@ import {DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_FILTER,NOT_FOU
 import {DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
 
 
-
+export function addCarrito(payload){
+      return {
+            type: 'POST_CARRITO',
+             payload
+      }
+}
 export function deleteArtwork(id){
       return async function (dispatch){
             let json = await axios.put('artworks/delete/' + id)

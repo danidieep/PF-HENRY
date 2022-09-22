@@ -39,7 +39,7 @@ function handleDelete(e){
              <img className={styles.img} src={data.image} alt="product_img" />
              <div className={styles.types_container}>
               <h3 className={styles.types}>{data.creator}</h3>
-              <h3 className={styles.types}>{`$${data.price}`}</h3>
+              <h3 className={styles.types}>{`${data.price}`}</h3>
               
             </div>
             </Link>

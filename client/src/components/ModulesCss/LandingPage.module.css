@@ -55,7 +55,8 @@
 
 }
 
-.login:hover {
+.login:hover,
+.login:focus {
     color: rgba(101, 53, 53, 1);
 }
 
@@ -74,7 +75,8 @@
     background-color: #DCB5B0;
 }
 
-.register:hover {
+.register:hover,
+.register:focus {
     color: rgba(101, 53, 53, 1);
 }
 
@@ -160,4 +162,10 @@
     font-size: 44px;
     line-height: 51px;
     color: #000000;
+}
+
+.pAboutUs {
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-size: 18px;
 }

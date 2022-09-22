@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useState } from "react"
 import Register from "./Register"
+import LogIn from "./LogIn"
 import styles from "./ModulesCss/LandingPage.module.css"
 
 
@@ -10,32 +11,65 @@ import styles from "./ModulesCss/LandingPage.module.css"
 export default function LandingPage() {
 
   const { loginWithRedirect } = useAuth0()
-  const [isShown, setIsShown] = useState()
+  const [isShownRegister, setIsShownRegister] = useState(false)
+  const [isShownLogIn, setIsShownLogIn] = useState(false)
+  const [isShownAbout, setIsShownAbout] = useState(false)
 
-  function handleClickRegister(e) {
-    setIsShown(current => !current)
+  function handleClickRegister() {
+    setIsShownLogIn(false)
+    setIsShownAbout(false)
+    setIsShownRegister(true)
+  }
+
+  function handleClickLogIn() {
+    setIsShownRegister(false)
+    setIsShownAbout(false)
+    setIsShownLogIn(true)
+  }
+
+  function handleClickAboutUs() {
+    setIsShownLogIn(false)
+    setIsShownRegister(false)
+    setIsShownAbout(true)
   }
 
   return (
     <div className={styles.container}>
 
-      <button className={styles.aboutus}>About us</button>
+      <button onClick={() => handleClickAboutUs()} className={styles.aboutus}>About us</button>
 
-      <button onClick={e => handleClickRegister(e)} className={styles.register}>Register</button>
+      <button onClick={() => handleClickRegister()} className={styles.register}>Register</button>
 
-      <button className={styles.login} onClick={() => loginWithRedirect()}>Log in</button>
 
+      {/* <button className={styles.login} onClick={() => loginWithRedirect()}>Log in</button> */}
+      <button className={styles.login} onClick={() => handleClickLogIn()}>Log in</button>
 
 
       <div className={styles.logoButton}>
         <div className={styles.logoLink}>
-          {/* CUANDO APRETO EL BOTON REGISTER ME MUESTRA PARA REGISTRARME */}
+          {/* CUANDO APRETO ALGUN BOTON REGISTER/LOGIN/ABOUTUS ME MUESTRA EL COMPONENTE */}
           {
-            isShown && <Register />
+            isShownRegister && <Register />
           }
-
           {
-            !isShown && (
+            isShownLogIn && <LogIn />
+
+          }
+          {
+            isShownAbout && (
+              <div>
+                <p className={styles.pAboutUs}>Artket is privately owned and operated with over 25 years experience in the fine art business, we've earned a valued reputation as knowledgeable reliable dealers in fine art. We understand the importance of purchasing fine art and want all of our customers to feel comfortable and confident with their purchase. "Quality customer service is our top priority. Whether you're a designer, collector, or just looking to fill that empty space we will assist you from beginning to end, and make your art purchase an enjoyable one".</p>
+                <Link to="/MainPage">
+                  <button className={styles.goToGalery}>
+                    Go to Galery
+                  </button>
+                </Link>
+              </div>
+
+            )
+          }
+          {
+            !isShownLogIn && !isShownRegister && !isShownAbout && (
               <div>
                 <h1 className={styles.logo}>Artket</h1>
                 <Link to="/MainPage">

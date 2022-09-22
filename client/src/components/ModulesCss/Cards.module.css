@@ -10,13 +10,27 @@
     transition: .3s;
     align-items: center;
     justify-content: center;
-}
-.card:hover{
-    transform: scale(1.1);
-}
-.img{
-    max-width: 30rem;
-    max-height: 45rem;
-   
+
 }
 
+.name,
+.types {
+    color: black;
+    margin: 7px auto;
+}
+
+
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.imageCard {
+    max-width: 30rem;
+    max-height: 45rem;
+}
+
+.imageCard:hover {
+    max-width: 30rem;
+    max-height: 45rem;
+}

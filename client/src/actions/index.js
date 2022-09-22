@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import {DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
-import {DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
+import {DELETE_USER,DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
+import {GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
 
 
 
@@ -187,4 +187,16 @@ export const deleteProductFromCarrito = (payload)=>{
       
 }
 
+export const getUser = (payload) =>{
+      return async function (dispatch) {
+            let json = await axios.get(`/users?email=${payload}`)
+            return dispatch({
+                  type: GET_USER,
+                  payload: json.data
+            })
+      }
+}
 
+export  function deleteUser (userId){
+    axios.delete(`user/${userId}`)
+}

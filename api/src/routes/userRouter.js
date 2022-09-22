@@ -1,45 +1,51 @@
 const { Router } = require("express");
-const { User } = require("../db")
+const { User, Cart } = require("../db")
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 
 const router = Router();
 
 router.post("/", async (req, res) => {
-     const { name, lastname ,email, password, dateBorn} = req.body
-    try {
-     
-    // const user = await Users.create({
-    //     name,
-    //     lastName,
-    //     email,
-    //     password,
-    //     dateBorn,
-    //   })
+  const { name, lastname, email, password, dateBorn, role } = req.body;
+  // let verify = User.findOne({where:email})
+  //   if(verify.length) return res.send('ya hay un usuario con ese email')
 
-      const user = await createUser(
-        name,
-        lastname,
-        email,
-        password,
-        dateBorn
-      
-      );
-
-      res.status(200).send('usuario creado con exito')
-    } catch (error) {
-      console.log(error);
+  try {
+    const userCartId = await Cart.create().then(
+      ({dataValues}) => dataValues.id
+    )
+    // console.log(userCartId)
+    const user = await User.findOrCreate({
+      where:{
+      cartId: userCartId,
+      name,
+      lastname,
+      email,
+      password,
+      role
+      }
     }
-  });
+  )
+    // const creado = await User.findOne({where:name})
+    // console.log(creado)
+    // const tokenAdmin = jwt.sign(
+    //   { name, lastname, email, password, dateBorn, role },
+    //   "secret_token"
+    // );
+    res.status(200).send(user);
+  } catch (error) {
+   console.log(error)
+  }
+});
 
   router.get("/", async (req, res) => {
     try {
 
-      const {name} = req.query
+      const {email} = req.query
       const users = await getUserDB()
 
-      if (name) {
-        const user = users.filter(e => e.name.toLowerCase()?.includes(name.toLowerCase()))
+      if (email) {
+        const user = users.filter(e => e.email.toLowerCase()?.includes(email.toLowerCase()))
 
         if(user){
            res.status(200).json(user)

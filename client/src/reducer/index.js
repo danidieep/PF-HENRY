@@ -2,7 +2,7 @@
 
 import {
 
-DELETE_ARTWORKS, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+DELETE_ARTWORKS,GET_USER, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
 ADD_FILTERS
 } from "../actions/action-types"
 
@@ -14,7 +14,8 @@ const initialState = {
     mediums: [],
     notFound :[],
     filters:[],
-    carrito:[]
+    carrito:[],
+    user:[]
     
 }
 
@@ -152,6 +153,12 @@ export default function Reducer(state = initialState, { type, payload }) {
             }
         }
     
+        case GET_USER:{
+            return{
+                ...state,
+                user:payload
+            }
+        }
 
         default:
             return state;

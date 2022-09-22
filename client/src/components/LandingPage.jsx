@@ -5,14 +5,22 @@ import { Link } from "react-router-dom"
 import styles from "./ModulesCss/LandingPage.module.css"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
-import GoToMyProfile from "./GoToMyProfile"
+
+import { useDispatch, useSelector } from "react-redux"
+import { getUser } from "../actions"
+import { useEffect } from "react"
+import { useAuth0 } from "@auth0/auth0-react"
 
 
 
 
 export default function LandingPage(){
  
+  const dispatch = useDispatch()
+  const state = useSelector(state => state)
+  const data = useAuth0()
   
+
 
     return(
         <div className={styles.container}>
@@ -21,11 +29,10 @@ export default function LandingPage(){
         {/* <Link to = "/Register">
              <button className={styles.register}>Register</button>
              </Link>      */}
-        
           
              <LogIn />
              <LogOut />
-             <GoToMyProfile></GoToMyProfile>
+    
           
         <div className={styles.logoButton}>
           <div className={styles.logoLink}>

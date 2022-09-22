@@ -10,8 +10,6 @@ import PutArtwork from "./components/PutArtwork"
 
 import "./App.css";
 
-
-
 function App() {
   return (
     <div className="App">

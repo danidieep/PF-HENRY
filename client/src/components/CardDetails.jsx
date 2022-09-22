@@ -13,7 +13,6 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 
 export default function CardDetails(props) {
-
   const { id } = useParams();
   const {email} = useAuth0()
 
@@ -118,7 +117,6 @@ export default function CardDetails(props) {
             </div> : <div>{Loader}</div>
         }
       </div>
-
     </div>
-  )
+  );
 }

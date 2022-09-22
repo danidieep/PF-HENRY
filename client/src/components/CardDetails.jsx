@@ -25,7 +25,6 @@ export default function CardDetails(props) {
   useEffect(() => {
     dispatch(cleanProductId())
     dispatch(getProductById(id))
-    console.log(product[0]);
   }, [])
 
 

@@ -1,103 +1,196 @@
-/* 
+.containerDetails {
+    background-color: #DCB5B0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    margin: auto;
+}
 
-.container{
-    
-    margin: 0px auto;
-  width: 90%;
-  background-color: white;
-  justify-content: center;
+#contenedorDetail {
+    padding-bottom: 10px;
+    width: 1220px;
+    background-color: rgba(12, 11, 11, 0.932);
+    border-radius: 15px;
+    margin: auto;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: auto;
+    margin-top: 80px;
+}
+
+.data {
+    display: flex;
+
+    width: 60%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.detailsH3,
+.detailsTittle {
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    text-align: left;
+    max-width: 400px;
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+.detailsTittle {
+    font-size: 24px;
+}
+
+.detailsH3 {
+    font-size: 18px;
+}
+
+.imgDetails {
+    margin-left: 65px;
+}
+
+.artist {
+    margin-top: 60px;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.buttonAddCart {
+    margin-top: 35px;
 }
 
 .header {
- background-color: rgb(255, 255, 255);
- padding: 0.5rem;
- border-bottom: solid 1px;
- border-color: #444;
- background-image: linear-gradient(to right,  rgb(195, 186, 231),  rgb(229, 226, 233),  rgb(201, 190, 235))
-}
-
-.button{
-    font-size: large;
-  
-    border-color: transparent;
-    background-color:transparent;
-    border :0;
-    outline: none;
-    border: 0;
-    font-family: 'Quicksand', cursive;  
-    font-weight: 600;
-    color:  rgb(109, 58, 217);
-     border-radius: 9999px;
-    padding: 0.5rem;
-    width: 13rem;
-    
-}
-
-.button:hover{
-    font-size: large;
-   
-    border-color: transparent;
-    background-color:  rgb(115, 89, 171);
-    border :0;
-    outline: none;
-    border: 0;
-    font-family: 'Quicksand', cursive;  
-    font-weight: 600;
-    color:  rgb(255, 255, 255);
-    border-radius:9999px;
-    padding:0.5rem;
-    transition: .4s;
-     width: 13rem;
-     cursor: pointer;
-     background-image: linear-gradient(to right,  rgb(115, 89, 171),  rgb(130, 108, 178),  rgb(115, 89, 171))
-}
-
-img{
-    width: 30rem;
-   
-}
-
-.body{
-    display: grid;
-   grid-template-columns: 40% 60%;
-   background-image: linear-gradient(to right,  rgb(195, 186, 231),  rgb(229, 226, 233),  rgb(201, 190, 235))
-}
-.stats{
+    background-color: rgb(255, 255, 255);
     display: flex;
-    flex-direction: column;
-    
-    margin: 3rem;
-    color:  rgb(87, 47, 174);
-    font-size: 1.5rem;
-    
+    border-radius: 5px;
+    height: 120px;
+    width: 100%;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
 }
 
-.stats span{
-  padding: 1rem;
- 
+.logo {
+    font-family: 'Euphoria Script', cursive;
+    text-decoration-color: rgba(101, 53, 53, 1);
+    color: black;
+    font-size: 100px;
+    font-weight: 100;
+    line-height: 51px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    /* background-color: #DCB5B0; */
 }
 
-.img_name{
-   display: grid;
-   padding: 3rem;
-    
-   
-}
-.img_name span{
-    color:  rgb(109, 58, 217);
-    font-size: 1.7rem;
+.btnHome {
+    grid-column: 1/3;
+    grid-row: 1;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
     font-weight: 600;
-  
-  
+    font-size: 24px;
+    line-height: 24px;
+    height: 30px;
+    border-width: 0px;
+    cursor: pointer;
+    float: left;
+    color: #000000;
+    margin-left: 80px;
+    margin-top: 40px;
+    color: black;
+    background-color: rgb(255, 255, 255);
 }
 
-.footer{
- background-color: rgb(65, 48, 116);
-   color: white;
+.btnHome:hover {
+    color: rgb(138, 54, 54);
+
+}
+
+.btnCarrito {
+    float: right;
+    grid-column: 3/3;
+    grid-row: 1;
+    height: 30px;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    border-width: 0px;
+    margin-right: 80px;
+    cursor: pointer;
+    color: #000000;
+    margin-top: 40px;
+    color: black;
+    background-color: rgb(255, 255, 255);
 }
 
 
-.Loader{
-    padding: 1rem;
-    background-image: linear-gradient(to right,  rgb(195, 186, 231),  rgb(229, 226, 233),  rgb(201, 190, 235))
-} */
+.btnUser {
+    float: right;
+    grid-column: 3/3;
+    grid-row: 1;
+    height: 30px;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    border-width: 0px;
+    margin-right: 80px;
+    cursor: pointer;
+    color: #000000;
+    margin-top: 40px;
+    color: black;
+    background-color: rgb(255, 255, 255);
+
+}
+
+
+.buttonAddCart {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 600;
+    font-weight: 500;
+    height: 50px;
+    width: 120px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+}
+
+.buttonAddCart:hover {
+    background-color: rgb(138, 54, 54);
+    color: white;
+}
+
+.buttonAddCartPos {
+    margin-top: 40px;
+}

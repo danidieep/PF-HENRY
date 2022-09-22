@@ -272,4 +272,3 @@ export default function MainPage(props) {
     </div>
   )
 }
-

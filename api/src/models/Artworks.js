@@ -45,6 +45,15 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      show:{
+        type: DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: true,
+      },
+      createdinDB: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     },
     { timestamps: false, createdAt: false, updatedAt: false }
   );

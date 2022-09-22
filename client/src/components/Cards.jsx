@@ -5,9 +5,6 @@ import { deleteArtwork, getProducts } from '../actions/index'
 import styles from "./ModulesCss/Cards.module.css"
 import { Link } from "react-router-dom"
 
-export default function Cards({ data }) {
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
 
 
 
@@ -20,7 +17,7 @@ function handleDelete(e){
   e.preventDefault()
   dispatch(deleteArtwork(e.target.name))
   dispatch(getProducts())
-  
+
 }
 
      return(
@@ -31,11 +28,11 @@ function handleDelete(e){
           <Link to ={`/PutArtwork/${data.id}`} >
           <button>Modificar</button>
           </Link>
-          
+
 
         </div>
-              
-           
+
+
            <div className={styles.card}>
              <Link to={`/Products/${data.id}`}>
              <h3 className={styles.name} >{data.title}</h3>
@@ -43,11 +40,11 @@ function handleDelete(e){
              <div className={styles.types_container}>
               <h3 className={styles.types}>{data.creator}</h3>
               <h3 className={styles.types}>{`$${data.price}`}</h3>
-              
+
             </div>
             </Link>
            </div>
-         
+
       </div>
        )
        }

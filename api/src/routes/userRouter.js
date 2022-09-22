@@ -21,7 +21,9 @@ router.post("/", async (req, res) => {
           name: headers.user.given_name,
           lastname: headers.user.family_name,
           email: headers.user.email,
+          idAuth: headers.user.sub,
         });
+        console.log(arr);
         User.bulkCreate(arr);
         res.status(200).send("User created succesfully");
       } else {

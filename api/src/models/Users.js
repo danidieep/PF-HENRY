@@ -13,11 +13,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-        cartId: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          allowNull: false,
-        },
+      cartId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,6 +35,9 @@ module.exports = (sequelize) => {
       },
       dateBorn: {
         type: DataTypes.DATEONLY,
+      },
+      idAuth: {
+        type: DataTypes.STRING,
       },
       role: {
         type: DataTypes.BOOLEAN,

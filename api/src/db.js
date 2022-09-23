@@ -65,7 +65,6 @@ const { Artwork, Artist, User, Favourite, Cart, Artworkincart } = sequelize.mode
 // console.log(sequelize.models)
 // Aca vendrian las relaciones
 
-
 Cart.hasMany(Artworkincart);
 Artworkincart.belongsTo(Cart);
 

@@ -15,13 +15,12 @@ import { useMemo } from "react"
 
 export default function CardDetails(props) {
   const { id } = useParams();
-  const {email} = useAuth0()
+  const { email, getAccessTokenSilently } = useAuth0();
 
-  const dispatch = useDispatch()
-  const product = useSelector((state) => state.productDetails)
-  const state = useSelector(state => state)
-  const [cantCompr, setCantCompr] = useState(0)
-
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.productDetails);
+  const state = useSelector((state) => state);
+  const [cantCompr, setCantCompr] = useState(0);
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem("cart"))===null){localStorage.setItem("cart", JSON.stringify([]))}
@@ -52,17 +51,13 @@ export default function CardDetails(props) {
   //   if(action==="-")setCantCompr(cantCompr-1)
   //   }
   // if(cantCompr>=0){
-  //   if(action==="+")setCantCompr(cantCompr + 1) 
+  //   if(action==="+")setCantCompr(cantCompr + 1)
   //   }
   // }
-  
-
 
   return (
-
-    <div className={styles.containerDetails} key={id} >
-
-      <header >
+    <div className={styles.containerDetails} key={id}>
+      <header>
         {/* <div className={styles.content2}> */}
         <div className={styles.header}>
           <div>
@@ -79,13 +74,15 @@ export default function CardDetails(props) {
           </div>
           <div></div>
           <div>
-            
-            <button className={styles.btnUser}><img src="https://i.imgur.com/LtoCkNW.png" alt="" /></button>
+            <button className={styles.btnUser}>
+              <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
+            </button>
             <Link to="/ShopCart">
-            <button className={styles.btnCarrito}><img src="https://i.imgur.com/WsQE0Cn.png" alt="" /></button>
+              <button className={styles.btnCarrito}>
+                <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+              </button>
             </Link>
           </div>
-
         </div>
       </header>
       <div id='conteinerDetail'>

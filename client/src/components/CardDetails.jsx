@@ -7,6 +7,7 @@ import Message from "./Message"
 import styles from "./ModulesCss/CardsDetails.module.css"
 import { useEffect } from 'react'
 import { useAuth0 } from "@auth0/auth0-react"
+import { useMemo } from "react"
 
 
 
@@ -29,17 +30,14 @@ export default function CardDetails(props) {
     console.log(product[0]);
   }, [])
 
-  useEffect(()=>{
-  
-    localStorage.setItem("cart",JSON.stringify(state.carrito))
-  },[state.carrito])
+ 
 
   const addToCartOrDelete = async ()=>{
     const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
     if(ArtInCuesiton.length){
       dispatch(deleteProductFromCarrito(product[0]))
       // alert("artWork deleted from cart")
-      localStorage.setItem("cart",JSON.stringify(state.carrito))
+     
     }
     else{
       dispatch(addProductToCarrito(product[0]))
@@ -47,6 +45,17 @@ export default function CardDetails(props) {
      
     }
   }
+  useMemo(()=>{
+
+      if(state.carrito.length){
+        localStorage.setItem("cart",JSON.stringify(state.carrito))
+      }
+      if(state.carrito.length===0){
+        if( JSON.parse(localStorage.getItem("cart")===null)){ localStorage.setItem("cart",JSON.stringify([]))}
+        if( JSON.parse(localStorage.getItem("cart")!==null)){ state.carrito = JSON.parse(localStorage.getItem("cart")) }
+      }
+
+  },[addToCartOrDelete])
 
   // const addCount = (action) =>{
   //  if(cantCompr>0){

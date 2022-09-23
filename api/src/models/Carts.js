@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
     },
     totalPrice: {
         type: DataTypes.STRING,
-        defaultValue:0,
+        defaultValue:1,
         // allowNull: false
     }
   }, { timestamps: false });

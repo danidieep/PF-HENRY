@@ -5,6 +5,8 @@ import styles from "./ModulesCss/LogIn.module.css"
 
 export default function LogIn() {
    const { loginWithRedirect, isAuthenticated } = useAuth0();
+
+   
   
     return(
       

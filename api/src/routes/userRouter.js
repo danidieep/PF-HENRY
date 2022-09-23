@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
       const userDb = await User.findOne({
         where: { email: headers.user.email },
       });
+      ////////////////////////////////////////
       if (!userDb) {
         let arr = [];
         arr.push({

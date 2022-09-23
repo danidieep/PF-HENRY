@@ -9,18 +9,25 @@ router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
   try {
     if (!headers) {
-      createUser(name, lastname, email, password, dateBorn, role);
+      const userCartId = await Cart.create().then(
+              ({ dataValues }) => dataValues.id
+            );
+      createUser(name, lastname, email, password, dateBorn, role, userCartId);
       res.status(200).send("User created succesfully");
     } else {
       const userDb = await User.findOne({
         where: { email: headers.user.email },
       });
       if (!userDb) {
+        const userCartId = await Cart.create().then( 
+          ({ dataValues }) => dataValues.id
+        );
         let arr = [];
         arr.push({
           name: headers.user.given_name,
           lastname: headers.user.family_name,
           email: headers.user.email,
+          cartId: userCartId,
           idAuth: headers.user.sub,
         });
         console.log(arr);
@@ -35,7 +42,7 @@ router.post("/", async (req, res) => {
     //   "secret_token"
     // );
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 });
 // const creado = await User.findOne({where:name})

@@ -64,6 +64,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Artwork, Artist, User, Favourite, Cart, Artworkincart } = sequelize.models;
 // console.log(sequelize.models)
 // Aca vendrian las relaciones
+// console.log(sequelize.models)
 
 Cart.hasMany(Artworkincart);
 Artworkincart.belongsTo(Cart);

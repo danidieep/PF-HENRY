@@ -13,6 +13,7 @@ return (
      <h1>My profile</h1>
      <h2>hello {user.name}</h2>
      <img src={user.picture}></img>
+     <h3>{user.email}</h3>
     </div>
 )
 }

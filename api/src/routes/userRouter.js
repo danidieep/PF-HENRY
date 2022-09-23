@@ -2,44 +2,53 @@ const { Router } = require("express");
 const { User, Cart } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
-var jwt = require("jsonwebtoken");
 const router = Router();
-const  getUserByID = require("../controllers/getUserByID");
-// const {Cart} = require("../db");
-
+const getUserByID = require("../controllers/getUserByID");
 
 router.post("/", async (req, res) => {
-  const { name, lastname, email, password, dateBorn, role } = req.body;
+  const { name, lastname, email, password, dateBorn, role, headers } = req.body;
   try {
-    // let verify = User.findOne({where:email})
-    // if(verify.length) res.send('ya hay un usuario con ese email')
-    const userCartId = await Cart.create().then(
-      ({dataValues}) => dataValues.id
-    )
-    // console.log(userCartId)
-    const user = await User.findOrCreate({
-      where:{
-      email,  
-      cartId: userCartId,
-      name,
-      lastname,
-      password,
-      role
+    if (!headers) {
+      createUser(name, lastname, email, password, dateBorn, role);
+      res.status(200).send("User created succesfully");
+    } else {
+      const userDb = await User.findOne({
+        where: { email: headers.user.email },
+      });
+      if (!userDb) {
+        let arr = [];
+        arr.push({
+          name: headers.user.given_name,
+          lastname: headers.user.family_name,
+          email: headers.user.email,
+          idAuth: headers.user.sub,
+        });
+        console.log(arr);
+        User.bulkCreate(arr);
+        res.status(200).send("User created succesfully");
+      } else {
+        res.status(400).send("User allready exists");
       }
     }
-  )
-  console.log(user);
-    // const creado = await User.findOne({where:name})
-    // console.log(creado)
     // const tokenAdmin = jwt.sign(
     //   { name, lastname, email, password, dateBorn, role },
     //   "secret_token"
     // );
-    res.status(200).send(user);
   } catch (error) {
-      res.status(400).send(error)
+    console.log(error.message);
   }
 });
+// const creado = await User.findOne({where:name})
+// console.log(creado)
+// const tokenAdmin = jwt.sign(
+//   { name, lastname, email, password, dateBorn, role },
+//   "secret_token"
+// );
+//     res.status(200).send(user);
+//   } catch (error) {
+//     res.status(400).send(error.message);
+//   }
+// });
 
 // const ensureToken = (req, res, next) => {
 //   const { authorization } = req.headers;
@@ -81,19 +90,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-router.get('/:id', async (req, res) =>{
+router.get("/:id", async (req, res) => {
   try {
-    const {id} = req.params
-    const userById = await getUserByID(id)
-    if(userById.length){
-      res.send(userById)
+    const { id } = req.params;
+    const userById = await getUserByID(id);
+    if (userById.length) {
+      res.send(userById);
     }
-    res.send('no se ha encontrado un usuario con ese id')
+    res.send("no se ha encontrado un usuario con ese id");
   } catch (error) {
     res.status(404).send(error);
   }
-})
+});
 
 router.delete("/:id", async (req, res) => {
   try {

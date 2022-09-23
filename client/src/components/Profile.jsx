@@ -19,14 +19,13 @@ export default function Profile(){
 
 
     useEffect(()=>{
-        if(!state.user.length&&data.isAuthenticated)dispatch(getUser(data.user.email))
+        dispatch(getUser(data.user.email))
       })
   
 
       const delete_User = ()=>{
         deleteUser(userlocal.id)
         data.logout()
-        window.location.href("www.google.com")
       }
 
 

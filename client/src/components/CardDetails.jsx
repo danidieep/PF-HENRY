@@ -24,38 +24,28 @@ export default function CardDetails(props) {
 
 
   useEffect(() => {
-   
+    if(JSON.parse(localStorage.getItem("cart"))===null){localStorage.setItem("cart", JSON.stringify([]))}
     dispatch(cleanProductId())
     dispatch(getProductById(id))
     console.log(product[0]);
   }, [])
 
- 
+  
 
   const addToCartOrDelete = async ()=>{
-    const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
+   const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
     if(ArtInCuesiton.length){
-      dispatch(deleteProductFromCarrito(product[0]))
-      // alert("artWork deleted from cart")
-     
+     dispatch(deleteProductFromCarrito(product[0].id))
+      alert("artWork deleted from cart")
+      console.log(JSON.parse(localStorage.getItem("cart")))
     }
     else{
-      dispatch(addProductToCarrito(product[0]))
-      // alert("artWork added to cart")
-     
+      dispatch( addProductToCarrito(product[0].id))
+      alert("artWork added to cart")
     }
   }
-  useMemo(()=>{
 
-      if(state.carrito.length){
-        localStorage.setItem("cart",JSON.stringify(state.carrito))
-      }
-      if(state.carrito.length===0){
-        if( JSON.parse(localStorage.getItem("cart")===null)){ localStorage.setItem("cart",JSON.stringify([]))}
-        if( JSON.parse(localStorage.getItem("cart")!==null)){ state.carrito = JSON.parse(localStorage.getItem("cart")) }
-      }
 
-  },[addToCartOrDelete])
 
   // const addCount = (action) =>{
   //  if(cantCompr>0){
@@ -80,6 +70,7 @@ export default function CardDetails(props) {
               <button className={styles.btnHome}>
                 Home
               </button>
+             
             </Link>
           </div>
           <div></div>
@@ -97,7 +88,6 @@ export default function CardDetails(props) {
 
         </div>
       </header>
-
       <div id='conteinerDetail'>
         {
           product.length > 0 ?
@@ -114,7 +104,7 @@ export default function CardDetails(props) {
                     {/* <button onClick={()=>addCount("-")}>-</button> */}
 
 
-                    {!state.carrito.includes(product[0])?
+                    {true?
                    ( <button className={styles.buttonAddCart}
                      onClick={addToCartOrDelete}>Add to cart</button>)
                    : <button className={styles.buttonAddCart}

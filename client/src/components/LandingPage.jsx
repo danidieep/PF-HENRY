@@ -21,21 +21,11 @@ export default function LandingPage(){
   
 
 
-  const local = ()=>{
-    localStorage.setItem("pija",["ada"])
-  }
-  const locala = ()=>{
-    localStorage.setItem("pija",JSON.stringify({"ada":"ada"}))
-  }
 
-  const a = localStorage.getItem("pija")
-  console.log(a.split(","))
+  
     return(
         <div className={styles.container}>
 
-          <button onClick={local}>dads</button>
-          <button onClick={locala}>dads</button>
-          <h1>{localStorage.getItem("pija")}</h1>
         <button className={styles.aboutus}>About us</button>
         {/* <Link to = "/Register">
              <button className={styles.register}>Register</button>

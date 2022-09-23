@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { deletProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
+import { deleteProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
 import React, { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import Loader from "./Loader"
@@ -7,50 +7,59 @@ import Message from "./Message"
 import styles from "./ModulesCss/CardsDetails.module.css"
 import { useEffect } from 'react'
 import { useAuth0 } from "@auth0/auth0-react"
+import { useMemo } from "react"
 
 
 
 
 
 export default function CardDetails(props) {
-
   const { id } = useParams();
   const {email} = useAuth0()
 
   const dispatch = useDispatch()
   const product = useSelector((state) => state.productDetails)
   const state = useSelector(state => state)
-  const [cantCompr, setCantCompr] = useState(0)
-
+ 
+ 
 
   useEffect(() => {
+   
     dispatch(cleanProductId())
     dispatch(getProductById(id))
-    console.log(product[0]);
+    
   }, [])
 
+ 
 
-  const addToCartOrDelete = ()=>{
-    const ArtInCuesiton = state.carrito.filter(element=> element===product[0].title)
+  const addToCartOrDelete = async ()=>{
+    const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
+    
     if(ArtInCuesiton.length){
-      deletProductFromCarrito({artId:product[0].id, email})
-      alert("artWork deleted from cart")
+   
+      localStorage.removeItem("cart",JSON.stringify(state.carrito))
+      dispatch(deleteProductFromCarrito(product[0]))
+      
     }
     else{
-      addProductToCarrito({artId:product[0].id, email})
-      alert("artWork added to cart")
+      dispatch(addProductToCarrito(product[0]))
+      localStorage.setItem("cart",JSON.stringify(state.carrito))
+     
     }
   }
+  useMemo(()=>{
 
-  // const addCount = (action) =>{
-  //  if(cantCompr>0){
-  //   if(action==="-")setCantCompr(cantCompr-1)
-  //   }
-  // if(cantCompr>=0){
-  //   if(action==="+")setCantCompr(cantCompr + 1) 
-  //   }
-  // }
-  
+      if(state.carrito.length){
+        localStorage.setItem("cart",JSON.stringify(state.carrito))
+      }
+      if(state.carrito.length===0){
+        if( JSON.parse(localStorage.getItem("cart")===null)){ localStorage.setItem("cart",JSON.stringify([]))}
+        if( JSON.parse(localStorage.getItem("cart")!==null)){ state.carrito = JSON.parse(localStorage.getItem("cart")) }
+        
+      }
+
+  },[state.carrito])
+
 
 
   return (
@@ -99,7 +108,7 @@ export default function CardDetails(props) {
                     {/* <button onClick={()=>addCount("-")}>-</button> */}
 
 
-                    {!state.carrito.includes(product[0].title)?
+                    {!state.carrito.includes(product[0])?
                    ( <button className={styles.buttonAddCart}
                      onClick={addToCartOrDelete}>Add to cart</button>)
                    : <button className={styles.buttonAddCart}
@@ -114,11 +123,12 @@ export default function CardDetails(props) {
                   <img src={product[0].image ? product[0].image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="450px" height="400px" />
                 </div>
 
+                
+
               </div>
             </div> : <div>{Loader}</div>
         }
       </div>
-
     </div>
-  )
+  );
 }

@@ -17,7 +17,7 @@ export default function SearchBar(props) {
 
     function subirAlState(event) {
         state.product = event.target.value.toLowerCase()
-        console.log(state.product)
+        
     }
 
     function cons(event) {
@@ -25,7 +25,7 @@ export default function SearchBar(props) {
         if (state.product.length > 0) {
             props.handleReset()
             dispatch(getProductByName(state.product))
-            document.getElementById("inputDeBusqueda").value = ""
+            // document.getElementById("inputDeBusqueda").value = ""
         }
     }
 
@@ -41,9 +41,3 @@ export default function SearchBar(props) {
 
     )
 }
-
-
-
-
-
-

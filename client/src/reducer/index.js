@@ -2,8 +2,9 @@
 
 import {
 
-DELETE_ARTWORKS, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
-ADD_FILTERS
+DELETE_ARTWORKS,GET_USER, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+ADD_FILTERS,
+DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD
 } from "../actions/action-types"
 
 const initialState = {
@@ -14,13 +15,22 @@ const initialState = {
     mediums: [],
     notFound :[],
     filters:[],
-    carrito:[]
+    carrito:[],
+    user:[],
+
     
 }
 
 
 export default function Reducer(state = initialState, { type, payload }) {
     switch (type) {
+
+        case 'POST_CARRITO': 
+        
+        return{
+            ...state,
+            carrito: [...state.carrito,payload]
+        }
         case GET_PRODUCTS: {
             return {
                 ...state,
@@ -35,16 +45,10 @@ export default function Reducer(state = initialState, { type, payload }) {
                 ...state
             }
 
-        case GET_PRODUCT_BY_NAME: {
-    }
     case 'PUT_ARTWORK':
             return{
                 ...state
             }    
-    case 'POST_USER':
-        return{
-            ...state
-    } 
 
     case DELETE_ARTWORKS:
        return {
@@ -152,11 +156,36 @@ export default function Reducer(state = initialState, { type, payload }) {
             }
         }
     
+        case GET_USER:{
+            return{
+                ...state,
+                user:payload
+            }
+        }
+        case ADD_PRODUCT_TO_CARRITO:{
 
+            return{
+                ...state,
+                carrito:[...state.carrito,payload]
+            }
+        }
+        case DELETE_PRODUCT_FROM_CARRITO:{
+            return{
+                ...state,
+                carrito:state.carrito.filter(element => element.title !== payload.title)
+            }
+        }
+        case   DELETE_PRODUCT_FROM_CARRITO_BOARD:{
+            return{
+                ...state,
+                carrito:state.carrito.filter(element => element.title !== payload.title)
+            }
+        }
+        
         default:
             return state;
     }
-    }
+}
 
 
 

@@ -1,10 +1,16 @@
 import React from "react"
+import { useEffect } from "react"
 import { filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
+import { Link } from "react-router-dom"
+import Message from "./Message"
+import Loader from "./Loader"
 import styles from "./ModulesCss/MainPage.module.css"
 import { useSelector, useDispatch } from "react-redux"
+import LogIn from "./LogIn"
+import LogOut from "./LogOut"
 
 
 
@@ -122,9 +128,9 @@ export default function MainPage(props) {
             <div className={styles.SearchBarHome}>
               <SearchBar handleReset={handleReset} ></SearchBar>
             </div>
-            <button className={styles.buttonProfile}>Log in</button>
             <div>
-              <button className={styles.buttonProfile}>Register</button>
+             <LogIn></LogIn>
+             <LogOut></LogOut>
             </div>
 
           </div>
@@ -268,5 +274,3 @@ export default function MainPage(props) {
     </div>
   )
 }
-
-

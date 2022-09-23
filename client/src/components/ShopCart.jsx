@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux"
-import {deleteProductFromCarrito} from "../actions"
+import {deleteProductFromCarritoBoard} from "../actions"
 import {Link} from "react-router-dom"
 import { useEffect } from "react"
 
@@ -23,15 +23,23 @@ export default function ShopCart(){
     return(
         <div>
              <Link to="/MainPage"><button>Back</button></Link> 
+             <h1>Cashito de compras</h1>
             {state.carrito.map(element => {
+                
                 return (
                     <div>
-                    <span>artWork: {element}</span>
+
                     <button
-                    onClick={()=>dispatch(deleteProductFromCarrito(element))}
+                    onClick={()=>dispatch(deleteProductFromCarritoBoard(element))}
                     >X</button>
+
+                     <span>artWork: {element.title}</span>
+
+                    <img src={element.image ? element.image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="450px" height="400px" />
+                   
+                    <h3>{element.price}</h3>
+                    <br/>
                
-                  
                     </div>
                 )
             })}

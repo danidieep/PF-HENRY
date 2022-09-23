@@ -1,10 +1,15 @@
 import axios from 'axios'
 
-import {DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
-import {DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
+import {DELETE_USER,DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
+import {DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
 
 
-
+export function addCarrito(payload){
+      return {
+            type: 'POST_CARRITO',
+             payload
+      }
+}
 export function deleteArtwork(id){
       return async function (dispatch){
             let json = await axios.put('artworks/delete/' + id)
@@ -147,11 +152,6 @@ export const addFilterMedium = (payload) => {
 
 
 
-export const deletProductFromCarrito = (payload)=>{
-      return{
-            type:DELETE_PRODUCT_FROM_CARRITO,payload
-      }
-}
 
 export const AddFilters = (payload)=>{
       return{
@@ -161,30 +161,34 @@ export const AddFilters = (payload)=>{
 
 
 export const addProductToCarrito = (payload) =>{
-
-            fetch(`/cart/${payload.artId}`,{
-                  method: "POST",
-                  headers:{"Accept": "application/json",
-                 "Content-Type":"application/json"},            
-               body:JSON.stringify(payload.email)
-                  }
-              )
-      
-      
+      return{
+            type:ADD_PRODUCT_TO_CARRITO,payload
+      }
 }
-
 
 export const deleteProductFromCarrito = (payload)=>{
+      return{
+            type:DELETE_PRODUCT_FROM_CARRITO,payload
+      }
+}
 
-            fetch(`/cart/${payload.artId}`,{
-                  method: "POST",
-                  headers:{"Accept": "application/json",
-                 "Content-Type":"application/json"},            
-               body:JSON.stringify(payload.email)
-                  }
-              )
-      
-      
+export const getUser = (payload) =>{
+      return async function (dispatch) {
+            let json = await axios.get(`/users?email=${payload}`)
+            return dispatch({
+                  type: GET_USER,
+                  payload: json.data
+            })
+      }
+}
+
+export  function deleteUser (userId){
+    axios.delete(`user/${userId}`)
 }
 
 
+export const deleteProductFromCarritoBoard = (payload)=>{
+      return{
+            type:DELETE_PRODUCT_FROM_CARRITO_BOARD,payload
+      }
+}

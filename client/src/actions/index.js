@@ -218,6 +218,7 @@ export const LogLocal = (payload) => {
     });
   };
 };
+
 export const vaciarUser = () => {
   return {
     type: VACIAR_USER,

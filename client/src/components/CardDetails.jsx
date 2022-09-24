@@ -35,8 +35,10 @@ export default function CardDetails(props) {
     );
     if (ArtInCuesiton.length) {
       deleteProductFromCarrito({ artId: product[0].id, email }, token);
+      alert("Deleted from cart");
     } else {
       addProductToCarrito({ artId: product[0].id, email }, token);
+      alert("Added to cart");
     }
   };
 

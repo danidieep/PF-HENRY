@@ -9,7 +9,7 @@ import PutArtwork from "./components/PutArtwork";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, sendUserInfo } from "./actions";
+import { getUser, sendUserInfo, setUser } from "./actions";
 import { useEffect } from "react";
 import LoginLocal from "./components/Loginlocal";
 
@@ -19,11 +19,8 @@ function App() {
   const { isAuthenticated, user } = useAuth0();
 
   //creamos en el local storege un array vacío
-
+  !localStorage.getItem("user")?localStorage.setItem("user", JSON.stringify([])):console.log("va")
   //si esta autenticado sse subo los datos de auth0 al local storage, caso contrario se convertira en un array vacío
-  isAuthenticated
-    ? localStorage.setItem("user", JSON.stringify(user))
-    : localStorage.setItem("user", JSON.stringify([]));
 
   const userData = isAuthenticated
     ? {
@@ -42,13 +39,17 @@ function App() {
         password: "123",
       };
 
+     
+
   //si no esta autenticado userData sera igual a los datos del localStorage subidos anteriormente
   //tuve que hacer esto porque si recargas la pagina los datos de auth0 tardan en cargar
   //y al haber cargado una sola vez ya estan en localstorage
 
-  // useEffect(() => {
-  //   if (isAuthenticated) dispatch(sendUserInfo(userData));
-  // }, [user]);
+ useEffect(() => {
+     if (isAuthenticated)dispatch(getUser(userData));
+   }, [user]);
+
+  
 
   //si esta autenticado se despachara la accion getUser con la data de arriba
   //prestara atencion a los cambios de estados de user

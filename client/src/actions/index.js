@@ -199,9 +199,13 @@ export function deleteUser(userId) {
   axios.delete(`users/${userId}`);
 }
 
-export const getProductsFromCarritoDB = (userId) => {
+export const getProductsFromCarritoDB = (payload) => {
   return async function (dispatch) {
-    let json = await axios.get("/cart/" + userId);
+    let json = await axios.get("/cart", {
+      headers: {
+        payload: payload,
+      },
+    });
     return dispatch({
       type: GET_PRODUCTS_FROM_CARRITODB,
       payload: json.data,

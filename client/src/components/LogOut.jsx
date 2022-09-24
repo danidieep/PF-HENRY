@@ -20,16 +20,23 @@ export default function LogOut() {
   const logInUser = async () => {
     await loginWithRedirect();
   };
-
+ 
   useEffect(() => {
     try {
       if (user.length !== 0) {
+      
         sendUserInfo(user);
       }
     } catch (error) {
       console.log(error.message);
     }
   });
+
+  function myFriend () {
+    logout()
+    localStorage.setItem("user", JSON.stringify([]));
+    state.user = []
+  }
 
   return (
     <div>
@@ -44,13 +51,16 @@ export default function LogOut() {
             <button>Local Login</button>
           </Link>
         </div>
-      ) : isAuthenticated && state.user.length ? (
+
+      ) : isAuthenticated && state.user.length  ? (
+
         <div>
           <Link to="/Profile">
             <button>Profile</button>
           </Link>
-          <button onClick={logout}>Log out</button>
+          <button onClick={myFriend}>Log out</button>
         </div>
+
       ) : !isAuthenticated && state.user.length ? (
         <div>
           <Link to="/Profile">

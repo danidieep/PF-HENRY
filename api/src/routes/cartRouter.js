@@ -48,31 +48,38 @@ router.post("/:artworkId", async (req, res) => {
 //     }
 // })
 
-router.get("/:userId", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const { userId } = req.params;
-
-let user = await User.findOne({ where: { id: userId } });
+    const { payload } = req.headers;
+    let user = await User.findOne({ where: { email: payload } });
     let cart = await Cart.findOne({
       where: {
         id: user.cartId,
       },
       include: Artworkincart,
     });
-    return res.status(200).send({ cart });
+    let detailArt = cart.artworkincarts
+    let arr = []
+    detailArt.map(async (e)=>  arr.push(Artwork.findOne({where:{id:e.artworkId}})))
+    await Promise.all(arr).then((resp) => {
+      res.status(200).send(resp);
+    })
+    // if (cart.length === 0) {
+    // res.status(200).send('Ta vacio')
+    // }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
   }
 });
 
-router.get("/", async (req, res) => {
-  try {
-    let cart = await Cart.findAll();
-    res.send(cart);
-  } catch (error) {
-    console.log(error);
-  }
-});
+// router.get("/", async (req, res) => {
+//   try {
+//     let cart = await Cart.findAll();
+//     res.send(cart);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 module.exports = router;

@@ -171,6 +171,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
         
         case GET_PRODUCTS_FROM_CARRITODB:{
+            console.log(payload)
             return{
                 ...state,
                 carrito:payload

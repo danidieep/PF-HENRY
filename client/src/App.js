@@ -52,6 +52,12 @@ function App() {
 
   //si esta autenticado se despachara la accion getUser con la data de arriba
   //prestara atencion a los cambios de estados de user
+   if(JSON.parse(localStorage.getItem('user'))){
+      state.user = JSON.parse(localStorage.getItem('user'))
+   }else {
+     console.log('algo esta mal')
+   }
+
 
   return (
     <div className="App">

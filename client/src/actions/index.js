@@ -21,6 +21,8 @@ import {
   SHOW_ALL_PRODUCTS,
   ORDER_BY_PRICE,
   ADD_FILTERS,
+  GET_USER,
+  GET_PRODUCTS_FROM_CARRITODB,
 } from "./action-types.js";
 
 export function deleteArtwork(id) {
@@ -171,54 +173,86 @@ export const AddFilters = (payload) => {
   };
 };
 
-export const addProductToCarrito = async (payload, token) => {
-  try {
-    fetch(`/cart/${payload.artId}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload.email),
-    });
-    const response = await axios.get(
-      `http://localhost:3001/cart/${payload.artId}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    return error.message;
-  }
+// export const addProductToCarrito = async (payload, token) => {
+//   try {
+//     fetch(`http://localhost:3001/cart/${payload.artId}`, {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(payload.email),
+//     });
+//     const response = await axios.get(
+//       `http://localhost:3001/cart/${payload.artId}`,
+//       {
+//         headers: {
+//           authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+//   } catch (error) {
+//     return error.message;
+//   }
+// };
+
+// export const deleteProductFromCarrito = async (payload, token) => {
+//   try {
+//     fetch(`/cart/${payload.artId}`, {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(payload.email),
+//     });
+//     const response = await axios.get(
+//       `http://localhost:3001/cart/${payload.artId}`,
+//       {
+//         headers: {
+//           authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+//   } catch (error) {
+//     return error.message;
+//   }
+// };
+
+export const deleteProductFromCarrito = async (payload) => {
+    let json = await axios.put("/cart/" + payload);
 };
 
-export const deleteProductFromCarrito = async (payload, token) => {
-  try {
-    fetch(`/cart/${payload.artId}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload.email),
+export const addProductToCarrito = async (payload) => {
+  axios.post(`/cart/${payload.artId}`, { email: payload.email });
+};
+
+export const getUser = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findorcreate`, payload);
+    return dispatch({
+      type: GET_USER,
+      payload: json.data,
     });
-    const response = await axios.get(
-      `http://localhost:3001/cart/${payload.artId}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    return error.message;
-  }
+  };
+};
+
+export function deleteUser(userId) {
+  axios.delete(`users/${userId}`);
+}
+
+export const getProductsFromCarritoDB = (userId) => {
+  return async function (dispatch) {
+    let json = await axios.get("/cart/" + userId);
+    return dispatch({
+      type: GET_PRODUCTS_FROM_CARRITODB,
+      payload: json.data,
+    });
+  };
 };
 
 export const sendUserInfo = async (user) => {
-  const response = await axios.post("http://localhost:3001/users", {
+  const response = await axios.post("/users", {
     headers: {
       user: user,
     },

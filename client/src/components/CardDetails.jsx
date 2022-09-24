@@ -15,7 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function CardDetails(props) {
   const { id } = useParams();
-  const { email, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
@@ -29,14 +29,14 @@ export default function CardDetails(props) {
 
   const addToCartOrDelete = async () => {
     const token = getAccessTokenSilently();
+    const email = user.email;
     const ArtInCuesiton = state.carrito.filter(
       (element) => element === product[0].title
     );
     if (ArtInCuesiton.length) {
       deletProductFromCarrito({ artId: product[0].id, email }, token);
     } else {
-      const add = await addProductToCarrito({ artId: product[0].id, email }, token);
-      alert(add);
+      addProductToCarrito({ artId: product[0].id, email }, token);
     }
   };
 
@@ -100,7 +100,13 @@ export default function CardDetails(props) {
                   {!state.carrito.includes(product[0].title) ? (
                     <button
                       className={styles.buttonAddCart}
-                      onClick={addToCartOrDelete}
+                      onClick={() => {
+                        if (user) {
+                          addToCartOrDelete();
+                        } else {
+                          alert("Login required");
+                        }
+                      }}
                     >
                       Add to cart
                     </button>

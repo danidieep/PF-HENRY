@@ -3,16 +3,18 @@ const { User, Cart } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
+const bcryptjs = require('bcryptjs')
 const getUserByID = require("../controllers/getUserByID");
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
+  let passHash = await bcryptjs.hash(password, 8)
   try {
     if (!headers) {
       const userCartId = await Cart.create().then(
               ({ dataValues }) => dataValues.id
             );
-      createUser(name, lastname, email, password, dateBorn, role, userCartId);
+      createUser(name, lastname, email, passHash, dateBorn, role, userCartId);
       res.status(200).send("User created succesfully");
     } else {
       const userDb = await User.findOne({

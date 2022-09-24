@@ -12,6 +12,7 @@ router.post("/", async (req, res) => {
       const userCartId = await Cart.create().then(
         ({ dataValues }) => dataValues.id
       );
+      console.log(userCartId, 'userCartId');
       createUser(name, lastname, email, password, dateBorn, role, userCartId);
       res.status(200).send("User created succesfully");
     } else {

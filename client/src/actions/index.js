@@ -51,12 +51,9 @@ export function getProducts() {
   };
 }
 
-export function RegisterUser(payload) {
-  return async function (dispatch) {
-    let json = await axios.post("/users", payload);
-    return json;
-  };
-}
+export const RegisterUser = async (payload) => {
+  await axios.post("/users", payload);
+};
 
 export const getProductByName = (payload) => {
   return async function (dispatch) {

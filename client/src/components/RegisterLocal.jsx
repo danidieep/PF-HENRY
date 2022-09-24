@@ -32,8 +32,8 @@ export default function Register() {
     //     alert('Debes llenar el Formulario primero')
 
     //   } else {
-    dispatch(RegisterUser(input));
-    alert("Usuario Creado");
+    RegisterUser(input);
+
     //   }
     setInput({
       name: "",

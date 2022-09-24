@@ -4,7 +4,7 @@ import {
 
 DELETE_ARTWORKS,GET_USER, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
 ADD_FILTERS,LOG_LOCAL,VACIAR_USER,
-DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_PRODUCTS_FROM_CARRITODB
+DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_PRODUCTS_FROM_CARRITODB, SET_USER
 } from "../actions/action-types"
 
 const initialState = {
@@ -157,10 +157,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
     
         case GET_USER:{
-            return{
-                ...state,
-                user:payload
-            }
+         localStorage.setItem("user",JSON.stringify(payload))
         }
      
         case   DELETE_PRODUCT_FROM_CARRITO_BOARD:{
@@ -179,15 +176,18 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
 
         case LOG_LOCAL:{
-            return{
-                ...state,
-                user:payload
-            }
+            localStorage.setItem("user",JSON.stringify(payload))
         }
         case VACIAR_USER:{
             return{
                 ...state,
                 user:[]
+            }
+        }
+        case SET_USER:{
+            return{
+                ...state,
+                user:JSON.parse(localStorage.getItem("user"))
             }
         }
         

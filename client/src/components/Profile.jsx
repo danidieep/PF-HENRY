@@ -14,15 +14,15 @@ export default function Profile(){
     const data = useAuth0()
     const state = useSelector(state => state)
     const dispatch = useDispatch()
-    const userlocal = state.user[0]
     const [edit, setEdit] = useState(false)
 
 
+    const user = JSON.parse(localStorage.getItem("user"))
 
 
       const delete_User = ()=>{
         localStorage.setItem("user",JSON.stringify([]))
-        deleteUser(userlocal.id)
+        deleteUser(user[0].id)
         data.logout()
       }
 
@@ -30,7 +30,7 @@ export default function Profile(){
 return (
 
     <div>
-     {state.user.length?
+     {user.length?
     
      <div>
     <button onClick={()=>window.history.back()}>Back</button>
@@ -44,10 +44,10 @@ return (
     <div>
      <h2>picture</h2>
      <img style={{width:"15rem"}} src="https://pbs.twimg.com/profile_images/1077237220497678336/V07CdmoH_400x400.jpg"></img>
-     <h2>Name: {userlocal.name} </h2>
-     <h2>LastName:  {userlocal.lastname}</h2>
-     <h2>Email:  {userlocal.email}</h2>
-     <h2>Date born:  {userlocal.dateBorn}</h2>
+     <h2>Name: {user[0].name} </h2>
+     <h2>LastName:  {user[0].lastname}</h2>
+     <h2>Email:  {user[0].email}</h2>
+     <h2>Date born:  {user[0].dateBorn}</h2>
      <br />
      <button onClick={()=>setEdit(!edit)}>edit</button>
      </div>
@@ -55,13 +55,13 @@ return (
      :<div>
         <h2>picture</h2>
      <img style={{width:"15rem"}} src="https://pbs.twimg.com/profile_images/1077237220497678336/V07CdmoH_400x400.jpg"></img>
-     <h2>Name: {userlocal.name} </h2>
+     <h2>Name: {user[0].name} </h2>
      <input placeholder="New name..."></input>
-     <h2>LastName:  {userlocal.lastname}</h2>
+     <h2>LastName:  {user[0].lastname}</h2>
      <input placeholder="new Lastname..."></input>
-     <h2>Email:  {userlocal.email}</h2>
+     <h2>Email:  {user[0].email}</h2>
      <input placeholder="new email..."></input>
-     <h2>Date born:  {userlocal.dateBorn}</h2>
+     <h2>Date born:  {user[0].dateBorn}</h2>
      <input placeholder="new date born..."></input>
      <br />
      <button onClick={()=>setEdit(!edit)}>cancel</button>

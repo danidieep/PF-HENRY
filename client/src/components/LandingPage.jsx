@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import styles from "./ModulesCss/LandingPage.module.css";
-import LogIn from "./LogIn";
+
 import LogOut from "./LogOut";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ export default function LandingPage() {
     <div className={styles.container}>
       <button className={styles.aboutus}>About us</button>
       <button className={styles.aboutus}>prueba</button>
-      <LogIn />
+      
       <LogOut />
       <div className={styles.logoButton}>
         <div className={styles.logoLink}>

@@ -67,7 +67,7 @@ const getUserByID = require("../controllers/getUserByID");
 // //   }
 // // };
 
-// router.post("/findorcreate", async (req, res) => {
+ router.post("/findorcreate", async (req, res) => {
 //   try {
 //     // jwt.verify(req.token, "secret_token", (err, data) => {
 //     //   if (err) {
@@ -76,31 +76,31 @@ const getUserByID = require("../controllers/getUserByID");
 //     //     res.send(data);
 //     //   }
 //     // });
-//     const { email, name, lastname, password, dateBorn, role } = req.body;
-//     const users = await getUserDB();
+   const { email, name, lastname, password, dateBorn, role } = req.body;
+    const users = await getUserDB();
 
-//     if (email) {
-//       const user = users.filter(
-//         (e) => e.email.toLowerCase() === email.toLowerCase()
-//       );
+     
+      const user = users.filter(
+        (e) => e.email.toLowerCase() === email.toLowerCase()
+      );
 
-//       if (user.length) {
-//         res.status(200).json(user);
-//       } else {
-//         await createUser(name, lastname, email, password, dateBorn, role);
+      if (user.length) {
+        res.status(200).json(user);
+      } else {
+        const userCartId =  await Cart.create().then(
+          ({ dataValues }) => dataValues.id
+        );
+        await createUser(name, lastname, email, password, dateBorn, role,userCartId);
 
-//         const a = await getUserDB();
+        const a = await getUserDB();
 
-//         const b = a.filter(
-//           (e) => e.email.toLowerCase() === email.toLowerCase()
-//         );
+        const b = a.filter(
+         (e) => e.email.toLowerCase() === email.toLowerCase()
+        );
+          res.status(200).json(b);
 
-//         await Cart.create({ id: b[0].cartId });
-
-//         if (user) {
-//           res.status(200).json(b);
-//         }
-//       }
+       }
+      })
 //     } else {
 //       res.status(200).json(users);
 //     }
@@ -108,28 +108,28 @@ const getUserByID = require("../controllers/getUserByID");
 //     console.log(error);
 //   }
 // });
+ 
+ router.post("/findLocalUser", async (req, res) => {
+  //  jwt.verify(req.token, "secret_token", (err, data) => {
+  //    if (err) {
+  //       res.status(403).send("Eroorororor");
+  //   } else {
+  //      res.send(data);
+  //  }
+  //   });
+  const { email, password } = req.body;
+   const users = await getUserDB();
 
-// router.post("/findLocalUser", async (req, res) => {
-//   // jwt.verify(req.token, "secret_token", (err, data) => {
-//   //   if (err) {
-//   //     res.status(403).send("Eroorororor");
-//   //   } else {
-//   //     res.send(data);
-//   //   }
-//   // });
-//   const { email, password } = req.body;
-//   const users = await getUserDB();
+   const user = users.filter(
+     (e) => e.password.toLowerCase() === password.toLowerCase()
+   );
 
-//   const user = users.filter(
-//     (e) => e.password.toLowerCase() === password.toLowerCase()
-//   );
-
-//   if (user.length) {
-//     res.status(200).json(user);
-//   } else {
-//     res.status(400).send("datos incorrectos");
-//   }
-// });
+  if (user.length) {
+     res.status(200).json(user);
+   } else {
+     res.status(400).send("datos incorrectos");
+   }
+ });
 
 // router.get("/", async (req, res) => {
 //   try {
@@ -169,7 +169,7 @@ const getUserByID = require("../controllers/getUserByID");
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
-  console.log(headers);
+  console.log(req.body);
   try {
     if (!headers) {
       const userCartId =  await Cart.create().then(

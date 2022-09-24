@@ -22,6 +22,7 @@ import {
   SHOW_ALL_PRODUCTS,
   ORDER_BY_PRICE,
   ADD_FILTERS,
+  SET_USER
 } from "./action-types.js";
 
 export function deleteArtwork(id) {
@@ -177,21 +178,22 @@ export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
 };
 
-export const getUser = (payload) => {
+export const getUser = (data) => {
   return async function (dispatch) {
-    let json = await axios.post(`/users/findorcreate`, payload);
+    let json = await axios.post(`/users/findorcreate`, data);
+    console.log(json.data)
     return dispatch({
       type: GET_USER,
       payload: json.data,
     });
+
+
   };
 };
 
-export const sendUserInfo = async (user) => {
-  const response = await axios.post("/users", {
-    headers: {
-      user: user,
-    },
+export const sendUserInfo = async ({ name, lastname, email, password, dateBorn, role, headers }) => {
+  await axios.post("/users", {
+    name, lastname, email, password, dateBorn, role, headers 
   });
 };
 
@@ -228,3 +230,10 @@ export const vaciarUser = () => {
     type: VACIAR_USER,
   };
 };
+
+
+export const setUser = () => {
+  return{
+    type:SET_USER,
+  }
+}

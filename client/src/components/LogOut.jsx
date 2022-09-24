@@ -17,30 +17,21 @@ export default function LogOut() {
     dispatch(vaciarUser());
   };
 
-  const logInUser = async () => {
-    await loginWithRedirect();
-  };
- 
-  useEffect(() => {
-    try {
-      if (user.length !== 0) {
-      
-        sendUserInfo(user);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  });
+  const logOutAuth0 = () =>{
+logout()
+localStorage.setItem("user", JSON.stringify([]))
+dispatch(vaciarUser())
 
-  function myFriend () {
-    logout()
-    localStorage.setItem("user", JSON.stringify([]));
-    state.user = []
   }
+  const logInUser = () => {
+     loginWithRedirect();
+  };
+
+  const userLocalStorage = JSON.parse(localStorage.getItem("user"))
 
   return (
     <div>
-      {!isAuthenticated && !state.user.length ? (
+      {!isAuthenticated && !userLocalStorage.length ?(
         <div>
           <button onClick={() => logInUser()}>Log/Reg with auth0</button>
 
@@ -51,17 +42,14 @@ export default function LogOut() {
             <button>Local Login</button>
           </Link>
         </div>
-
-      ) : isAuthenticated && state.user.length  ? (
-
+      ) : isAuthenticated? (
         <div>
           <Link to="/Profile">
             <button>Profile</button>
           </Link>
-          <button onClick={myFriend}>Log out</button>
+          <button onClick={logOutAuth0}>Log out</button>
         </div>
-
-      ) : !isAuthenticated && state.user.length ? (
+      ) : !isAuthenticated && userLocalStorage.length ? (
         <div>
           <Link to="/Profile">
             <button>Profile</button>
@@ -69,7 +57,10 @@ export default function LogOut() {
           <button onClick={logOutLocal}>Log out</button>
         </div>
       ) : (
-        false
+        <div>
+        <div> error</div>
+        <button onClick={logout}>logout</button>
+        </div>
       )}
     </div>
   );

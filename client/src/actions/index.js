@@ -131,58 +131,45 @@ export const filterByMedium = (payload) => {
 };
 
 export const addFilterMedium = (payload) => {
-      return{
-            type:ADD_FILTER_MEDIUM, payload
-      }
+  return {
+    type: ADD_FILTER_MEDIUM,
+    payload,
+  };
+};
+
+export const AddFilters = (payload) => {
+  return {
+    type: ADD_FILTERS,
+    payload,
+  };
+};
+
+export const deleteProductFromCarrito = (payload) => {
+  return async function () {
+    let json = await axios.put("/cart/" + payload);
+    return json;
+  };
+};
+
+export const addProductToCarrito = (payload) => {
+  return async function () {
+    await axios.post(`/cart/${payload.itemId}`, { idU: payload.userId });
+  };
+};
+
+export const getUser = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findorcreate`, payload);
+    return dispatch({
+      type: GET_USER,
+      payload: json.data,
+    });
+  };
+};
+
+export function deleteUser(userId) {
+  axios.delete(`users/${userId}`);
 }
-
-
-
-
-
-
-export const AddFilters = (payload)=>{
-      return{
-            type:ADD_FILTERS, payload
-      }
-}
-
-
-
- 
-        
-
-export const deleteProductFromCarrito = (payload)=>{
-   return async function (){
-        let json = await axios.put('/cart/' + payload)
-        return json
-
- }
-}
-
-export const addProductToCarrito = (payload)=>{
-      return async function (){
-          await axios.post(`/cart/${payload.itemId}`, {idU:payload.userId})
-         
-   
-    }
-   }
-
-export const getUser = (payload) =>{
-      return async function (dispatch) {
-            let json = await axios.post(`/users/findorcreate`,payload)
-            return dispatch({
-                  type: GET_USER,
-                  payload: json.data
-            })
-      }
-}
-
-export  function deleteUser (userId){
-    axios.delete(`users/${userId}`)
-}
-
-
 
 export const getProductsFromCarritoDB = (userId) => {
       return async function(dispatch){

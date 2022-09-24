@@ -9,15 +9,10 @@ router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
   try {
     if (!headers) {
-     
-      await createUser(name, lastname, email, password, dateBorn);
-
-      const userEnCuestion = await User.findOne({where:{email}})
-
-
-       const userCartId = await Cart.create({id:userEnCuestion.dataValues.cartId})
-       
-
+      const userCartId = await Cart.create().then(
+        ({ dataValues }) => dataValues.id
+      );
+      createUser(name, lastname, email, password, dateBorn, role, userCartId);
       res.status(200).send("User created succesfully");
     } else {
 
@@ -26,7 +21,7 @@ router.post("/", async (req, res) => {
         where: { email: headers.user.email },
       });
       if (!userDb) {
-        const userCartId = await Cart.create().then( 
+        const userCartId = await Cart.create().then(
           ({ dataValues }) => dataValues.id
         );
         let arr = [];
@@ -37,7 +32,6 @@ router.post("/", async (req, res) => {
           cartId: userCartId,
           idAuth: headers.user.sub,
         });
-        console.log(arr);
         User.bulkCreate(arr);
         res.status(200).send("User created succesfully");
       } else {

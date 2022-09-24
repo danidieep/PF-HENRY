@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import {DELETE_USER,DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
-import {DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
+import {GET_PRODUCTS_FROM_CARRITODB,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
+import {GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
 
 
 export function addCarrito(payload){
@@ -161,15 +161,20 @@ export const AddFilters = (payload)=>{
 
 
 export const addProductToCarrito = (payload) =>{
-      return{
-            type:ADD_PRODUCT_TO_CARRITO,payload
-      }
+return async function (){
+      let json = await axios.put('/cart/' + payload)
+      return json
 }
 
+ }
+        
+
 export const deleteProductFromCarrito = (payload)=>{
-      return{
-            type:DELETE_PRODUCT_FROM_CARRITO,payload
-      }
+return async function (){
+      let json = await axios.put('/cart/' + payload)
+      return json
+
+ }
 }
 
 export const getUser = (payload) =>{
@@ -187,8 +192,13 @@ export  function deleteUser (userId){
 }
 
 
-export const deleteProductFromCarritoBoard = (payload)=>{
-      return{
-            type:DELETE_PRODUCT_FROM_CARRITO_BOARD,payload
+
+export const getProductsFromCarritoDB = (userId) => {
+      return async function(dispatch){
+            let json = await axios.get("/cart/" + userId)
+            return dispatch({
+                  type : GET_PRODUCTS_FROM_CARRITODB,
+                  payload:json.data
+            })
       }
 }

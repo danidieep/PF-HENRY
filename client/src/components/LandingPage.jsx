@@ -21,11 +21,11 @@ export default function LandingPage(){
   
 
 
- 
+
+  
     return(
         <div className={styles.container}>
 
-          
         <button className={styles.aboutus}>About us</button>
         {/* <Link to = "/Register">
              <button className={styles.register}>Register</button>

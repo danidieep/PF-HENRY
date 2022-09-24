@@ -4,7 +4,7 @@ import {
 
 DELETE_ARTWORKS,GET_USER, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
 ADD_FILTERS,
-DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD
+DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_PRODUCTS_FROM_CARRITODB
 } from "../actions/action-types"
 
 const initialState = {
@@ -162,23 +162,18 @@ export default function Reducer(state = initialState, { type, payload }) {
                 user:payload
             }
         }
-        case ADD_PRODUCT_TO_CARRITO:{
-
-            return{
-                ...state,
-                carrito:[...state.carrito,payload]
-            }
-        }
-        case DELETE_PRODUCT_FROM_CARRITO:{
-            return{
-                ...state,
-                carrito:state.carrito.filter(element => element.title !== payload.title)
-            }
-        }
+     
         case   DELETE_PRODUCT_FROM_CARRITO_BOARD:{
             return{
                 ...state,
                 carrito:state.carrito.filter(element => element.title !== payload.title)
+            }
+        }
+        
+        case GET_PRODUCTS_FROM_CARRITODB:{
+            return{
+                ...state,
+                carrito:payload
             }
         }
         

@@ -1,18 +1,21 @@
 
 import { useDispatch, useSelector } from "react-redux"
-import {deleteProductFromCarritoBoard} from "../actions"
+import {getProductsFromCarritoDB} from "../actions"
 import {Link} from "react-router-dom"
 import { useEffect } from "react"
+import { useMemo } from "react"
 
 export default function ShopCart(){
 
-    const state = useSelector(state => state)
-    const dispatch = useDispatch()
+ const state = useSelector(state => state)
+ const dispatch = useDispatch()
+
 
     useEffect(()=>{
-        
+    dispatch(getProductsFromCarritoDB(state.user.id))
     })
 
+  
 
     if(!state.carrito.length){
         return (<div>
@@ -28,17 +31,7 @@ export default function ShopCart(){
                 
                 return (
                     <div>
-
-                    <button
-                    onClick={()=>dispatch(deleteProductFromCarritoBoard(element))}
-                    >X</button>
-
-                     <span>artWork: {element.title}</span>
-
-                    <img src={element.image ? element.image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="450px" height="400px" />
-                   
-                    <h3>{element.price}</h3>
-                    <br/>
+                    <span>artWork: {element.title}</span>
                
                     </div>
                 )
@@ -47,3 +40,23 @@ export default function ShopCart(){
         </div>
     )
 }
+
+
+
+
+
+
+
+  // useMemo(()=>{
+
+    //     if(state.carrito.length){
+    //       localStorage.setItem("cart",JSON.stringify(state.carrito))
+    //     }
+    //     if(state.carrito.length===0){
+          
+    //       if( JSON.parse(localStorage.getItem("cart")===null)){ localStorage.setItem("cart",JSON.stringify([]))}
+    //       if( JSON.parse(localStorage.getItem("cart").length)){ state.carrito = JSON.parse(localStorage.getItem("cart")) }
+        
+    //     }
+  
+    // },[state.carrito])

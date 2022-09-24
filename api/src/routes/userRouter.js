@@ -4,6 +4,7 @@ const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
 const getUserByID = require("../controllers/getUserByID");
+const bcypt = require("bcrypt")
 
 // router.post("/", async (req, res) => {
 //   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
@@ -85,7 +86,8 @@ const getUserByID = require("../controllers/getUserByID");
       );
 
       if (user.length) {
-        res.status(200).json(user);
+        const {name,cartId,id,lastname,email} = user[0]
+        res.status(200).json({name,cartId,id,lastname,email});
       } else {
         const userCartId =  await Cart.create().then(
           ({ dataValues }) => dataValues.id
@@ -117,19 +119,26 @@ const getUserByID = require("../controllers/getUserByID");
   //      res.send(data);
   //  }
   //   });
-  const { email, password } = req.body;
-   const users = await getUserDB();
+  const { email} = req.body;
+  const passNoHashed = req.body.password
+  
+  let userInCuestion = await User.findOne({where:{email}})
 
-   const user = users.filter(
-     (e) => e.password.toLowerCase() === password.toLowerCase()
-   );
+ if(userInCuestion){
+ let hashSaved = userInCuestion.password
+ let compare = bcypt.compareSync(passNoHashed,hashSaved)
 
-  if (user.length) {
-     res.status(200).json(user);
-   } else {
-     res.status(400).send("datos incorrectos");
-   }
- });
+if(compare){
+  const {name, lastname,id,email,cartId} = userInCuestion.dataValues
+  res.status(200).json({name,lastname,id,email,cartId})
+}
+else{
+  res.status(400).send("contraseña incorrecta")
+}
+  }else{
+    res.status(400).send("el user no existe")
+  }
+})
 
 // router.get("/", async (req, res) => {
 //   try {
@@ -168,7 +177,11 @@ const getUserByID = require("../controllers/getUserByID");
 // module.exports = router;
 
 router.post("/", async (req, res) => {
-  const { name, lastname, email, password, dateBorn, role, headers } = req.body;
+  const { name, lastname, email, dateBorn, role, headers } = req.body;
+  const passNoHashed = req.body.password
+  let password =  bcypt.hashSync(passNoHashed, 8)
+
+
   console.log(req.body);
   try {
     if (!headers) {

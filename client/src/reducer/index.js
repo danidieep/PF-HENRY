@@ -157,7 +157,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
     
         case GET_USER:{
-         localStorage.setItem("user",JSON.stringify(payload))
+         localStorage.setItem("user",JSON.stringify([payload]))
         }
      
         case   DELETE_PRODUCT_FROM_CARRITO_BOARD:{
@@ -176,7 +176,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
 
         case LOG_LOCAL:{
-            localStorage.setItem("user",JSON.stringify(payload))
+            localStorage.setItem("user",JSON.stringify([payload]))
         }
         case VACIAR_USER:{
             return{

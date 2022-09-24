@@ -12,7 +12,6 @@ import Message from "./Message";
 import styles from "./ModulesCss/CardsDetails.module.css";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMemo } from "react";
 
 export default function CardDetails(props) {
   const { id } = useParams();
@@ -24,9 +23,9 @@ export default function CardDetails(props) {
   const [cantCompr, setCantCompr] = useState(0);
 
   useEffect(() => {
-   
-    dispatch(cleanProductId())
-    dispatch(getProductById(id))
+    dispatch(cleanProductId());
+    dispatch(getProductById(id));
+  }, []);
 
   const addToCartOrDelete = async () => {
     const token = getAccessTokenSilently();
@@ -35,27 +34,24 @@ export default function CardDetails(props) {
       (element) => element === product[0].title
     );
     if (ArtInCuesiton.length) {
-      deletProductFromCarrito({ artId: product[0].id, email }, token);
+      deleteProductFromCarrito({ artId: product[0].id, email }, token);
     } else {
       addProductToCarrito({ artId: product[0].id, email }, token);
-  }, [])
+    }
+  };
 
-  
-
- // const addToCartOrDelete = async ()=>{
- //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
- //   if(ArtInCuesiton.length){
- //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
- //     alert("artWork deleted from cart")
-     // console.log(JSON.parse(localStorage.getItem("cart")))
-   // }
+  // const addToCartOrDelete = async ()=>{
+  //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
+  //   if(ArtInCuesiton.length){
+  //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
+  //     alert("artWork deleted from cart")
+  // console.log(JSON.parse(localStorage.getItem("cart")))
+  // }
   //  else{
- //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
-     // alert("artWork added to cart")
-   // }
- // }
-
-
+  //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
+  // alert("artWork added to cart")
+  // }
+  // }
 
   return (
     <div className={styles.containerDetails} key={id}>

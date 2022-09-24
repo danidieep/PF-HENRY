@@ -1,6 +1,28 @@
 import axios from "axios";
-import {VACIAR_USER, LOG_LOCAL,GET_PRODUCTS_FROM_CARRITODB,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
-import {GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
+import {
+  VACIAR_USER,
+  LOG_LOCAL,
+  GET_PRODUCTS_FROM_CARRITODB,
+  DELETE_FILTER,
+  NOT_FOUND,
+} from "./action-types.js";
+import {
+  GET_USER,
+  DELETE_ARTWORKS,
+  ADD_FILTER_MEDIUM,
+  FILTER_BY_MEDIUM,
+  ADD_PRICE_TYPE,
+  ADD_FILTER_ARTIST,
+  FILTER_BY_ARTIST,
+  GET_ARTISTS,
+  GET_PRODUCTS,
+  GET_PRODUCT_BY_NAME,
+  GET_PRODUCT_BY_ID,
+  CLEAN_PRODUCT_ID,
+  SHOW_ALL_PRODUCTS,
+  ORDER_BY_PRICE,
+  ADD_FILTERS,
+} from "./action-types.js";
 
 export function deleteArtwork(id) {
   return async function (dispatch) {
@@ -143,20 +165,20 @@ export const AddFilters = (payload) => {
   };
 };
 
-export const deleteProductFromCarrito = (payload) => {
-  return async function () {
-    let json = await axios.put("/cart/" + payload);
-    return json;
-  };
-};
-
+// export const deleteProductFromCarrito = (payload) => {
+//   return async function () {
+//     let json = await axios.put("/cart/" + payload);
+//     return json;
+//   };
+// };
 
 export const deleteProductFromCarrito = async (payload) => {
-    let json = await axios.put("/cart/" + payload);
+  let json = await axios.put("/cart/" + payload);
 };
 
 export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
+};
 
 export const getUser = (payload) => {
   return async function (dispatch) {
@@ -168,7 +190,6 @@ export const getUser = (payload) => {
   };
 };
 
-
 export const sendUserInfo = async (user) => {
   const response = await axios.post("/users", {
     headers: {
@@ -176,39 +197,32 @@ export const sendUserInfo = async (user) => {
     },
   });
 };
-    });
-  };
-};
 
 export function deleteUser(userId) {
   axios.delete(`users/${userId}`);
 }
 
 export const getProductsFromCarritoDB = (userId) => {
-      return async function(dispatch){
-            let json = await axios.get("/cart/" + userId)
-            return dispatch({
-                  type : GET_PRODUCTS_FROM_CARRITODB,
-                  payload:json.data
-            })
-      }
-}
-
-
-export const LogLocal = (payload)=>{
-
   return async function (dispatch) {
-    let json = await axios.post(`/users/findLocalUser`,payload)
+    let json = await axios.get("/cart/" + userId);
     return dispatch({
-          type: LOG_LOCAL,
-          payload: json.data
-    })
-}
-}
-export const vaciarUser = () =>{
-  return{
-    type:VACIAR_USER
-  }
-}
+      type: GET_PRODUCTS_FROM_CARRITODB,
+      payload: json.data,
+    });
+  };
+};
 
-
+export const LogLocal = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findLocalUser`, payload);
+    return dispatch({
+      type: LOG_LOCAL,
+      payload: json.data,
+    });
+  };
+};
+export const vaciarUser = () => {
+  return {
+    type: VACIAR_USER,
+  };
+};

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deletProductFromCarrito,
+  deleteProductFromCarrito,
   addProductToCarrito,
   getProductById,
   cleanProductId,
@@ -12,6 +12,7 @@ import Message from "./Message";
 import styles from "./ModulesCss/CardsDetails.module.css";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useMemo } from "react";
 
 export default function CardDetails(props) {
   const { id } = useParams();
@@ -23,9 +24,9 @@ export default function CardDetails(props) {
   const [cantCompr, setCantCompr] = useState(0);
 
   useEffect(() => {
-    dispatch(cleanProductId());
-    dispatch(getProductById(id));
-  }, []);
+   
+    dispatch(cleanProductId())
+    dispatch(getProductById(id))
 
   const addToCartOrDelete = async () => {
     const token = getAccessTokenSilently();
@@ -37,17 +38,24 @@ export default function CardDetails(props) {
       deletProductFromCarrito({ artId: product[0].id, email }, token);
     } else {
       addProductToCarrito({ artId: product[0].id, email }, token);
-    }
-  };
+  }, [])
 
-  // const addCount = (action) =>{
-  //  if(cantCompr>0){
-  //   if(action==="-")setCantCompr(cantCompr-1)
-  //   }
-  // if(cantCompr>=0){
-  //   if(action==="+")setCantCompr(cantCompr + 1)
-  //   }
-  // }
+  
+
+ // const addToCartOrDelete = async ()=>{
+ //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
+ //   if(ArtInCuesiton.length){
+ //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
+ //     alert("artWork deleted from cart")
+     // console.log(JSON.parse(localStorage.getItem("cart")))
+   // }
+  //  else{
+ //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
+     // alert("artWork added to cart")
+   // }
+ // }
+
+
 
   return (
     <div className={styles.containerDetails} key={id}>
@@ -76,7 +84,6 @@ export default function CardDetails(props) {
           </div>
         </div>
       </header>
-
       <div id="conteinerDetail">
         {product.length > 0 ? (
           <div>
@@ -97,7 +104,7 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                  {!state.carrito.includes(product[0].title) ? (
+                  {true ? (
                     <button
                       className={styles.buttonAddCart}
                       onClick={() => {

@@ -52,7 +52,7 @@ router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    let user = await User.findByPk(userId);
+let user = await User.findOne({ where: { id: userId } });
     let cart = await Cart.findOne({
       where: {
         id: user.cartId,

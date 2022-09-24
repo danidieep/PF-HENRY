@@ -49,6 +49,7 @@ export default function Register() {
        }
     return (
         <div>
+          <button onClick={()=>window.history.back()}>Back</button>
 
    <h1 >lets register us!</h1>
 

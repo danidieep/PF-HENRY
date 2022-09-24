@@ -10,16 +10,18 @@ router.post("/", async (req, res) => {
   try {
     if (!headers) {
       const userCartId = await Cart.create().then(
-              ({ dataValues }) => dataValues.id
-            );
+        ({ dataValues }) => dataValues.id
+      );
       createUser(name, lastname, email, password, dateBorn, role, userCartId);
       res.status(200).send("User created succesfully");
     } else {
+
+
       const userDb = await User.findOne({
         where: { email: headers.user.email },
       });
       if (!userDb) {
-        const userCartId = await Cart.create().then( 
+        const userCartId = await Cart.create().then(
           ({ dataValues }) => dataValues.id
         );
         let arr = [];
@@ -30,7 +32,6 @@ router.post("/", async (req, res) => {
           cartId: userCartId,
           idAuth: headers.user.sub,
         });
-        console.log(arr);
         User.bulkCreate(arr);
         res.status(200).send("User created succesfully");
       } else {
@@ -67,7 +68,7 @@ router.post("/", async (req, res) => {
 //   }
 // };
 
-router.get("/", async (req, res) => {
+router.post("/findorcreate", async (req, res) => {
   try {
     // jwt.verify(req.token, "secret_token", (err, data) => {
     //   if (err) {
@@ -76,25 +77,68 @@ router.get("/", async (req, res) => {
     //     res.send(data);
     //   }
     // });
-    const { name } = req.query;
+    const { email,name,lastname,password,dateBorn,role } = req.body;
     const users = await getUserDB();
 
-    if (name) {
+
+    if (email) {
       const user = users.filter((e) =>
-        e.name.toLowerCase()?.includes(name.toLowerCase())
+        e.email.toLowerCase()=== email.toLowerCase()
       );
 
-      if (user) {
+      if (user.length) {
         res.status(200).json(user);
       } else {
-        res.status(404).send("este usuario no existe");
+      
+        await createUser(name, lastname, email, password, dateBorn, role);
+     
+
+        const a = await getUserDB();
+
+        const b = a.filter((e) =>
+        e.email.toLowerCase()=== email.toLowerCase()
+        );
+
+        await Cart.create({id:b[0].cartId})
+
+        if(user){
+        res.status(200).json(b);
+}
+
       }
     } else {
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(404).send(error);
+   console.log(error);
   }
+});
+
+router.post("/findLocalUser", async (req, res) => {
+  
+    // jwt.verify(req.token, "secret_token", (err, data) => {
+    //   if (err) {
+    //     res.status(403).send("Eroorororor");
+    //   } else {
+    //     res.send(data);
+    //   }
+    // });
+    const { email,password} = req.body;
+    const users = await getUserDB();
+
+
+    
+      const user = users.filter((e) =>
+        e.password.toLowerCase() === password.toLowerCase()
+      );
+
+      if (user.length) {
+        res.status(200).json(user);
+      } else {
+      res.status(400).send("datos incorrectos")
+}
+
+    
 });
 
 router.get("/:id", async (req, res) => {
@@ -118,7 +162,7 @@ router.delete("/:id", async (req, res) => {
 
     res.status(200).send({ msg: "usuario eliminado" });
   } catch (error) {
-    res.status(404).send(error);
+   console.log(error);
   }
 });
 

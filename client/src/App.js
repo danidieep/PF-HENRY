@@ -7,7 +7,6 @@ import Profile from "./components/Profile"
 import ShopCart from "./components/ShopCart";
 import PutArtwork from "./components/PutArtwork"
 import { useAuth0 } from "@auth0/auth0-react";
-
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./actions";

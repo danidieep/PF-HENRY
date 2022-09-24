@@ -16,7 +16,7 @@ import { useMemo } from "react";
 
 export default function CardDetails(props) {
   const { id } = useParams();
-  const { email, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
@@ -28,22 +28,32 @@ export default function CardDetails(props) {
     dispatch(cleanProductId())
     dispatch(getProductById(id))
 
+  const addToCartOrDelete = async () => {
+    const token = getAccessTokenSilently();
+    const email = user.email;
+    const ArtInCuesiton = state.carrito.filter(
+      (element) => element === product[0].title
+    );
+    if (ArtInCuesiton.length) {
+      deletProductFromCarrito({ artId: product[0].id, email }, token);
+    } else {
+      addProductToCarrito({ artId: product[0].id, email }, token);
   }, [])
 
   
 
-  const addToCartOrDelete = async ()=>{
-   const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
-    if(ArtInCuesiton.length){
-     dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
-      alert("artWork deleted from cart")
-      console.log(JSON.parse(localStorage.getItem("cart")))
-    }
-    else{
-      dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
-      alert("artWork added to cart")
-    }
-  }
+ // const addToCartOrDelete = async ()=>{
+ //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
+ //   if(ArtInCuesiton.length){
+ //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
+ //     alert("artWork deleted from cart")
+     // console.log(JSON.parse(localStorage.getItem("cart")))
+   // }
+  //  else{
+ //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
+     // alert("artWork added to cart")
+   // }
+ // }
 
 
 
@@ -97,7 +107,13 @@ export default function CardDetails(props) {
                   {true ? (
                     <button
                       className={styles.buttonAddCart}
-                      onClick={addToCartOrDelete}
+                      onClick={() => {
+                        if (user) {
+                          addToCartOrDelete();
+                        } else {
+                          alert("Login required");
+                        }
+                      }}
                     >
                       Add to cart
                     </button>

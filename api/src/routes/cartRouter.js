@@ -11,17 +11,15 @@ const { User, Artworkincart, Artwork, Cart } = require("../db");
 // const {User, ArtworkInCarts, Artworks, Cart} = sequelize.models
 
 router.post("/:artworkId", async (req, res) => {
-  const { idU } = req.body;
+  const { email } = req.body;
   const { artworkId } = req.params;
-  // console.log(idU)
   try {
     let artwork = await Artwork.findByPk(artworkId);
     // console.log(artwork)
     // if(!artwork){
     //     res.send({error: 'id del producto no es valido'})
     // }
-    let user = await User.findByPk(idU);
-    // console.log(cart)
+    let user = await User.findOne({ where: { email } });
     let cart = await Cart.findOne({ where: { id: user.cartId } });
     let artworkInCart = await addArtworkInCart(artworkId);
     let totalPrice = cart.totalPrice + artwork.price;
@@ -54,7 +52,7 @@ router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    let user = await User.findOne({ where: { id: userId } });
+let user = await User.findOne({ where: { id: userId } });
     let cart = await Cart.findOne({
       where: {
         id: user.cartId,

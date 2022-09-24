@@ -21,5 +21,4 @@ export const DELETE_ARTWORKS = "DELETE_ARTWORKS"
 export const ADD_FILTERS = "ADD_FILTERS"
 export const GET_USER = "GET USER"
 export const LOG_LOCAL = "LOG_LOCAL"
-
 export const VACIAR_USER = "VACIAR_USER"

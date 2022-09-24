@@ -18,21 +18,10 @@ export default function Profile(){
     const [edit, setEdit] = useState(false)
 
 
-  const userData = {
-    name:data.user.given_name,
-    lastname:data.user.family_name,
-    email:data.user.email,
-    dateBorn:"0112",
-    password:"123"
-  }
 
-
-    useEffect(()=>{
-        dispatch(getUser(userData))
-      },[])
-  
 
       const delete_User = ()=>{
+        localStorage.setItem("user",JSON.stringify([]))
         deleteUser(userlocal.id)
         data.logout()
       }

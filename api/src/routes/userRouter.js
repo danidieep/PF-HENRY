@@ -9,12 +9,19 @@ router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
   try {
     if (!headers) {
-      const userCartId = await Cart.create().then(
-              ({ dataValues }) => dataValues.id
-            );
-      createUser(name, lastname, email, password, dateBorn, role, userCartId);
+     
+      await createUser(name, lastname, email, password, dateBorn);
+
+      const userEnCuestion = await User.findOne({where:{email}})
+
+
+       const userCartId = await Cart.create({id:userEnCuestion.dataValues.cartId})
+       
+
       res.status(200).send("User created succesfully");
     } else {
+
+
       const userDb = await User.findOne({
         where: { email: headers.user.email },
       });
@@ -90,12 +97,16 @@ router.post("/findorcreate", async (req, res) => {
       } else {
       
         await createUser(name, lastname, email, password, dateBorn, role);
+     
 
         const a = await getUserDB();
 
         const b = a.filter((e) =>
         e.email.toLowerCase()=== email.toLowerCase()
         );
+
+        await Cart.create({id:b[0].cartId})
+
         if(user){
         res.status(200).json(b);
 }
@@ -105,8 +116,35 @@ router.post("/findorcreate", async (req, res) => {
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(404).send(error);
+   console.log(error);
   }
+});
+
+router.post("/findLocalUser", async (req, res) => {
+  
+    // jwt.verify(req.token, "secret_token", (err, data) => {
+    //   if (err) {
+    //     res.status(403).send("Eroorororor");
+    //   } else {
+    //     res.send(data);
+    //   }
+    // });
+    const { email,password} = req.body;
+    const users = await getUserDB();
+
+
+    
+      const user = users.filter((e) =>
+        e.password.toLowerCase() === password.toLowerCase()
+      );
+
+      if (user.length) {
+        res.status(200).json(user);
+      } else {
+      res.status(400).send("datos incorrectos")
+}
+
+    
 });
 
 router.get("/:id", async (req, res) => {

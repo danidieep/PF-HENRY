@@ -13,7 +13,7 @@ const {User, Artworkincart, Artwork, Cart} = require("../db");
 router.post('/:artworkId', async(req, res) =>{
     const {idU} = req.body
     const{artworkId} = req.params
-    // console.log(idU)
+    console.log(idU)
     try{
         let artwork = await Artwork.findByPk(artworkId)
         // console.log(artwork)
@@ -21,8 +21,8 @@ router.post('/:artworkId', async(req, res) =>{
         //     res.send({error: 'id del producto no es valido'})
         // }
         let user = await User.findByPk(idU)
-        // console.log(cart)
-        let cart = await Cart.findOne({where:{id:user.cartId}})
+         console.log(user.dataValues)
+        let cart = await Cart.findOne({where:{id:user.dataValues.cartId}})
         console.log(cart)
         let artworkInCart = await addArtworkInCart(artworkId)
         let totalPrice = cart.totalPrice + artwork.price

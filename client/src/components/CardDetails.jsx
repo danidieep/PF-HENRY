@@ -34,12 +34,12 @@ export default function CardDetails(props) {
   const addToCartOrDelete = async ()=>{
    const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
     if(ArtInCuesiton.length){
-     dispatch(deleteProductFromCarrito(product[0].id))
+     dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
       alert("artWork deleted from cart")
       console.log(JSON.parse(localStorage.getItem("cart")))
     }
     else{
-      dispatch( addProductToCarrito(product[0].id))
+      dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
       alert("artWork added to cart")
     }
   }

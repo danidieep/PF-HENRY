@@ -162,8 +162,8 @@ export const deleteProductFromCarrito = (payload)=>{
 
 export const addProductToCarrito = (payload)=>{
       return async function (){
-           let json = await axios.put('/cart/' + payload)
-           return json
+          await axios.post(`/cart/${payload.itemId}`, {idU:payload.userId})
+         
    
     }
    }

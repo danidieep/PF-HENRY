@@ -7,8 +7,7 @@ module.exports = (sequelize) => {
     "cart", 
     {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
     },

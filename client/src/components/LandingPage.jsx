@@ -4,28 +4,32 @@ import { Link } from "react-router-dom"
 import styles from "./ModulesCss/LandingPage.module.css"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
-import GoToMyProfile from "./GoToMyProfile"
+
+import { useDispatch, useSelector } from "react-redux"
+import { getUser } from "../actions"
+import { useEffect } from "react"
+import { useAuth0 } from "@auth0/auth0-react"
 
 
 
 
 export default function LandingPage(){
  
+  const dispatch = useDispatch()
+  const state = useSelector(state => state)
+  const data = useAuth0()
+  
+  const {isAuthenticated,user} = useAuth0()
 
 
+  
     return(
         <div className={styles.container}>
 
         <button className={styles.aboutus}>About us</button>
-        {/* <Link to = "/Register">
-             <button className={styles.register}>Register</button>
-             </Link>      */}
-
-
-             <LogIn />
-             <LogOut />
-             <GoToMyProfile></GoToMyProfile>
-
+        <button className={styles.aboutus}>prueba</button>
+        <LogIn />
+        <LogOut />      
         <div className={styles.logoButton}>
           <div className={styles.logoLink}>
         <h1 className={styles.logo}>Artket</h1>
@@ -38,7 +42,7 @@ export default function LandingPage(){
         <img className={styles.venus} src="https://i.imgur.com/w28JKZQ.png" alt="" /> 
         </div>
 
-
+          
         <div className={styles.contact}>
           <div className={styles.contactNumber}>
           <p className={styles.contactTittle}>Arket </p> 

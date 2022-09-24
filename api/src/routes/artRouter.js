@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
       const artworkByName = arts.filter((e) =>
         e.title.toUpperCase().includes(title.toUpperCase())
       );
-      if (artworkByName.length) res.send(artworkByName);
+      if (artworkByName.length) return res.json(artworkByName);
       else res.status(400).send({ message: "Artwork does not found" });
     } catch (error) {
       res.status(404).send(error);

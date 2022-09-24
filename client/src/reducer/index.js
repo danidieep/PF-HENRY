@@ -2,8 +2,9 @@
 
 import {
 
-DELETE_ARTWORKS, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
-ADD_FILTERS
+DELETE_ARTWORKS,GET_USER, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
+ADD_FILTERS,LOG_LOCAL,VACIAR_USER,
+DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_PRODUCTS_FROM_CARRITODB
 } from "../actions/action-types"
 
 const initialState = {
@@ -14,7 +15,9 @@ const initialState = {
     mediums: [],
     notFound :[],
     filters:[],
-    carrito:[]
+    carrito:[],
+    user:[],
+
     
 }
 
@@ -152,11 +155,44 @@ export default function Reducer(state = initialState, { type, payload }) {
             }
         }
     
+        case GET_USER:{
+            return{
+                ...state,
+                user:payload
+            }
+        }
+     
+        case   DELETE_PRODUCT_FROM_CARRITO_BOARD:{
+            return{
+                ...state,
+                carrito:state.carrito.filter(element => element.title !== payload.title)
+            }
+        }
+        
+        case GET_PRODUCTS_FROM_CARRITODB:{
+            return{
+                ...state,
+                carrito:payload
+            }
+        }
 
+        case LOG_LOCAL:{
+            return{
+                ...state,
+                user:payload
+            }
+        }
+        case VACIAR_USER:{
+            return{
+                ...state,
+                user:[]
+            }
+        }
+        
         default:
             return state;
     }
-    }
+}
 
 
 

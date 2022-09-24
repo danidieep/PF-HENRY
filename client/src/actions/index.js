@@ -1,27 +1,6 @@
 import axios from "axios";
-
-import {
-  DELETE_PRODUCT_FROM_CARRITO,
-  ADD_PRODUCT_TO_CARRITO,
-  DELETE_FILTER,
-  NOT_FOUND,
-} from "./action-types.js";
-import {
-  DELETE_ARTWORKS,
-  ADD_FILTER_MEDIUM,
-  FILTER_BY_MEDIUM,
-  ADD_PRICE_TYPE,
-  ADD_FILTER_ARTIST,
-  FILTER_BY_ARTIST,
-  GET_ARTISTS,
-  GET_PRODUCTS,
-  GET_PRODUCT_BY_NAME,
-  GET_PRODUCT_BY_ID,
-  CLEAN_PRODUCT_ID,
-  SHOW_ALL_PRODUCTS,
-  ORDER_BY_PRICE,
-  ADD_FILTERS,
-} from "./action-types.js";
+import {VACIAR_USER, LOG_LOCAL,GET_PRODUCTS_FROM_CARRITODB,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
+import {GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
 
 export function deleteArtwork(id) {
   return async function (dispatch) {
@@ -52,7 +31,7 @@ export function getProducts() {
 
 export function RegisterUser(payload) {
   return async function (dispatch) {
-    let json = await axios.post("/user", payload);
+    let json = await axios.post("/users", payload);
     return json;
   };
 }
@@ -157,13 +136,6 @@ export const addFilterMedium = (payload) => {
   };
 };
 
-export const deletProductFromCarrito = (payload) => {
-  return {
-    type: DELETE_PRODUCT_FROM_CARRITO,
-    payload,
-  };
-};
-
 export const AddFilters = (payload) => {
   return {
     type: ADD_FILTERS,
@@ -171,56 +143,72 @@ export const AddFilters = (payload) => {
   };
 };
 
-export const addProductToCarrito = async (payload, token) => {
-  try {
-    fetch(`/cart/${payload.artId}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload.email),
-    });
-    const response = await axios.get(
-      `http://localhost:3001/cart/${payload.artId}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    return error.message;
-  }
+export const deleteProductFromCarrito = (payload) => {
+  return async function () {
+    let json = await axios.put("/cart/" + payload);
+    return json;
+  };
 };
 
-export const deleteProductFromCarrito = async (payload, token) => {
-  try {
-    fetch(`/cart/${payload.artId}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload.email),
-    });
-    const response = await axios.get(
-      `http://localhost:3001/cart/${payload.artId}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    return error.message;
-  }
+
+export const deleteProductFromCarrito = async (payload) => {
+    let json = await axios.put("/cart/" + payload);
 };
+
+export const addProductToCarrito = async (payload) => {
+  axios.post(`/cart/${payload.artId}`, { email: payload.email });
+
+export const getUser = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findorcreate`, payload);
+    return dispatch({
+      type: GET_USER,
+      payload: json.data,
+    });
+  };
+};
+
 
 export const sendUserInfo = async (user) => {
-  const response = await axios.post("http://localhost:3001/users", {
+  const response = await axios.post("/users", {
     headers: {
       user: user,
     },
   });
 };
+    });
+  };
+};
+
+export function deleteUser(userId) {
+  axios.delete(`users/${userId}`);
+}
+
+export const getProductsFromCarritoDB = (userId) => {
+      return async function(dispatch){
+            let json = await axios.get("/cart/" + userId)
+            return dispatch({
+                  type : GET_PRODUCTS_FROM_CARRITODB,
+                  payload:json.data
+            })
+      }
+}
+
+
+export const LogLocal = (payload)=>{
+
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findLocalUser`,payload)
+    return dispatch({
+          type: LOG_LOCAL,
+          payload: json.data
+    })
+}
+}
+export const vaciarUser = () =>{
+  return{
+    type:VACIAR_USER
+  }
+}
+
+

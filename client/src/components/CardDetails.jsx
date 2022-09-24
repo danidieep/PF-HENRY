@@ -23,10 +23,10 @@ export default function CardDetails(props) {
   const [cantCompr, setCantCompr] = useState(0);
 
   useEffect(() => {
-    if(JSON.parse(localStorage.getItem("cart"))===null){localStorage.setItem("cart", JSON.stringify([]))}
+   
     dispatch(cleanProductId())
     dispatch(getProductById(id))
-    console.log(product[0]);
+
   }, [])
 
   
@@ -45,15 +45,6 @@ export default function CardDetails(props) {
   }
 
 
-
-  // const addCount = (action) =>{
-  //  if(cantCompr>0){
-  //   if(action==="-")setCantCompr(cantCompr-1)
-  //   }
-  // if(cantCompr>=0){
-  //   if(action==="+")setCantCompr(cantCompr + 1)
-  //   }
-  // }
 
   return (
     <div className={styles.containerDetails} key={id}>

@@ -33,7 +33,7 @@ return (
      {state.user.length?
     
      <div>
-    <button onClick={()=>window.history.back()}>MainPage</button>
+    <button onClick={()=>window.history.back()}>Back</button>
      <h1>My profile</h1>
      <br />
      <hr />

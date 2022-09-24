@@ -45,7 +45,7 @@ export default function LoginLocal() {
 
       <button onClick={()=> window.history.back()}> Back</button>
 
-   <h1 >Login</h1>
+   <h1>Login</h1>
 
    <form>
       <input  name="email" value={input.email} autoComplete="off" placeholder="Email..." onChange={e => {handleChange(e)}}/>

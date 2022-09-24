@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {GET_PRODUCTS_FROM_CARRITODB,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
+import {VACIAR_USER, LOG_LOCAL,GET_PRODUCTS_FROM_CARRITODB,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
 import {GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
 
 export function deleteArtwork(id) {
@@ -193,3 +193,22 @@ export const getProductsFromCarritoDB = (userId) => {
             })
       }
 }
+
+
+export const LogLocal = (payload)=>{
+
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findLocalUser`,payload)
+    return dispatch({
+          type: LOG_LOCAL,
+          payload: json.data
+    })
+}
+}
+export const vaciarUser = () =>{
+  return{
+    type:VACIAR_USER
+  }
+}
+
+

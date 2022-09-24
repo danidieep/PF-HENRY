@@ -19,7 +19,7 @@ export default function LandingPage(){
   const state = useSelector(state => state)
   const data = useAuth0()
   
-
+  const {isAuthenticated,user} = useAuth0()
 
 
   
@@ -27,14 +27,9 @@ export default function LandingPage(){
         <div className={styles.container}>
 
         <button className={styles.aboutus}>About us</button>
-        {/* <Link to = "/Register">
-             <button className={styles.register}>Register</button>
-             </Link>      */}
-          
-             <LogIn />
-             <LogOut />
-    
-          
+        <button className={styles.aboutus}>prueba</button>
+        <LogIn />
+        <LogOut />      
         <div className={styles.logoButton}>
           <div className={styles.logoLink}>
         <h1 className={styles.logo}>Artket</h1>

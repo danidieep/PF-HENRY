@@ -12,16 +12,6 @@ export default function LogIn() {
    
   
     return(
-      
-      !isAuthenticated ? 
-      <div>
-       <Link to = "/Register">
-             <button className={styles.login}>Register</button>
-             </Link>
-    
-      <button className={styles.login} onClick={()=> loginWithRedirect()}>Log In</button>
-      </div>
-      
-      : false
+      <div></div>
     )
 }

@@ -22,11 +22,12 @@ const deleteArtworkInCart = async(artworkInCartID)=>{
 }
 
 const updateCart = async(totalPrice, cartId) =>{
-    return await Cart.update({
-        totalPrice,
+    return await Cart.update(
+    {
+    totalPrice,
     },
-    {where:
-        {
+    {
+    where:{
         id:cartId,
     }
   })
@@ -44,4 +45,31 @@ const updateCart = async(totalPrice, cartId) =>{
 //     }
 // }
 
-module.exports={getCart, addArtworkInCart, deleteArtworkInCart, updateCart }
+const resetUserCart= async (userId)=>
+{    
+    try {
+        let newCartId=await Cart.create().then(r=>r.dataValues.id);
+        let user=await User.findByPk(userId);
+        await Cart.destroy({
+            where:{
+                id:user.cartId
+            }
+        })
+        await User.update(
+            {
+            cartId:newCartId,
+            },
+            {
+            where: {
+                id: userId,
+            },
+            }
+        );
+        return {status:"Cart reseted"}
+    } catch (error) {
+        console.log(error.message)
+        return {status:"Error updating user cart"}
+    }
+}
+
+module.exports={getCart, addArtworkInCart, deleteArtworkInCart, updateCart, resetUserCart }

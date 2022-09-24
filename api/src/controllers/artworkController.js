@@ -65,6 +65,7 @@ const getDbArtworks = async () => {
           ? collecting_institution
           : "false",
         image: image,
+        show: true,
         creator: artist ? artist : "unknown",
         medio: medio,
         dimensions: dimensions,

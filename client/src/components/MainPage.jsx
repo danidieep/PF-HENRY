@@ -13,10 +13,6 @@ import LogIn from "./LogIn"
 import LogOut from "./LogOut"
 
 
-
-
-
-
 let ProductsPorPage = 6
 
 export default function MainPage(props) {

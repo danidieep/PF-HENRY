@@ -1,17 +1,18 @@
-import { useDispatch, useSelector } from "react-redux"
-import { deleteProductFromCarrito,addProductToCarrito,getProductById, cleanProductId } from "../actions/index"
-import React, { useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import Loader from "./Loader"
-import Message from "./Message"
-import styles from "./ModulesCss/CardsDetails.module.css"
-import { useEffect } from 'react'
-import { useAuth0 } from "@auth0/auth0-react"
-import { useMemo } from "react"
-
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProductFromCarrito,
+  addProductToCarrito,
+  getProductById,
+  cleanProductId,
+} from "../actions/index";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import Loader from "./Loader";
+import Message from "./Message";
+import styles from "./ModulesCss/CardsDetails.module.css";
+import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useMemo } from "react";
 
 export default function CardDetails(props) {
   const { id } = useParams();
@@ -23,28 +24,39 @@ export default function CardDetails(props) {
   const [cantCompr, setCantCompr] = useState(0);
 
   useEffect(() => {
-    if(JSON.parse(localStorage.getItem("cart"))===null){localStorage.setItem("cart", JSON.stringify([]))}
-    dispatch(cleanProductId())
-    dispatch(getProductById(id))
+    if (JSON.parse(localStorage.getItem("cart")) === null) {
+      localStorage.setItem("cart", JSON.stringify([]));
+    }
+    dispatch(cleanProductId());
+    dispatch(getProductById(id));
     console.log(product[0]);
-  }, [])
+  }, []);
 
-  
+  // const addToCartOrDelete = async ()=>{
+  //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
+  //   if(ArtInCuesiton.length){
+  //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
+  //     alert("artWork deleted from cart")
+  //     console.log(JSON.parse(localStorage.getItem("cart")))
+  //   }
+  //   else{
+  //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
+  //     alert("artWork added to cart")
+  //   dispatch(cleanProductId());
+  //   dispatch(getProductById(id));
+  // }, []);
 
-  const addToCartOrDelete = async ()=>{
-   const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
-    if(ArtInCuesiton.length){
-     dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
-      alert("artWork deleted from cart")
-      console.log(JSON.parse(localStorage.getItem("cart")))
+  const addToCartOrDelete = async () => {
+    const token = getAccessTokenSilently();
+    const ArtInCuesiton = state.carrito.filter(
+      (element) => element === product[0].title
+    );
+    if (ArtInCuesiton.length) {
+      deleteProductFromCarrito({ artId: product[0].id, email }, token);
+    } else {
+      addProductToCarrito({ artId: product[0].id, email }, token);
     }
-    else{
-      dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
-      alert("artWork added to cart")
-    }
-  }
-
-
+  };
 
   // const addCount = (action) =>{
   //  if(cantCompr>0){
@@ -62,10 +74,7 @@ export default function CardDetails(props) {
         <div className={styles.header}>
           <div>
             <Link to="/MainPage">
-              <button className={styles.btnHome}>
-                Home
-              </button>
-             
+              <button className={styles.btnHome}>Home</button>
             </Link>
           </div>
           <div></div>
@@ -85,40 +94,62 @@ export default function CardDetails(props) {
           </div>
         </div>
       </header>
-      <div id='conteinerDetail'>
-        {
-          product.length > 0 ?
-            <div>
-              <div className={styles.data}>
-                <h1 className={styles.artist}>{product[0].creator}</h1>
-                <div className={styles.detailsText}>
-                  <h3 className={styles.detailsTittle}> {product[0].title}, {product[0].date}</h3>
-                  <h3 className={styles.detailsH3}> {product[0].collecting_institution}</h3>
-                  <h3 className={styles.detailsH3}> {product[0].medio}</h3>
-                  <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
-                  <h3 className={styles.detailsH3}>$ {product[0].price}</h3>
-                  <div className={styles.buttonAddCartPos}>
-                    {/* <button onClick={()=>addCount("-")}>-</button> */}
+      <div id="conteinerDetail">
+        {product.length > 0 ? (
+          <div>
+            <div className={styles.data}>
+              <h1 className={styles.artist}>{product[0].creator}</h1>
+              <div className={styles.detailsText}>
+                <h3 className={styles.detailsTittle}>
+                  {" "}
+                  {product[0].title}, {product[0].date}
+                </h3>
+                <h3 className={styles.detailsH3}>
+                  {" "}
+                  {product[0].collecting_institution}
+                </h3>
+                <h3 className={styles.detailsH3}> {product[0].medio}</h3>
+                <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
+                <h3 className={styles.detailsH3}>$ {product[0].price}</h3>
+                <div className={styles.buttonAddCartPos}>
+                  {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-
-                    {true?
-                   ( <button className={styles.buttonAddCart}
-                     onClick={addToCartOrDelete}>Add to cart</button>)
-                   : <button className={styles.buttonAddCart}
-                   onClick={addToCartOrDelete}>Delete from cart</button>
-                  
-                  }
-                    {/* <button onClick={()=>addCount("+")}>+</button> */}
-                    {/* <span>cantidad a comprar: {cantCompr}</span> */}
-                  </div>
+                  {true ? (
+                    <button
+                      className={styles.buttonAddCart}
+                      onClick={addToCartOrDelete}
+                    >
+                      Add to cart
+                    </button>
+                  ) : (
+                    <button
+                      className={styles.buttonAddCart}
+                      onClick={addToCartOrDelete}
+                    >
+                      Delete from cart
+                    </button>
+                  )}
+                  {/* <button onClick={()=>addCount("+")}>+</button> */}
+                  {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>
-                <div className={styles.imgDetails}>
-                  <img src={product[0].image ? product[0].image : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"} alt="img not found" width="450px" height="400px" />
-                </div>
-
               </div>
-            </div> : <div>{Loader}</div>
-        }
+              <div className={styles.imgDetails}>
+                <img
+                  src={
+                    product[0].image
+                      ? product[0].image
+                      : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"
+                  }
+                  alt="img not found"
+                  width="450px"
+                  height="400px"
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>{Loader}</div>
+        )}
       </div>
     </div>
   );

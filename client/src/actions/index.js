@@ -1,7 +1,27 @@
 import axios from "axios";
 
-import {GET_PRODUCTS_FROM_CARRITODB,DELETE_FILTER,NOT_FOUND} from "./action-types.js"
-import {GET_USER,DELETE_ARTWORKS,ADD_FILTER_MEDIUM,FILTER_BY_MEDIUM,ADD_PRICE_TYPE,ADD_FILTER_ARTIST,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS, GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID, SHOW_ALL_PRODUCTS, ORDER_BY_PRICE,ADD_FILTERS} from "./action-types.js"
+import {
+  GET_PRODUCTS_FROM_CARRITODB,
+  DELETE_FILTER,
+  NOT_FOUND,
+} from "./action-types.js";
+import {
+  GET_USER,
+  DELETE_ARTWORKS,
+  ADD_FILTER_MEDIUM,
+  FILTER_BY_MEDIUM,
+  ADD_PRICE_TYPE,
+  ADD_FILTER_ARTIST,
+  FILTER_BY_ARTIST,
+  GET_ARTISTS,
+  GET_PRODUCTS,
+  GET_PRODUCT_BY_NAME,
+  GET_PRODUCT_BY_ID,
+  CLEAN_PRODUCT_ID,
+  SHOW_ALL_PRODUCTS,
+  ORDER_BY_PRICE,
+  ADD_FILTERS,
+} from "./action-types.js";
 
 export function deleteArtwork(id) {
   return async function (dispatch) {
@@ -131,65 +151,52 @@ export const filterByMedium = (payload) => {
 };
 
 export const addFilterMedium = (payload) => {
-      return{
-            type:ADD_FILTER_MEDIUM, payload
-      }
+  return {
+    type: ADD_FILTER_MEDIUM,
+    payload,
+  };
+};
+
+export const AddFilters = (payload) => {
+  return {
+    type: ADD_FILTERS,
+    payload,
+  };
+};
+
+export const deleteProductFromCarrito = (payload) => {
+  return async function () {
+    let json = await axios.put("/cart/" + payload);
+    return json;
+  };
+};
+
+export const addProductToCarrito = (payload) => {
+  return async function () {
+    await axios.post(`/cart/${payload.itemId}`, { idU: payload.userId });
+  };
+};
+
+export const getUser = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findorcreate`, payload);
+    return dispatch({
+      type: GET_USER,
+      payload: json.data,
+    });
+  };
+};
+
+export function deleteUser(userId) {
+  axios.delete(`users/${userId}`);
 }
-
-
-
-
-
-
-export const AddFilters = (payload)=>{
-      return{
-            type:ADD_FILTERS, payload
-      }
-}
-
-
-
- 
-        
-
-export const deleteProductFromCarrito = (payload)=>{
-   return async function (){
-        let json = await axios.put('/cart/' + payload)
-        return json
-
- }
-}
-
-export const addProductToCarrito = (payload)=>{
-      return async function (){
-          await axios.post(`/cart/${payload.itemId}`, {idU:payload.userId})
-         
-   
-    }
-   }
-
-export const getUser = (payload) =>{
-      return async function (dispatch) {
-            let json = await axios.post(`/users/findorcreate`,payload)
-            return dispatch({
-                  type: GET_USER,
-                  payload: json.data
-            })
-      }
-}
-
-export  function deleteUser (userId){
-    axios.delete(`users/${userId}`)
-}
-
-
 
 export const getProductsFromCarritoDB = (userId) => {
-      return async function(dispatch){
-            let json = await axios.get("/cart/" + userId)
-            return dispatch({
-                  type : GET_PRODUCTS_FROM_CARRITODB,
-                  payload:json.data
-            })
-      }
-}
+  return async function (dispatch) {
+    let json = await axios.get("/cart/" + userId);
+    return dispatch({
+      type: GET_PRODUCTS_FROM_CARRITODB,
+      payload: json.data,
+    });
+  };
+};

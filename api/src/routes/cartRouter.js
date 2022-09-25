@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
     let user = await User.findOne({ where: { email: payload } });
     let cart = await Cart.findOne({
       where: {
-        id: user.cartId,
+        id: user.dataValues.cartId,
       },
       include: Artworkincart,
     });

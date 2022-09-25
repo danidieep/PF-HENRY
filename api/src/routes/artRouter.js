@@ -113,21 +113,16 @@ router.put("/:idArtwork", async (req, res) => {
     price,
   } = req.body;
   try {
-    await Artwork.update(
-      {
-        title,
-        date,
-        collecting_institution,
-        image,
-        creator,
-        dimensions,
-        medio,
-        price,
-      },
-      {
-        where: { id: idArtwork },
-      }
-    );
+    
+    if(title.length){Artwork.update({title},{where:{id:idArtwork}})}
+    if(date.length){Artwork.update({date},{where:{id:idArtwork}})}
+    if(collecting_institution.length){Artwork.update({collecting_institution},{where:{id:idArtwork}})}
+    if(image.length){Artwork.update({image},{where:{id:idArtwork}})}
+    if(creator.length){Artwork.update({creator},{where:{id:idArtwork}})}
+    if(dimensions.length){Artwork.update({dimensions},{where:{id:idArtwork}})}
+    if(medio.length){Artwork.update({medio},{where:{id:idArtwork}})}
+    if(price.length){Artwork.update({price},{where:{id:idArtwork}})}
+    
     res.status(200).send("se actualizo con exito la obra de arte");
   } catch (error) {
     res.status(400).send(error.message);

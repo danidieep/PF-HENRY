@@ -126,7 +126,7 @@ const enviarMail = async (name,email,password)=>{
           ({ dataValues }) => dataValues.id
         );
 
-        await User.create({name, lastname, email, password, dateBorn, role,userCartId,idAuth});
+        await User.create({name, lastname, email, password, dateBorn, role,cartId:userCartId,idAuth});
 
         const user = await User.findOne({where:{idAuth}})
          res.status(200).json(user.dataValues)

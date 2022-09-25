@@ -29,7 +29,7 @@ const enviarMail = async (name,email,password)=>{
     from : "artk3t@gmail.com",
     to:email,
     subject:"Artket",
-    text: `Hi ${name} thank you for registering on our website! Remember, your password is ${password}`
+    text: `Hi ${name}! thank you for registering on our website! Remember, your password is ${password}`
   }
 
   const transport = nodemailer.createTransport(config);
@@ -111,29 +111,25 @@ const enviarMail = async (name,email,password)=>{
 //     //     res.send(data);
 //     //   }
 //     // });
-   const { email, name, lastname, password, dateBorn, role } = req.body;
-    const users = await getUserDB();
+   const { email, name, lastname, password, dateBorn, role, idAuth } = req.body;
+    
+      const user = await User.findOne({where:{idAuth}})
+      
 
-     
-      const user = users.filter(
-        (e) => e.email.toLowerCase() === email.toLowerCase()
-      );
-
-      if (user.length) {
-        const {name,cartId,id,lastname,email} = user[0]
-        res.status(200).json({name,cartId,id,lastname,email});
+      if (user) {
+        const {name,cartId,id,lastname,email,idAuth} = user.dataValues
+        res.status(200).json({name,cartId,id,lastname,email,idAuth});
       } else {
+
+        
         const userCartId =  await Cart.create().then(
           ({ dataValues }) => dataValues.id
         );
-        await createUser(name, lastname, email, password, dateBorn, role,userCartId);
 
-        const a = await getUserDB();
+        await User.create({name, lastname, email, password, dateBorn, role,userCartId,idAuth});
 
-        const b = a.filter(
-         (e) => e.email.toLowerCase() === email.toLowerCase()
-        );
-          res.status(200).json(b);
+        const user = await User.findOne({where:{idAuth}})
+         res.status(200).json(user.dataValues)
 
        }
       })
@@ -224,6 +220,10 @@ router.post("/", async (req, res) => {
             );
       createUser(name, lastname, email, password, dateBorn, role, userCartId);
 
+      const user = await User.findOne({where:email})
+
+      if(!user){
+
       try {
         enviarMail(name,email, passNoHashed)
       } catch (error) {
@@ -231,6 +231,14 @@ router.post("/", async (req, res) => {
       }
       
       res.status(200).send("User created succesfully");
+    } else {
+
+      res.status(400).send("User allready exist")
+    }
+
+
+
+
     } else {
       const userDb = await User.findOne({
         where: { email: headers.user.email },
@@ -258,6 +266,10 @@ router.post("/", async (req, res) => {
         res.status(400).send("User allready exists");
       }
     }
+
+
+
+    
     // const tokenAdmin = jwt.sign(
     //   { name, lastname, email, password, dateBorn, role },
     //   "secret_token"
@@ -349,7 +361,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/update", async(req,res)=>{
 
   try {
-    const {email, name, lastname,id} = req.body
+    const {email, name, lastname,id,idAuth} = req.body
 
     const passNoHashed = req.body.password 
     let password =  bcypt.hashSync(passNoHashed, 8)

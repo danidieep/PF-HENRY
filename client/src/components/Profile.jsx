@@ -112,14 +112,25 @@ return (
      <hr />
      <br />
      <br />
-     <img style={{width:"15rem"}} src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"></img>
+      {data.isAuthenticated?
+      <img src={data.user.picture}></img>
+      :
+      <img style={{width:"15rem"}} src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"></img>
+      }
+    
     {!edit?
     <div>
       
       <h2>{user[0].name} {user[0].lastname} </h2>
      <h2>{user[0].email}</h2>
      <br />
-     <button onClick={()=>setEdit(!edit)}>edit</button>
+
+      {data.isAuthenticated?
+      <div></div>
+     : <button onClick={()=>setEdit(!edit)}>edit</button>
+     }
+
+
      </div>
 
      :<div>

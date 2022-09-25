@@ -21,12 +21,13 @@ function App() {
   //creamos en el local storege un array vacío
   !localStorage.getItem("user")?localStorage.setItem("user", JSON.stringify([])):console.log("va")
   //si esta autenticado sse subo los datos de auth0 al local storage, caso contrario se convertira en un array vacío
-
+  console.log(user)
   const userData = isAuthenticated
     ? {
         name: user.given_name,
         lastname: user.family_name,
         email: user.email,
+        idAuth: user.sub,
         dateBorn: "0",
         password: "123",
         //si esta auntenticado userData va a ser igual a los datos auth0
@@ -34,7 +35,8 @@ function App() {
     : {
         name: JSON.parse(localStorage.getItem("user")).given_name,
         lastname: JSON.parse(localStorage.getItem("user")).family_name,
-        email: JSON.parse(localStorage.getItem("user")).email, //
+        email: JSON.parse(localStorage.getItem("user")).email,
+        idAuth:JSON.parse(localStorage.getItem("user")).idAuth, 
         dateBorn: "0",
         password: "123",
       };

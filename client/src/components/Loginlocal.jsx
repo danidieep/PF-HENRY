@@ -48,6 +48,7 @@ export default function LoginLocal() {
         />
         <br></br>
         <input
+        type="password"
           name="password"
           value={input.password}
           autoComplete="off"

@@ -138,6 +138,7 @@ const onlyCharacters = /^[a-zA-Z\s]+$/
 
         <div>
           <input
+          type="password"
             name="password"
             value={input.password}
             autoComplete="off"

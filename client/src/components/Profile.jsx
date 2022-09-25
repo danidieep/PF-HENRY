@@ -98,13 +98,13 @@ return (
 
       <form onSubmit={(e)=>handleSubmit(e)} >
         <h2>Name: {user[0].name} </h2>
-        <input placeholder="New name..." onChange={(e)=>handleChange(e)} name="name"></input>
+        <input  placeholder="New name..." onChange={(e)=>handleChange(e)} name="name"></input>
         <h2>LastName:  {user[0].lastname}</h2>
         <input placeholder="new Lastname..." onChange={(e)=>handleChange(e)} name="lastname" ></input>
         <h2>Email:  {user[0].email}</h2>
-        <input placeholder="new email..." onChange={(e)=>handleChange(e)} name="email" ></input>
+        <input type="email" placeholder="new email..." onChange={(e)=>handleChange(e)} name="email" ></input>
         <h2>Password:</h2>
-        <input placeholder="new password..." onChange={(e)=>handleChange(e)} name="password" ></input>
+        <input type="password" placeholder="new password..." onChange={(e)=>handleChange(e)} name="password" ></input>
         <br></br>
         <br></br>
         <button type="submit">save changes</button>

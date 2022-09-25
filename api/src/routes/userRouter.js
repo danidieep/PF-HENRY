@@ -5,6 +5,40 @@ const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
 const getUserByID = require("../controllers/getUserByID");
 const bcypt = require("bcrypt")
+const nodemailer = require("nodemailer")
+
+
+
+
+
+
+const enviarMail = async (email)=>{
+  const config = {
+    host : "smtp.gmail.com",
+    port:587,
+    auth : {
+      user : "artk3t@gmail.com",
+      pass :"ylqfjwgnvluhqkbp"
+    },
+    tls:{
+      rejectUnauthorized:false
+    }
+  }
+
+  const mensaje = {
+    from : "artk3t@gmail.com",
+    to:email,
+    subject:"Artket",
+    text: "Thank you for registering in oue website!"
+  }
+
+  const transport = nodemailer.createTransport(config);
+  const info = await transport.sendMail(mensaje);
+  console.log(info)
+}
+
+
+
 
 // router.post("/", async (req, res) => {
 //   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
@@ -180,8 +214,8 @@ router.post("/", async (req, res) => {
   const { name, lastname, email, dateBorn, role, headers } = req.body;
   const passNoHashed = req.body.password
   let password =  bcypt.hashSync(passNoHashed, 8)
-
-
+  
+  
   console.log(req.body);
   try {
     if (!headers) {
@@ -189,6 +223,7 @@ router.post("/", async (req, res) => {
               ({ dataValues }) => dataValues.id
             );
       createUser(name, lastname, email, password, dateBorn, role, userCartId);
+      enviarMail(email)
       res.status(200).send("User created succesfully");
     } else {
       const userDb = await User.findOne({
@@ -207,6 +242,7 @@ router.post("/", async (req, res) => {
           idAuth: headers.user.sub,
         });
         await User.bulkCreate(arr);
+        enviarMail()
         res.status(200).send("User created succesfully");
       } else {
         res.status(400).send("User allready exists");

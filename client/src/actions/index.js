@@ -5,6 +5,7 @@ import {
   GET_PRODUCTS_FROM_CARRITODB,
   DELETE_FILTER,
   NOT_FOUND,
+  SEND_EMAIL,
 } from "./action-types.js";
 import {
   GET_USER,
@@ -254,4 +255,15 @@ export const findUserById = (id)=>{
       payload: json.data,
     });
   };
+}
+
+export function sendEmail(a) {
+  return async function (dispatch) {
+        const email = await axios.post('/sendemail',{email:a })
+        return dispatch({
+              type: SEND_EMAIL,
+              payload: email
+        })
+  }
+
 }

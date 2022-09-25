@@ -17,8 +17,8 @@ const enviarMail = async (name,email,password)=>{
     host : "smtp.gmail.com",
     port:587,
     auth : {
-      user : "artk3t@gmail.com",
-      pass :"ylqfjwgnvluhqkbp"
+      user : "artketgalery@gmail.com",
+      pass :"vvvicqjzjkocwjtd"
     },
     tls:{
       rejectUnauthorized:false
@@ -26,7 +26,7 @@ const enviarMail = async (name,email,password)=>{
   }
 
   const mensaje = {
-    from : "artk3t@gmail.com",
+    from : "artketgalery@gmail.com",
     to:email,
     subject:"Artket",
     text: `Hi ${name}! thank you for registering on our website! Remember, your password is ${password}`
@@ -215,10 +215,12 @@ router.post("/", async (req, res) => {
   console.log(req.body);
   try {
     if (!headers) {
-      const userCartId =  await Cart.create().then(
+      const cartId =  await Cart.create().then(
               ({ dataValues }) => dataValues.id
             );
-      createUser(name, lastname, email, password, dateBorn, role, userCartId);
+
+
+      createUser(name, lastname, email, password, dateBorn, role, cartId);
 
       const user = await User.findOne({where:email})
 

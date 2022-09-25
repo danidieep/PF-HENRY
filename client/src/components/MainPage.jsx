@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect } from "react"
-import { filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
+import {sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -100,6 +100,13 @@ export default function MainPage(props) {
     dispatch(AddFilters({ type: "medium", name }))
     // dispatch(filterByMedium(type))
     handleReset()
+  }
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    const email = JSON.parse(localStorage.getItem("user"))[0].email
+    dispatch(sendEmail(email))
+    alert('You have been suscribed to our Newsletter')
   }
 
 
@@ -254,18 +261,29 @@ export default function MainPage(props) {
             <button className={styles.button31P} onClick={handlerNext} >{`>`}</button>
           </div>
           <div className={styles.footer_info}>
-            <p className={styles.newsletter}>
-              Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
-            </p>
-            <div className={styles.formNewsletter}>
-              <form className={styles.formNewsletter} onSubmit={(e) => handleSubmit(e)} >
-                <input className={styles.formNewsletterBox} type="text"
-                  name="suscribe"
-                />
-              </form>
-            </div>
-          </div>
+           
+              {JSON.parse(localStorage.getItem("user")).length?
+              <div>
+               <p className={styles.newsletter}>
+               Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
+              </p>
+             <div className={styles.formNewsletter}>
+               <form className={styles.formNewsletter} onSubmit={(e) => handleSubmit(e)} >
+               <button onClick={handleSubscribe}>Subscribe to Newsletter</button>
+               </form>
+             </div>
+             
+           
+             </div>
+           
+            :false
+
+              }
+            
+        </div>
+             
         </footer>
+         
       </div>
     </div>
   )

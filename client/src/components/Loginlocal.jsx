@@ -27,7 +27,7 @@ export default function LoginLocal() {
       password: "",
     });
 
-    window.history.back();
+    window.location.href="/MainPage";
   }
 
   return (

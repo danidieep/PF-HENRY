@@ -16,6 +16,14 @@ export default function Profile(){
     const dispatch = useDispatch()
     const [edit, setEdit] = useState(false)
 
+    const validatorEmail = (valor)=>{
+      if(/^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/.test(valor))
+       {return true}
+       else return false
+     }
+     const onlyCharacters = /^[a-zA-Z\s]+$/
+     
+
 
     const user = JSON.parse(localStorage.getItem("user"))
 
@@ -25,6 +33,8 @@ export default function Profile(){
         deleteUser(user[0].id)
         data.logout()
       }
+
+
 
 
       const [input, setInput] = useState({
@@ -46,16 +56,35 @@ export default function Profile(){
       }
     
       function handleSubmit(e) {
-        e.preventDefault();
-        dispatch(updateUser(input))
-        setTimeout(() => {
-          dispatch(findUserById(user[0].id))
-        }, 200);
-       
-       setTimeout(() => {
-        window.location.reload()
-      }, 300);
+        if(input.email!==""){
+          if(validatorEmail(input.email)){
+            e.preventDefault();
+            dispatch(updateUser(input))
+            setTimeout(() => {
+              dispatch(findUserById(user[0].id))
+            }, 200);
+          
+          setTimeout(() => {
+            window.location.reload()
+          }, 300);
+        }
+        else{
+          alert("wrong email format")
+        
+        }
+     }
+     else{
+      e.preventDefault();
+      dispatch(updateUser(input))
+      setTimeout(() => {
+        dispatch(findUserById(user[0].id))
+      }, 200);
+    
+    setTimeout(() => {
+      window.location.reload()
+    }, 300);
 
+     }
       }
 
 
@@ -77,7 +106,7 @@ return (
      {user.length?
     
      <div>
-    <button onClick={()=>window.history.back()}>Back</button>
+    <button onClick={()=>window.location.href="/MainPage"}>Back</button>
      <h1>My profile</h1>
      <br />
      <hr />
@@ -102,7 +131,7 @@ return (
         <h2>LastName:  {user[0].lastname}</h2>
         <input placeholder="new Lastname..." onChange={(e)=>handleChange(e)} name="lastname" ></input>
         <h2>Email:  {user[0].email}</h2>
-        <input type="email" placeholder="new email..." onChange={(e)=>handleChange(e)} name="email" ></input>
+        <input  placeholder="new email..." onChange={(e)=>handleChange(e)} name="email" ></input>
         <h2>Password:</h2>
         <input type="password" placeholder="new password..." onChange={(e)=>handleChange(e)} name="password" ></input>
         <br></br>

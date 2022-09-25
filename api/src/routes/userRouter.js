@@ -12,7 +12,7 @@ const nodemailer = require("nodemailer")
 
 
 
-const enviarMail = async (email)=>{
+const enviarMail = async (name,email,password)=>{
   const config = {
     host : "smtp.gmail.com",
     port:587,
@@ -29,7 +29,7 @@ const enviarMail = async (email)=>{
     from : "artk3t@gmail.com",
     to:email,
     subject:"Artket",
-    text: "Thank you for registering in oue website!"
+    text: `Hi ${name} thank you for registering on our website! Remember, your password is ${password}`
   }
 
   const transport = nodemailer.createTransport(config);
@@ -223,7 +223,13 @@ router.post("/", async (req, res) => {
               ({ dataValues }) => dataValues.id
             );
       createUser(name, lastname, email, password, dateBorn, role, userCartId);
-      enviarMail(email)
+
+      try {
+        enviarMail(name,email, passNoHashed)
+      } catch (error) {
+        console.log(error)
+      }
+      
       res.status(200).send("User created succesfully");
     } else {
       const userDb = await User.findOne({
@@ -242,7 +248,11 @@ router.post("/", async (req, res) => {
           idAuth: headers.user.sub,
         });
         await User.bulkCreate(arr);
-        enviarMail()
+        try {
+          enviarMail(name,email, passNoHashed)
+        } catch (error) {
+          console.log(error)
+        }
         res.status(200).send("User created succesfully");
       } else {
         res.status(400).send("User allready exists");

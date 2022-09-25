@@ -8,7 +8,7 @@ const getUserByID = require("../controllers/getUserByID");
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
-  let passHash = await bcryptjs.hash(password, 8)
+  const passHash = await bcryptjs.hash(password, 8)
   try {
     if (!headers) {
       const userCartId = await Cart.create().then(

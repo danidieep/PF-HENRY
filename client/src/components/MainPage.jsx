@@ -9,10 +9,8 @@ import Message from "./Message"
 import Loader from "./Loader"
 import styles from "./ModulesCss/MainPage.module.css"
 import { useSelector, useDispatch } from "react-redux"
-
-
-
-
+import LogIn from "./LogIn"
+import LogOut from "./LogOut"
 
 
 let ProductsPorPage = 6
@@ -126,9 +124,9 @@ export default function MainPage(props) {
             <div className={styles.SearchBarHome}>
               <SearchBar handleReset={handleReset} ></SearchBar>
             </div>
-            <button className={styles.buttonProfile}>Log in</button>
             <div>
-              <button className={styles.buttonProfile}>Register</button>
+             <LogIn></LogIn>
+             <LogOut></LogOut>
             </div>
 
           </div>

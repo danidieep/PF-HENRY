@@ -33,33 +33,33 @@ dispatch(vaciarUser())
     <div>
       {!isAuthenticated && !userLocalStorage.length ?(
         <div>
-          <button onClick={() => logInUser()}>Log/Reg with auth0</button>
+          <button onClick={() => logInUser()}  className={styles.logout} >Log/Reg with auth0</button>
 
           <Link to="/LocalRegister">
-            <button>Local register</button>
+            <button className={styles.logout}>Local register</button>
           </Link>
           <Link to="/LocalLogin">
-            <button>Local Login</button>
+            <button  className={styles.logout} >Local Login</button>
           </Link>
         </div>
       ) : isAuthenticated? (
         <div>
           <Link to="/Profile">
-            <button>Profile</button>
+            <button  className={styles.logout} >Profile</button>
           </Link>
-          <button onClick={logOutAuth0}>Log out</button>
+          <button onClick={logOutAuth0}  className={styles.logout} >Log out</button>
         </div>
       ) : !isAuthenticated && userLocalStorage.length ? (
         <div>
           <Link to="/Profile">
-            <button>Profile</button>
+            <button  className={styles.logout} >Profile</button>
           </Link>
-          <button onClick={logOutLocal}>Log out</button>
+          <button onClick={logOutLocal}  className={styles.logout} >Log out</button>
         </div>
       ) : (
         <div>
         <div> error</div>
-        <button onClick={logout}>logout</button>
+        <button onClick={logout}  className={styles.logout} >logout</button>
         </div>
       )}
     </div>

@@ -4,7 +4,7 @@ import { getUser } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { deleteUser } from "../actions";
+import { deleteUser, updateUser, findUserById} from "../actions";
 
 
 
@@ -27,6 +27,50 @@ export default function Profile(){
       }
 
 
+      const [input, setInput] = useState({
+        name: "",
+        lastname: "",
+        email: "",
+        password: "",
+        id:user[0].id
+      });
+    
+      function handleChange(e) {
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value,
+        });
+
+        console.log(e.target.value)
+        console.log(input)
+      }
+    
+      function handleSubmit(e) {
+        e.preventDefault();
+        dispatch(updateUser(input))
+        setTimeout(() => {
+          dispatch(findUserById(user[0].id))
+        }, 200);
+       
+       setTimeout(() => {
+        window.location.reload()
+      }, 300);
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 return (
 
     <div>
@@ -39,39 +83,43 @@ return (
      <hr />
      <br />
      <br />
-
+     <img style={{width:"15rem"}} src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"></img>
     {!edit?
     <div>
-     <h2>picture</h2>
-     <img style={{width:"15rem"}} src="https://pbs.twimg.com/profile_images/1077237220497678336/V07CdmoH_400x400.jpg"></img>
-     <h2>Name: {user[0].name} </h2>
-     <h2>LastName:  {user[0].lastname}</h2>
-     <h2>Email:  {user[0].email}</h2>
-     <h2>Date born:  {user[0].dateBorn}</h2>
+      
+      <h2>{user[0].name} {user[0].lastname} </h2>
+     <h2>{user[0].email}</h2>
      <br />
      <button onClick={()=>setEdit(!edit)}>edit</button>
      </div>
 
      :<div>
-        <h2>picture</h2>
-     <img style={{width:"15rem"}} src="https://pbs.twimg.com/profile_images/1077237220497678336/V07CdmoH_400x400.jpg"></img>
-     <h2>Name: {user[0].name} </h2>
-     <input placeholder="New name..."></input>
-     <h2>LastName:  {user[0].lastname}</h2>
-     <input placeholder="new Lastname..."></input>
-     <h2>Email:  {user[0].email}</h2>
-     <input placeholder="new email..."></input>
-     <h2>Date born:  {user[0].dateBorn}</h2>
-     <input placeholder="new date born..."></input>
-     <br />
-     <button onClick={()=>setEdit(!edit)}>cancel</button>
-     </div>
-}
+      
+
+      <form onSubmit={(e)=>handleSubmit(e)} >
+        <h2>Name: {user[0].name} </h2>
+        <input placeholder="New name..." onChange={(e)=>handleChange(e)} name="name"></input>
+        <h2>LastName:  {user[0].lastname}</h2>
+        <input placeholder="new Lastname..." onChange={(e)=>handleChange(e)} name="lastname" ></input>
+        <h2>Email:  {user[0].email}</h2>
+        <input placeholder="new email..." onChange={(e)=>handleChange(e)} name="email" ></input>
+        <h2>Password:</h2>
+        <input placeholder="new password..." onChange={(e)=>handleChange(e)} name="password" ></input>
+        <br></br>
+        <br></br>
+        <button type="submit">save changes</button>
+     </form>
+      <br></br>
+       <button style={{backgroundColor:"red", color:"white"}}
+       onClick={()=> delete_User()
+       }
+      >Delete user</button>
+      <br></br>
+      <button onClick={()=>setEdit(!edit)}>cancel</button>
+      </div>
+}   
     <br/>
-    <button style={{backgroundColor:"red", color:"white"}}
-    onClick={()=> delete_User()
-    }
-    >Delete user</button>
+   
      </div>
      :
      <div>Loading</div>

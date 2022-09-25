@@ -275,11 +275,13 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const userById = await getUserByID(id);
-    if (userById.length) {
-      res.send(userById);
+    const userById = await User.findOne({where:{id}});
+    if (userById) {
+      const {id,cartId,name,lastname,email} = userById.dataValues
+      res.status(200).json({id,cartId,name,lastname,email})
     }
-    res.send("no se ha encontrado un usuario con ese id");
+    else{res.send("no se ha encontrado un usuario con ese id");}
+    
   } catch (error) {
     res.status(404).send(error);
   }
@@ -296,6 +298,32 @@ router.delete("/:id", async (req, res) => {
     res.status(404).send(error);
   }
 });
+
+
+router.post("/update", async(req,res)=>{
+
+  try {
+    const {email, name, lastname,id} = req.body
+
+    const passNoHashed = req.body.password 
+    let password =  bcypt.hashSync(passNoHashed, 8)
+
+    if(email.length){User.update({email},{where:{id}})}
+    if(name.length){User.update({name},{where:{id}})}
+    if(lastname.length){User.update({lastname},{where:{id}})}
+    if(password.length){User.update({password},{where:{id}})}
+    res.status(200).send("se actualize paa")
+    
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+
+
+
+
 
 module.exports = router;
 

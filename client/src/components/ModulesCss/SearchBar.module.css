@@ -10,7 +10,7 @@
 
 input[type="text"] {
   height: 24px;
-  font-size: 20px;
+  font-size: 1rem;
   display: inline-block;
   font-family: 'Merriweather', serif;
   font-weight: 100;
@@ -18,7 +18,7 @@ input[type="text"] {
   outline: none;
   color: rgb(0, 0, 0);
   padding: 3px;
-  width: 0px;
+  width: 2rem;
   top: 0;
   right: 0;
   background: none;

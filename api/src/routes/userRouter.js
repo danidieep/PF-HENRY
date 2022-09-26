@@ -15,7 +15,8 @@ const nodemailer = require("nodemailer")
 const enviarMail = async (name,email,password)=>{
   const config = {
     host : "smtp.gmail.com",
-    port:587,
+    port:465,
+    secure: true,
     auth : {
       user : "artketgalery@gmail.com",
       pass :"vvvicqjzjkocwjtd"
@@ -26,7 +27,7 @@ const enviarMail = async (name,email,password)=>{
   }
 
   const mensaje = {
-    from : "artketgalery@gmail.com",
+    from : '"Arket" <artketgalery@gmail.com>',
     to:email,
     subject:"Artket",
     text: `Hi ${name}! thank you for registering on our website! Remember, your password is ${password}`
@@ -218,17 +219,18 @@ router.post("/", async (req, res) => {
   console.log(req.body);
   try {
     if (!headers) {
-      const cartId =  await Cart.create().then(
-              ({ dataValues }) => dataValues.id
-            );
+     
 
-
-      createUser(name, lastname, email, password, dateBorn, role, cartId);
+      
 
       const user = await User.findOne({where:{email}})
 
       if(!user){
+        const cartId =  await Cart.create().then(
+          ({ dataValues }) => dataValues.id
+        );
 
+        createUser(name, lastname, email, password, dateBorn, role, cartId);
       try {
         enviarMail(name,email, passNoHashed)
       } catch (error) {

@@ -18,13 +18,14 @@
 }
 
 .header {
-    background-color: rgb(255, 255, 255);
-    display: flex;
+    background-color: white;
+    display: grid;
     border-radius: 5px;
-    height: 120px;
+    height: 6rem;
     width: 100%;
-    flex-flow: row wrap;
+    grid-template-columns:  20% 15% 20% 40%;
     justify-content: space-between;
+    align-content: center;
 
 }
 

@@ -30,7 +30,7 @@ export default function LoginLocal() {
     setTimeout(() => {
       window.location.href = "/MainPage"
    
-    }, 300);
+    }, 600);
     
   }
 

@@ -15,7 +15,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function CardDetails(props) {
   const { id } = useParams();
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
+
+  const user = JSON.parse(localStorage.getItem("user"))[0]
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
@@ -28,16 +30,16 @@ export default function CardDetails(props) {
   }, []);
 
   const addToCartOrDelete = async () => {
-    const token = getAccessTokenSilently();
+    
     const email = user.email;
     const ArtInCuesiton = state.carrito.filter(
       (element) => element === product[0].title
     );
     if (ArtInCuesiton.length) {
-      deleteProductFromCarrito({ artId: product[0].id, email }, token);
+      deleteProductFromCarrito({ artId: product[0].id, email }, );
       alert("Deleted from cart");
     } else {
-      addProductToCarrito({ artId: product[0].id, email }, token);
+      addProductToCarrito({ artId: product[0].id, email }, );
       alert("Added to cart");
     }
   };

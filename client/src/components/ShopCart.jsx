@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductsFromCarritoDB } from "../actions";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { useMemo } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+
 
 export default function ShopCart() {
   const user = JSON.parse(localStorage.getItem("user"))
@@ -32,10 +31,20 @@ export default function ShopCart() {
       </Link>
       {carrito.map((element) => {
         return (
-          <div>
-            <span>artWork: {element.title}</span>
-            <span>Price: {element.price}</span>
-
+          <div key={element.id}>
+          
+            <br />
+            <br />
+            <br />
+            
+            <span>Title: {element.title}</span>
+            <br />
+            <span>Author: {element.creator}</span>
+            <br />
+            <span>Price: ${element.price}</span>
+            <br />
+            <img style={{"width":"10rem"}} src={element.image}></img>
+            
           </div>
         );
       })}

@@ -116,8 +116,8 @@ export default function MainPage(props) {
         <header >
           {/* <div className={styles.content2}> */}
           <div className={styles.header}>
-            <div>
-              <button className={styles.Products}>About us</button>
+          <div>
+              <h1 className={styles.logo}>Artket</h1>
             </div>
             <div>
               <button onClick={() => {
@@ -125,9 +125,7 @@ export default function MainPage(props) {
                 dispatch(showAllProducts())
               }} className={styles.Products}>Show all Products</button>
             </div>
-            <div>
-              <h1 className={styles.logo}>Artket</h1>
-            </div>
+            
             <div className={styles.SearchBarHome}>
               <SearchBar handleReset={handleReset} ></SearchBar>
             </div>
@@ -213,7 +211,7 @@ export default function MainPage(props) {
         {/* LIMPIAR FILTROS */}
         {state.filters.map(element => {
           return (
-            <div>
+            <div key={1}>
               <span>{element.name}</span>
               <button onClick={() => deleteFilter_(element)}>X</button>
             </div>

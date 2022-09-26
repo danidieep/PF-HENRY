@@ -12,7 +12,7 @@ import {
   DELETE_ARTWORKS,
   ADD_FILTER_MEDIUM,
   FILTER_BY_MEDIUM,
-  ADD_PRICE_TYPE,FIND_USER_BY_ID,
+  ADD_PRICE_TYPE, FIND_USER_BY_ID,
   ADD_FILTER_ARTIST,
   FILTER_BY_ARTIST,
   GET_ARTISTS,
@@ -44,9 +44,11 @@ export function putArtwork(payload) {
   };
 }
 
-export function getProducts() {
+export function getProducts(setLoading) {
   return async function (dispatch) {
+    setLoading(true)
     let json = await axios.get("/artworks");
+    setLoading(false)
     return dispatch({
       type: GET_PRODUCTS,
       payload: json.data,
@@ -195,7 +197,7 @@ export const getUser = (data) => {
 
 export const sendUserInfo = async ({ name, lastname, email, password, dateBorn, role, headers }) => {
   await axios.post("/users", {
-    name, lastname, email, password, dateBorn, role, headers 
+    name, lastname, email, password, dateBorn, role, headers
   });
 };
 
@@ -235,19 +237,19 @@ export const vaciarUser = () => {
 
 
 export const setUser = () => {
-  return{
-    type:SET_USER,
+  return {
+    type: SET_USER,
   }
 }
 
-export const updateUser = (user) =>{
+export const updateUser = (user) => {
   return async function () {
     await axios.post(`/users/update`, user)
   }
 }
 
-export const findUserById = (id)=>{
-  
+export const findUserById = (id) => {
+
   return async function (dispatch) {
     let json = await axios.get(`users/${id}`);
     return dispatch({
@@ -259,11 +261,11 @@ export const findUserById = (id)=>{
 
 export function sendEmail(a) {
   return async function (dispatch) {
-        const email = await axios.post('/sendemail',{email:a })
-        return dispatch({
-              type: SEND_EMAIL,
-              payload: email
-        })
+    const email = await axios.post('/sendemail', { email: a })
+    return dispatch({
+      type: SEND_EMAIL,
+      payload: email
+    })
   }
 
 }

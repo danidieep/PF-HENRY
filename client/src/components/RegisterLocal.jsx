@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../actions/index";
+import styles from "./ModulesCss/LogIn.module.css"
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -16,37 +17,37 @@ export default function Register() {
   });
 
 
-const validatorEmail = (valor)=>{
- if(/^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/.test(valor))
-  {return true}
-  else return false
-}
-const onlyCharacters = /^[a-zA-Z\s]+$/
+  const validatorEmail = (valor) => {
+    if (/^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/.test(valor)) { return true }
+    else return false
+  }
+  const onlyCharacters = /^[a-zA-Z\s]+$/
 
 
   function handleChange(e) {
-    if(e.target.name==="name"&& onlyCharacters.test(e.target.value) || e.target.value==="")
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    if(e.target.name==="lastname"&& onlyCharacters.test(e.target.value) || e.target.value==="")
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    if(e.target.name==="email"){
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });}
-    if(e.target.name==="password"){
+    if (e.target.name === "name" && onlyCharacters.test(e.target.value) || e.target.value === "")
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    if (e.target.name === "lastname" && onlyCharacters.test(e.target.value) || e.target.value === "")
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    if (e.target.name === "email") {
       setInput({
         ...input,
         [e.target.name]: e.target.value,
       });
     }
-    if(e.target.name==="dateBorn"){
+    if (e.target.name === "password") {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    }
+    if (e.target.name === "dateBorn") {
       setInput({
         ...input,
         [e.target.name]: e.target.value,
@@ -57,8 +58,8 @@ const onlyCharacters = /^[a-zA-Z\s]+$/
 
   function handleSubmit(e) {
     e.preventDefault();
-    if(validatorEmail(input.email)){
-      if(input.name.length>0&&input.lastname.length>0&&input.password.length>0&&input.dateBorn.length>0){
+    if (validatorEmail(input.email)) {
+      if (input.name.length > 0 && input.lastname.length > 0 && input.password.length > 0 && input.dateBorn.length > 0) {
         RegisterUser(input);
         window.location.href = "/LocalLogin"
         setInput({
@@ -69,109 +70,115 @@ const onlyCharacters = /^[a-zA-Z\s]+$/
           dateBorn: "",
         });
       }
-     
-      else{
+
+      else {
         alert("complete your data")
       }
     }
-    else if(input.email.length===0){
+    else if (input.email.length === 0) {
       alert("complete your data")
-      }
-  else{
-    alert("wrong email format")
-  }
-    
-  
-    
+    }
+    else {
+      alert("wrong email format")
+    }
+
+
+
   }
   return (
-    <div>
-      <button onClick={() => window.history.back()}>Back</button>
+    <div className={styles.containerRegister}>
+      <div className={styles.formContainer}>
 
-      <h1>lets register us!</h1>
 
-      <form>
-        <div>
-          <input
-            name="name"
-            value={input.name}
-            autoComplete="off"
-            placeholder="Name..."
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          {/* {errors.name && (
+        <h1 className={styles.logoForm}>Arteck</h1>
+
+        <form>
+          <div className={styles.optForm}>
+            <input
+              name="name"
+              value={input.name}
+              autoComplete="off"
+              placeholder="Name..."
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-        </div>
+          </div>
 
-        <div>
-          <input
-            name="lastname"
-            value={input.lastname}
-            autoComplete="off"
-            placeholder="LastName..."
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          {/* {errors.name && (
+          <div className={styles.optForm}>
+            <input
+              name="lastname"
+              value={input.lastname}
+              autoComplete="off"
+              placeholder="LastName..."
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-        </div>
+          </div>
 
-        <div>
-          <input
-            name="email"
-            value={input.email}
-            autoComplete="off"
-            placeholder="Email..."
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          {/* {errors.name && (
+          <div className={styles.optForm}>
+            <input
+              name="email"
+              value={input.email}
+              autoComplete="off"
+              placeholder="Email..."
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-        </div>
+          </div>
 
-        <div>
-          <input
-          type="password"
-            name="password"
-            value={input.password}
-            autoComplete="off"
-            placeholder="Password..."
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          {/* {errors.name && (
+          <div className={styles.optForm}>
+            <input
+              type="password"
+              name="password"
+              value={input.password}
+              autoComplete="off"
+              placeholder="Password..."
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-        </div>
+          </div>
 
-        <div>
-          <input
-            type="date"
-            name="dateBorn"
-            value={input.dateBorn}
-            autoComplete="off"
-            placeholder="Date of Birth..."
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          ></input>
-          {/* {errors.released && (
+          <div className={styles.optForm}>
+            <input
+              type="date"
+              name="dateBorn"
+              value={input.dateBorn}
+              autoComplete="off"
+              placeholder="Date of Birth..."
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            ></input>
+            {/* {errors.released && (
       <p className={s.errors} >{errors.released}</p>
       )}  */}
-        </div>
-
-        <button type="submit" onClick={(e) => handleSubmit(e)}>
-          Register
-        </button>
-      </form>
+          </div>
+          <div className={styles.buttonRegisterPos}>
+            <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
+              Register
+            </button>
+            <Link to='/MainPage'>
+              <button className={styles.buttonRegister}>Home</button>
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

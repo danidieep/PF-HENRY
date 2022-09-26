@@ -1,16 +1,18 @@
 import axios from "axios";
-
 import {
-  DELETE_PRODUCT_FROM_CARRITO,
-  ADD_PRODUCT_TO_CARRITO,
+  VACIAR_USER,
+  LOG_LOCAL,
+  GET_PRODUCTS_FROM_CARRITODB,
   DELETE_FILTER,
   NOT_FOUND,
+  SEND_EMAIL,
 } from "./action-types.js";
 import {
+  GET_USER,
   DELETE_ARTWORKS,
   ADD_FILTER_MEDIUM,
   FILTER_BY_MEDIUM,
-  ADD_PRICE_TYPE,
+  ADD_PRICE_TYPE,FIND_USER_BY_ID,
   ADD_FILTER_ARTIST,
   FILTER_BY_ARTIST,
   GET_ARTISTS,
@@ -21,6 +23,8 @@ import {
   SHOW_ALL_PRODUCTS,
   ORDER_BY_PRICE,
   ADD_FILTERS,
+  SET_USER,
+  UPDATE_USER
 } from "./action-types.js";
 
 export function deleteArtwork(id) {
@@ -50,12 +54,9 @@ export function getProducts() {
   };
 }
 
-export function RegisterUser(payload) {
-  return async function (dispatch) {
-    let json = await axios.post("/user", payload);
-    return json;
-  };
-}
+export const RegisterUser = async (payload) => {
+  await axios.post("/users", payload);
+};
 
 export const getProductByName = (payload) => {
   return async function (dispatch) {
@@ -157,13 +158,6 @@ export const addFilterMedium = (payload) => {
   };
 };
 
-export const deletProductFromCarrito = (payload) => {
-  return {
-    type: DELETE_PRODUCT_FROM_CARRITO,
-    payload,
-  };
-};
-
 export const AddFilters = (payload) => {
   return {
     type: ADD_FILTERS,
@@ -171,56 +165,105 @@ export const AddFilters = (payload) => {
   };
 };
 
-export const addProductToCarrito = async (payload, token) => {
-  try {
-    fetch(`/cart/${payload.artId}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload.email),
-    });
-    const response = await axios.get(
-      `http://localhost:3001/cart/${payload.artId}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    return error.message;
-  }
+// export const deleteProductFromCarrito = (payload) => {
+//   return async function () {
+//     let json = await axios.put("/cart/" + payload);
+//     return json;
+//   };
+// };
+
+export const deleteProductFromCarrito = async (payload) => {
+  let json = await axios.put("/cart/" + payload);
 };
 
-export const deleteProductFromCarrito = async (payload, token) => {
-  try {
-    fetch(`/cart/${payload.artId}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload.email),
-    });
-    const response = await axios.get(
-      `http://localhost:3001/cart/${payload.artId}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    return error.message;
-  }
+export const addProductToCarrito = async (payload) => {
+  axios.post(`/cart/${payload.artId}`, { email: payload.email });
 };
 
-export const sendUserInfo = async (user) => {
-  const response = await axios.post("http://localhost:3001/users", {
-    headers: {
-      user: user,
-    },
+export const getUser = (data) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findorcreate`, data);
+    console.log(json.data)
+    return dispatch({
+      type: GET_USER,
+      payload: json.data,
+    });
+
+
+  };
+};
+
+export const sendUserInfo = async ({ name, lastname, email, password, dateBorn, role, headers }) => {
+  await axios.post("/users", {
+    name, lastname, email, password, dateBorn, role, headers 
   });
 };
+
+export function deleteUser(userId) {
+  axios.delete(`users/${userId}`);
+}
+
+export const getProductsFromCarritoDB = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/cart", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_PRODUCTS_FROM_CARRITODB,
+      payload: json.data,
+    });
+  };
+};
+
+export const LogLocal = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.post(`/users/findLocalUser`, payload);
+    return dispatch({
+      type: LOG_LOCAL,
+      payload: json.data,
+    });
+  };
+};
+
+export const vaciarUser = () => {
+  return {
+    type: VACIAR_USER,
+  };
+};
+
+
+export const setUser = () => {
+  return{
+    type:SET_USER,
+  }
+}
+
+export const updateUser = (user) =>{
+  return async function () {
+    await axios.post(`/users/update`, user)
+  }
+}
+
+export const findUserById = (id)=>{
+  
+  return async function (dispatch) {
+    let json = await axios.get(`users/${id}`);
+    return dispatch({
+      type: FIND_USER_BY_ID,
+      payload: json.data,
+    });
+  };
+}
+
+export function sendEmail(a) {
+  return async function (dispatch) {
+        const email = await axios.post('/sendemail',{email:a })
+        return dispatch({
+              type: SEND_EMAIL,
+              payload: email
+        })
+  }
+
+}

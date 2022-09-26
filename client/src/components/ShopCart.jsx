@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function ShopCart() {
+
   const user = JSON.parse(localStorage.getItem("user"))
   const carrito = useSelector((state) => state.carrito)
   const dispatch = useDispatch(); 
@@ -35,7 +36,6 @@ export default function ShopCart() {
           <div>
             <span>artWork: {element.title}</span>
             <span>Price: {element.price}</span>
-
           </div>
         );
       })}

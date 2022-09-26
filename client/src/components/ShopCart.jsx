@@ -6,13 +6,13 @@ import { useMemo } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function ShopCart() {
-  // const user = useSelector((state) => state.user);
-  const carrito = useSelector((state) => state.carrito);
-  const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("user"));
+
+  const user = JSON.parse(localStorage.getItem("user"))
+  const carrito = useSelector((state) => state.carrito)
+  const dispatch = useDispatch(); 
+  
 
   useEffect(() => {
-    // console.log(user[0].email, 'userLocalStorage');
     dispatch(getProductsFromCarritoDB(user[0].email));
   }, []);
 

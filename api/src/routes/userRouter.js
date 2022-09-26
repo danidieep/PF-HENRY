@@ -4,6 +4,41 @@ const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
 const getUserByID = require("../controllers/getUserByID");
+const bcypt = require("bcrypt")
+const nodemailer = require("nodemailer")
+
+
+
+
+
+
+const enviarMail = async (name,email,password)=>{
+  const config = {
+    host : "smtp.gmail.com",
+    port:587,
+    auth : {
+      user : "artketgalery@gmail.com",
+      pass :"vvvicqjzjkocwjtd"
+    },
+    tls:{
+      rejectUnauthorized:false
+    }
+  }
+
+  const mensaje = {
+    from : "artketgalery@gmail.com",
+    to:email,
+    subject:"Artket",
+    text: `Hi ${name}! thank you for registering on our website! Remember, your password is ${password}`
+  }
+
+  const transport = nodemailer.createTransport(config);
+  const info = await transport.sendMail(mensaje);
+  console.log(info)
+}
+
+
+
 
 // router.post("/", async (req, res) => {
 //   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
@@ -76,28 +111,25 @@ const getUserByID = require("../controllers/getUserByID");
 //     //     res.send(data);
 //     //   }
 //     // });
-   const { email, name, lastname, password, dateBorn, role } = req.body;
-    const users = await getUserDB();
+   const { email, name, lastname, password, dateBorn, role, idAuth } = req.body;
+    
+      const user = await User.findOne({where:{idAuth}})
+      
 
-     
-      const user = users.filter(
-        (e) => e.email.toLowerCase() === email.toLowerCase()
-      );
-
-      if (user.length) {
-        res.status(200).json(user);
+      if (user) {
+        const {name,cartId,id,lastname,email,idAuth} = user.dataValues
+        res.status(200).json({name,cartId,id,lastname,email,idAuth});
       } else {
+
+        
         const userCartId =  await Cart.create().then(
           ({ dataValues }) => dataValues.id
         );
-        await createUser(name, lastname, email, password, dateBorn, role,userCartId);
 
-        const a = await getUserDB();
+        await User.create({name, lastname, email, password, dateBorn, role,cartId:userCartId,idAuth});
 
-        const b = a.filter(
-         (e) => e.email.toLowerCase() === email.toLowerCase()
-        );
-          res.status(200).json(b);
+        const user = await User.findOne({where:{idAuth}})
+         res.status(200).json(user.dataValues)
 
        }
       })
@@ -117,19 +149,29 @@ const getUserByID = require("../controllers/getUserByID");
   //      res.send(data);
   //  }
   //   });
-  const { email, password } = req.body;
-   const users = await getUserDB();
+  const {email} = req.body;
+  const passNoHashed = req.body.password
+  
+  let userInCuestion = await User.findOne({where:{email:email}})
 
-   const user = users.filter(
-     (e) => e.password.toLowerCase() === password.toLowerCase()
-   );
+ if(userInCuestion){
+ let hashSaved = userInCuestion.dataValues.password
+ 
+ let compare = bcypt.compareSync(passNoHashed,hashSaved)
 
-  if (user.length) {
-     res.status(200).json(user);
-   } else {
-     res.status(400).send("datos incorrectos");
-   }
- });
+if(compare){
+  
+  let a = userInCuestion.dataValues
+  console.log(a)
+  return res.status(200).json(a)
+}
+else{
+  res.status(400).send("contraseña incorrecta")
+}
+  }else{
+    res.status(400).send("el user no existe")
+  }
+})
 
 // router.get("/", async (req, res) => {
 //   try {
@@ -168,15 +210,40 @@ const getUserByID = require("../controllers/getUserByID");
 // module.exports = router;
 
 router.post("/", async (req, res) => {
-  const { name, lastname, email, password, dateBorn, role, headers } = req.body;
+  const { name, lastname, email, dateBorn, role, headers } = req.body;
+  const passNoHashed = req.body.password
+  let password =  bcypt.hashSync(passNoHashed, 8)
+  
+  
   console.log(req.body);
   try {
     if (!headers) {
-      const userCartId =  await Cart.create().then(
+      const cartId =  await Cart.create().then(
               ({ dataValues }) => dataValues.id
             );
-      createUser(name, lastname, email, password, dateBorn, role, userCartId);
+
+
+      createUser(name, lastname, email, password, dateBorn, role, cartId);
+
+      const user = await User.findOne({where:{email}})
+
+      if(!user){
+
+      try {
+        enviarMail(name,email, passNoHashed)
+      } catch (error) {
+        console.log(error)
+      }
+      
       res.status(200).send("User created succesfully");
+    } else {
+
+      res.status(400).send("User allready exist")
+    }
+
+
+
+
     } else {
       const userDb = await User.findOne({
         where: { email: headers.user.email },
@@ -194,11 +261,20 @@ router.post("/", async (req, res) => {
           idAuth: headers.user.sub,
         });
         await User.bulkCreate(arr);
+        try {
+          enviarMail(name,email, passNoHashed)
+        } catch (error) {
+          console.log(error)
+        }
         res.status(200).send("User created succesfully");
       } else {
         res.status(400).send("User allready exists");
       }
     }
+
+
+
+    
     // const tokenAdmin = jwt.sign(
     //   { name, lastname, email, password, dateBorn, role },
     //   "secret_token"
@@ -262,11 +338,13 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const userById = await getUserByID(id);
-    if (userById.length) {
-      res.send(userById);
+    const userById = await User.findOne({where:{id}});
+    if (userById) {
+      const {id,cartId,name,lastname,email} = userById.dataValues
+      res.status(200).json({id,cartId,name,lastname,email})
     }
-    res.send("no se ha encontrado un usuario con ese id");
+    else{res.send("no se ha encontrado un usuario con ese id");}
+    
   } catch (error) {
     res.status(404).send(error);
   }
@@ -283,6 +361,32 @@ router.delete("/:id", async (req, res) => {
     res.status(404).send(error);
   }
 });
+
+
+router.post("/update", async(req,res)=>{
+
+  try {
+    const {email, name, lastname,id,idAuth} = req.body
+
+    const passNoHashed = req.body.password 
+    let password =  bcypt.hashSync(passNoHashed, 8)
+
+    if(email.length){User.update({email},{where:{id}})}
+    if(name.length){User.update({name},{where:{id}})}
+    if(lastname.length){User.update({lastname},{where:{id}})}
+    if(password.length){User.update({password},{where:{id}})}
+    res.status(200).send("se actualize paa")
+    
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+
+
+
+
 
 module.exports = router;
 

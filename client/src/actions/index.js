@@ -5,13 +5,14 @@ import {
   GET_PRODUCTS_FROM_CARRITODB,
   DELETE_FILTER,
   NOT_FOUND,
+  SEND_EMAIL,
 } from "./action-types.js";
 import {
   GET_USER,
   DELETE_ARTWORKS,
   ADD_FILTER_MEDIUM,
   FILTER_BY_MEDIUM,
-  ADD_PRICE_TYPE,
+  ADD_PRICE_TYPE,FIND_USER_BY_ID,
   ADD_FILTER_ARTIST,
   FILTER_BY_ARTIST,
   GET_ARTISTS,
@@ -22,7 +23,8 @@ import {
   SHOW_ALL_PRODUCTS,
   ORDER_BY_PRICE,
   ADD_FILTERS,
-  SET_USER
+  SET_USER,
+  UPDATE_USER
 } from "./action-types.js";
 
 export function deleteArtwork(id) {
@@ -236,4 +238,32 @@ export const setUser = () => {
   return{
     type:SET_USER,
   }
+}
+
+export const updateUser = (user) =>{
+  return async function () {
+    await axios.post(`/users/update`, user)
+  }
+}
+
+export const findUserById = (id)=>{
+  
+  return async function (dispatch) {
+    let json = await axios.get(`users/${id}`);
+    return dispatch({
+      type: FIND_USER_BY_ID,
+      payload: json.data,
+    });
+  };
+}
+
+export function sendEmail(a) {
+  return async function (dispatch) {
+        const email = await axios.post('/sendemail',{email:a })
+        return dispatch({
+              type: SEND_EMAIL,
+              payload: email
+        })
+  }
+
 }

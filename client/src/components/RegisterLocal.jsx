@@ -15,33 +15,74 @@ export default function Register() {
     dateBorn: "",
   });
 
+
+const validatorEmail = (valor)=>{
+ if(/^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/.test(valor))
+  {return true}
+  else return false
+}
+const onlyCharacters = /^[a-zA-Z\s]+$/
+
+
   function handleChange(e) {
+    if(e.target.name==="name"&& onlyCharacters.test(e.target.value) || e.target.value==="")
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-    //  setErrors(validate({
-    //   ...input,
-    //   [e.target.name] : e.target.value
-    //  }))
+    if(e.target.name==="lastname"&& onlyCharacters.test(e.target.value) || e.target.value==="")
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    if(e.target.name==="email"){
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });}
+    if(e.target.name==="password"){
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    }
+    if(e.target.name==="dateBorn"){
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    }
+
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    //   if(Object.keys(errors).length !== 0){
-    //     alert('Debes llenar el Formulario primero')
-
-    //   } else {
-    RegisterUser(input);
-
-    //   }
-    setInput({
-      name: "",
-      lastname: "",
-      email: "",
-      password: "",
-      dateBorn: "",
-    });
+    if(validatorEmail(input.email)){
+      if(input.name.length>0&&input.lastname.length>0&&input.password.length>0&&input.dateBorn.length>0){
+        RegisterUser(input);
+        window.location.href = "/LocalLogin"
+        setInput({
+          name: "",
+          lastname: "",
+          email: "",
+          password: "",
+          dateBorn: "",
+        });
+      }
+     
+      else{
+        alert("complete your data")
+      }
+    }
+    else if(input.email.length===0){
+      alert("complete your data")
+      }
+  else{
+    alert("wrong email format")
+  }
+    
+  
+    
   }
   return (
     <div>
@@ -97,6 +138,7 @@ export default function Register() {
 
         <div>
           <input
+          type="password"
             name="password"
             value={input.password}
             autoComplete="off"

@@ -27,7 +27,11 @@ export default function LoginLocal() {
       password: "",
     });
 
-    window.history.back();
+    setTimeout(() => {
+      window.location.href = "/MainPage"
+   
+    }, 300);
+    
   }
 
   return (
@@ -48,6 +52,7 @@ export default function LoginLocal() {
         />
         <br></br>
         <input
+        type="password"
           name="password"
           value={input.password}
           autoComplete="off"

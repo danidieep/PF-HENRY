@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 
 export default function ShopCart() {
+
   const user = JSON.parse(localStorage.getItem("user"))
   const carrito = useSelector((state) => state.carrito)
   const dispatch = useDispatch(); 

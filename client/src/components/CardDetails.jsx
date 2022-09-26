@@ -17,7 +17,7 @@ export default function CardDetails(props) {
   const { id } = useParams();
   const { getAccessTokenSilently } = useAuth0();
 
-  const user = JSON.parse(localStorage.getItem("user"))[0]
+  const user = JSON.parse(localStorage.getItem("user"))
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
@@ -31,7 +31,7 @@ export default function CardDetails(props) {
 
   const addToCartOrDelete = async () => {
     
-    const email = user.email;
+    const email = user[0].email;
     const ArtInCuesiton = state.carrito.filter(
       (element) => element === product[0].title
     );
@@ -104,7 +104,7 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                  {true ? (
+                  {user.length ? (
                     <button
                       className={styles.buttonAddCart}
                       onClick={() => {

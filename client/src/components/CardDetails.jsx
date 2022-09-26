@@ -28,7 +28,7 @@ export default function CardDetails(props) {
   useEffect(() => {
     dispatch(cleanProductId());
     dispatch(getProductById(id));
-    dispatch(getProductsFromCarritoDB(user[0].email))
+    if(user.length)dispatch(getProductsFromCarritoDB(user[0].email))
   }, []);
 
   const estaono = ()=>{
@@ -46,7 +46,7 @@ export default function CardDetails(props) {
 
 
   const addToCartOrDelete = async () => {
-    
+   
     const email = user[0].email;
     const ArtInCuesiton = state.carrito.filter(
       (element) => element.title === product[0].title

@@ -44,11 +44,11 @@ export function putArtwork(payload) {
   };
 }
 
-export function getProducts(setLoading) {
+export function getProducts() {
   return async function (dispatch) {
-    setLoading(true)
+
     let json = await axios.get("/artworks");
-    setLoading(false)
+ 
     return dispatch({
       type: GET_PRODUCTS,
       payload: json.data,
@@ -175,7 +175,7 @@ export const AddFilters = (payload) => {
 // };
 
 export const deleteProductFromCarrito = async (payload) => {
-  let json = await axios.put("/cart/" + payload);
+  axios.post(`/cart/delete/${payload.artId}`, { email: payload.email });
 };
 
 export const addProductToCarrito = async (payload) => {

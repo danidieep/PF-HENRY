@@ -4,6 +4,7 @@ import {
   addProductToCarrito,
   getProductById,
   cleanProductId,
+  getProductsFromCarritoDB
 } from "../actions/index";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -22,24 +23,50 @@ export default function CardDetails(props) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
   const state = useSelector((state) => state);
-  const [cantCompr, setCantCompr] = useState(0);
+  const [esta, setEsta] = useState(false);
 
   useEffect(() => {
     dispatch(cleanProductId());
     dispatch(getProductById(id));
+    dispatch(getProductsFromCarritoDB(user[0].email))
   }, []);
+
+  const estaono = ()=>{
+    
+      const a = state.carrito.filter(e => e.title === product[0].title)
+      if(a.length)setEsta(true)
+      if(!a.length)setEsta(false)
+   
+   
+  }
+
+  useEffect(() => {
+    if(state.carrito.length)estaono()
+  }, [state.carrito]);
+
 
   const addToCartOrDelete = async () => {
     
     const email = user[0].email;
     const ArtInCuesiton = state.carrito.filter(
-      (element) => element === product[0].title
+      (element) => element.title === product[0].title
     );
     if (ArtInCuesiton.length) {
-      deleteProductFromCarrito({ artId: product[0].id, email }, );
+      deleteProductFromCarrito({ artId: product[0].id, email }, )
+      setEsta(false)
+      setTimeout(() => {
+        dispatch(getProductsFromCarritoDB(email))
+      }, 600);
+      
+
+      console.log("a")
       alert("Deleted from cart");
     } else {
       addProductToCarrito({ artId: product[0].id, email }, );
+      setTimeout(() => {
+        dispatch(getProductsFromCarritoDB(email))
+      }, 600);
+      
       alert("Added to cart");
     }
   };
@@ -111,7 +138,7 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                  {user.length ? (
+                  {user.length && !esta? (
                     <button
                       className={styles.buttonAddCart}
                       onClick={() => {
@@ -124,15 +151,15 @@ export default function CardDetails(props) {
                     >
                       Add to cart
                     </button>
-                  ) : false
-                  //   <button
-                  //     className={styles.buttonAddCart}
-                  //     onClick={addToCartOrDelete}
-                  //   >
-                  //     Delete from cart
-                  //   </button>
-                  // )}
-                    }
+                  ) : 
+                    <button
+                      className={styles.buttonAddCart}
+                      onClick={addToCartOrDelete}
+                    >
+                      Delete from cart
+                    </button>
+                  }
+                    
                   {/* <button onClick={()=>addCount("+")}>+</button> */}
                   {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>

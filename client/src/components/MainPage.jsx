@@ -25,14 +25,14 @@ export default function MainPage(props) {
   let arrCountOf = [];
   arrCountOf = state.productsFiltered.slice(0, CountOf)
 
-  const [loading, setLoading] = useState(false)
+  
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
 
 
   React.useEffect(() => {
-    if (state.allProducts.length === 0) dispatch(getProducts(setLoading))
+    if (state.allProducts.length === 0) dispatch(getProducts())
     if (state.artistsList.length === 0) dispatch(getArtists())
     applyFilter()
   }, [state.filters])
@@ -243,13 +243,15 @@ export default function MainPage(props) {
               )
               )}
             </div> :
-            loading ?
+            !state.allProducts && !state.filters.length?
               <div className={styles.contenedorLoading}>
                 <img className="loading" src="https://i.pinimg.com/originals/2e/b8/d0/2eb8d009f410f30866b6a34a374af797.gif" alt="" />
               </div>
-              :
+              :state.allProducts && state.filters.length?
               <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
               </div>
+              :
+              false
 
         }
         {/* PAGINADO */}

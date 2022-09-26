@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsFromCarritoDB } from "../actions";
+import { getProductsFromCarritoDB ,deleteProductFromCarrito} from "../actions";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useMemo } from "react";
@@ -11,6 +11,15 @@ export default function ShopCart() {
   const user = JSON.parse(localStorage.getItem("user"))
   const carrito = useSelector((state) => state.carrito)
   const dispatch = useDispatch();
+
+const email = JSON.parse(localStorage.getItem("user"))[0].email
+  const eliminar = (id)=>{
+    deleteProductFromCarrito({ artId: id, email }, )
+    
+    setTimeout(() => {
+      dispatch(getProductsFromCarritoDB(email))
+    }, 1000);
+  }
 
 
   useEffect(() => {
@@ -41,7 +50,7 @@ export default function ShopCart() {
               <h1 className={styles.priceCarrito}> ${element.price}</h1>
               <div className={styles.btnCarritoPos}>
                 <button className={styles.btnCarrito} onClick={() => alert("comprado")}>Buy Now!</button>
-                <button className={styles.btnCarrito}>Delete</button>
+                <button className={styles.btnCarrito} onClick={()=> eliminar(element.id)}>Delete</button>
               </div>
             </div>
           </div>

@@ -25,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^2.1.4",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.6",
     "nodemailer": "^6.7.8",
     "pg": "^8.5.1",
     "sequelize": "^6.21.6",
@@ -34,7 +35,6 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
-    "nodemon": "^2.0.6",
     "prettier": "2.7.1",
     "supertest": "^6.0.1",
     "supertest-session": "^4.1.0"

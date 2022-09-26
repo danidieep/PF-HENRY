@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect } from "react"
-import {sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
+import { sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -11,6 +11,7 @@ import styles from "./ModulesCss/MainPage.module.css"
 import { useSelector, useDispatch } from "react-redux"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
+import { User } from "@auth0/auth0-react"
 
 
 let ProductsPorPage = 6
@@ -24,14 +25,14 @@ export default function MainPage(props) {
   let arrCountOf = [];
   arrCountOf = state.productsFiltered.slice(0, CountOf)
 
-
+  const [loading, setLoading] = useState(false)
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
 
 
   React.useEffect(() => {
-    if (state.allProducts.length === 0) dispatch(getProducts())
+    if (state.allProducts.length === 0) dispatch(getProducts(setLoading))
     if (state.artistsList.length === 0) dispatch(getArtists())
     applyFilter()
   }, [state.filters])
@@ -57,11 +58,6 @@ export default function MainPage(props) {
     setNum1(0)
     setNum2(ProductsPorPage)
     setCurrent(1)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    alert('You have been suscribed to the Newslatter')
   }
 
   const applyFilter = (e) => {
@@ -113,31 +109,41 @@ export default function MainPage(props) {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <header >
+      <header >
           {/* <div className={styles.content2}> */}
           <div className={styles.header}>
-          <div>
+            <div>
+              <button className={styles.Products}>About us</button>
+            </div>
+
+{JSON.parse(localStorage.getItem("user")).length?
+            <div>
+              <Link to="/ShopCart">
+                <button className={styles.btnCarrito}>
+                  <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+                </button>
+              </Link>
+            </div>
+            :false
+}
+
+            <div>
               <h1 className={styles.logo}>Artket</h1>
             </div>
-            <div>
-              <button onClick={() => {
-                dispatch(getProducts())
-                dispatch(showAllProducts())
-              }} className={styles.Products}>Show all Products</button>
-            </div>
-            
             <div className={styles.SearchBarHome}>
               <SearchBar handleReset={handleReset} ></SearchBar>
             </div>
             <div>
-             <LogIn></LogIn>
-             <LogOut></LogOut>
+              <LogIn></LogIn>
+              <LogOut></LogOut>
             </div>
 
           </div>
         </header>
 
         {/* CARRUSEL */}
+
+        {state.productsFiltered.length>5?
         <carrusel>
           <p className={styles.featured}>Featured</p>
           <div className={styles.carrusel}>
@@ -154,13 +160,16 @@ export default function MainPage(props) {
             </div>
           </div>
         </carrusel>
-
-
+        :false
+}
 
 
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
         <div className={styles.filtersDiv}>
+          <button
+          onClick={()=>dispatch(showAllProducts()) }
+          >Reload artworks</button>
           {/* <p className={styles.filter}>Filters</p> */}
           <div className={styles.select}>
             <form>
@@ -234,15 +243,20 @@ export default function MainPage(props) {
               )
               )}
             </div> :
-            <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
-            </div>
+            loading ?
+              <div className={styles.contenedorLoading}>
+                <img className="loading" src="https://i.pinimg.com/originals/2e/b8/d0/2eb8d009f410f30866b6a34a374af797.gif" alt="" />
+              </div>
+              :
+              <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
+              </div>
 
         }
         {/* PAGINADO */}
         <footer className={styles}>
           <div className={styles.paginado}>
 
-            <button onClick={handlerPrev} className={styles.button31P}>{`<`}</button>
+            <button onClick={handlerPrev} className={styles.button31Paginado}>{`<`}</button>
             {
               arrCountOf.map((e, i) => (
 
@@ -252,36 +266,34 @@ export default function MainPage(props) {
                     setNum2((i + 1) * ProductsPorPage)
                     setCurrent(i + 1)
                   }
-                } className={styles.button31P} >{i + 1}</button>
+                } className={styles.button31Paginado} >{i + 1}</button>
               )
               )
             }
-            <button className={styles.button31P} onClick={handlerNext} >{`>`}</button>
+            <button className={styles.button31Paginado} onClick={handlerNext} >{`>`}</button>
           </div>
           <div className={styles.footer_info}>
-           
-              {JSON.parse(localStorage.getItem("user")).length?
-              <div>
-               <p className={styles.newsletter}>
-               Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
-              </p>
-             <div className={styles.formNewsletter}>
-               <form className={styles.formNewsletter} onSubmit={(e) => handleSubmit(e)} >
-               <button onClick={handleSubscribe}>Subscribe to Newsletter</button>
-               </form>
-             </div>
-             
-           
-             </div>
-           
-            :false
 
-              }
-            
-        </div>
-             
+            {JSON.parse(localStorage.getItem("user")).length ?
+              <div>
+                <p className={styles.newsletter}>
+                  Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
+                </p>
+                <div className={styles.formNewsletter}>
+                  <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
+                </div>
+
+
+              </div>
+
+              : false
+
+            }
+
+          </div>
+
         </footer>
-         
+
       </div>
     </div>
   )

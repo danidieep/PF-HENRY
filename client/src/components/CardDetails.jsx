@@ -72,16 +72,23 @@ export default function CardDetails(props) {
             <h1 className={styles.logo}>Artket</h1>
           </div>
           <div></div>
-          <div>
+
+          {user.length?<div>
+            <Link to="/Profile">
             <button className={styles.btnUser}>
               <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
             </button>
+            </Link>
             <Link to="/ShopCart">
               <button className={styles.btnCarrito}>
                 <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
               </button>
             </Link>
           </div>
+          :
+          false
+}
+
         </div>
       </header>
       <div id="conteinerDetail">
@@ -108,7 +115,7 @@ export default function CardDetails(props) {
                     <button
                       className={styles.buttonAddCart}
                       onClick={() => {
-                        if (user) {
+                        if (user.length) {
                           addToCartOrDelete();
                         } else {
                           alert("Login required");
@@ -117,14 +124,15 @@ export default function CardDetails(props) {
                     >
                       Add to cart
                     </button>
-                  ) : (
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={addToCartOrDelete}
-                    >
-                      Delete from cart
-                    </button>
-                  )}
+                  ) : false
+                  //   <button
+                  //     className={styles.buttonAddCart}
+                  //     onClick={addToCartOrDelete}
+                  //   >
+                  //     Delete from cart
+                  //   </button>
+                  // )}
+                    }
                   {/* <button onClick={()=>addCount("+")}>+</button> */}
                   {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>

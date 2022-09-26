@@ -1,4 +1,4 @@
-.logout{
+.logout {
     font-family: 'Merriweather', serif;
     font-style: normal;
     font-weight: 600;
@@ -9,7 +9,11 @@
     color: #000000;
     float: right;
     margin-right: 40px;
-    margin-top: 20px;
-    background-color:transparent;
-    
+    margin-top: 35px;
+    background-color: transparent;
+
+}
+
+.logout:hover {
+    color: rgba(101, 53, 53, 1);
 }

@@ -27,7 +27,11 @@ export default function LoginLocal() {
       password: "",
     });
 
-    window.location.href="/MainPage";
+    setTimeout(() => {
+      window.location.href = "/MainPage"
+   
+    }, 300);
+    
   }
 
   return (

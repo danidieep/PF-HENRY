@@ -149,18 +149,21 @@ const enviarMail = async (name,email,password)=>{
   //      res.send(data);
   //  }
   //   });
-  const { email} = req.body;
+  const {email} = req.body;
   const passNoHashed = req.body.password
   
-  let userInCuestion = await User.findOne({where:{email}})
+  let userInCuestion = await User.findOne({where:{email:email}})
 
  if(userInCuestion){
- let hashSaved = userInCuestion.password
+ let hashSaved = userInCuestion.dataValues.password
+ 
  let compare = bcypt.compareSync(passNoHashed,hashSaved)
 
 if(compare){
-  const {name, lastname,id,email,cartId} = userInCuestion.dataValues
-  res.status(200).json({name,lastname,id,email,cartId})
+  
+  let a = userInCuestion.dataValues
+  console.log(a)
+  return res.status(200).json(a)
 }
 else{
   res.status(400).send("contraseña incorrecta")
@@ -222,7 +225,7 @@ router.post("/", async (req, res) => {
 
       createUser(name, lastname, email, password, dateBorn, role, cartId);
 
-      const user = await User.findOne({where:email})
+      const user = await User.findOne({where:{email}})
 
       if(!user){
 

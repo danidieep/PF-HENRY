@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect } from "react"
-import { filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
+import { sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -9,10 +9,9 @@ import Message from "./Message"
 import Loader from "./Loader"
 import styles from "./ModulesCss/MainPage.module.css"
 import { useSelector, useDispatch } from "react-redux"
-
-
-
-
+import LogIn from "./LogIn"
+import LogOut from "./LogOut"
+import { User } from "@auth0/auth0-react"
 
 
 let ProductsPorPage = 6
@@ -26,7 +25,7 @@ export default function MainPage(props) {
   let arrCountOf = [];
   arrCountOf = state.productsFiltered.slice(0, CountOf)
 
-
+  
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
@@ -59,11 +58,6 @@ export default function MainPage(props) {
     setNum1(0)
     setNum2(ProductsPorPage)
     setCurrent(1)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    alert('You have been suscribed to the Newslatter')
   }
 
   const applyFilter = (e) => {
@@ -104,37 +98,52 @@ export default function MainPage(props) {
     handleReset()
   }
 
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    const email = JSON.parse(localStorage.getItem("user"))[0].email
+    dispatch(sendEmail(email))
+    alert('You have been suscribed to our Newsletter')
+  }
+
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <header >
+      <header >
           {/* <div className={styles.content2}> */}
           <div className={styles.header}>
             <div>
               <button className={styles.Products}>About us</button>
             </div>
+
+{JSON.parse(localStorage.getItem("user")).length?
             <div>
-              <button onClick={() => {
-                dispatch(getProducts())
-                dispatch(showAllProducts())
-              }} className={styles.Products}>Show all Products</button>
+              <Link to="/ShopCart">
+                <button className={styles.btnCarrito}>
+                  <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+                </button>
+              </Link>
             </div>
+            :false
+}
+
             <div>
               <h1 className={styles.logo}>Artket</h1>
             </div>
             <div className={styles.SearchBarHome}>
               <SearchBar handleReset={handleReset} ></SearchBar>
             </div>
-            <button className={styles.buttonProfile}>Log in</button>
             <div>
-              <button className={styles.buttonProfile}>Register</button>
+              <LogIn></LogIn>
+              <LogOut></LogOut>
             </div>
 
           </div>
         </header>
 
         {/* CARRUSEL */}
+
+        {state.productsFiltered.length>5?
         <carrusel>
           <p className={styles.featured}>Featured</p>
           <div className={styles.carrusel}>
@@ -151,13 +160,16 @@ export default function MainPage(props) {
             </div>
           </div>
         </carrusel>
-
-
+        :false
+}
 
 
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
         <div className={styles.filtersDiv}>
+          <button
+          onClick={()=>dispatch(showAllProducts()) }
+          >Reload artworks</button>
           {/* <p className={styles.filter}>Filters</p> */}
           <div className={styles.select}>
             <form>
@@ -208,7 +220,7 @@ export default function MainPage(props) {
         {/* LIMPIAR FILTROS */}
         {state.filters.map(element => {
           return (
-            <div>
+            <div key={1}>
               <span>{element.name}</span>
               <button onClick={() => deleteFilter_(element)}>X</button>
             </div>
@@ -231,15 +243,22 @@ export default function MainPage(props) {
               )
               )}
             </div> :
-            <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
-            </div>
+            !state.allProducts && !state.filters.length?
+              <div className={styles.contenedorLoading}>
+                <img className="loading" src="https://i.pinimg.com/originals/2e/b8/d0/2eb8d009f410f30866b6a34a374af797.gif" alt="" />
+              </div>
+              :state.allProducts && state.filters.length?
+              <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
+              </div>
+              :
+              false
 
         }
         {/* PAGINADO */}
         <footer className={styles}>
           <div className={styles.paginado}>
 
-            <button onClick={handlerPrev} className={styles.button31P}>{`<`}</button>
+            <button onClick={handlerPrev} className={styles.button31Paginado}>{`<`}</button>
             {
               arrCountOf.map((e, i) => (
 
@@ -249,25 +268,34 @@ export default function MainPage(props) {
                     setNum2((i + 1) * ProductsPorPage)
                     setCurrent(i + 1)
                   }
-                } className={styles.button31P} >{i + 1}</button>
+                } className={styles.button31Paginado} >{i + 1}</button>
               )
               )
             }
-            <button className={styles.button31P} onClick={handlerNext} >{`>`}</button>
+            <button className={styles.button31Paginado} onClick={handlerNext} >{`>`}</button>
           </div>
           <div className={styles.footer_info}>
-            <p className={styles.newsletter}>
-              Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
-            </p>
-            <div className={styles.formNewsletter}>
-              <form className={styles.formNewsletter} onSubmit={(e) => handleSubmit(e)} >
-                <input className={styles.formNewsletterBox} type="text"
-                  name="suscribe"
-                />
-              </form>
-            </div>
+
+            {JSON.parse(localStorage.getItem("user")).length ?
+              <div>
+                <p className={styles.newsletter}>
+                  Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
+                </p>
+                <div className={styles.formNewsletter}>
+                  <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
+                </div>
+
+
+              </div>
+
+              : false
+
+            }
+
           </div>
+
         </footer>
+
       </div>
     </div>
   )

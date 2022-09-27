@@ -60,7 +60,7 @@
 }
 
 .Products:hover {
-    color: rgb(138, 54, 54);
+    color: rgba(101, 53, 53, 1);
 
 }
 
@@ -209,7 +209,7 @@
     margin: auto;
 }
 
-.button31P {
+.button31Paginado {
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
     border-style: none;
@@ -233,8 +233,8 @@
 
 }
 
-.button31P:hover,
-.button31P:focus {
+.button31Paginado:hover,
+.button31Paginado:focus {
     background-color: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
 }
@@ -259,4 +259,44 @@ form .formNewsletterBox {
     margin-right: 40px;
     margin-top: 60px;
     width: 100%;
+}
+
+.btnCarrito {
+    height: 30px;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    border-width: 0px;
+    margin-right: 80px;
+    cursor: pointer;
+    color: #000000;
+    margin-top: 35px;
+    color: black;
+    background-color: rgb(255, 255, 255);
+}
+
+.btnSubscribe {
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    border-style: none;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    padding: 10px 15px;
+    margin: 15px;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
 }

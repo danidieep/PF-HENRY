@@ -3,8 +3,8 @@
 import {
 
 DELETE_ARTWORKS,GET_USER, NOT_FOUND,FILTER_BY_MEDIUM,ORDER_BY_PRICE,DELETE_FILTER,FILTER_BY_ARTIST,GET_ARTISTS,GET_PRODUCTS,SHOW_ALL_PRODUCTS,GET_PRODUCT_BY_NAME,GET_PRODUCT_BY_ID, CLEAN_PRODUCT_ID,
-ADD_FILTERS,LOG_LOCAL,VACIAR_USER,
-DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_PRODUCTS_FROM_CARRITODB
+ADD_FILTERS,LOG_LOCAL,VACIAR_USER,FIND_USER_BY_ID,
+DELETE_PRODUCT_FROM_CARRITO,ADD_PRODUCT_TO_CARRITO,DELETE_PRODUCT_FROM_CARRITO_BOARD,GET_PRODUCTS_FROM_CARRITODB, SET_USER
 } from "../actions/action-types"
 
 const initialState = {
@@ -24,6 +24,13 @@ const initialState = {
 
 export default function Reducer(state = initialState, { type, payload }) {
     switch (type) {
+
+        case 'POST_CARRITO': 
+        
+        return{
+            ...state,
+            carrito: [...state.carrito,payload]
+        }
         case GET_PRODUCTS: {
             return {
                 ...state,
@@ -38,16 +45,10 @@ export default function Reducer(state = initialState, { type, payload }) {
                 ...state
             }
 
-        case GET_PRODUCT_BY_NAME: {
-    }
     case 'PUT_ARTWORK':
             return{
                 ...state
             }    
-    case 'POST_USER':
-        return{
-            ...state
-    } 
 
     case DELETE_ARTWORKS:
        return {
@@ -156,10 +157,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
     
         case GET_USER:{
-            return{
-                ...state,
-                user:payload
-            }
+         localStorage.setItem("user",JSON.stringify([payload]))
         }
      
         case   DELETE_PRODUCT_FROM_CARRITO_BOARD:{
@@ -170,6 +168,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
         
         case GET_PRODUCTS_FROM_CARRITODB:{
+            console.log(payload)
             return{
                 ...state,
                 carrito:payload
@@ -177,10 +176,7 @@ export default function Reducer(state = initialState, { type, payload }) {
         }
 
         case LOG_LOCAL:{
-            return{
-                ...state,
-                user:payload
-            }
+            localStorage.setItem("user",JSON.stringify([payload]))
         }
         case VACIAR_USER:{
             return{
@@ -188,7 +184,16 @@ export default function Reducer(state = initialState, { type, payload }) {
                 user:[]
             }
         }
+        case SET_USER:{
+            return{
+                ...state,
+                user:JSON.parse(localStorage.getItem("user"))
+            }
+        }
         
+        case FIND_USER_BY_ID:{
+            localStorage.setItem("user",JSON.stringify([payload]))
+        }
         default:
             return state;
     }

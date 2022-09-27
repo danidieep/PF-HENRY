@@ -1,9 +1,9 @@
 const { Favourite, Artworks, User } = require("../db");
 
-const getFavs = async (userId) => {
+const getFavs = async (email) => {
   let favourites =await User.findOne({
     where:{
-        id:userId
+        email
     },
     include:[{model:Favourite , include:Artworks}]
 });

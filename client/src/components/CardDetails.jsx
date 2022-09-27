@@ -151,13 +151,15 @@ export default function CardDetails(props) {
                     >
                       Add to cart
                     </button>
-                  ) : 
+                  ) : user.length?
                     <button
                       className={styles.buttonAddCart}
                       onClick={addToCartOrDelete}
                     >
                       Delete from cart
                     </button>
+                    :
+                    false
                   }
                     
                   {/* <button onClick={()=>addCount("+")}>+</button> */}

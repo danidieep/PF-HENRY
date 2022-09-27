@@ -5,6 +5,7 @@ const userRouter = require("./userRouter");
 const favsRouter = require('./favouriteRouter')
 // const authRouter = require('./authRouter')
 const cartRouter = require('./cartRouter')
+const emailRouter = require('./emailRouter')
 // console.log(authRouter)
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/artists", artistRouter);
 router.use("/users", userRouter);
 router.use("/favourites", favsRouter);
 router.use('/cart', cartRouter)
+router.use('/sendemail', emailRouter)
 
 module.exports = router;

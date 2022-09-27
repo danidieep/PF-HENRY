@@ -19,8 +19,8 @@ export default function LandingPage() {
   return (
     <div className={styles.container}>
       <button className={styles.aboutus}>About us</button>
-      <button className={styles.aboutus}>prueba</button>
-      
+
+
       <LogOut />
       <div className={styles.logoButton}>
         <div className={styles.logoLink}>

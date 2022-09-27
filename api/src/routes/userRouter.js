@@ -1,3 +1,4 @@
+
 const { Router } = require("express");
 const { User, Cart } = require("../db");
 const createUser = require("../controllers/createUserController");
@@ -15,10 +16,11 @@ const nodemailer = require("nodemailer")
 const enviarMail = async (name,email,password)=>{
   const config = {
     host : "smtp.gmail.com",
-    port:587,
+    port:465,
+    secure: true,
     auth : {
-      user : "artk3t@gmail.com",
-      pass :"ylqfjwgnvluhqkbp"
+      user : "artketgalery@gmail.com",
+      pass :"vvvicqjzjkocwjtd"
     },
     tls:{
       rejectUnauthorized:false
@@ -26,7 +28,7 @@ const enviarMail = async (name,email,password)=>{
   }
 
   const mensaje = {
-    from : "artk3t@gmail.com",
+    from : '"Arket" <artketgalery@gmail.com>',
     to:email,
     subject:"Artket",
     text: `Hi ${name}! thank you for registering on our website! Remember, your password is ${password}`
@@ -149,18 +151,21 @@ const enviarMail = async (name,email,password)=>{
   //      res.send(data);
   //  }
   //   });
-  const { email} = req.body;
+  const {email} = req.body;
   const passNoHashed = req.body.password
   
-  let userInCuestion = await User.findOne({where:{email}})
+  let userInCuestion = await User.findOne({where:{email:email}})
 
  if(userInCuestion){
- let hashSaved = userInCuestion.password
+ let hashSaved = userInCuestion.dataValues.password
+ 
  let compare = bcypt.compareSync(passNoHashed,hashSaved)
 
 if(compare){
-  const {name, lastname,id,email,cartId} = userInCuestion.dataValues
-  res.status(200).json({name,lastname,id,email,cartId})
+  
+  let a = userInCuestion.dataValues
+  console.log(a)
+  return res.status(200).json(a)
 }
 else{
   res.status(400).send("contraseña incorrecta")
@@ -215,15 +220,18 @@ router.post("/", async (req, res) => {
   console.log(req.body);
   try {
     if (!headers) {
-      const userCartId =  await Cart.create().then(
-              ({ dataValues }) => dataValues.id
-            );
-      createUser(name, lastname, email, password, dateBorn, role, userCartId);
+     
 
-      const user = await User.findOne({where:email})
+      
+
+      const user = await User.findOne({where:{email}})
 
       if(!user){
+        const cartId =  await Cart.create().then(
+          ({ dataValues }) => dataValues.id
+        );
 
+        createUser(name, lastname, email, password, dateBorn, role, cartId);
       try {
         enviarMail(name,email, passNoHashed)
       } catch (error) {
@@ -384,4 +392,5 @@ router.post("/update", async(req,res)=>{
 
 
 module.exports = router;
+
 

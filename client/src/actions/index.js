@@ -5,13 +5,14 @@ import {
   GET_PRODUCTS_FROM_CARRITODB,
   DELETE_FILTER,
   NOT_FOUND,
+  SEND_EMAIL,
 } from "./action-types.js";
 import {
   GET_USER,
   DELETE_ARTWORKS,
   ADD_FILTER_MEDIUM,
   FILTER_BY_MEDIUM,
-  ADD_PRICE_TYPE,FIND_USER_BY_ID,
+  ADD_PRICE_TYPE, FIND_USER_BY_ID,
   ADD_FILTER_ARTIST,
   FILTER_BY_ARTIST,
   GET_ARTISTS,
@@ -45,7 +46,9 @@ export function putArtwork(payload) {
 
 export function getProducts() {
   return async function (dispatch) {
+
     let json = await axios.get("/artworks");
+ 
     return dispatch({
       type: GET_PRODUCTS,
       payload: json.data,
@@ -172,7 +175,7 @@ export const AddFilters = (payload) => {
 // };
 
 export const deleteProductFromCarrito = async (payload) => {
-  let json = await axios.put("/cart/" + payload);
+  axios.post(`/cart/delete/${payload.artId}`, { email: payload.email });
 };
 
 export const addProductToCarrito = async (payload) => {
@@ -194,7 +197,7 @@ export const getUser = (data) => {
 
 export const sendUserInfo = async ({ name, lastname, email, password, dateBorn, role, headers }) => {
   await axios.post("/users", {
-    name, lastname, email, password, dateBorn, role, headers 
+    name, lastname, email, password, dateBorn, role, headers
   });
 };
 
@@ -234,19 +237,19 @@ export const vaciarUser = () => {
 
 
 export const setUser = () => {
-  return{
-    type:SET_USER,
+  return {
+    type: SET_USER,
   }
 }
 
-export const updateUser = (user) =>{
+export const updateUser = (user) => {
   return async function () {
     await axios.post(`/users/update`, user)
   }
 }
 
-export const findUserById = (id)=>{
-  
+export const findUserById = (id) => {
+
   return async function (dispatch) {
     let json = await axios.get(`users/${id}`);
     return dispatch({
@@ -254,4 +257,15 @@ export const findUserById = (id)=>{
       payload: json.data,
     });
   };
+}
+
+export function sendEmail(a) {
+  return async function (dispatch) {
+    const email = await axios.post('/sendemail', { email: a })
+    return dispatch({
+      type: SEND_EMAIL,
+      payload: email
+    })
+  }
+
 }

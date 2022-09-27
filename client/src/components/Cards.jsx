@@ -9,6 +9,8 @@ export default function Cards({ data }) {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const user = JSON.parse(localStorage.getItem("user"))
+
   function handleDelete(e) {
     e.preventDefault();
     dispatch(deleteArtwork(e.target.name));
@@ -17,6 +19,9 @@ export default function Cards({ data }) {
 
   return (
     <div>
+
+
+{user.length?
       <div>
         <button
           name={data.id}
@@ -32,6 +37,8 @@ export default function Cards({ data }) {
           <button>Modificar</button>
         </Link>
       </div>
+:false
+}
 
       <div className={styles.card}>
         <Link to={`/Products/${data.id}`}>

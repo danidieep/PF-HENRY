@@ -4,7 +4,11 @@ import {
   addProductToCarrito,
   getProductById,
   cleanProductId,
-  getProductsFromCarritoDB
+  getProductsFromCarritoDB,
+  deleteProductFromFavourites,
+  getFavourites,
+  addProductToFavourites
+
 } from "../actions/index";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -24,6 +28,7 @@ export default function CardDetails(props) {
   const product = useSelector((state) => state.productDetails);
   const state = useSelector((state) => state);
   const [esta, setEsta] = useState(false);
+  const [estaEnfavoritos, setEstaEnFavoritos] = useState(false);
 
   useEffect(() => {
     dispatch(cleanProductId());
@@ -40,9 +45,23 @@ export default function CardDetails(props) {
    
   }
 
+  const estaonoEnfavoritos = ()=>{
+    
+    const a = state.favoritos.filter(e => e.title === product[0].title)
+    if(a.length)setEstaEnFavoritos(true)
+    if(!a.length)setEstaEnFavoritos(false)
+ 
+ 
+}
+
   useEffect(() => {
     if(state.carrito.length) estaono()
   }, [state.carrito]);
+
+  useEffect(() => {
+    if(state.favoritos.length) estaonoEnfavoritos()
+  }, [state.favoritos]);
+
 
 
   const addToCartOrDelete = async () => {
@@ -62,6 +81,7 @@ export default function CardDetails(props) {
       console.log("a")
       alert("Deleted from cart");
     } else {
+      setEsta(true)
       addProductToCarrito({ artId: product[0].id, email }, );
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
@@ -71,18 +91,36 @@ export default function CardDetails(props) {
     }
   };
 
-  // const addToCartOrDelete = async ()=>{
-  //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
-  //   if(ArtInCuesiton.length){
-  //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
-  //     alert("artWork deleted from cart")
-  // console.log(JSON.parse(localStorage.getItem("cart")))
-  // }
-  //  else{
-  //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
-  // alert("artWork added to cart")
-  // }
-  // }
+
+
+  const addToFavouritosOrDelete = async () => {
+   
+    const email = user[0].email;
+    const ArtInCuesiton1 = state.favoritos.filter(
+      (element) => element.title === product[0].title
+    );
+    if (ArtInCuesiton1.length) {
+      deleteProductFromFavourites({ artId: product[0].id, email }, )
+      setEstaEnFavoritos(false)
+      setTimeout(() => {
+        dispatch(getFavourites(email))
+      }, 600);
+      
+
+      console.log("a")
+      alert("Deleted from favs");
+    } else {
+      setEstaEnFavoritos(true)
+      addProductToFavourites({ artId: product[0].id, email }, );
+      setTimeout(() => {
+        dispatch(getFavourites(email))
+      }, 600);
+      
+      alert("Added to cart");
+    }
+  };
+
+
 
   return (
     <div className={styles.containerDetails} key={id}>
@@ -138,6 +176,7 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
+                <div>
                   {user.length && !esta? (
                     <button
                       className={styles.buttonAddCart}
@@ -151,7 +190,7 @@ export default function CardDetails(props) {
                     >
                       Add to cart
                     </button>
-                  ) : user.length?
+                  ) : user.length && esta?
                     <button
                       className={styles.buttonAddCart}
                       onClick={addToCartOrDelete}
@@ -161,7 +200,34 @@ export default function CardDetails(props) {
                     :
                     false
                   }
-                    
+                  </div>
+                   {/* <button onClick={()=>addCount("-")}>-</button> */}
+                  
+                  <div>
+                   {user.length && !estaEnfavoritos? (
+                    <button
+                      className={styles.buttonAddCart}
+                      onClick={() => {
+                        if (user.length) {
+                          addToFavouritosOrDelete();
+                        } else {
+                          alert("Login required");
+                        }
+                      }}
+                    >
+                      Add to Favourites
+                    </button>
+                  ) : user.length && estaEnfavoritos?
+                    <button
+                      className={styles.buttonAddCart}
+                      onClick={addToFavouritosOrDelete}
+                    >
+                      Delete from Favourites
+                    </button>
+                    :
+                    false
+                  }
+                    </div>
                   {/* <button onClick={()=>addCount("+")}>+</button> */}
                   {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>

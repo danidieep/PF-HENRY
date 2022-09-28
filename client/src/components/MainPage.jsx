@@ -145,6 +145,10 @@ export default function MainPage(props) {
             <button className={styles.SearchBarHome}>crear obra</button>
           </Link>
 
+          <Link to="/Favourites">
+            <button className={styles.SearchBarHome}>favourites</button>
+          </Link>
+
         {/* CARRUSEL */}
 
         {state.productsFiltered.length>5?

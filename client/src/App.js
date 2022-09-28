@@ -14,6 +14,7 @@ import { getUser, sendUserInfo, setUser } from "./actions";
 import { useEffect } from "react";
 import LoginLocal from "./components/Loginlocal";
 import Users from "./components/Users";
+import Favoritos from "./components/Favoritos"
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function App() {
     ? localStorage.setItem("user", JSON.stringify([]))
     : console.log("va");
   //si esta autenticado sse subo los datos de auth0 al local storage, caso contrario se convertira en un array vacío
-  console.log(user);
+ 
   const userData = isAuthenticated
     ? {
         name: user.given_name,
@@ -69,6 +70,7 @@ function App() {
       <Route path="/PutArtwork/:id" component={PutArtwork} />
       <Route path="/PostArtwork" component={PostArtwork} />
       <Route path="/Users" component={Users} />
+      <Route path="/Favourites" component={Favoritos} />
     </div>
   );
 }

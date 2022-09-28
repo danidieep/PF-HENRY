@@ -6,6 +6,9 @@ import {
   DELETE_FILTER,
   NOT_FOUND,
   SEND_EMAIL,
+  ADD_PRODUCTO_TO_FAVOURITES,
+  DELETE_PRODUCTO_FROM_FAVOURITES,
+  GET_FAVOURITES
 } from "./action-types.js";
 import {
   GET_USER,
@@ -199,7 +202,38 @@ export const deleteProductFromCarrito = async (payload) => {
 
 export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
+  
 };
+
+
+
+
+export const deleteProductFromFavourites = async (payload) => {
+  axios.post(`/favourites/delete/${payload.artId}`, { email: payload.email });
+};
+
+export const addProductToFavourites = async (payload) => {
+  axios.post(`/favourites/${payload.artId}`, { email: payload.email });
+};
+
+
+export const getFavourites = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/favourites", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_FAVOURITES,
+      payload: json.data,
+    });
+  };
+};
+
+
+
+
 
 export const getUser = (data) => {
   return async function (dispatch) {

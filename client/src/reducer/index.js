@@ -23,6 +23,7 @@ import {
   GET_PRODUCTS_FROM_CARRITODB,
   SET_USER,
   GET_USERS,
+  GET_FAVOURITES
 } from "../actions/action-types";
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
   filters: [],
   carrito: [],
   users: [],
+  favoritos:[]
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
@@ -197,6 +199,13 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
         carrito: payload,
       };
+    }
+
+    case GET_FAVOURITES:{
+      return{
+        ...state,
+        favoritos:payload,
+      }
     }
 
     case LOG_LOCAL: {

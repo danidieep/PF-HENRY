@@ -225,8 +225,11 @@ export const sendUserInfo = async ({
 };
 
 export function deleteUser(userId) {
-  console.log(userId, "userID");
-  axios.delete(`users/${userId}`);
+  axios.post(`users/${userId}`, {
+    headers: {
+      role,
+    },
+  });
 }
 
 export const getProductsFromCarritoDB = (payload) => {

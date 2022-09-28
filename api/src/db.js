@@ -63,9 +63,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 const { Artwork, Artist, User, Favourite, Cart, Artworkincart, Artworkinfav } = sequelize.models;
-// console.log(sequelize.models)
-// Aca vendrian las relaciones
 console.log(sequelize.models)
+// Aca vendrian las relaciones
 
 Cart.hasMany(Artworkincart);
 Artworkincart.belongsTo(Cart);

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, Cart, Favourite } = require("../db");
+const { User, Cart, Favourite, Banner } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
@@ -201,15 +201,13 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.post("/:id", authAdmins, async (req, res) => {
   try {
     const { id } = req.params;
-
-    const user = await User.destroy({ where: { id } });
-
-    res.status(200).send({ msg: "usuario eliminado" });
+    const user = User.update({ ban: true }, { where: { id } });
+    res.status(200).send({ msg: "usuario banneado" });
   } catch (error) {
-    res.status(404).send(error);
+    res.status(400).send(error.message);
   }
 });
 

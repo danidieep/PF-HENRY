@@ -68,6 +68,12 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
       };
 
+      case 'POST_ARTWORK':{
+        return{
+            ...state
+        }
+    }  
+
     case DELETE_ARTWORKS:
       return {
         ...state,

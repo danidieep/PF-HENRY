@@ -29,6 +29,13 @@ import {
   UPDATE_USER,
 } from "./action-types.js";
 
+export function postArtwork(payload) {
+  return async function (dispatch) {
+    let json = await axios.post('/artworks/', payload)
+    return json
+  }
+}
+
 export function deleteArtwork(id, user) {
   // console.log('user data delete artwork');
   return async function (dispatch) {

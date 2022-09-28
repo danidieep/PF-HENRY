@@ -61,7 +61,10 @@ export default function Register() {
     if (validatorEmail(input.email)) {
       if (input.name.length > 0 && input.lastname.length > 0 && input.password.length > 0 && input.dateBorn.length > 0) {
         RegisterUser(input);
-        window.location.href = "/LocalLogin"
+        setTimeout(() => {
+          window.location.href = "/LocalLogin"
+        }, 1000);
+      
         setInput({
           name: "",
           lastname: "",

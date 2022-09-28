@@ -16,4 +16,5 @@ const authAdmins1 = (req, res, next) => {
   }
 };
 
+
 module.exports = { authAdmins, authAdmins1 };

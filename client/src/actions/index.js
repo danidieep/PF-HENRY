@@ -41,9 +41,12 @@ export function deleteArtwork(id, user) {
     });
   };
 }
-export function putArtwork(payload) {
+export function putArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.put("/artworks/" + payload.id, payload);
+    let json = await axios.put("/artworks/" + payload.id, {
+      payload: payload,
+      role: role,
+    });
     return json;
   };
 }

@@ -6,7 +6,7 @@ const router = Router();
 const getUserByID = require("../controllers/getUserByID");
 const bcypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const authAdmins = require("../middlewares/middleware");
+const { authAdmins } = require("../middlewares/middleware");
 
 const enviarMail = async (name, email, password) => {
   const config = {

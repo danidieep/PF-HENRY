@@ -5,16 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
-<<<<<<< HEAD
 import styles from "./ModulesCss/Profile.module.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
-=======
-import styles from "./ModulesCss/Profile.module.css";
->>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
 
 export default function Profile() {
   const data = useAuth0();
@@ -33,26 +29,16 @@ export default function Profile() {
   };
   const onlyCharacters = /^[a-zA-Z\s]+$/;
 
-  const user = JSON.parse(localStorage.getItem("user"));
+
+
+  const user = JSON.parse(localStorage.getItem("user"))
 
 
   const delete_User = () => {
-<<<<<<< HEAD
-    localStorage.setItem("user", JSON.stringify([]))
-    deleteUser(user[0].id)
-    data.logout()
-  }
-
-  useEffect(() => {
-    console.log(user);
-  })
-
-=======
     localStorage.setItem("user", JSON.stringify([]));
     deleteUser(user[0].id);
     data.logout();
   };
->>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
 
   const [input, setInput] = useState({
     name: "",
@@ -81,19 +67,13 @@ export default function Profile() {
         setTimeout(() => {
           window.location.reload();
         }, 300);
-      } else {
-        alert("wrong email format");
       }
-<<<<<<< HEAD
       else {
         alertWrongEmailFormat()
 
       }
     }
     else {
-=======
-    } else {
->>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
       e.preventDefault();
       dispatch(updateUser(input));
       setTimeout(() => {
@@ -106,7 +86,6 @@ export default function Profile() {
     }
   }
 
-<<<<<<< HEAD
   function alertWrongEmailFormat() {
     toast.warning(`Wrong email format`, {
       position: "top-center",
@@ -120,8 +99,6 @@ export default function Profile() {
     })
   }
 
-=======
->>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profile}>
@@ -132,18 +109,11 @@ export default function Profile() {
             <hr />
             <br />
             <br />
-<<<<<<< HEAD
             <ToastContainer />
-            {data.isAuthenticated ?
-              <img className={styles.imgProfile1} src={user[0].picture} width='120' height='120'></img>
-              :
-              <img className={styles.imgProfile} src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg" width='120' height='120' />
-            }
-=======
             {data.isAuthenticated ? (
               <img
                 className={styles.imgProfile1}
-                src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                src={user[0].picture}
                 width="120"
                 height="120"
               ></img>
@@ -155,7 +125,6 @@ export default function Profile() {
                 height="120"
               />
             )}
->>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
 
             {!edit ? (
               <div>

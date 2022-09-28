@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
 import { User } from "@auth0/auth0-react"
+import AdminPanel from "./AdminPanel"
 
 
 let ProductsPorPage = 6
@@ -162,8 +163,6 @@ export default function MainPage(props) {
         </carrusel>
         :false
 }
-
-
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
         <div className={styles.filtersDiv}>
@@ -198,7 +197,6 @@ export default function MainPage(props) {
               </select>
             </form>
           </div>
-
           <div className={styles.select}>
             <form>
               <label>By medium </label>
@@ -216,6 +214,8 @@ export default function MainPage(props) {
             </form>
           </div>
         </div>
+        
+        <AdminPanel/>
 
         {/* LIMPIAR FILTROS */}
         {state.filters.map(element => {

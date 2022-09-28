@@ -22,6 +22,7 @@ import {
   DELETE_PRODUCT_FROM_CARRITO_BOARD,
   GET_PRODUCTS_FROM_CARRITODB,
   SET_USER,
+  GET_USERS,
 } from "../actions/action-types";
 
 const initialState = {
@@ -33,7 +34,7 @@ const initialState = {
   notFound: [],
   filters: [],
   carrito: [],
-  user: [],
+  users: [],
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
@@ -169,6 +170,13 @@ export default function Reducer(state = initialState, { type, payload }) {
       localStorage.setItem("user", JSON.stringify([payload]));
     }
 
+    case GET_USERS: {
+      return {
+        ...state,
+        users: payload.data,
+      };
+    }
+
     case DELETE_PRODUCT_FROM_CARRITO_BOARD: {
       return {
         ...state,
@@ -179,7 +187,6 @@ export default function Reducer(state = initialState, { type, payload }) {
     }
 
     case GET_PRODUCTS_FROM_CARRITODB: {
-      console.log(payload);
       return {
         ...state,
         carrito: payload,

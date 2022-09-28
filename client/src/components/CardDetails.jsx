@@ -41,7 +41,7 @@ export default function CardDetails(props) {
   }
 
   useEffect(() => {
-    if(state.carrito.length)estaono()
+    if(state.carrito.length) estaono()
   }, [state.carrito]);
 
 

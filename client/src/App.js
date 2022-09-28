@@ -6,12 +6,14 @@ import RegisterLocal from "./components/RegisterLocal";
 import Profile from "./components/Profile";
 import ShopCart from "./components/ShopCart";
 import PutArtwork from "./components/PutArtwork";
+import PostArtwork from "./components/PostArtwork";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, sendUserInfo, setUser } from "./actions";
 import { useEffect } from "react";
 import LoginLocal from "./components/Loginlocal";
+import Users from "./components/Users";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,9 +21,11 @@ function App() {
   const { isAuthenticated, user } = useAuth0();
 
   //creamos en el local storege un array vacío
-  !localStorage.getItem("user") ? localStorage.setItem("user", JSON.stringify([])) : console.log("va")
+  !localStorage.getItem("user")
+    ? localStorage.setItem("user", JSON.stringify([]))
+    : console.log("va");
   //si esta autenticado sse subo los datos de auth0 al local storage, caso contrario se convertira en un array vacío
-  console.log(user)
+  console.log(user);
   const userData = isAuthenticated
     ? {
       name: user.given_name,
@@ -39,6 +43,7 @@ function App() {
       idAuth: JSON.parse(localStorage.getItem("user")).idAuth,
       dateBorn: "0",
       password: "123",
+      role: JSON.parse(localStorage.getItem("user")).role,
     };
 
 
@@ -50,6 +55,7 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) dispatch(getUser(userData));
   }, [user]);
+
 
 
 
@@ -66,6 +72,8 @@ function App() {
       <Route path="/Profile" component={Profile} />
       <Route path="/ShopCart" component={ShopCart} />
       <Route path="/PutArtwork/:id" component={PutArtwork} />
+      <Route path="/PostArtwork" component={PostArtwork} />
+      <Route path="/Users" component={Users} />
     </div>
   );
 }

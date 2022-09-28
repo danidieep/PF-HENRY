@@ -9,37 +9,35 @@ export default function Cards({ data }) {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const user = JSON.parse(localStorage.getItem("user"))
+  const user = JSON.parse(localStorage.getItem("user"));
 
   function handleDelete(e) {
     e.preventDefault();
-    dispatch(deleteArtwork(e.target.name));
+    dispatch(deleteArtwork(e.target.name, user));
     dispatch(getProducts());
   }
 
   return (
     <div>
+      {user.length ? (
+        user[0].role ? (
+          <div>
+            <button
+              name={data.id}
+              value={data.id}
+              onClick={(e) => {
+                handleDelete(e);
+              }}
+            >
+              Eliminar
+            </button>
 
-
-{user.length?
-      <div>
-        <button
-          name={data.id}
-          value={data.id}
-          onClick={(e) => {
-            handleDelete(e);
-          }}
-        >
-          Eliminar
-        </button>
-
-        <Link to={`/PutArtwork/${data.id}`}>
-          <button>Modificar</button>
-        </Link>
-      </div>
-:false
-}
-
+            <Link to={`/PutArtwork/${data.id}`}>
+              <button>Modificar</button>
+            </Link>
+          </div>
+        ) : null
+      ) : null}
       <div className={styles.card}>
         <Link to={`/Products/${data.id}`}>
           <h3 className={styles.name}>{data.title}</h3>

@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
+const ArtworkInFav = require("./models/ArtworkInFav");
 require("dotenv").config();
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
@@ -61,7 +62,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Artwork, Artist, User, Favourite, Cart, Artworkincart } = sequelize.models;
+const { Artwork, Artist, User, Favourite, Cart, Artworkincart, Artworkinfav } = sequelize.models;
 // console.log(sequelize.models)
 // Aca vendrian las relaciones
 console.log(sequelize.models)
@@ -75,8 +76,11 @@ Artwork.belongsTo(Artist);
 User.hasMany(Artwork);
 Artwork.belongsTo(User);
 
-User.hasMany(Favourite);
-Favourite.belongsTo(User);
+Favourite.hasMany(Artworkinfav);
+Artworkinfav.belongsTo(Favourite);
+
+// Artwork.hasMany(Favourite);
+// Favourite.belongsTo(Artwork);
 
 // Favourite.belongsToMany(Artwork,{ through: 'favourites'})
 // Artwork.belongsToMany(Favourite, { through: 'favourites'})

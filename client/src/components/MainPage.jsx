@@ -12,9 +12,13 @@ import { useSelector, useDispatch } from "react-redux"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
 import { User } from "@auth0/auth0-react"
+<<<<<<< HEAD
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+=======
+import AdminPanel from "./AdminPanel"
+>>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
 
 
 let ProductsPorPage = 6
@@ -161,6 +165,9 @@ export default function MainPage(props) {
 
           </div>
         </header>
+        <Link to="/PostArtwork">
+            <button className={styles.SearchBarHome}>crear obra</button>
+          </Link>
 
         {/* NOTIFICACIONES ALERT */}
         <ToastContainer />
@@ -183,11 +190,18 @@ export default function MainPage(props) {
                 </ul>
               </div>
             </div>
+<<<<<<< HEAD
           </carrusel>
           : false
         }
 
 
+=======
+          </div>
+        </carrusel>
+        :false
+}
+>>>>>>> 436ca4c341d1482dd02de271110fee87c55554cd
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
         <div className={styles.filtersDiv}>
@@ -222,7 +236,6 @@ export default function MainPage(props) {
               </select>
             </form>
           </div>
-
           <div className={styles.select}>
             <form>
               <label>By medium </label>
@@ -240,6 +253,8 @@ export default function MainPage(props) {
             </form>
           </div>
         </div>
+        
+        <AdminPanel/>
 
         {/* LIMPIAR FILTROS */}
         {state.filters.map(element => {

@@ -1,66 +1,87 @@
-const { Artwork, User, Favourite } = require("../db");
-const { Router } = require("express");
-const getFavs = require("../controllers/favouriteController");
-const router = Router();
+const router = require("express").Router();
+const e = require("express");
+const {
+  getFav,
+  addArtworkInFav,
+  deleteArtworkInFav,
+} = require("../controllers/favouriteController");
+const { User, Artworkinfav, Artwork, Favourite } = require("../db");
 
-// router.post("/", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const artworkbyId = Artwork.findByPk(id);
-//     // let addFavourite = await Favourite.findOrCreate({
-//     //   where: { id: artworkById.id },
-//     // });
-//     // let userId = await Users.findOne({
-//     //   where: { id: user.id },
-//     // });
-//     // addFavourite.setUsers(userId);
-//     res.send("Artwork added to favourites");
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// });
-
-router.post("/", async (req, res) => {
+router.post("/:artworkId", async (req, res) => {
+  const { email } = req.body;
+  const { artworkId } = req.params;
   try {
-    const { email, artworkId } = req.body;
-    let userFavourites = await getFavs(email)
-    let newFavourite = await Favourite.create()
-    let product = await Artwork.findByPk(artworkId)
-    let user = await User.findOne({where:email})
-    await user.addFavourite(newFavourite)
-    await product.addFavourite(newFavourite)
-    return res.send('agregado a fav')
-  } catch (error) {
-    console.log(error)
-    res.status(400).send(error.message);
+    let user = await User.findOne({ where: { email } });
+    let favs = await Favourite.findOne({ where: { id: user.favId } });
+    let artworkInFav = await addArtworkInFav(artworkId);
+    await favs.addArtworkinfav(artworkInFav);
+    favs = await getFav(user.id);
+    return res.json({ favs });
+  } catch (err) {
+    console.log(err);
   }
 });
 
-router.delete('/', async(req, res) =>{
+
+
+
+
+router.post("/delete/:artworkId", async (req, res) => {
+  const { email } = req.body;
+  const { artworkId } = req.params;
   try {
-    const {favouriteId} = req.body
-    await Favourite.destroy({where: favouriteId})  
-  } catch (error) {
-    return console.log(error)
+    let artwork = await Artwork.findByPk(artworkId);
+    let user = await User.findOne({ where: { email } });
+    let favs = await Favourite.findOne({ where: { id: user.favId } });
+    let artworkInFav = await Artworkinfav.findOne({where:{artworkId}})
+    await deleteArtworkInFav(artworkInFav.dataValues.id);
+       res.status(200)
+  } catch (err) {
+    console.log(err);
   }
-  
-})
+});
 
 
-// router.get("/", async (req, res) => {
-//   const {email} = req.body
-//   try {
-//     let userFavourites = await getFavs(email);
-//     console.log(userFavourites)
-//     userFavourites = userFavourites.map((f) => {
-//     return { id: f.id, artwork: f.artwork };
-//     });
-//     return res.status(200).send({ favourites: userFavourites })
-//   } catch (error) {
-//     console.log(error)
-//   }
-// });
+router.get("/", async (req, res) => {
+  try {
+    const { payload } = req.headers;
+    let user = await User.findOne({ where: { email: payload } });
+    let favs = await Favourite.findOne({
+      where: {
+        id: user.dataValues.favId,
+      },
+      include: Artworkinfav,
+    });
+    let detailArt = favs.artworkinfavs
+    let arr = []
+    detailArt.map(async (e)=>  arr.push(Artwork.findOne({where:{id:e.artworkId}})))
+    await Promise.all(arr).then((resp) => {
+      res.status(200).send(resp);
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error.message });
+  }
+});
 
+
+
+router.get("/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    let user= await User.findByPk(userId);
+    let fav =  await Favourite.findOne({
+        where:{
+            id:user.favId
+        },
+        include: Artworkinfav
+    })
+      return res.status(200).send({status:"Successfully obtained fav", fav});
+  } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({error:error.message});
+  }
+});
 
 
 module.exports = router;

@@ -1,6 +1,6 @@
 
 const { Router } = require("express");
-const { User, Cart } = require("../db");
+const { User, Cart, Favourite } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
@@ -41,86 +41,16 @@ const enviarMail = async (name,email,password)=>{
 
 
 
-
-// router.post("/", async (req, res) => {
-//   const { name, lastname, email, password, dateBorn, role, headers } = req.body;
-//   try {
-//     if (!headers) {
-//       const userCartId = await Cart.create().then(
-//         ({ dataValues }) => dataValues.id
-//       );
-//       console.log(userCartId, 'userCartId');
-//       createUser(name, lastname, email, password, dateBorn, role, userCartId);
-//       res.status(200).send("User created succesfully");
-//     } else {
-//       const userDb = await User.findOne({
-//         where: { email: headers.user.email },
-//       });
-//       if (!userDb) {
-//         const userCartId = await Cart.create().then(
-//           ({ dataValues }) => dataValues.id
-//         );
-//         let arr = [];
-//         arr.push({
-//           name: headers.user.given_name,
-//           lastname: headers.user.family_name,
-//           email: headers.user.email,
-//           cartId: userCartId,
-//           idAuth: headers.user.sub,
-//         });
-//         User.bulkCreate(arr);
-//         res.status(200).send("User created succesfully");
-//       } else {
-//         res.status(400).send("User allready exists");
-//       }
-//     }
-//     // const tokenAdmin = jwt.sign(
-//     //   { name, lastname, email, password, dateBorn, role },
-//     //   "secret_token"
-//     // );
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-// // const creado = await User.findOne({where:name})
-// // console.log(creado)
-// // const tokenAdmin = jwt.sign(
-// //   { name, lastname, email, password, dateBorn, role },
-// //   "secret_token"
-// // );
-// //     res.status(200).send(user);
-// //   } catch (error) {
-// //     res.status(400).send(error.message);
-// //   }
-// // });
-
-// // const ensureToken = (req, res, next) => {
-// //   const { authorization } = req.headers;
-// //   if (authorization === undefined) {
-// //     res.status(403).send("not allowed");
-// //   } else {
-// //     req.token = authorization;
-// //     next();
-// //   }
-// // };
-
  router.post("/findorcreate", async (req, res) => {
-//   try {
-//     // jwt.verify(req.token, "secret_token", (err, data) => {
-//     //   if (err) {
-//     //     res.status(403).send("Eroorororor");
-//     //   } else {
-//     //     res.send(data);
-//     //   }
-//     // });
+
    const { email, name, lastname, password, dateBorn, role, idAuth } = req.body;
     
       const user = await User.findOne({where:{idAuth}})
       
 
       if (user) {
-        const {name,cartId,id,lastname,email,idAuth} = user.dataValues
-        res.status(200).json({name,cartId,id,lastname,email,idAuth});
+        const {name,cartId, favId,id,lastname,email,idAuth} = user.dataValues
+        res.status(200).json({name,cartId, favId,id,lastname,email,idAuth});
       } else {
 
         
@@ -128,29 +58,21 @@ const enviarMail = async (name,email,password)=>{
           ({ dataValues }) => dataValues.id
         );
 
-        await User.create({name, lastname, email, password, dateBorn, role,cartId:userCartId,idAuth});
+        const userFavId = await Favourite.create().then(
+          ({dataValues}) => dataValues.id
+        )
+
+        await User.create({name, lastname, email, password, dateBorn, role, cartId:userCartId, favId:userFavId, idAuth});
 
         const user = await User.findOne({where:{idAuth}})
          res.status(200).json(user.dataValues)
 
        }
       })
-//     } else {
-//       res.status(200).json(users);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+
  
  router.post("/findLocalUser", async (req, res) => {
-  //  jwt.verify(req.token, "secret_token", (err, data) => {
-  //    if (err) {
-  //       res.status(403).send("Eroorororor");
-  //   } else {
-  //      res.send(data);
-  //  }
-  //   });
+
   const {email} = req.body;
   const passNoHashed = req.body.password
   
@@ -175,63 +97,24 @@ else{
   }
 })
 
-// router.get("/", async (req, res) => {
-//   try {
-//     const userById = await getUserDB();
-//     res.send(userById);
-//   } catch (error) {
-//     res.status(404).send(error);
-//   }
-// });
 
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const userById = await getUserByID(id);
-//     if (userById.length) {
-//       res.send(userById);
-//     }
-//     res.send("no se ha encontrado un usuario con ese id");
-//   } catch (error) {
-//     res.status(404).send(error);
-//   }
-// });
-
-// router.delete("/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const user = await User.destroy({ where: { id } });
-
-//     res.status(200).send({ msg: "usuario eliminado" });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-
-// module.exports = router;
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, dateBorn, role, headers } = req.body;
   const passNoHashed = req.body.password
   let password =  bcypt.hashSync(passNoHashed, 8)
-  
-  
   console.log(req.body);
   try {
     if (!headers) {
-     
-
-      
-
       const user = await User.findOne({where:{email}})
-
       if(!user){
         const cartId =  await Cart.create().then(
           ({ dataValues }) => dataValues.id
         );
-
-        createUser(name, lastname, email, password, dateBorn, role, cartId);
+        const favId =  await Favourite.create().then(
+          ({ dataValues }) => dataValues.id
+        );
+        createUser(name, lastname, email, password, dateBorn, role, cartId, favId);
       try {
         enviarMail(name,email, passNoHashed)
       } catch (error) {
@@ -255,11 +138,15 @@ router.post("/", async (req, res) => {
         const userCartId = await Cart.create().then( 
           ({ dataValues }) => dataValues.id
         );
+        const userFavId = await Favourite.create().then(
+          ({dataValues}) => dataValues.id
+        )
         let arr = [];
         arr.push({
           name: headers.user.given_name,
           lastname: headers.user.family_name,
           email: headers.user.email,
+          favId: userFavId,
           cartId: userCartId,
           idAuth: headers.user.sub,
         });
@@ -277,46 +164,16 @@ router.post("/", async (req, res) => {
 
 
 
-    
-    // const tokenAdmin = jwt.sign(
-    //   { name, lastname, email, password, dateBorn, role },
-    //   "secret_token"
-    // );
+  
   } catch (error) {
     console.log(error);
   }
 });
-// const creado = await User.findOne({where:name})
-// console.log(creado)
-// const tokenAdmin = jwt.sign(
-//   { name, lastname, email, password, dateBorn, role },
-//   "secret_token"
-// );
-//     res.status(200).send(user);
-//   } catch (error) {
-//     res.status(400).send(error.message);
-//   }
-// });
 
-// const ensureToken = (req, res, next) => {
-//   const { authorization } = req.headers;
-//   if (authorization === undefined) {
-//     res.status(403).send("not allowed");
-//   } else {
-//     req.token = authorization;
-//     next();
-//   }
-// };
 
 router.get("/", async (req, res) => {
   try {
-    // jwt.verify(req.token, "secret_token", (err, data) => {
-    //   if (err) {
-    //     res.status(403).send("Eroorororor");
-    //   } else {
-    //     res.send(data);
-    //   }
-    // });
+
     const { name } = req.query;
     const users = await getUserDB();
 
@@ -343,8 +200,8 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const userById = await User.findOne({where:{id}});
     if (userById) {
-      const {id,cartId,name,lastname,email} = userById.dataValues
-      res.status(200).json({id,cartId,name,lastname,email})
+      const {id,cartId,favId ,name,lastname,email} = userById.dataValues
+      res.status(200).json({id,cartId, favId, name,lastname,email})
     }
     else{res.send("no se ha encontrado un usuario con ese id");}
     
@@ -384,11 +241,6 @@ router.post("/update", async(req,res)=>{
     console.log(error)
   }
 })
-
-
-
-
-
 
 
 module.exports = router;

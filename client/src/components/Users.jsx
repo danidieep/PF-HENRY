@@ -6,9 +6,10 @@ import { deleteUser, getProductsFromCarritoDB, getUSers } from "../actions";
 export default function Users() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    dispatch(getUSers());
+    dispatch(getUSers({role: user[0].role}));
   }, []);
 
   const delete_User = (user) => {
@@ -16,24 +17,6 @@ export default function Users() {
     setTimeout(() => {
       window.location.reload();
     }, 30);
-  };
-
-  const getCart = async (data) => {
-    await axios
-      .get("/cart", {
-        headers: {
-          payload: data,
-        },
-      })
-      .then((res) =>
-        res.data.map((el) => {
-          return (
-            <div>
-              <h6>{console.log(el.title)}</h6>
-            </div>
-          );
-        })
-      );
   };
 
   return (

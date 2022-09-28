@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -56,6 +58,32 @@ export default function Register() {
 
   }
 
+  function alertCompleteData() {
+    toast.warn(`Complete all the info`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertWorngEmailFormat() {
+    toast.warn(`Wrong email format`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (validatorEmail(input.email)) {
@@ -72,14 +100,14 @@ export default function Register() {
       }
 
       else {
-        alert("complete your data")
+        alert("C")
       }
     }
     else if (input.email.length === 0) {
-      alert("complete your data")
+      alertCompleteData()
     }
     else {
-      alert("wrong email format")
+      alertWorngEmailFormat()
     }
 
 
@@ -89,7 +117,7 @@ export default function Register() {
     <div className={styles.containerRegister}>
       <div className={styles.formContainer}>
 
-
+        <ToastContainer />
         <h1 className={styles.logoForm}>Arteck</h1>
 
         <form>

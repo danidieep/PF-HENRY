@@ -300,3 +300,8 @@ form .formNewsletterBox {
     touch-action: manipulation;
 
 }
+
+.btnSubscribe:disabled {
+    opacity: 0.5;
+    cursor: auto;
+}

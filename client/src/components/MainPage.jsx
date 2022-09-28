@@ -12,6 +12,9 @@ import { useSelector, useDispatch } from "react-redux"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
 import { User } from "@auth0/auth0-react"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 let ProductsPorPage = 6
@@ -25,10 +28,12 @@ export default function MainPage(props) {
   let arrCountOf = [];
   arrCountOf = state.productsFiltered.slice(0, CountOf)
 
-  
+
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
+  const [disableNewsletterBtn, setdisableNewsletterBtn] = useState(false)
+  const [tagSubBtn, setTagSubBtn] = useState('Subscribe to Newsletter')
 
 
   React.useEffect(() => {
@@ -102,30 +107,46 @@ export default function MainPage(props) {
     e.preventDefault()
     const email = JSON.parse(localStorage.getItem("user"))[0].email
     dispatch(sendEmail(email))
-    alert('You have been suscribed to our Newsletter')
+    alertNewslatter()
+    setdisableNewsletterBtn(true)
+    setTagSubBtn('Already subscribed to Newsletter')
+  }
+
+  function alertNewslatter() {
+    toast.info('You have been suscribed to our newsletter!', {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   }
 
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-      <header >
+        <header >
           {/* <div className={styles.content2}> */}
           <div className={styles.header}>
             <div>
               <button className={styles.Products}>About us</button>
             </div>
 
-{JSON.parse(localStorage.getItem("user")).length?
-            <div>
-              <Link to="/ShopCart">
-                <button className={styles.btnCarrito}>
-                  <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
-                </button>
-              </Link>
-            </div>
-            :false
-}
+            {JSON.parse(localStorage.getItem("user")).length ?
+              <div>
+                <Link to="/ShopCart">
+                  <button className={styles.btnCarrito}>
+                    <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+                  </button>
+                </Link>
+              </div>
+              : false
+            }
 
             <div>
               <h1 className={styles.logo}>Artket</h1>
@@ -141,34 +162,37 @@ export default function MainPage(props) {
           </div>
         </header>
 
+        {/* NOTIFICACIONES ALERT */}
+        <ToastContainer />
+
         {/* CARRUSEL */}
 
-        {state.productsFiltered.length>5?
-        <carrusel>
-          <p className={styles.featured}>Featured</p>
-          <div className={styles.carrusel}>
-            <div>
-              <ul>
-                {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
-                  return (
-                    <li><img src={element.image}></img></li>
+        {state.productsFiltered.length > 5 ?
+          <carrusel>
+            <p className={styles.featured}>Featured</p>
+            <div className={styles.carrusel}>
+              <div>
+                <ul>
+                  {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
+                    return (
+                      <li><img src={element.image}></img></li>
+                    )
+                  }
                   )
-                }
-                )
-                }
-              </ul>
+                  }
+                </ul>
+              </div>
             </div>
-          </div>
-        </carrusel>
-        :false
-}
+          </carrusel>
+          : false
+        }
 
 
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
         <div className={styles.filtersDiv}>
           <button
-          onClick={()=>dispatch(showAllProducts()) }
+            onClick={() => dispatch(showAllProducts())}
           >Reload artworks</button>
           {/* <p className={styles.filter}>Filters</p> */}
           <div className={styles.select}>
@@ -243,15 +267,15 @@ export default function MainPage(props) {
               )
               )}
             </div> :
-            !state.allProducts && !state.filters.length?
+            !state.allProducts && !state.filters.length ?
               <div className={styles.contenedorLoading}>
                 <img className="loading" src="https://i.pinimg.com/originals/2e/b8/d0/2eb8d009f410f30866b6a34a374af797.gif" alt="" />
               </div>
-              :state.allProducts && state.filters.length?
-              <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
-              </div>
-              :
-              false
+              : state.allProducts && state.filters.length ?
+                <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
+                </div>
+                :
+                false
 
         }
         {/* PAGINADO */}
@@ -282,7 +306,7 @@ export default function MainPage(props) {
                   Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
                 </p>
                 <div className={styles.formNewsletter}>
-                  <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
+                  <button disabled={disableNewsletterBtn} className={styles.btnSubscribe} onClick={handleSubscribe}>{tagSubBtn}</button>
                 </div>
 
 
@@ -300,3 +324,4 @@ export default function MainPage(props) {
     </div>
   )
 }
+

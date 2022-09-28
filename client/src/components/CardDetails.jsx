@@ -13,6 +13,10 @@ import Message from "./Message";
 import styles from "./ModulesCss/CardsDetails.module.css";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 export default function CardDetails(props) {
   const { id } = useParams();
@@ -28,61 +32,89 @@ export default function CardDetails(props) {
   useEffect(() => {
     dispatch(cleanProductId());
     dispatch(getProductById(id));
-    if(user.length)dispatch(getProductsFromCarritoDB(user[0].email))
+    if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
   }, []);
 
-  const estaono = ()=>{
-    
-      const a = state.carrito.filter(e => e.title === product[0].title)
-      if(a.length)setEsta(true)
-      if(!a.length)setEsta(false)
-   
-   
+  const estaono = () => {
+
+    const a = state.carrito.filter(e => e.title === product[0].title)
+    if (a.length) setEsta(true)
+    if (!a.length) setEsta(false)
+
+
   }
 
   useEffect(() => {
-    if(state.carrito.length)estaono()
+    if (state.carrito.length) estaono()
   }, [state.carrito]);
 
 
   const addToCartOrDelete = async () => {
-   
+
     const email = user[0].email;
     const ArtInCuesiton = state.carrito.filter(
       (element) => element.title === product[0].title
     );
     if (ArtInCuesiton.length) {
-      deleteProductFromCarrito({ artId: product[0].id, email }, )
+      deleteProductFromCarrito({ artId: product[0].id, email },)
       setEsta(false)
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
       }, 600);
-      
+      alertDeleteFromCarritoAtDetails()
 
-      console.log("a")
-      alert("Deleted from cart");
     } else {
-      addProductToCarrito({ artId: product[0].id, email }, );
+      addProductToCarrito({ artId: product[0].id, email },);
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
       }, 600);
-      
-      alert("Added to cart");
+
+      alertAddToCarrito()
     }
   };
 
-  // const addToCartOrDelete = async ()=>{
-  //  const ArtInCuesiton = state.carrito.filter(element=> element.title===product[0].title)
-  //   if(ArtInCuesiton.length){
-  //    dispatch(deleteProductFromCarrito({itemId:product[0].id, userId: state.user[0].id}))
-  //     alert("artWork deleted from cart")
-  // console.log(JSON.parse(localStorage.getItem("cart")))
-  // }
-  //  else{
-  //     dispatch( addProductToCarrito({itemId:product[0].id, userId: state.user[0].id}))
-  // alert("artWork added to cart")
-  // }
-  // }
+
+  function alertAddToCarrito() {
+    toast.success(`${product[0].title} has been added to your cart`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertDeleteFromCarritoAtDetails() {
+    toast.success(`${product[0].title} has been deleted from your cart`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertLogInRequired() {
+    toast.warn(`Login required`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+
+
 
   return (
     <div className={styles.containerDetails} key={id}>
@@ -100,11 +132,12 @@ export default function CardDetails(props) {
           </div>
           <div></div>
 
-          {user.length?<div>
+          <ToastContainer />
+          {user.length ? <div>
             <Link to="/Profile">
-            <button className={styles.btnUser}>
-              <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
-            </button>
+              <button className={styles.btnUser}>
+                <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
+              </button>
             </Link>
             <Link to="/ShopCart">
               <button className={styles.btnCarrito}>
@@ -112,9 +145,9 @@ export default function CardDetails(props) {
               </button>
             </Link>
           </div>
-          :
-          false
-}
+            :
+            false
+          }
 
         </div>
       </header>
@@ -138,20 +171,20 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                  {user.length && !esta? (
+                  {user.length && !esta ? (
                     <button
                       className={styles.buttonAddCart}
                       onClick={() => {
                         if (user.length) {
                           addToCartOrDelete();
                         } else {
-                          alert("Login required");
+                          alertLogInRequired();
                         }
                       }}
                     >
                       Add to cart
                     </button>
-                  ) : user.length?
+                  ) : user.length ?
                     <button
                       className={styles.buttonAddCart}
                       onClick={addToCartOrDelete}
@@ -161,7 +194,7 @@ export default function CardDetails(props) {
                     :
                     false
                   }
-                    
+
                   {/* <button onClick={()=>addCount("+")}>+</button> */}
                   {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>

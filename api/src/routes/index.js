@@ -2,10 +2,10 @@ const { Router, application } = require("express");
 const artRouter = require("./artRouter");
 const artistRouter = require("./artistsRouter");
 const userRouter = require("./userRouter");
-const favsRouter = require("./favAddRouter");
 const cartRouter = require("./cartRouter");
 const emailRouter = require("./emailRouter");
 const authAdmins = require("../middlewares/middleware");
+const favsRouter = require('./favouriteRouter')
 const router = Router();
 
 // router.use('/auth', authRouter)

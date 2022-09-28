@@ -23,7 +23,11 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3001
 
 conn.sync({ force: false }).then(() => {
+<<<<<<< HEAD
   server.listen(PORT, () => {
+=======
+  server.listen(3001, () => {
+>>>>>>> 019efe34d3884399554ce776469b7579fe31f730
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
 });

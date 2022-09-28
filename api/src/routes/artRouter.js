@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
   }
   try {
     const allArtworks = await getArtworks();
-    const arts = await Artwork.findAll({ where: { show: true } });
+    const arts = await Artwork.findAll();
     res.status(200).send(arts);
   } catch (error) {
     res.status(404).send(error);

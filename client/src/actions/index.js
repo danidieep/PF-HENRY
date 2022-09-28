@@ -41,9 +41,12 @@ export function deleteArtwork(id, user) {
     });
   };
 }
-export function putArtwork(payload) {
+export function putArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.put("/artworks/" + payload.id, payload);
+    let json = await axios.put("/artworks/" + payload.id, {
+      payload: payload,
+      role: role,
+    });
     return json;
   };
 }
@@ -222,7 +225,7 @@ export const sendUserInfo = async ({
 };
 
 export function deleteUser(userId) {
-  console.log(userId, 'userID');
+  console.log(userId, "userID");
   axios.delete(`users/${userId}`);
 }
 
@@ -288,9 +291,14 @@ export function sendEmail(a) {
   };
 }
 
-export function getUSers() {
+export function getUSers(role) {
+  console.log(role);
   return async function (dispatch) {
-    let data = await axios.get("/users");
+    let data = await axios.get("/users", {
+      headers: {
+        role,
+      },
+    });
     return dispatch({
       type: GET_USERS,
       payload: data,

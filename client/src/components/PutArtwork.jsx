@@ -1,141 +1,197 @@
-import React, { Fragment } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { putArtwork, cleanProductId, getProductById } from '../actions/index'
-import { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import React, { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { putArtwork, cleanProductId, getProductById } from "../actions/index";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-
-
-
-export default function PutArtwork(){
+export default function PutArtwork() {
   const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem("user"));
 
-const dispatch = useDispatch()
-const product = useSelector((state) => state.productDetails)
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.productDetails);
 
-useEffect(() => {
-dispatch(getProductById(id))
-dispatch(cleanProductId())
-}, [])
+  useEffect(() => {
+    dispatch(getProductById(id));
+    dispatch(cleanProductId());
+  }, []);
 
-
-const [input, setInput] = useState({
+  const [input, setInput] = useState({
     id: id,
-    title: '',
-    date:'',
-    collecting_institution:'',
-    image:'',
-    creator:'',
-    dimensions:'',
-    medio:'',
-    price:''
-   })
+    title: "",
+    date: "",
+    collecting_institution: "",
+    image: "",
+    creator: "",
+    dimensions: "",
+    medio: "",
+    price: "",
+  });
 
-
-   function handleChange(e) {
+  function handleChange(e) {
     setInput({
       ...input,
-      [e.target.name] : e.target.value
-    })
-   }  
+      [e.target.name]: e.target.value,
+    });
+  }
 
-  
-    
+  function handleSubmit(e) {
+    e.preventDefault();
 
-    function handleSubmit(e){
-      e.preventDefault()
+    dispatch(putArtwork(input, user[0].role ? user[0].role : null));
+    alert("obra de arte actualizada");
 
-        dispatch(putArtwork(input))
-         alert('obra de arte actualizada')
-      
-         setInput({
-          title:'',
-          date:'',
-          collecting_institution:'',
-          image:'',
-          creator:'',
-          dimensions:'',
-          medio:'',
-          price:''
-      })
-     }
-   
+    setInput({
+      title: "",
+      date: "",
+      collecting_institution: "",
+      image: "",
+      creator: "",
+      dimensions: "",
+      medio: "",
+      price: "",
+    });
+  }
 
- 
-    return(
-      product.length ? 
-        
-        <Fragment>
-          <button onClick={()=>window.location.href="/MainPage"}>back</button>
-          
-          <form onSubmit={e => handleSubmit(e)} >
-            <h1>MODIFICAR OBRA DE ARTE:</h1>
-            <br/>
-             {/* -------------------------   TITLE       */} 
-                  <label>title: </label>
-                  <input  type="input" name="title" value={input.title} placeholder='title...' onChange={(e) => {handleChange(e)}} /> 
-              
-              <br/>
+  return product.length ? (
+    <Fragment>
+      <button onClick={() => (window.location.href = "/MainPage")}>back</button>
 
-           {/* -------------------------   date       */}   
-                  <label>año de creacion: </label>
-                  <input  type="number" name="date" value={input.date} autoComplete="off" placeholder="date..." onChange={e => {handleChange(e)}}/>
-           
-              <br/>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <h1>MODIFICAR OBRA DE ARTE:</h1>
+        <br />
+        {/* -------------------------   TITLE       */}
+        <label>title: </label>
+        <input
+          type="input"
+          name="title"
+          value={input.title}
+          placeholder="title..."
+          onChange={(e) => {
+            handleChange(e);
+          }}
+        />
 
-             {/* -------------------------   collecting_institution       */}
-             <div>
-                  <label>institucion de ubicacion: </label>
-                  <input type="input" name="collecting_institution" value={input.collecting_institution} autoComplete="off" placeholder="institucion..." onChange={e => {handleChange(e)}}/>
-               
-             </div>
-             <br/>
+        <br />
 
-             {/* -------------------------   image       */}
-             <div>
-                   <label>image: </label>
-                  <input type="input" name="image" value={input.image} autoComplete="off" placeholder="imagen..." onChange={e => {handleChange(e)}}/>
-               
-             </div>
-             <br/>
+        {/* -------------------------   date       */}
+        <label>año de creacion: </label>
+        <input
+          type="number"
+          name="date"
+          value={input.date}
+          autoComplete="off"
+          placeholder="date..."
+          onChange={(e) => {
+            handleChange(e);
+          }}
+        />
 
-             {/* -------------------------   creator       */}
-             <div>
-                   <label>creator: </label>
-                  <input  type="input" name="creator" value={input.creator} autoComplete="off" placeholder="creator..." onChange={e => {handleChange(e)}}/>
-            
-             </div>
-             <br/>
+        <br />
 
-             {/* -------------------------   dimensions       */}
-             <div>
-                  <label>dimensions: </label>
-                  <input  type="input" name="dimensions" value={input.dimensions} autoComplete="off" placeholder="Title..." onChange={e => {handleChange(e)}}/>
-            
-             </div>
-             <br/>
+        {/* -------------------------   collecting_institution       */}
+        <div>
+          <label>institucion de ubicacion: </label>
+          <input
+            type="input"
+            name="collecting_institution"
+            value={input.collecting_institution}
+            autoComplete="off"
+            placeholder="institucion..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
 
-             {/* -------------------------   medio       */}
-             <div>
-                  <label>medio: </label>
-                  <input  type="input" name="medio" value={input.medio} autoComplete="off" placeholder="medio..." onChange={e => {handleChange(e)}}/>
-            
-             </div>
-             <br/>
+        {/* -------------------------   image       */}
+        <div>
+          <label>image: </label>
+          <input
+            type="input"
+            name="image"
+            value={input.image}
+            autoComplete="off"
+            placeholder="imagen..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
 
-             {/* -------------------------   price       */}
-             <div>
-                  <label>price: </label>
-                  <input  type="input" name="price" value={input.price} autoComplete="off" placeholder="Title..." onChange={e => {handleChange(e)}}/>
-          
-                  <br></br>
-             </div>
-             <br/>
-             <button  type='submit' onClick={e => handleSubmit(e)} >Modificar</button>
+        {/* -------------------------   creator       */}
+        <div>
+          <label>creator: </label>
+          <input
+            type="input"
+            name="creator"
+            value={input.creator}
+            autoComplete="off"
+            placeholder="creator..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
 
-          </form>
+        {/* -------------------------   dimensions       */}
+        <div>
+          <label>dimensions: </label>
+          <input
+            type="input"
+            name="dimensions"
+            value={input.dimensions}
+            autoComplete="off"
+            placeholder="Title..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
 
- 
-        </Fragment> : <p>Loading...</p>
-    )
+        {/* -------------------------   medio       */}
+        <div>
+          <label>medio: </label>
+          <input
+            type="input"
+            name="medio"
+            value={input.medio}
+            autoComplete="off"
+            placeholder="medio..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
+
+        {/* -------------------------   price       */}
+        <div>
+          <label>price: </label>
+          <input
+            type="input"
+            name="price"
+            value={input.price}
+            autoComplete="off"
+            placeholder="Title..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+
+          <br></br>
+        </div>
+        <br />
+        <button type="submit" onClick={(e) => handleSubmit(e)}>
+          Modificar
+        </button>
+      </form>
+    </Fragment>
+  ) : (
+    <p>Loading...</p>
+  );
 }

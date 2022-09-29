@@ -3,7 +3,7 @@ import { deleteProductFromFavourites ,getFavourites, } from "../actions";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import styles from './ModulesCss/Carrito.module.css'
-
+import {toast} from "react-toastify"
 
 
 
@@ -18,6 +18,17 @@ const email = JSON.parse(localStorage.getItem("user"))[0].email
 
   const eliminar = (id)=>{
     deleteProductFromFavourites({ artId: id, email }, )
+
+    toast.success(`Artwork deleted from favourites!`, {
+      position: "top-center",
+      theme: "light",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
     
     setTimeout(() => {
       dispatch(getFavourites(email))

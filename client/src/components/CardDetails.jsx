@@ -42,20 +42,22 @@ export default function CardDetails(props) {
   }, []);
 
   const estaono = () => {
-
+    
+    if(state.carrito.length && product.length){
     const a = state.carrito.filter(e => e.title === product[0].title)
     if (a.length) setEsta(true)
     if (!a.length) setEsta(false)
-
+    }
 
   }
-
+  
   const estaonoEnfavoritos = () => {
-
+    
+    if(state.favoritos.length && product.length){
     const a = state.favoritos.filter(e => e.title === product[0].title)
     if (a.length) setEstaEnFavoritos(true)
     if (!a.length) setEstaEnFavoritos(false)
-
+    }
 
   }
 
@@ -75,7 +77,7 @@ export default function CardDetails(props) {
     const ArtInCuesiton = state.carrito.filter(
       (element) => element.title === product[0].title
     );
-    if (ArtInCuesiton.length) {
+    if (ArtInCuesiton.length && esta) {
       deleteProductFromCarrito({ artId: product[0].id, email },)
       setEsta(false)
       setTimeout(() => {
@@ -83,7 +85,7 @@ export default function CardDetails(props) {
       }, 600);
       alertDeleteFromCarritoAtDetails()
 
-    } else {
+    } else if(!esta){
       setEsta(true)
       addProductToCarrito({ artId: product[0].id, email },);
       setTimeout(() => {
@@ -102,7 +104,7 @@ export default function CardDetails(props) {
     const ArtInCuesiton1 = state.favoritos.filter(
       (element) => element.title === product[0].title
     );
-    if (ArtInCuesiton1.length) {
+    if (ArtInCuesiton1.length && estaEnfavoritos) {
       deleteProductFromFavourites({ artId: product[0].id, email },)
       setEstaEnFavoritos(false)
       setTimeout(() => {
@@ -112,7 +114,7 @@ export default function CardDetails(props) {
 
       console.log("a")
       alertDeleteFromFavouritesAtDetails()
-    } else {
+    } else if(!estaEnfavoritos) {
       setEstaEnFavoritos(true)
       addProductToFavourites({ artId: product[0].id, email },);
       setTimeout(() => {
@@ -126,7 +128,7 @@ export default function CardDetails(props) {
 
   function alertAddToCarrito() {
     toast.success('Adding to cart!', {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -138,7 +140,7 @@ export default function CardDetails(props) {
 
   function alertDeleteFromCarritoAtDetails() {
     toast.success('Deleting from cart!', {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -150,7 +152,7 @@ export default function CardDetails(props) {
 
   function alertAddtoFavouritesAtDetails() {
     toast.success('Adding to Favourites!', {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -162,7 +164,7 @@ export default function CardDetails(props) {
 
   function alertDeleteFromFavouritesAtDetails() {
     toast.success('Deleting from Favourites!', {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,

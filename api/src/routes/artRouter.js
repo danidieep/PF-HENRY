@@ -63,7 +63,7 @@ const ensureToken = (req, res, next) => {
   }
 };
 
-router.post("/", ensureToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const {
     id,
     title,
@@ -75,29 +75,23 @@ router.post("/", ensureToken, async (req, res) => {
     medio,
     price,
   } = req.body;
-  jwt.verify(req.token, "secret_token", (err, data) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      if (data.role === true) {
-        const postArtwork = createArtwork(
-          id,
-          title,
-          date,
-          collecting_institution,
-          image,
-          creator,
-          dimensions,
-          medio,
-          price
-        );
-        res.status(200).send("Artwork created succesfully");
-      } else {
-        res.status(403).send("You cannot create an artwork");
-      }
-    }
-  });
-});
+  try {
+    const postArtwork = createArtwork(
+      id,
+      title,
+      date,
+      collecting_institution,
+      image,
+      creator,
+      dimensions,
+      medio,
+      price
+    )
+    res.status(200).send("Artwork created succesfully");
+  } catch (error) {
+    res.status(403).send("You cannot create an artwork");
+  }
+})
 
 router.put("/:idArtwork", authAdmins1, async (req, res) => {
   const { idArtwork } = req.params;

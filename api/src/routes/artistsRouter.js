@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const getArtists = require("../controllers/artistsController");
 const createArtist = require("../controllers/artistsPostController");
+const { authAdmins1 } = require("../middlewares/middleware");
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -45,15 +46,15 @@ router.get("/:idArtist", async (req, res) => {
   }
 });
 
-
-router.post("/", async (req, res) => {
+router.post("/", authAdmins1, async (req, res) => {
   try {
-    const { id, name, birthday, hometown } = req.body;
-    createArtist(id, name, birthday, hometown);
+    // const { id, name, birthday, hometown } = req.body;
+    // console.log(req.body, 'req.body back');
+    createArtist(req.body);
+    res.status(200).send("Artist created succesfully");
   } catch (error) {
     res.send(400).send(error);
   }
 });
-
 
 module.exports = router;

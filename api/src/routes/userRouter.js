@@ -102,7 +102,6 @@ router.post("/", async (req, res) => {
   const { name, lastname, email, dateBorn, role, headers } = req.body;
   const passNoHashed = req.body.password;
   let password = bcypt.hashSync(passNoHashed, 8);
-  console.log(req.body);
   try {
     if (!headers) {
       const user = await User.findOne({ where: { email } });

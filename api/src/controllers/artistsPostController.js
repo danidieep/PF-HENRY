@@ -1,14 +1,18 @@
 const { Artist } = require("../db");
 
-const createArtist = async (id, name, birthday, hometown) => {
+const createArtist = async (data) => {
   try {
-    const artistCreate = await Artist.create({
-      id,
-      name,
-      birthday,
-      hometown,
+    const {id, name, birthday, hometown} = data.payload
+    const artistCreate = await Artist.findOrCreate({
+      where : {
+        name
+      },
+      defaults: {
+        id,
+        birthday,
+        hometown
+      }
     });
-    resizeBy.send('Artist created succesfully')
   } catch (error) {
     console.log(error.message);
   }

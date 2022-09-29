@@ -31,12 +31,12 @@ import {
 
 export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post('/artworks/', {
+    let json = await axios.post("/artworks/", {
       payload: payload,
       role: role,
-    })
-    return json
-  }
+    });
+    return json;
+  };
 }
 
 export function deleteArtwork(id, user) {
@@ -312,4 +312,12 @@ export function getUSers(role) {
       payload: data,
     });
   };
+}
+
+export async function postArtists(payload, role) {
+  let json = await axios.post("/artists", {
+    payload: payload,
+    role: role,
+  });
+  return json;
 }

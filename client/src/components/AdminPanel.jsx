@@ -14,6 +14,9 @@ export default function AdminPanel() {
             <Link to="/PostArtwork">
               <button>crear obra</button>
             </Link>
+            <Link to="/PostArtist">
+              <button>crear artista</button>
+            </Link>
           </div>
         ) : null
       ) : null}

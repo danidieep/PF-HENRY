@@ -6,20 +6,24 @@ import {AiOutlineSearch} from "react-icons/ai"
  
 
 const state = {
-    product: ""
-}
+  product: "",
+};
 
 export default function SearchBar(props) {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  function subirAlState(event) {
+    state.product = event.target.value.toLowerCase();
+  }
 
-
-
-
-    function subirAlState(event) {
-        state.product = event.target.value.toLowerCase()
-        
+  function cons(event) {
+    event.preventDefault();
+    if (state.product.length > 0) {
+      props.handleReset();
+      dispatch(getProductByName(state.product));
+      // document.getElementById("inputDeBusqueda").value = ""
     }
+  }
 
     function cons(event) {
         event.preventDefault()

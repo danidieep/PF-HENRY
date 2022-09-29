@@ -14,6 +14,7 @@ import { getUser, sendUserInfo, setUser } from "./actions";
 import { useEffect } from "react";
 import LoginLocal from "./components/Loginlocal";
 import Users from "./components/Users";
+import ArtistsPost from "./components/ArtistsPost";
 import Favoritos from "./components/Favoritos"
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
       <Route path="/PutArtwork/:id" component={PutArtwork} />
       <Route path="/PostArtwork" component={PostArtwork} />
       <Route path="/Users" component={Users} />
+      <Route path="/PostArtist" component={ArtistsPost} />
       <Route path="/Favourites" component={Favoritos} />
     </div>
   );

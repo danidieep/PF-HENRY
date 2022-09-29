@@ -226,12 +226,6 @@ export default function MainPage(props) {
           </div>
         </header>
 
-
-
-        <Link to="/PostArtwork">
-          <button className={styles.SearchBarHome}>crear obra</button>
-        </Link>
-
         <Link to="/Favourites">
           <button className={styles.SearchBarHome}>favourites</button>
         </Link>

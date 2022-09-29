@@ -34,11 +34,14 @@ import {
 
 import Toastify from 'toastify-js'
 
-export function postArtwork(payload) {
+export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post('/artworks/', payload)
-    return json
-  }
+    let json = await axios.post("/artworks/", {
+      payload: payload,
+      role: role,
+    });
+    return json;
+  };
 }
 
 export function deleteArtwork(id, user) {
@@ -289,9 +292,8 @@ export const sendUserInfo = async ({
   });
 };
 
-export function deleteUser(userId) {
-  console.log(userId, "userID");
-  axios.delete(`users/${userId}`);
+export function deleteUser(userId, ban) {
+  axios.post(`users/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {
@@ -372,7 +374,6 @@ export function sendEmail(a) {
 }
 
 export function getUSers(role) {
-  console.log(role);
   return async function (dispatch) {
     let data = await axios.get("/users", {
       headers: {
@@ -384,4 +385,12 @@ export function getUSers(role) {
       payload: data,
     });
   };
+}
+
+export async function postArtists(payload, role) {
+  let json = await axios.post("/artists", {
+    payload: payload,
+    role: role,
+  });
+  return json;
 }

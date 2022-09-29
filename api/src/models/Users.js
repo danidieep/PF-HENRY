@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
-      favId:{
+      favId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
@@ -49,13 +49,16 @@ module.exports = (sequelize) => {
         defaultValue: false,
         allowNull: false,
       },
+      ban: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       image: {
         type: DataTypes.TEXT,
-        
       },
-      isSuscribed:{
+      isSuscribed: {
         type: DataTypes.BOOLEAN,
-       
         defaultValue: false,
       },
     },

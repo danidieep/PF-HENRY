@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, getProductsFromCarritoDB, getUSers } from "../actions";
+import {
+  deleteUser,
+  getUSers,
+} from "../actions";
 
 export default function Users() {
   const dispatch = useDispatch();
@@ -9,14 +12,14 @@ export default function Users() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    dispatch(getUSers({role: user[0].role}));
+    dispatch(getUSers({ role: user[0].role }));
   }, []);
 
-  const delete_User = (user) => {
-    deleteUser(user.value);
+  const delete_User = (user, ban) => {
+    deleteUser(user.value, ban);
     setTimeout(() => {
       window.location.reload();
-    }, 30);
+    }, 300);
   };
 
   return (
@@ -35,8 +38,9 @@ export default function Users() {
             <h2>{el.lastname}</h2>
             <h5>{el.email}</h5>
             <h5>{el.dateBorn}</h5>
-            <button onClick={(e) => delete_User(e.target)} value={el.id}>
-              Delete user
+            {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario desbanneado</h6>}
+            <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
+              {el.ban === true ? 'Desbanear' : 'Banear'}
             </button>
           </div>
         ) : null

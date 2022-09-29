@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css";
+import swal from "sweetalert";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -74,9 +75,7 @@ export default function Register() {
         input.dateBorn.length > 0
       ) {
         RegisterUser(input);
-        setTimeout(function () {
-          window.location.href = "/LocalLogin";
-        }, 300);
+        
         setInput({
           name: "",
           lastname: "",
@@ -85,12 +84,12 @@ export default function Register() {
           dateBorn: "",
         });
       } else {
-        alert("complete your data");
+        swal("Error","complete your data","error");
       }
     } else if (input.email.length === 0) {
-      alert("complete your data");
+      swal("Error","complete your data","error");
     } else {
-      alert("wrong email format");
+      swal("Error","wrong email format","error");
     }
   }
   return (

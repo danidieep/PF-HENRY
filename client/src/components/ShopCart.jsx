@@ -38,9 +38,11 @@ const email = JSON.parse(localStorage.getItem("user"))[0].email
   // }
   return (
     <div className={styles.containerCarrito}>
+
       <div className={styles.yourCarrito}>
         <h1>Your Cart </h1>
       </div>
+      
       {carrito.map((element) => {
         return (
           <div className={styles.allCarritoContainer}>

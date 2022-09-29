@@ -38,7 +38,12 @@
         color: #000000;
         cursor: pointer;
         font-family: 'Merriweather', serif;
-        
+       transition: 0.3s;
         width: 5rem;
         
+    }
+
+    .logins:hover{
+        color:rgb(141, 93, 93) ;
+        transition: 0.3s;
     }

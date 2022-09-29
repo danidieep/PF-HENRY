@@ -60,8 +60,17 @@ const createPayment = async(cart, user) =>{
         "Content-Type" : "application/json",
         Authorization : `Bearer ${process.env.ACCESS_TOKEN}`
         }
+    }).then((r)=>{
+        res.json(r)
+    })
+    .catch((e)=>{
+        console.log(e)
     })
     return payment.data
+}
+
+const notifications = async (req, res)=>{
+    const data = req.query
 }
 
 module.exports= createPayment

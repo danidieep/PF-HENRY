@@ -103,9 +103,7 @@ export default function Register() {
         input.dateBorn.length > 0
       ) {
         RegisterUser(input);
-        setTimeout(function () {
-          window.location.href = "/LocalLogin";
-        }, 300);
+        
         setInput({
           name: "",
           lastname: "",
@@ -113,16 +111,17 @@ export default function Register() {
           password: "",
           dateBorn: "",
         });
-
-      }
-      else if (input.email.length === 0) {
+        } else {
+          console.log("a")
+        }}
+      else if(input.email.length === 0) {
         alertCompleteData()
       }
       else {
         alertWorngEmailFormat()
       }
     }
-  }
+  
 
   return (
     <div>
@@ -232,4 +231,5 @@ export default function Register() {
       </div>
     </div>
   );
-}
+
+    }

@@ -191,8 +191,8 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const userById = await User.findOne({ where: { id } });
     if (userById) {
-      const { id, cartId, favId, name, lastname, email } = userById.dataValues;
-      res.status(200).json({ id, cartId, favId, name, lastname, email });
+      const { id, cartId,image, favId, name, lastname, email } = userById.dataValues;
+      res.status(200).json({ id, cartId, image,  favId, name, lastname, email });
     } else {
       res.send("no se ha encontrado un usuario con ese id");
     }
@@ -215,7 +215,7 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   try {
-    const { email, name, lastname, id, idAuth } = req.body;
+    const { email, name, image, lastname, id, idAuth } = req.body;
 
     const passNoHashed = req.body.password;
     let password = bcypt.hashSync(passNoHashed, 8);
@@ -228,6 +228,9 @@ router.post("/update", async (req, res) => {
     }
     if (lastname.length) {
       User.update({ lastname }, { where: { id } });
+    }
+    if (image.length) {
+      User.update({ image }, { where: { id } });
     }
     if (password.length) {
       User.update({ password }, { where: { id } });

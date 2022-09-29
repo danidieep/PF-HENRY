@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios"
 
 
 export default function PutArtwork() {
@@ -51,7 +52,29 @@ export default function PutArtwork() {
       progress: undefined,
     })
   }
+  const [loading, setLoading] = useState(false)
 
+  const uploadImage = async (e) => {
+    const files = e.target.files[0]
+    const data = new FormData()
+    
+    data.append('file', files)
+    data.append('upload_preset', 'artket')
+    data.append("api_key", "194228613445554")
+    setLoading(true)
+    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload', 
+         data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" }}
+    ).then(response => {
+      const imagen = response.data
+      const fileURL = imagen 
+      setInput({...input,image:fileURL.secure_url})
+ 
+    }).catch(function (error) {
+      console.log(error);
+     });
+
+   }
 
 
   function handleSubmit(e) {
@@ -96,14 +119,95 @@ export default function PutArtwork() {
             name="date"
             value={input.date}
             autoComplete="off"
-            placeholder="date..."
+            placeholder="institucion..."
             onChange={(e) => {
               handleChange(e);
             }}
           />
+        
+        <br />
 
+        {/* -------------------------   image       */}
+        <div>
+          <label>image: </label>
+          {/* <input
+            type="input"
+            name="image"
+            value={input.image}
+            autoComplete="off"
+            placeholder="imagen..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          /> */}
+          <input type='file' name="file" onChange={e => {uploadImage(e)}}/>
+        </div>
+        <br />
+
+        {/* -------------------------   creator       */}
+        <div>
+          <label>creator: </label>
+          <input
+            type="input"
+            name="creator"
+            value={input.creator}
+            autoComplete="off"
+            placeholder="creator..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
+
+        {/* -------------------------   dimensions       */}
+        <div>
+          <label>dimensions: </label>
+          <input
+            type="input"
+            name="dimensions"
+            value={input.dimensions}
+            autoComplete="off"
+            placeholder="Title..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
+
+        {/* -------------------------   medio       */}
+        <div>
+          <label>medio: </label>
+          <input
+            type="input"
+            name="medio"
+            value={input.medio}
+            autoComplete="off"
+            placeholder="medio..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+        </div>
+        <br />
+
+        {/* -------------------------   price       */}
+        <div>
+          <label>price: </label>
+          <input
+            type="input"
+            name="price"
+            value={input.price}
+            autoComplete="off"
+            placeholder="Title..."
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+           </div>
           <br />
-
+         
           {/* -------------------------   collecting_institution       */}
           <div>
             <label>institucion de ubicacion: </label>

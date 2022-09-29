@@ -10,7 +10,6 @@ const favsRouter = require('./favouriteRouter')
 
 
 const paymentRouter = require('./mercadopagoRouter')
-// console.log(authRouter)
 const router = Router();
 
 

@@ -34,6 +34,7 @@ export default function CardDetails(props) {
     dispatch(cleanProductId());
     dispatch(getProductById(id));
     if(user.length)dispatch(getProductsFromCarritoDB(user[0].email))
+    if(user.length)dispatch(getFavourites(user[0].email))
   }, []);
 
   const estaono = ()=>{
@@ -75,7 +76,7 @@ export default function CardDetails(props) {
       setEsta(false)
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
-      }, 600);
+      }, 1000);
       
 
       console.log("a")
@@ -85,7 +86,7 @@ export default function CardDetails(props) {
       addProductToCarrito({ artId: product[0].id, email }, );
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
-      }, 600);
+      }, 1000);
       
       alert("Added to cart");
     }
@@ -104,7 +105,7 @@ export default function CardDetails(props) {
       setEstaEnFavoritos(false)
       setTimeout(() => {
         dispatch(getFavourites(email))
-      }, 600);
+      }, 1000);
       
 
       console.log("a")
@@ -114,7 +115,7 @@ export default function CardDetails(props) {
       addProductToFavourites({ artId: product[0].id, email }, );
       setTimeout(() => {
         dispatch(getFavourites(email))
-      }, 600);
+      }, 1000);
       
       alert("Added to cart");
     }

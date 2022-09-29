@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
 import styles from "./ModulesCss/Profile.module.css";
+import axios from "axios"
 
 export default function Profile() {
   const data = useAuth0();
@@ -74,6 +75,29 @@ export default function Profile() {
       }, 300);
     }
   }
+  const [loading, setLoading] = useState(false)
+
+  const uploadImage = async (e) => {
+    const files = e.target.files[0]
+    const data = new FormData()
+    
+    data.append('file', files)
+    data.append('upload_preset', 'artket')
+    data.append("api_key", "194228613445554")
+    setLoading(true)
+    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload', 
+         data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" }}
+    ).then(response => {
+      const imagen = response.data
+      const fileURL = imagen 
+      setInput({...input,image:fileURL.secure_url})
+ 
+    }).catch(function (error) {
+      console.log(error);
+     });
+
+   }
 
   return (
     <div className={styles.profileContainer}>
@@ -93,12 +117,23 @@ export default function Profile() {
                 height="120"
               ></img>
             ) : (
-              <img
+               user[0].image.length !== 0 ? 
+                <img
                 className={styles.imgProfile}
+                // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                src={user[0].image}
+                width="120"
+                height="120"
+              /> :
+              <img
+                className={styles.imgProfile1}
                 src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
                 width="120"
                 height="120"
-              />
+              ></img>
+              
+              
+              
             )}
 
             {!edit ? (
@@ -130,12 +165,17 @@ export default function Profile() {
                     onChange={(e) => handleChange(e)}
                     name="lastname"
                   ></input>
+
                   <h2>Email: {user[0].email}</h2>
                   <input
                     placeholder="new email..."
                     onChange={(e) => handleChange(e)}
                     name="email"
                   ></input>
+                  <h2>Image: {user[0].image}</h2>
+                  <input type='file' name="file" onChange={e => {uploadImage(e)}}/>
+
+
                   <h2>Password:</h2>
                   <input
                     type="password"

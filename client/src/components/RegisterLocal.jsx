@@ -94,9 +94,16 @@ export default function Register() {
     }
   }
   return (
+
+    <div>
+       <div className={styles.header}>
+       <h1 className={styles.logoForm}>Arteck</h1>
+</div>
+    
     <div className={styles.containerRegister}>
+     
       <div className={styles.formContainer}>
-        <h1 className={styles.logoForm}>Arteck</h1>
+      <h2 className={styles.LoginMsg} >Complete your data to register!</h2>
 
         <form>
           <div className={styles.optForm}>
@@ -189,6 +196,7 @@ export default function Register() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

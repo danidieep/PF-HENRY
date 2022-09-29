@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
 
+
+
 * {
     margin: 0;
     padding: 0;
@@ -9,8 +11,42 @@
 
 .container {
     width: 100%;
-    height: 940px;
-    background: #DCB5B0;
+    height: 100%;
+    background-color: #DCB5B0;
+}
+
+.header {
+    background-color: rgba(255, 255, 255, 0.7);
+    display: grid;
+    grid-template-columns: 80% 20%;
+    height: 4rem;
+    align-content: center;
+
+    width: 100%;
+    box-shadow: 0 0 30rem rgb(200, 197, 197);
+
+}
+
+.content_login {
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+}
+
+.buttonsLink {
+    width: 5rem;
+
+}
+
+.logins {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #000000;
+    cursor: pointer;
+    font-family: 'Merriweather', serif;
+
 }
 
 .navLading {
@@ -21,43 +57,27 @@
 }
 
 .aboutus {
-    font-family: 'Merriweather', serif;
+
     font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 24px;
-    border-width: 0px;
+
+    font-size: 1.2rem;
+    margin-left: 10%;
+    border: none;
     cursor: pointer;
-    float: left;
     color: #000000;
-    margin-left: 80px;
-    margin-top: 35px;
-    background-color: #DCB5B0;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Merriweather', serif;
+    transition: 0.3s;
 }
+
 
 .aboutus:hover {
-    color: rgba(101, 53, 53, 1);
+    color: rgb(141, 93, 93);
+    transition: 0.3s;
 }
 
-.login {
-    font-family: 'Merriweather', serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    border-width: 0px;
-    cursor: pointer;
-    line-height: 36px;
-    color: #000000;
-    float: right;
-    margin-right: 40px;
-    margin-top: 20px;
-    background-color: transparent;
-
-}
-
-.login:hover {
-    color: rgba(101, 53, 53, 1);
-}
 
 .register {
     font-family: 'Merriweather', serif;
@@ -68,7 +88,7 @@
     cursor: pointer;
     line-height: 36px;
     float: right;
-    color: #000000;
+    color: #e1bebe;
     margin-right: 80px;
     margin-top: 20px;
     background-color: transparent;
@@ -81,7 +101,6 @@
 
 .contact {
     display: grid;
-    height: 60px;
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
@@ -136,7 +155,7 @@
     text-align: center;
     cursor: pointer;
     line-height: 36px;
-    background-color: #DCB5B0;
+    background-color: transparent;
     margin-top: 80px;
     color: rgba(101, 53, 53, 1);
 }

@@ -1,7 +1,9 @@
-import { getProductByName } from "../actions/index";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import styles from "./ModulesCss/SearchBar.module.css";
+import { getProductByName } from "../actions/index"
+import { useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
+import styles from "./ModulesCss/SearchBar.module.css"
+import {AiOutlineSearch} from "react-icons/ai"
+ 
 
 const state = {
   product: "",
@@ -23,26 +25,31 @@ export default function SearchBar(props) {
     }
   }
 
-  return (
-    <div id="wrap">
-      <form
-        className="search-bar"
-        onSubmit={(event) => {
-          cons(event);
-        }}
-      >
-        <input
-          type="text"
-          class="input-searched"
-          placeholder="Search"
-          autoComplete="off"
-          id="inputSearch"
-          onChange={(event) => {
-            subirAlState(event);
-          }}
-        />
-        <input id="search_submit" value="Rechercher" type="submit" />
-      </form>
-    </div>
-  );
+    function cons(event) {
+        event.preventDefault()
+        if (state.product.length > 0) {
+            props.handleReset()
+            dispatch(getProductByName(state.product))
+            // document.getElementById("inputDeBusqueda").value = ""
+        }
+    }
+
+    return (
+
+        // <div id='wrap'>
+        //     <form className="search-bar" onSubmit={(event) => { cons(event) }}>
+        //         <input type='text' class="input-searched" placeholder="Search" autoComplete="off" id="inputSearch" onChange={(event) => { subirAlState(event) }} />
+        //         <input id="search_submit" value="Rechercher" type="submit" />
+        //     </form>
+        // </div>
+           <div id='wrap'>
+           <form className={styles.SearchBar} onSubmit={(event) => { cons(event) }}>
+               <input type='text' className={styles.input}  placeholder="Search" autoComplete="off" id="inputSearch" onChange={(event) => { subirAlState(event) }} />
+               <button className={styles.input1}  type="submit"><AiOutlineSearch/></button>
+           </form>
+       </div>
+
+
+
+    )
 }

@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
-
 import styles from "./ModulesCss/LandingPage.module.css";
-
 import LogOut from "./LogOut";
-
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../actions";
-import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LandingPage() {
@@ -15,13 +10,21 @@ export default function LandingPage() {
   const data = useAuth0();
 
   const { isAuthenticated, user } = useAuth0();
+  const userLocalStorage = JSON.parse(localStorage.getItem("user"))
 
   return (
     <div className={styles.container}>
-      <button className={styles.aboutus}>About us</button>
 
 
-      <LogOut />
+
+
+      <div className={styles.header}>
+        <Link><div><button className={styles.aboutus}>About us</button></div></Link>
+        <LogOut></LogOut>
+
+
+
+      </div>
       <div className={styles.logoButton}>
         <div className={styles.logoLink}>
           <h1 className={styles.logo}>Artket</h1>
@@ -41,7 +44,7 @@ export default function LandingPage() {
           <p className={styles.contactTittle}>Arket </p>
           <p>
             tel: (+32) 344 132 497 <br />
-            mail: contact@arket.gom
+            mail: contact@arket.com
           </p>
         </div>
         <div className={styles.iconsRedes}>

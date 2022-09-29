@@ -53,6 +53,14 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
+      image: {
+        type: DataTypes.TEXT,
+        
+      },
+      isSuscribed:{
+        type: DataTypes.BOOLEAN,
+       
+        defaultValue: false,
       },
     },
     { timestamps: false, createdAt: false, updatedAt: false }

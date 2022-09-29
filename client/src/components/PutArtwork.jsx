@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { putArtwork, cleanProductId, getProductById } from "../actions/index";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios"
 
 export default function PutArtwork() {
   const { id } = useParams();
@@ -52,6 +53,28 @@ export default function PutArtwork() {
       price: "",
     });
   }
+  const [loading, setLoading] = useState(false)
+  const uploadImage = async (e) => {
+    const files = e.target.files[0]
+    const data = new FormData()
+    
+    data.append('file', files)
+    data.append('upload_preset', 'artket')
+    data.append("api_key", "194228613445554")
+    setLoading(true)
+    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload', 
+         data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" }}
+    ).then(response => {
+      const imagen = response.data
+      const fileURL = imagen 
+      setInput({...input,image:fileURL.secure_url})
+ 
+    }).catch(function (error) {
+      console.log(error);
+     });
+
+   }
 
   return product.length ? (
     <Fragment>
@@ -108,7 +131,7 @@ export default function PutArtwork() {
         {/* -------------------------   image       */}
         <div>
           <label>image: </label>
-          <input
+          {/* <input
             type="input"
             name="image"
             value={input.image}
@@ -117,7 +140,8 @@ export default function PutArtwork() {
             onChange={(e) => {
               handleChange(e);
             }}
-          />
+          /> */}
+          <input type='file' name="file" onChange={e => {uploadImage(e)}}/>
         </div>
         <br />
 

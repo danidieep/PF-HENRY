@@ -31,7 +31,6 @@ const enviarMail = async (name, email, password) => {
 
   const transport = nodemailer.createTransport(config);
   const info = await transport.sendMail(mensaje);
-  console.log(info);
 };
 
 router.post("/findorcreate", async (req, res) => {
@@ -39,33 +38,38 @@ router.post("/findorcreate", async (req, res) => {
 
   const user = await User.findOne({ where: { idAuth } });
 
-  if (user) {
-    const { name, cartId, favId, id, lastname, email, idAuth } =
-      user.dataValues;
-    res.status(200).json({ name, cartId, favId, id, lastname, email, idAuth });
-  } else {
-    const userCartId = await Cart.create().then(
-      ({ dataValues }) => dataValues.id
-    );
+  if (user.ban) res.status(401).json({ msg: "Not allowed" });
+  else {
+    if (user) {
+      const { name, cartId, favId, id, lastname, email, idAuth } =
+        user.dataValues;
+      res
+        .status(200)
+        .json({ name, cartId, favId, id, lastname, email, idAuth });
+    } else {
+      const userCartId = await Cart.create().then(
+        ({ dataValues }) => dataValues.id
+      );
 
-    const userFavId = await Favourite.create().then(
-      ({ dataValues }) => dataValues.id
-    );
+      const userFavId = await Favourite.create().then(
+        ({ dataValues }) => dataValues.id
+      );
 
-    await User.create({
-      name,
-      lastname,
-      email,
-      password,
-      dateBorn,
-      role,
-      cartId: userCartId,
-      favId: userFavId,
-      idAuth,
-    });
+      await User.create({
+        name,
+        lastname,
+        email,
+        password,
+        dateBorn,
+        role,
+        cartId: userCartId,
+        favId: userFavId,
+        idAuth,
+      });
 
-    const user = await User.findOne({ where: { idAuth } });
-    res.status(200).json(user.dataValues);
+      const user = await User.findOne({ where: { idAuth } });
+      res.status(200).json(user.dataValues);
+    }
   }
 });
 
@@ -75,20 +79,23 @@ router.post("/findLocalUser", async (req, res) => {
 
   let userInCuestion = await User.findOne({ where: { email: email } });
 
-  if (userInCuestion) {
-    let hashSaved = userInCuestion.dataValues.password;
+  if (userInCuestion.ban) res.status(401).json({ msg: "Not allowed" });
+  else {
+    if (userInCuestion) {
+      let hashSaved = userInCuestion.dataValues.password;
 
-    let compare = bcypt.compareSync(passNoHashed, hashSaved);
+      let compare = bcypt.compareSync(passNoHashed, hashSaved);
 
-    if (compare) {
-      let a = userInCuestion.dataValues;
-      console.log(a);
-      return res.status(200).json(a);
+      if (compare) {
+        let a = userInCuestion.dataValues;
+        console.log(a);
+        return res.status(200).json(a);
+      } else {
+        res.status(400).send("contraseña incorrecta");
+      }
     } else {
-      res.status(400).send("contraseña incorrecta");
+      res.status(400).send("el user no existe");
     }
-  } else {
-    res.status(400).send("el user no existe");
   }
 });
 
@@ -201,10 +208,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/:id", authAdmins, async (req, res) => {
+router.post("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const user = User.update({ ban: true }, { where: { id } });
+    const { ban } = req.body;
+    const user = User.update({ ban: !ban }, { where: { id } });
     res.status(200).send({ msg: "usuario banneado" });
   } catch (error) {
     res.status(400).send(error.message);

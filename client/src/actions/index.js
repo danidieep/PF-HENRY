@@ -224,12 +224,8 @@ export const sendUserInfo = async ({
   });
 };
 
-export function deleteUser(userId) {
-  axios.post(`users/${userId}`, {
-    headers: {
-      role,
-    },
-  });
+export function deleteUser(userId, ban) {
+  axios.post(`users/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {
@@ -295,7 +291,6 @@ export function sendEmail(a) {
 }
 
 export function getUSers(role) {
-  console.log(role);
   return async function (dispatch) {
     let data = await axios.get("/users", {
       headers: {

@@ -92,12 +92,12 @@ export default function PostArtwork() {
     // }))
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e, role) {
     e.preventDefault();
     if (Object.keys(errors).length !== 0) {
       alert("Debes llenar el Formulario primero");
     } else {
-      dispatch(postArtwork(input));
+      dispatch(postArtwork(input, role));
       alert("obra de arte Creada");
     }
 
@@ -134,6 +134,8 @@ export default function PostArtwork() {
         console.log(error);
       });
   };
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Fragment>
@@ -278,7 +280,7 @@ export default function PostArtwork() {
           <br></br>
         </div>
         <br />
-        <button type="submit" onClick={(e) => handleSubmit(e)}>
+        <button type="submit" onClick={(e) => handleSubmit(e, user[0].role ? user[0].role : null)}>
           Crear
         </button>
       </form>

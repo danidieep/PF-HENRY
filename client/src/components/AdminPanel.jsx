@@ -8,8 +8,11 @@ export default function AdminPanel() {
       {user.length ? (
         user[0].role ? (
           <div>
-            <Link to='/Users'>
+            <Link to="/Users">
               <button>Gestionar usuarios</button>
+            </Link>
+            <Link to="/PostArtwork">
+              <button>crear obra</button>
             </Link>
           </div>
         ) : null

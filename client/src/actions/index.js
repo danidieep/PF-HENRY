@@ -29,9 +29,12 @@ import {
   UPDATE_USER,
 } from "./action-types.js";
 
-export function postArtwork(payload) {
+export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post('/artworks/', payload)
+    let json = await axios.post('/artworks/', {
+      payload: payload,
+      role: role,
+    })
     return json
   }
 }

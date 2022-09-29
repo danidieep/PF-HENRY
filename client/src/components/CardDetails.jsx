@@ -17,6 +17,10 @@ import Message from "./Message";
 import styles from "./ModulesCss/CardsDetails.module.css";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 export default function CardDetails(props) {
   const { id } = useParams();
@@ -33,93 +37,132 @@ export default function CardDetails(props) {
   useEffect(() => {
     dispatch(cleanProductId());
     dispatch(getProductById(id));
-    if(user.length)dispatch(getProductsFromCarritoDB(user[0].email))
-    if(user.length)dispatch(getFavourites(user[0].email))
+    if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
+    if (user.length) dispatch(getFavourites(user[0].email))
   }, []);
 
-  const estaono = ()=>{
-    
-      const a = state.carrito.filter(e => e.title === product[0].title)
-      if(a.length)setEsta(true)
-      if(!a.length)setEsta(false)
-   
-   
+  const estaono = () => {
+
+    const a = state.carrito.filter(e => e.title === product[0].title)
+    if (a.length) setEsta(true)
+    if (!a.length) setEsta(false)
+
+
   }
 
-  const estaonoEnfavoritos = ()=>{
-    
+  const estaonoEnfavoritos = () => {
+
     const a = state.favoritos.filter(e => e.title === product[0].title)
-    if(a.length)setEstaEnFavoritos(true)
-    if(!a.length)setEstaEnFavoritos(false)
- 
- 
-}
+    if (a.length) setEstaEnFavoritos(true)
+    if (!a.length) setEstaEnFavoritos(false)
+
+
+  }
 
   useEffect(() => {
-    if(state.carrito.length) estaono()
+    if (state.carrito.length) estaono()
   }, [state.carrito]);
 
   useEffect(() => {
-    if(state.favoritos.length) estaonoEnfavoritos()
+    if (state.favoritos.length) estaonoEnfavoritos()
   }, [state.favoritos]);
 
 
 
   const addToCartOrDelete = async () => {
-   
+
     const email = user[0].email;
     const ArtInCuesiton = state.carrito.filter(
       (element) => element.title === product[0].title
     );
     if (ArtInCuesiton.length) {
-      deleteProductFromCarrito({ artId: product[0].id, email }, )
+      deleteProductFromCarrito({ artId: product[0].id, email },)
       setEsta(false)
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
-      }, 1000);
-      
+      }, 600);
+      alertDeleteFromCarritoAtDetails()
 
-      console.log("a")
-      alert("Deleted from cart");
     } else {
       setEsta(true)
-      addProductToCarrito({ artId: product[0].id, email }, );
+      addProductToCarrito({ artId: product[0].id, email },);
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
       }, 1000);
-      
-      alert("Added to cart");
+
+      alertAddToCarrito()
     }
   };
 
 
 
   const addToFavouritosOrDelete = async () => {
-   
+
     const email = user[0].email;
     const ArtInCuesiton1 = state.favoritos.filter(
       (element) => element.title === product[0].title
     );
     if (ArtInCuesiton1.length) {
-      deleteProductFromFavourites({ artId: product[0].id, email }, )
+      deleteProductFromFavourites({ artId: product[0].id, email },)
       setEstaEnFavoritos(false)
       setTimeout(() => {
         dispatch(getFavourites(email))
       }, 1000);
-      
+
 
       console.log("a")
       alert("Deleted from favs");
     } else {
       setEstaEnFavoritos(true)
-      addProductToFavourites({ artId: product[0].id, email }, );
+      addProductToFavourites({ artId: product[0].id, email },);
       setTimeout(() => {
         dispatch(getFavourites(email))
       }, 1000);
-      
-      alert("Added to cart");
+
+      alertAddToCarrito()
     }
   };
+
+
+  function alertAddToCarrito() {
+    toast.success(`${product[0].title} has been added to your cart`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertDeleteFromCarritoAtDetails() {
+    toast.success(`${product[0].title} has been deleted from your cart`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertLogInRequired() {
+    toast.warn(`Login required`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
 
 
 
@@ -139,11 +182,12 @@ export default function CardDetails(props) {
           </div>
           <div></div>
 
-          {user.length?<div>
+          <ToastContainer />
+          {user.length ? <div>
             <Link to="/Profile">
-            <button className={styles.btnUser}>
-              <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
-            </button>
+              <button className={styles.btnUser}>
+                <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
+              </button>
             </Link>
             <Link to="/ShopCart">
               <button className={styles.btnCarrito}>
@@ -151,9 +195,9 @@ export default function CardDetails(props) {
               </button>
             </Link>
           </div>
-          :
-          false
-}
+            :
+            false
+          }
 
         </div>
       </header>
@@ -177,58 +221,58 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                <div>
-                  {user.length && !esta? (
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={() => {
-                        if (user.length) {
-                          addToCartOrDelete();
-                        } else {
-                          alert("Login required");
-                        }
-                      }}
-                    >
-                      Add to cart
-                    </button>
-                  ) : user.length && esta?
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={addToCartOrDelete}
-                    >
-                      Delete from cart
-                    </button>
-                    :
-                    false
-                  }
-                  </div>
-                   {/* <button onClick={()=>addCount("-")}>-</button> */}
-                  
                   <div>
-                   {user.length && !estaEnfavoritos? (
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={() => {
-                        if (user.length) {
-                          addToFavouritosOrDelete();
-                        } else {
-                          alert("Login required");
-                        }
-                      }}
-                    >
-                      Add to Favourites
-                    </button>
-                  ) : user.length && estaEnfavoritos?
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={addToFavouritosOrDelete}
-                    >
-                      Delete from Favourites
-                    </button>
-                    :
-                    false
-                  }
-                    </div>
+                    {user.length && !esta ? (
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={() => {
+                          if (user.length) {
+                            addToCartOrDelete();
+                          } else {
+                            alertLogInRequired();
+                          }
+                        }}
+                      >
+                        Add to cart
+                      </button>
+                    ) : user.length && esta ?
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={addToCartOrDelete}
+                      >
+                        Delete from cart
+                      </button>
+                      :
+                      false
+                    }
+                  </div>
+                  {/* <button onClick={()=>addCount("-")}>-</button> */}
+
+                  <div>
+                    {user.length && !estaEnfavoritos ? (
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={() => {
+                          if (user.length) {
+                            addToFavouritosOrDelete();
+                          } else {
+                            alert("Login required");
+                          }
+                        }}
+                      >
+                        Add to Favourites
+                      </button>
+                    ) : user.length && estaEnfavoritos ?
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={addToFavouritosOrDelete}
+                      >
+                        Delete from Favourites
+                      </button>
+                      :
+                      false
+                    }
+                  </div>
                   {/* <button onClick={()=>addCount("+")}>+</button> */}
                   {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>

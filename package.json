@@ -1,5 +1,9 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "react-toastify": "^9.0.8"
+=======
+    "react-icons": "^4.4.0"
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
   }
 }

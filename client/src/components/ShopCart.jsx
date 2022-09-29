@@ -65,10 +65,12 @@ export default function ShopCart() {
   }
   return (
     <div className={styles.containerCarrito}>
+
       <div className={styles.yourCarrito}>
         <ToastContainer />
         <h1>Your Cart </h1>
       </div>
+      
       {carrito.map((element) => {
         return (
           <div className={styles.allCarritoContainer}>

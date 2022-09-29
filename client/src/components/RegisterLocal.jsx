@@ -125,9 +125,24 @@ export default function Register() {
 
 
     }
+<<<<<<< HEAD
     return (
       <div className={styles.containerRegister}>
         <div className={styles.formContainer}>
+=======
+  }
+  return (
+
+    <div>
+       <div className={styles.header}>
+       <h1 className={styles.logoForm}>Arteck</h1>
+</div>
+    
+    <div className={styles.containerRegister}>
+     
+      <div className={styles.formContainer}>
+      <h2 className={styles.LoginMsg} >Complete your data to register!</h2>
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
 
           <ToastContainer />
           <h1 className={styles.logoForm}>Arteck</h1>
@@ -224,6 +239,12 @@ export default function Register() {
           </form>
         </div>
       </div>
+<<<<<<< HEAD
     );
   }
+=======
+    </div>
+    </div>
+  );
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
 }

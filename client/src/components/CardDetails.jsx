@@ -4,7 +4,11 @@ import {
   addProductToCarrito,
   getProductById,
   cleanProductId,
-  getProductsFromCarritoDB
+  getProductsFromCarritoDB,
+  deleteProductFromFavourites,
+  getFavourites,
+  addProductToFavourites
+
 } from "../actions/index";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -28,11 +32,13 @@ export default function CardDetails(props) {
   const product = useSelector((state) => state.productDetails);
   const state = useSelector((state) => state);
   const [esta, setEsta] = useState(false);
+  const [estaEnfavoritos, setEstaEnFavoritos] = useState(false);
 
   useEffect(() => {
     dispatch(cleanProductId());
     dispatch(getProductById(id));
     if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
+    if (user.length) dispatch(getFavourites(user[0].email))
   }, []);
 
   const estaono = () => {
@@ -44,9 +50,23 @@ export default function CardDetails(props) {
 
   }
 
+  const estaonoEnfavoritos = () => {
+
+    const a = state.favoritos.filter(e => e.title === product[0].title)
+    if (a.length) setEstaEnFavoritos(true)
+    if (!a.length) setEstaEnFavoritos(false)
+
+
+  }
+
   useEffect(() => {
     if (state.carrito.length) estaono()
   }, [state.carrito]);
+
+  useEffect(() => {
+    if (state.favoritos.length) estaonoEnfavoritos()
+  }, [state.favoritos]);
+
 
 
   const addToCartOrDelete = async () => {
@@ -64,10 +84,40 @@ export default function CardDetails(props) {
       alertDeleteFromCarritoAtDetails()
 
     } else {
+      setEsta(true)
       addProductToCarrito({ artId: product[0].id, email },);
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
-      }, 600);
+      }, 1000);
+
+      alertAddToCarrito()
+    }
+  };
+
+
+
+  const addToFavouritosOrDelete = async () => {
+
+    const email = user[0].email;
+    const ArtInCuesiton1 = state.favoritos.filter(
+      (element) => element.title === product[0].title
+    );
+    if (ArtInCuesiton1.length) {
+      deleteProductFromFavourites({ artId: product[0].id, email },)
+      setEstaEnFavoritos(false)
+      setTimeout(() => {
+        dispatch(getFavourites(email))
+      }, 1000);
+
+
+      console.log("a")
+      alert("Deleted from favs");
+    } else {
+      setEstaEnFavoritos(true)
+      addProductToFavourites({ artId: product[0].id, email },);
+      setTimeout(() => {
+        dispatch(getFavourites(email))
+      }, 1000);
 
       alertAddToCarrito()
     }
@@ -171,30 +221,58 @@ export default function CardDetails(props) {
                 <div className={styles.buttonAddCartPos}>
                   {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                  {user.length && !esta ? (
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={() => {
-                        if (user.length) {
-                          addToCartOrDelete();
-                        } else {
-                          alertLogInRequired();
-                        }
-                      }}
-                    >
-                      Add to cart
-                    </button>
-                  ) : user.length ?
-                    <button
-                      className={styles.buttonAddCart}
-                      onClick={addToCartOrDelete}
-                    >
-                      Delete from cart
-                    </button>
-                    :
-                    false
-                  }
+                  <div>
+                    {user.length && !esta ? (
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={() => {
+                          if (user.length) {
+                            addToCartOrDelete();
+                          } else {
+                            alertLogInRequired();
+                          }
+                        }}
+                      >
+                        Add to cart
+                      </button>
+                    ) : user.length && esta ?
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={addToCartOrDelete}
+                      >
+                        Delete from cart
+                      </button>
+                      :
+                      false
+                    }
+                  </div>
+                  {/* <button onClick={()=>addCount("-")}>-</button> */}
 
+                  <div>
+                    {user.length && !estaEnfavoritos ? (
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={() => {
+                          if (user.length) {
+                            addToFavouritosOrDelete();
+                          } else {
+                            alert("Login required");
+                          }
+                        }}
+                      >
+                        Add to Favourites
+                      </button>
+                    ) : user.length && estaEnfavoritos ?
+                      <button
+                        className={styles.buttonAddCart}
+                        onClick={addToFavouritosOrDelete}
+                      >
+                        Delete from Favourites
+                      </button>
+                      :
+                      false
+                    }
+                  </div>
                   {/* <button onClick={()=>addCount("+")}>+</button> */}
                   {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>

@@ -133,6 +133,7 @@ export default function MainPage(props) {
         <header >
           {/* <div className={styles.content2}> */}
           <div className={styles.header}>
+<<<<<<< HEAD
             <div>
               <button className={styles.Products}>About us</button>
             </div>
@@ -151,14 +152,16 @@ export default function MainPage(props) {
             <div>
               <h1 className={styles.logo}>Artket</h1>
             </div>
+=======
+            <div className={styles.logoMasSearchbar}>
+             <h2 className={styles.logo}>Artket</h2>
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
             <div className={styles.SearchBarHome}>
               <SearchBar handleReset={handleReset} ></SearchBar>
             </div>
-            <div>
-              <LogIn></LogIn>
-              <LogOut></LogOut>
-            </div>
+           </div>
 
+<<<<<<< HEAD
           </div>
         </header>
         <Link to="/PostArtwork">
@@ -167,9 +170,11 @@ export default function MainPage(props) {
 
         {/* NOTIFICACIONES ALERT */}
         <ToastContainer />
+=======
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
 
-        {/* CARRUSEL */}
 
+<<<<<<< HEAD
         {state.productsFiltered.length > 5 ?
           <carrusel>
             <p className={styles.featured}>Featured</p>
@@ -194,6 +199,11 @@ export default function MainPage(props) {
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
         <div className={styles.filtersDiv}>
+=======
+          <div className={styles.restoDeItems}>
+
+          <div className={styles.filtersDiv}>
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
           <button
             onClick={() => dispatch(showAllProducts())}
           >Reload artworks</button>
@@ -242,8 +252,84 @@ export default function MainPage(props) {
             </form>
           </div>
         </div>
+<<<<<<< HEAD
 
         <AdminPanel />
+=======
+          <div className={styles.cartAndProfileAndFav} >
+
+            
+           {JSON.parse(localStorage.getItem("user")).length?
+           <div className={styles.CartAndFav}>
+           <div>
+           <Link to="/ShopCart">
+             <button className={styles.btnCarrito}>
+               <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+             </button>
+           </Link>
+         </div>
+            <div>
+              <Link to="/Favourites">
+                <button className={styles.btnCarrito}>
+                  Fav
+                </button>
+              </Link>
+            </div>
+            </div>
+            :false
+             }
+
+            <div>
+             
+            </div>
+           
+            <div>
+              <LogOut></LogOut>
+            </div>
+
+            </div>
+          </div>
+
+          </div>
+        </header>
+
+
+
+        <Link to="/PostArtwork">
+            <button className={styles.SearchBarHome}>crear obra</button>
+          </Link>
+
+          <Link to="/Favourites">
+            <button className={styles.SearchBarHome}>favourites</button>
+          </Link>
+
+        {/* CARRUSEL */}
+
+        {state.productsFiltered.length>5?
+        <carrusel>
+          <p className={styles.featured}>Featured</p>
+          <div className={styles.carrusel}>
+            <div>
+              <ul>
+                {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
+                  return (
+                    <li><img src={element.image}></img></li>
+                  )
+                }
+                )
+                }
+              </ul>
+            </div>
+          </div>
+        </carrusel>
+        :false
+}
+        <p className={styles.featured}>Galery</p>
+        {/* FILTROS */}
+        
+        
+        <AdminPanel/>
+>>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
 
         {/* LIMPIAR FILTROS */}
         {state.filters.map(element => {

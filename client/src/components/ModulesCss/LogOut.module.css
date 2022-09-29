@@ -2,14 +2,11 @@
     font-family: 'Merriweather', serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
-    border-width: 0px;
+    font-size: 1.3rem;
+     border: none;
     cursor: pointer;
-    line-height: 36px;
-    color: #000000;
-    float: right;
-    margin-right: 40px;
-    margin-top: 35px;
+    color: #e1bebe;
+    margin-right:2rem;
     background-color: transparent;
 
 }
@@ -17,3 +14,36 @@
 .logout:hover {
     color: rgba(101, 53, 53, 1);
 }
+
+.content{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.content_login{
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    
+    }
+    
+    .buttonsLink{
+        width: 5rem;
+      margin: 0 1rem;
+       
+    }
+    .logins{
+        background-color: transparent;
+        border: none;
+        font-size: 1.2rem;
+        color: #000000;
+        cursor: pointer;
+        font-family: 'Merriweather', serif;
+       transition: 0.3s;
+        width: 5rem;
+        
+    }
+
+    .logins:hover{
+        color:rgb(141, 93, 93) ;
+        transition: 0.3s;
+    }

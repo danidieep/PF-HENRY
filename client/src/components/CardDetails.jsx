@@ -111,7 +111,7 @@ export default function CardDetails(props) {
 
 
       console.log("a")
-      alert("Deleted from favs");
+      alertDeleteFromFavorites()
     } else {
       setEstaEnFavoritos(true)
       addProductToFavourites({ artId: product[0].id, email },);
@@ -119,10 +119,35 @@ export default function CardDetails(props) {
         dispatch(getFavourites(email))
       }, 1000);
 
-      alertAddToCarrito()
+      alertAddToFavorites()
     }
   };
 
+  function alertDeleteFromFavorites() {
+    toast.success(`${product[0].title} has been deleted from favorites`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertAddToFavorites() {
+    toast.success(`${product[0].title} has been added to your favorites`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
 
   function alertAddToCarrito() {
     toast.success(`${product[0].title} has been added to your cart`, {
@@ -256,7 +281,7 @@ export default function CardDetails(props) {
                           if (user.length) {
                             addToFavouritosOrDelete();
                           } else {
-                            alert("Login required");
+                            alertLogInRequired();
                           }
                         }}
                       >

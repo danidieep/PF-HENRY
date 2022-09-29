@@ -18,21 +18,26 @@
 }
 
 .header {
-    background-color: rgba(255, 255, 255, 0.7);
-
+    background-color: rgba(255, 255, 255);
     width: 100%;
+}
+
+button {
+    border: none;
 }
 
 .logo {
     font-family: 'Euphoria Script', cursive;
     color: black;
-    font-size: 3.5rem;
+    cursor: pointer;
+    font-size: 3.2rem;
     font-weight: 100;
-    /* background-color: #DCB5B0; */
+    border: none;
+    background-color: white;
 }
 
-.logoMasSearchbar {
-    display: flex;
+.SearchBarHome {
+    margin-left: 6rem;
     justify-content: center;
     align-items: center;
 
@@ -91,7 +96,24 @@
     color: rgb(138, 54, 54);
 }
 
+.btnAddArtwork {
+    float: right;
+    height: 30px;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    margin-right: 80px;
+    cursor: pointer;
+    color: #000000;
+    margin-top: 40px;
+    background-color: #DCB5B0;
+}
 
+.btnAddArtwork:hover {
+    color: rgb(138, 54, 54);
+    transition: 0.3s;
+}
 
 .cards {
     width: 80%;
@@ -176,7 +198,6 @@
     font-family: 'Merriweather', serif;
     font-style: italic;
     font-size: 56px;
-    line-height: 36px;
     color: #000000;
     margin-right: 40px;
     margin-top: 40px;
@@ -194,6 +215,24 @@
     font-size: 0.8rem;
     height: 4rem;
 
+}
+
+.filters {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255);
+    border: none;
+    width: 7rem;
+    text-align: right;
+
+}
+
+.optFilters {
+    text-align: left;
+}
+
+.filters:focus,
+.filters::selection {
+    border: none;
 }
 
 .cartAndProfileAndFav {
@@ -268,7 +307,6 @@ form .formNewsletterBox {
     font-family: 'Merriweather', serif;
     font-style: italic;
     font-size: 26px;
-    line-height: 36px;
     color: #000000;
     margin-right: 40px;
     margin-top: 60px;
@@ -276,14 +314,19 @@ form .formNewsletterBox {
 }
 
 .btnCarrito {
-    height: 30px;
-    font-family: 'Merriweather', serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
     background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #000000;
+    cursor: pointer;
+    font-family: 'Merriweather', serif;
+    transition: 0.3s;
+    width: 5rem;
+}
+
+.btnCarrito:hover {
+    color: rgb(141, 93, 93);
+    transition: 0.3s;
 }
 
 .btnSubscribe {

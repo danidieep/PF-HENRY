@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
-      favId:{
+      favId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,

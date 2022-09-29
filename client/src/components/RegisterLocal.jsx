@@ -126,7 +126,10 @@ export default function Register() {
   return (
     <div>
       <div className={styles.header}>
-        <h1 className={styles.logoForm}>Arteck</h1>
+      <Link to='/MainPage'>
+  
+  <h1 className={styles.logoForm}>Arteck</h1>
+</Link>
       </div>
 
       <div className={styles.containerRegister}>
@@ -222,9 +225,8 @@ export default function Register() {
               >
                 Register
               </button>
-              <Link to="/MainPage">
-                <button className={styles.buttonRegister}>Home</button>
-              </Link>
+              <br />
+              <span> you have an account? <Link to="/LocalLogin">sign in here</Link></span>
             </div>
           </form>
         </div>

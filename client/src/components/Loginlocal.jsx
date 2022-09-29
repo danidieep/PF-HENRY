@@ -6,6 +6,8 @@ import { LogLocal } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
 import {FcGoogle} from "react-icons/fc"
 import { useAuth0 } from "@auth0/auth0-react";
+import {IoChevronBackSharp} from "react-icons/io5"
+import {toast} from "react-toastify"
 
 export default function LoginLocal() {
   const dispatch = useDispatch();
@@ -34,16 +36,25 @@ export default function LoginLocal() {
     
   }
 
+
+  const loginWithAlert = ()=>{ 
+   
+      loginWithRedirect()
+ 
+  }
   return (
 
     <div>
        <div className={styles.header}>
+       <Link to='/MainPage'>
+  
       <h1 className={styles.logoForm}>Arteck</h1>
+  </Link>
       </div>
     <div className={styles.containerRegister}>
 
       <div className={styles.formContainer}>
-
+       
         <h2 className={styles.LoginMsg} >Welcome! use your data to log in</h2>
       
 
@@ -75,15 +86,18 @@ export default function LoginLocal() {
             <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
               Login
             </button>
-            <Link to='/MainPage'>
-              <button className={styles.buttonRegister}>Home</button>
-            </Link>
+           
+            
+           
+           
           </div>
         </form>
         <div>
         
 
-        <button onClick={loginWithRedirect} className={styles.buttonGoogle}><FcGoogle className={styles.Google}/> <span className={styles.buttonGoogleText}>Continue with Google</span></button>
+        <button onClick={loginWithAlert} className={styles.buttonGoogle}><FcGoogle className={styles.Google}/> <span className={styles.buttonGoogleText}>Continue with Google</span></button>
+        <br></br><br></br>
+            <span> you don't have an account? <Link to="/LocalRegister">sign up here</Link></span>
         </div>
         
       </div>

@@ -111,7 +111,7 @@ export default function CardDetails(props) {
 
 
       console.log("a")
-      alert("Deleted from favs");
+      alertDeleteFromFavouritesAtDetails()
     } else {
       setEstaEnFavoritos(true)
       addProductToFavourites({ artId: product[0].id, email },);
@@ -119,35 +119,57 @@ export default function CardDetails(props) {
         dispatch(getFavourites(email))
       }, 1000);
 
-      alertAddToCarrito()
+      alertAddtoFavouritesAtDetails()
     }
   };
 
 
   function alertAddToCarrito() {
-    toast.success(`${product[0].title} has been added to your cart`, {
-      position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
+    toast.success('Adding to cart!', {
+      position: "top-right",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+      });
   }
 
   function alertDeleteFromCarritoAtDetails() {
-    toast.success(`${product[0].title} has been deleted from your cart`, {
-      position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
+    toast.success('Deleting from cart!', {
+      position: "top-right",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+      });
+  }
+
+  function alertAddtoFavouritesAtDetails() {
+    toast.success('Adding to Favourites!', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+
+  function alertDeleteFromFavouritesAtDetails() {
+    toast.success('Deleting from Favourites!', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   }
 
   function alertLogInRequired() {

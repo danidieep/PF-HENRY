@@ -10,6 +10,7 @@ import axios from "axios"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import swal from "sweetalert"
 
 
 
@@ -37,9 +38,7 @@ export default function Profile() {
 
 
   const delete_User = () => {
-    localStorage.setItem("user", JSON.stringify([]));
-    deleteUser(user[0].id);
-    data.logout();
+    alertaDeEliminar()
   };
 
   const [input, setInput] = useState({
@@ -121,6 +120,21 @@ export default function Profile() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
+    })
+  }
+
+  const alertaDeEliminar =()=>{
+    swal({
+      title:"Delete",
+      text:"Are you sure you want to delete your profile?",
+      icon:"warning",
+      buttons:["cancel","yes"]
+    }).then(respuesta =>{
+      if(respuesta){
+        localStorage.setItem("user", JSON.stringify([]));
+        deleteUser(user[0].id);
+        data.logout();
+      }
     })
   }
 
@@ -216,7 +230,7 @@ export default function Profile() {
                 <br></br>
                 <button
                   style={{ backgroundColor: "red", color: "white" }}
-                  onClick={() => delete_User()}
+                  onClick={() =>alertaDeEliminar()}
                 >
                   Delete user
                 </button>

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendUserInfo, vaciarUser } from "../actions/index";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import swal from "sweetalert";
 
 export default function LogOut() {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
@@ -12,22 +14,71 @@ export default function LogOut() {
   let state = useSelector((state) => state);
   const dispatch = useDispatch();
 
+    const usuarioEnLocalStorage = JSON.parse(localStorage.getItem("user"))
   const logOutLocal = () => {
     localStorage.setItem("user", JSON.stringify([]));
     dispatch(vaciarUser());
+    toast('See you later!', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   };
 
   const logOutAuth0 = () =>{
-logout()
+    setTimeout(() => {
+      logout()
+    }, 600);
+
 localStorage.setItem("user", JSON.stringify([]))
 dispatch(vaciarUser())
+toast('See you later!', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
 
   }
   const logInUser = () => {
      loginWithRedirect();
+  
   };
 
   const userLocalStorage = JSON.parse(localStorage.getItem("user"))
+
+
+  const logOut =()=>{
+    swal({
+      title:"Hey!",
+      text:"Are you sure you want to log out?",
+      icon:"warning",
+      buttons:["cancel","yes"]
+    }).then(respuesta =>{
+      if(respuesta && isAuthenticated){
+        localStorage.setItem("user", JSON.stringify([]));
+        logout();
+        setTimeout(() => {
+          window.location.reload()
+        }, 300);
+      }else if(respuesta && userLocalStorage.length){
+        console.log("asdads")
+        localStorage.setItem("user", JSON.stringify([]));
+        setTimeout(() => {
+          window.location.reload()
+        }, 300);
+      
+      }
+    })
+  }
+
 
   return (
     <div className={styles.content}>
@@ -42,7 +93,7 @@ dispatch(vaciarUser())
           <Link className={styles.buttonsLink} to="/Profile">
             <button className={styles.logins} >Profile</button>
           </Link>
-            <div className={styles.buttonsLink}><button onClick={logOutAuth0} className={styles.logins} >Log out</button></div>
+            <div className={styles.buttonsLink}><button onClick={logOut} className={styles.logins} >Log out</button></div>
           
         </div>
       ) : !isAuthenticated && userLocalStorage.length ? (
@@ -51,7 +102,7 @@ dispatch(vaciarUser())
           <Link to="/Profile" className={styles.buttonsLink}>
             <button className={styles.logins} >Profile</button>
           </Link>
-          <div className={styles.buttonsLink}><button onClick={logOutLocal} className={styles.logins} >Log out</button></div>
+          <div className={styles.buttonsLink}><button onClick={logOut} className={styles.logins} >Log out</button></div>
         </div>
 
       ) : (

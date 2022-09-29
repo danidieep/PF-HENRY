@@ -3,8 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteUser,
-  desbanUser,
-  getProductsFromCarritoDB,
   getUSers,
 } from "../actions";
 

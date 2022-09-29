@@ -38,39 +38,38 @@ router.post("/findorcreate", async (req, res) => {
 
   const user = await User.findOne({ where: { idAuth } });
 
-  if (user.ban) res.status(401).json({ msg: "Not allowed" });
-  else {
-    if (user) {
-      const { name, cartId, favId, id, lastname, email, idAuth } =
-        user.dataValues;
-      res
-        .status(200)
-        .json({ name, cartId, favId, id, lastname, email, idAuth });
-    } else {
-      const userCartId = await Cart.create().then(
-        ({ dataValues }) => dataValues.id
-      );
+  // if (user.ban) res.status(401).json({ msg: "Not allowed" });
+  // else {
+  if (user && user.ban) res.status(401).json({ msg: "Not allowed" });
+  else if (user) {
+    const { name, cartId, favId, id, lastname, email, idAuth } =
+      user.dataValues;
+    res.status(200).json({ name, cartId, favId, id, lastname, email, idAuth });
+  } else {
+    const userCartId = await Cart.create().then(
+      ({ dataValues }) => dataValues.id
+    );
 
-      const userFavId = await Favourite.create().then(
-        ({ dataValues }) => dataValues.id
-      );
+    const userFavId = await Favourite.create().then(
+      ({ dataValues }) => dataValues.id
+    );
 
-      await User.create({
-        name,
-        lastname,
-        email,
-        password,
-        dateBorn,
-        role,
-        cartId: userCartId,
-        favId: userFavId,
-        idAuth,
-      });
+    await User.create({
+      name,
+      lastname,
+      email,
+      password,
+      dateBorn,
+      role,
+      cartId: userCartId,
+      favId: userFavId,
+      idAuth,
+    });
 
-      const user = await User.findOne({ where: { idAuth } });
-      res.status(200).json(user.dataValues);
-    }
+    const user = await User.findOne({ where: { idAuth } });
+    res.status(200).json(user.dataValues);
   }
+  // }
 });
 
 router.post("/findLocalUser", async (req, res) => {
@@ -79,24 +78,24 @@ router.post("/findLocalUser", async (req, res) => {
 
   let userInCuestion = await User.findOne({ where: { email: email } });
 
-  if (userInCuestion.ban) res.status(401).json({ msg: "Not allowed" });
-  else {
-    if (userInCuestion) {
-      let hashSaved = userInCuestion.dataValues.password;
+  // if (userInCuestion.ban) res.status(401).json({ msg: "Not allowed" });
+  // else {
+  if (userInCuestion && userInCuestion.ban)
+    res.status(401).json({ msg: "Not allowed" });
+  else if (userInCuestion) {
+    let hashSaved = userInCuestion.dataValues.password;
 
-      let compare = bcypt.compareSync(passNoHashed, hashSaved);
-
-      if (compare) {
-        let a = userInCuestion.dataValues;
-        console.log(a);
-        return res.status(200).json(a);
-      } else {
-        res.status(400).send("contraseña incorrecta");
-      }
+    let compare = bcypt.compareSync(passNoHashed, hashSaved);
+    if (compare) {
+      let a = userInCuestion.dataValues;
+      return res.status(200).json(a);
     } else {
-      res.status(400).send("el user no existe");
+      res.status(400).send("contraseña incorrecta");
     }
+  } else {
+    res.status(400).send("el user no existe");
   }
+  // }
 });
 
 router.post("/", async (req, res) => {

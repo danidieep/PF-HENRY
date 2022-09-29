@@ -6,6 +6,9 @@ import {
   DELETE_FILTER,
   NOT_FOUND,
   SEND_EMAIL,
+  ADD_PRODUCTO_TO_FAVOURITES,
+  DELETE_PRODUCTO_FROM_FAVOURITES,
+  GET_FAVOURITES
 } from "./action-types.js";
 import {
   GET_USER,
@@ -29,11 +32,16 @@ import {
   UPDATE_USER,
 } from "./action-types.js";
 
-export function postArtwork(payload) {
+import Toastify from 'toastify-js'
+
+export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post('/artworks/', payload)
-    return json
-  }
+    let json = await axios.post("/artworks/", {
+      payload: payload,
+      role: role,
+    });
+    return json;
+  };
 }
 
 export function deleteArtwork(id, user) {
@@ -70,13 +78,35 @@ export function getProducts() {
 }
 
 export const RegisterUser = async (payload) => {
-  await axios.post("/users", payload);
-  return async function (dispatch) {
-    return dispatch({
-      type: "REGISTER",
-      payload,
-    });
-  };
+  try {
+    let json = await axios.post("/users", payload);
+    Toastify({
+  text: "This is a toast",
+  duration: 3000,
+  destination: "https://github.com/apvarun/toastify-js",
+  newWindow: true,
+  close: true,
+  gravity: "top", // `top` or `bottom`
+  position: "left", // `left`, `center` or `right`
+  stopOnFocus: true, // Prevents dismissing of toast on hover
+  style: {
+    background: "linear-gradient(to right, #00b09b, #96c93d)",
+  },
+  onClick: function(){} // Callback after click
+}).showToast();
+  
+  } catch (error) {
+    Toastify({
+      text: "User created",
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      }
+    }).showToast();
+  }
+  
+  
+
 };
 
 export const getProductByName = (payload) => {
@@ -199,7 +229,38 @@ export const deleteProductFromCarrito = async (payload) => {
 
 export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
+  
 };
+
+
+
+
+export const deleteProductFromFavourites = async (payload) => {
+  axios.post(`/favourites/delete/${payload.artId}`, { email: payload.email });
+};
+
+export const addProductToFavourites = async (payload) => {
+  axios.post(`/favourites/${payload.artId}`, { email: payload.email });
+};
+
+
+export const getFavourites = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/favourites", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_FAVOURITES,
+      payload: json.data,
+    });
+  };
+};
+
+
+
+
 
 export const getUser = (data) => {
   return async function (dispatch) {
@@ -231,9 +292,8 @@ export const sendUserInfo = async ({
   });
 };
 
-export function deleteUser(userId) {
-  console.log(userId, "userID");
-  axios.delete(`users/${userId}`);
+export function deleteUser(userId, ban) {
+  axios.post(`users/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {
@@ -252,12 +312,27 @@ export const getProductsFromCarritoDB = (payload) => {
 
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-    let json = await axios.post(`/users/findLocalUser`, payload);
-    return dispatch({
-      type: LOG_LOCAL,
-      payload: json.data,
-    });
+    
+    try {
+      let json = await axios.post(`/users/findLocalUser`, payload);
+      dispatch({
+        type: LOG_LOCAL,
+        payload: json.data,
+      });
+      window.location.href = "/MainPage"
+    } catch (error) {
+      Toastify({
+        text: "User created",
+        className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+    }
+
   };
+
+ 
 };
 
 export const vaciarUser = () => {
@@ -299,7 +374,6 @@ export function sendEmail(a) {
 }
 
 export function getUSers(role) {
-  console.log(role);
   return async function (dispatch) {
     let data = await axios.get("/users", {
       headers: {
@@ -311,4 +385,12 @@ export function getUSers(role) {
       payload: data,
     });
   };
+}
+
+export async function postArtists(payload, role) {
+  let json = await axios.post("/artists", {
+    payload: payload,
+    role: role,
+  });
+  return json;
 }

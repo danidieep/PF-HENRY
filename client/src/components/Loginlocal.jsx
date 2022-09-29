@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LogLocal } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
+import {FcGoogle} from "react-icons/fc"
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LoginLocal() {
   const dispatch = useDispatch();
@@ -12,6 +14,8 @@ export default function LoginLocal() {
     email: "",
     password: "",
   });
+
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
   function handleChange(e) {
     setInput({
@@ -27,20 +31,21 @@ export default function LoginLocal() {
       email: "",
       password: "",
     });
-
-    setTimeout(() => {
-      window.location.href = "/MainPage"
-   
-    }, 600);
     
   }
 
   return (
+
+    <div>
+       <div className={styles.header}>
+      <h1 className={styles.logoForm}>Arteck</h1>
+      </div>
     <div className={styles.containerRegister}>
+
       <div className={styles.formContainer}>
 
-
-        <h1 className={styles.logoForm}>Arteck</h1>
+        <h2 className={styles.LoginMsg} >Welcome! use your data to log in</h2>
+      
 
         <form>
           <div className={styles.optForm}>
@@ -75,7 +80,14 @@ export default function LoginLocal() {
             </Link>
           </div>
         </form>
+        <div>
+        
+
+        <button onClick={loginWithRedirect} className={styles.buttonGoogle}><FcGoogle className={styles.Google}/> <span className={styles.buttonGoogleText}>Continue with Google</span></button>
+        </div>
+        
       </div>
+    </div>
     </div>
   );
 }

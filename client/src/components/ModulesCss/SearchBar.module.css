@@ -1,59 +1,25 @@
-/* #wrap {
-    margin: 50px 100px;
-    height: 60px;
-    padding: 0;
-    width: 40px;
-  } */
-#inputSearch {
-  padding-right: 20px;
+.SearchBar {
+
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-input[type="text"] {
-  height: 24px;
-  font-size: 1rem;
-  display: inline-block;
-  font-family: 'Merriweather', serif;
-  font-weight: 100;
+.input {
+  padding: 0.5rem;
+  border-radius: 2rem;
   border: none;
-  outline: none;
-  color: rgb(0, 0, 0);
-  padding: 3px;
-  width: 2rem;
-  top: 0;
-  right: 0;
-  background: none;
-  z-index: 3;
-  transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
-  cursor: pointer;
+  border-width: 0px;
 }
 
-input[type="text"]:focus:hover {
-  border-bottom: 1px solid rgb(0, 0, 0);
-}
-
-.search-bar {
-  width: 40px;
-}
-
-input[type="text"]:focus {
-  width: 80px;
-  z-index: 1;
-  border-bottom: 1px solid rgb(0, 0, 0);
-  cursor: text;
-}
-
-input[type="submit"] {
-  height: 40px;
-  width: 20px;
-  display: inline-block;
-  color: red;
-  background: url(https://i.imgur.com/noqkYx0.png) center center no-repeat;
-  text-indent: -10000px;
+.input1 {
+  font-size: 1.5rem;
+  background-color: transparent;
   border: none;
-  top: 0px;
-  /* position: absolute; */
-  z-index: 2;
-  cursor: pointer;
-  opacity: 0.4;
+  margin-left: -2rem;
+}
 
+.input:focus {
+  border-width: 0px;
 }

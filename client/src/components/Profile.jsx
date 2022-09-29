@@ -6,6 +6,13 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
 import styles from "./ModulesCss/Profile.module.css";
+import axios from "axios"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 
 export default function Profile() {
   const data = useAuth0();
@@ -24,7 +31,10 @@ export default function Profile() {
   };
   const onlyCharacters = /^[a-zA-Z\s]+$/;
 
-  const user = JSON.parse(localStorage.getItem("user"));
+
+
+  const user = JSON.parse(localStorage.getItem("user"))
+
 
   const delete_User = () => {
     localStorage.setItem("user", JSON.stringify([]));
@@ -59,10 +69,13 @@ export default function Profile() {
         setTimeout(() => {
           window.location.reload();
         }, 300);
-      } else {
-        alert("wrong email format");
       }
-    } else {
+      else {
+        alertWrongEmailFormat()
+
+      }
+    }
+    else {
       e.preventDefault();
       dispatch(updateUser(input));
       setTimeout(() => {
@@ -73,6 +86,42 @@ export default function Profile() {
         window.location.reload();
       }, 300);
     }
+  }
+  const [loading, setLoading] = useState(false)
+
+  const uploadImage = async (e) => {
+    const files = e.target.files[0]
+    const data = new FormData()
+    
+    data.append('file', files)
+    data.append('upload_preset', 'artket')
+    data.append("api_key", "194228613445554")
+    setLoading(true)
+    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload', 
+         data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" }}
+    ).then(response => {
+      const imagen = response.data
+      const fileURL = imagen 
+      setInput({...input,image:fileURL.secure_url})
+ 
+    }).catch(function (error) {
+      console.log(error);
+     });
+
+   }
+
+  function alertWrongEmailFormat() {
+    toast.warning(`Wrong email format`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
   }
 
   return (
@@ -85,20 +134,32 @@ export default function Profile() {
             <hr />
             <br />
             <br />
+            <ToastContainer />
             {data.isAuthenticated ? (
+              <img
+                className={styles.imgProfile1}
+                src={user[0].picture}
+                width="120"
+                height="120"
+              ></img>
+            ) : (
+               user.length && user[0].image !== null ? 
+                <img
+                className={styles.imgProfile}
+                // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                src={user[0].image}
+                width="120"
+                height="120"
+              /> : user.length?
               <img
                 className={styles.imgProfile1}
                 src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
                 width="120"
                 height="120"
-              ></img>
-            ) : (
-              <img
-                className={styles.imgProfile}
-                src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                width="120"
-                height="120"
-              />
+              ></img> : false
+              
+              
+              
             )}
 
             {!edit ? (
@@ -130,12 +191,17 @@ export default function Profile() {
                     onChange={(e) => handleChange(e)}
                     name="lastname"
                   ></input>
+
                   <h2>Email: {user[0].email}</h2>
                   <input
                     placeholder="new email..."
                     onChange={(e) => handleChange(e)}
                     name="email"
                   ></input>
+                  <h2>Image: {user[0].image}</h2>
+                  <input type='file' name="file" onChange={e => {uploadImage(e)}}/>
+
+
                   <h2>Password:</h2>
                   <input
                     type="password"

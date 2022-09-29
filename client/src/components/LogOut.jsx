@@ -30,36 +30,34 @@ dispatch(vaciarUser())
   const userLocalStorage = JSON.parse(localStorage.getItem("user"))
 
   return (
-    <div>
+    <div className={styles.content}>
       {!isAuthenticated && !userLocalStorage.length ?(
-        <div>
-          <button onClick={() => logInUser()}  className={styles.logout} >Log/Reg with auth0</button>
-
-          <Link to="/LocalRegister">
-            <button className={styles.logout}>Local register</button>
-          </Link>
-          <Link to="/LocalLogin">
-            <button  className={styles.logout} >Local Login</button>
-          </Link>
+        <div className={styles.content_login}>
+        <Link className={styles.buttonsLink} to="/LocalRegister"><div><button className={styles.logins} >Sign up</button></div></Link>
+        <Link className={styles.buttonsLink} to="/LocalLogin"><div><button className={styles.logins}  >Sign in</button></div></Link>
         </div>
       ) : isAuthenticated? (
-        <div>
-          <Link to="/Profile">
-            <button  className={styles.logout} >Profile</button>
+        <div className={styles.content_login} >
+          
+          <Link className={styles.buttonsLink} to="/Profile">
+            <button className={styles.logins} >Profile</button>
           </Link>
-          <button onClick={logOutAuth0}  className={styles.logout} >Log out</button>
+            <div className={styles.buttonsLink}><button onClick={logOutAuth0} className={styles.logins} >Log out</button></div>
+          
         </div>
       ) : !isAuthenticated && userLocalStorage.length ? (
-        <div>
-          <Link to="/Profile">
-            <button  className={styles.logout} >Profile</button>
+
+        <div className={styles.content_login}>
+          <Link to="/Profile" className={styles.buttonsLink}>
+            <button className={styles.logins} >Profile</button>
           </Link>
-          <button onClick={logOutLocal}  className={styles.logout} >Log out</button>
+          <div className={styles.buttonsLink}><button onClick={logOutLocal} className={styles.logins} >Log out</button></div>
         </div>
+
       ) : (
         <div>
         <div> error</div>
-        <button onClick={logout}  className={styles.logout} >logout</button>
+        <button onClick={logout}  className={styles.logins} >logout</button>
         </div>
       )}
     </div>

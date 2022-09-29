@@ -63,7 +63,7 @@ const ensureToken = (req, res, next) => {
   }
 };
 
-router.post("/", async (req, res) => {
+router.post("/", authAdmins1, async (req, res) => {
   const {
     id,
     title,
@@ -86,12 +86,12 @@ router.post("/", async (req, res) => {
       dimensions,
       medio,
       price
-    )
+    );
     res.status(200).send("Artwork created succesfully");
   } catch (error) {
     res.status(403).send("You cannot create an artwork");
   }
-})
+});
 
 router.put("/:idArtwork", authAdmins1, async (req, res) => {
   const { idArtwork } = req.params;

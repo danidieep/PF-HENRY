@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, Cart, Favourite } = require("../db");
+const { User, Cart, Favourite, Banner } = require("../db");
 const createUser = require("../controllers/createUserController");
 const { getUserDB } = require("../controllers/getUserDB");
 const router = Router();
@@ -31,7 +31,6 @@ const enviarMail = async (name, email, password) => {
 
   const transport = nodemailer.createTransport(config);
   const info = await transport.sendMail(mensaje);
-  console.log(info);
 };
 
 router.post("/findorcreate", async (req, res) => {
@@ -39,7 +38,10 @@ router.post("/findorcreate", async (req, res) => {
 
   const user = await User.findOne({ where: { idAuth } });
 
-  if (user) {
+  // if (user.ban) res.status(401).json({ msg: "Not allowed" });
+  // else {
+  if (user && user.ban) res.status(401).json({ msg: "Not allowed" });
+  else if (user) {
     const { name, cartId, favId, id, lastname, email, idAuth } =
       user.dataValues;
     res.status(200).json({ name, cartId, favId, id, lastname, email, idAuth });
@@ -67,6 +69,7 @@ router.post("/findorcreate", async (req, res) => {
     const user = await User.findOne({ where: { idAuth } });
     res.status(200).json(user.dataValues);
   }
+  // }
 });
 
 router.post("/findLocalUser", async (req, res) => {
@@ -75,14 +78,16 @@ router.post("/findLocalUser", async (req, res) => {
 
   let userInCuestion = await User.findOne({ where: { email: email } });
 
-  if (userInCuestion) {
+  // if (userInCuestion.ban) res.status(401).json({ msg: "Not allowed" });
+  // else {
+  if (userInCuestion && userInCuestion.ban)
+    res.status(401).json({ msg: "Not allowed" });
+  else if (userInCuestion) {
     let hashSaved = userInCuestion.dataValues.password;
 
     let compare = bcypt.compareSync(passNoHashed, hashSaved);
-
     if (compare) {
       let a = userInCuestion.dataValues;
-      console.log(a);
       return res.status(200).json(a);
     } else {
       res.status(400).send("contraseña incorrecta");
@@ -90,13 +95,13 @@ router.post("/findLocalUser", async (req, res) => {
   } else {
     res.status(400).send("el user no existe");
   }
+  // }
 });
 
 router.post("/", async (req, res) => {
   const { name, lastname, email, dateBorn, role, headers } = req.body;
   const passNoHashed = req.body.password;
   let password = bcypt.hashSync(passNoHashed, 8);
-  console.log(req.body);
   try {
     if (!headers) {
       const user = await User.findOne({ where: { email } });
@@ -191,8 +196,8 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const userById = await User.findOne({ where: { id } });
     if (userById) {
-      const { id, cartId, favId, name, lastname, email } = userById.dataValues;
-      res.status(200).json({ id, cartId, favId, name, lastname, email });
+      const { id, cartId,image, favId, name, lastname, email } = userById.dataValues;
+      res.status(200).json({ id, cartId, image,  favId, name, lastname, email });
     } else {
       res.send("no se ha encontrado un usuario con ese id");
     }
@@ -201,21 +206,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.post("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
-    const user = await User.destroy({ where: { id } });
-
-    res.status(200).send({ msg: "usuario eliminado" });
+    const { ban } = req.body;
+    const user = User.update({ ban: !ban }, { where: { id } });
+    res.status(200).send({ msg: "usuario banneado" });
   } catch (error) {
-    res.status(404).send(error);
+    res.status(400).send(error.message);
   }
 });
 
 router.post("/update", async (req, res) => {
   try {
-    const { email, name, lastname, id, idAuth } = req.body;
+    const { email, name, image, lastname, id, idAuth } = req.body;
 
     const passNoHashed = req.body.password;
     let password = bcypt.hashSync(passNoHashed, 8);
@@ -228,6 +232,9 @@ router.post("/update", async (req, res) => {
     }
     if (lastname.length) {
       User.update({ lastname }, { where: { id } });
+    }
+    if (image.length) {
+      User.update({ image }, { where: { id } });
     }
     if (password.length) {
       User.update({ password }, { where: { id } });

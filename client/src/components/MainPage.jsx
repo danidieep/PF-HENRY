@@ -32,8 +32,6 @@ export default function MainPage(props) {
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
-  const [disableNewsletterBtn, setdisableNewsletterBtn] = useState(false)
-  const [tagSubBtn, setTagSubBtn] = useState('Subscribe to Newsletter')
 
 
   React.useEffect(() => {
@@ -108,8 +106,6 @@ export default function MainPage(props) {
     const email = JSON.parse(localStorage.getItem("user"))[0].email
     dispatch(sendEmail(email))
     alertNewslatter()
-    setdisableNewsletterBtn(true)
-    setTagSubBtn('Already subscribed to Newsletter')
   }
 
   function alertNewslatter() {
@@ -133,48 +129,115 @@ export default function MainPage(props) {
         <header >
           {/* <div className={styles.content2}> */}
           <div className={styles.header}>
-<<<<<<< HEAD
-            <div>
-              <button className={styles.Products}>About us</button>
-            </div>
-
-            {JSON.parse(localStorage.getItem("user")).length ?
-              <div>
-                <Link to="/ShopCart">
-                  <button className={styles.btnCarrito}>
-                    <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
-                  </button>
-                </Link>
-              </div>
-              : false
-            }
-
-            <div>
-              <h1 className={styles.logo}>Artket</h1>
-            </div>
-=======
             <div className={styles.logoMasSearchbar}>
-             <h2 className={styles.logo}>Artket</h2>
->>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
-            <div className={styles.SearchBarHome}>
-              <SearchBar handleReset={handleReset} ></SearchBar>
+              {/* <h2 className={styles.logo}>Artket</h2> */}
+              <div className={styles.SearchBarHome}>
+                <SearchBar handleReset={handleReset} ></SearchBar>
+              </div>
             </div>
-           </div>
 
-<<<<<<< HEAD
+
+
+            <div className={styles.restoDeItems}>
+
+              <div className={styles.filtersDiv}>
+                <button
+                  onClick={() => dispatch(showAllProducts())}
+                >Reload artworks</button>
+                {/* <p className={styles.filter}>Filters</p> */}
+                <div className={styles.select}>
+                  <form>
+                    <label>By price </label>
+                    <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      <option value="OrderByMoreExpensive">More expensive</option>
+                      <option value="OrderByLessExpensive">Less expensive</option>
+                    </select>
+                  </form>
+                </div>
+
+                <div className={styles.select}>
+                  <form>
+                    <label>By Artist </label>
+                    <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                        state.artistsList.map(element => {
+
+                          return (<option value={element.name}>{element.name}</option>)
+                        }
+                        )
+                      }
+
+                    </select>
+                  </form>
+                </div>
+                <div className={styles.select}>
+                  <form>
+                    <label>By medium </label>
+                    <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
+                      <option disabled={true} value="base">-------</option>
+                      {
+                        state.mediums.map(element => {
+
+                          return (<option value={element}>{element}</option>)
+                        }
+                        )
+                      }
+
+                    </select>
+                  </form>
+                </div>
+              </div>
+              <div className={styles.cartAndProfileAndFav} >
+
+
+                {JSON.parse(localStorage.getItem("user")).length ?
+                  <div className={styles.CartAndFav}>
+                    <div>
+                      <Link to="/ShopCart">
+                        <button className={styles.btnCarrito}>
+                          <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+                        </button>
+                      </Link>
+                    </div>
+                    <div>
+                      <Link to="/Favourites">
+                        <button className={styles.btnCarrito}>
+                          Fav
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  : false
+                }
+
+                <div>
+
+                </div>
+
+                <div>
+                  <LogOut></LogOut>
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </header>
+
+
+
         <Link to="/PostArtwork">
           <button className={styles.SearchBarHome}>crear obra</button>
         </Link>
 
-        {/* NOTIFICACIONES ALERT */}
-        <ToastContainer />
-=======
->>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
+        <Link to="/Favourites">
+          <button className={styles.SearchBarHome}>favourites</button>
+        </Link>
 
+        {/* CARRUSEL */}
 
-<<<<<<< HEAD
         {state.productsFiltered.length > 5 ?
           <carrusel>
             <p className={styles.featured}>Featured</p>
@@ -194,142 +257,11 @@ export default function MainPage(props) {
           </carrusel>
           : false
         }
-
-
         <p className={styles.featured}>Galery</p>
         {/* FILTROS */}
-        <div className={styles.filtersDiv}>
-=======
-          <div className={styles.restoDeItems}>
 
-          <div className={styles.filtersDiv}>
->>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
-          <button
-            onClick={() => dispatch(showAllProducts())}
-          >Reload artworks</button>
-          {/* <p className={styles.filter}>Filters</p> */}
-          <div className={styles.select}>
-            <form>
-              <label>By price </label>
-              <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
-                <option disabled={true} value="base">-------</option>
-                <option value="OrderByMoreExpensive">More expensive</option>
-                <option value="OrderByLessExpensive">Less expensive</option>
-              </select>
-            </form>
-          </div>
-
-          <div className={styles.select}>
-            <form>
-              <label>By Artist </label>
-              <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
-                <option disabled={true} value="base">-------</option>
-                {
-                  state.artistsList.map(element => {
-
-                    return (<option value={element.name}>{element.name}</option>)
-                  }
-                  )
-                }
-
-              </select>
-            </form>
-          </div>
-          <div className={styles.select}>
-            <form>
-              <label>By medium </label>
-              <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
-                <option disabled={true} value="base">-------</option>
-                {
-                  state.mediums.map(element => {
-
-                    return (<option value={element}>{element}</option>)
-                  }
-                  )
-                }
-
-              </select>
-            </form>
-          </div>
-        </div>
-<<<<<<< HEAD
 
         <AdminPanel />
-=======
-          <div className={styles.cartAndProfileAndFav} >
-
-            
-           {JSON.parse(localStorage.getItem("user")).length?
-           <div className={styles.CartAndFav}>
-           <div>
-           <Link to="/ShopCart">
-             <button className={styles.btnCarrito}>
-               <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
-             </button>
-           </Link>
-         </div>
-            <div>
-              <Link to="/Favourites">
-                <button className={styles.btnCarrito}>
-                  Fav
-                </button>
-              </Link>
-            </div>
-            </div>
-            :false
-             }
-
-            <div>
-             
-            </div>
-           
-            <div>
-              <LogOut></LogOut>
-            </div>
-
-            </div>
-          </div>
-
-          </div>
-        </header>
-
-
-
-        <Link to="/PostArtwork">
-            <button className={styles.SearchBarHome}>crear obra</button>
-          </Link>
-
-          <Link to="/Favourites">
-            <button className={styles.SearchBarHome}>favourites</button>
-          </Link>
-
-        {/* CARRUSEL */}
-
-        {state.productsFiltered.length>5?
-        <carrusel>
-          <p className={styles.featured}>Featured</p>
-          <div className={styles.carrusel}>
-            <div>
-              <ul>
-                {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
-                  return (
-                    <li><img src={element.image}></img></li>
-                  )
-                }
-                )
-                }
-              </ul>
-            </div>
-          </div>
-        </carrusel>
-        :false
-}
-        <p className={styles.featured}>Galery</p>
-        {/* FILTROS */}
-        
-        
-        <AdminPanel/>
->>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
 
         {/* LIMPIAR FILTROS */}
         {state.filters.map(element => {
@@ -396,7 +328,7 @@ export default function MainPage(props) {
                   Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
                 </p>
                 <div className={styles.formNewsletter}>
-                  <button disabled={disableNewsletterBtn} className={styles.btnSubscribe} onClick={handleSubscribe}>{tagSubBtn}</button>
+                  <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
                 </div>
 
 

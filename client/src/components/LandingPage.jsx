@@ -19,12 +19,12 @@ export default function LandingPage() {
 
 
       <div className={styles.header}>
-      <Link><div><button className={styles.aboutus}>About us</button></div></Link>
-      <LogOut></LogOut>
-      
-       
-     
-     </div>
+        <Link><div><button className={styles.aboutus}>About us</button></div></Link>
+        <LogOut></LogOut>
+
+
+
+      </div>
       <div className={styles.logoButton}>
         <div className={styles.logoLink}>
           <h1 className={styles.logo}>Artket</h1>
@@ -44,7 +44,7 @@ export default function LandingPage() {
           <p className={styles.contactTittle}>Arket </p>
           <p>
             tel: (+32) 344 132 497 <br />
-            mail: contact@arket.gom
+            mail: contact@arket.com
           </p>
         </div>
         <div className={styles.iconsRedes}>

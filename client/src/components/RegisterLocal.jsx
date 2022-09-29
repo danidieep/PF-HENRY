@@ -121,31 +121,22 @@ export default function Register() {
       else {
         alertWorngEmailFormat()
       }
-
-
-
     }
-<<<<<<< HEAD
-    return (
-      <div className={styles.containerRegister}>
-        <div className={styles.formContainer}>
-=======
   }
-  return (
 
+  return (
     <div>
-       <div className={styles.header}>
-       <h1 className={styles.logoForm}>Arteck</h1>
-</div>
-    
-    <div className={styles.containerRegister}>
-     
-      <div className={styles.formContainer}>
-      <h2 className={styles.LoginMsg} >Complete your data to register!</h2>
->>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
+      <div className={styles.header}>
+        <h1 className={styles.logoForm}>Arteck</h1>
+      </div>
+
+      <div className={styles.containerRegister}>
+
+        <div className={styles.formContainer}>
+          <h2 className={styles.LoginMsg} >Complete your data to register!</h2>
 
           <ToastContainer />
-          <h1 className={styles.logoForm}>Arteck</h1>
+
 
           <form>
             <div className={styles.optForm}>
@@ -239,12 +230,6 @@ export default function Register() {
           </form>
         </div>
       </div>
-<<<<<<< HEAD
-    );
-  }
-=======
-    </div>
     </div>
   );
->>>>>>> 2d8ea9dc9e135f3b4d6aa3f23ac3f4e1fe6bcf86
 }

@@ -29,23 +29,25 @@ function App() {
  
   const userData = isAuthenticated
     ? {
-        name: user.given_name,
-        lastname: user.family_name,
-        email: user.email,
-        idAuth: user.sub,
-        dateBorn: "0",
-        password: "123",
-        //si esta auntenticado userData va a ser igual a los datos auth0
-      }
+      name: user.given_name,
+      lastname: user.family_name,
+      email: user.email,
+      idAuth: user.sub,
+      dateBorn: "0",
+      password: "123",
+      //si esta auntenticado userData va a ser igual a los datos auth0
+    }
     : {
-        name: JSON.parse(localStorage.getItem("user")).given_name,
-        lastname: JSON.parse(localStorage.getItem("user")).family_name,
-        email: JSON.parse(localStorage.getItem("user")).email,
-        idAuth: JSON.parse(localStorage.getItem("user")).idAuth,
-        dateBorn: "0",
-        password: "123",
-        role: JSON.parse(localStorage.getItem("user")).role,
-      };
+      name: JSON.parse(localStorage.getItem("user")).given_name,
+      lastname: JSON.parse(localStorage.getItem("user")).family_name,
+      email: JSON.parse(localStorage.getItem("user")).email,
+      idAuth: JSON.parse(localStorage.getItem("user")).idAuth,
+      dateBorn: "0",
+      password: "123",
+      role: JSON.parse(localStorage.getItem("user")).role,
+    };
+
+
 
   //si no esta autenticado userData sera igual a los datos del localStorage subidos anteriormente
   //tuve que hacer esto porque si recargas la pagina los datos de auth0 tardan en cargar
@@ -54,6 +56,9 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) dispatch(getUser(userData));
   }, [user]);
+
+
+
 
   //si esta autenticado se despachara la accion getUser con la data de arriba
   //prestara atencion a los cambios de estados de user

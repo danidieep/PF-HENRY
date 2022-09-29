@@ -2,7 +2,7 @@
     font-family: 'Merriweather', serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 1.5rem;
     border-width: 0px;
     cursor: pointer;
     line-height: 36px;
@@ -12,60 +12,87 @@
     margin-top: 20px;
     background-color: transparent;
 
+
+}
+
+.header {
+    background-color: rgba(255, 255, 255, 0.7);
+    display: grid;
+    grid-template-columns: 100%;
+    height: 4rem;
+    align-content: center;
+    position: fixed;
+    width: 100%;
+    box-shadow: 0 0 30rem rgb(172, 168, 168);
+
 }
 
 .containerRegister {
     background-color: #DCB5B0;
-    display: flex;
-    flex-flow: row wrap;
     align-content: center;
+    height: 60rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 .formContainer {
     height: auto;
-    background-color: rgba(101, 53, 53, 1);
+    background-color: rgba(253, 253, 252, 0.7);
     width: 320px;
-    margin: 0 auto;
     border-radius: 5px;
     padding: 20px 0;
+    box-shadow: 0 0 30rem rgb(203, 200, 200);
 
 }
 
 .logoForm {
     font-family: 'Euphoria Script', cursive;
-    text-decoration-color: rgba(101, 53, 53, 1);
-    font-size: 100px;
+    text-decoration-color: rgb(0, 0, 0);
+
     font-weight: 400;
-    color: white;
+    color: rgb(1, 1, 1);
+    background-color: transparent;
+
 }
 
 .optForm {
     margin: 10px;
 }
 
+.LoginMsg {
+    color: rgb(81, 70, 70);
+    font-weight: 100;
+    background-color: transparent;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-family: 'Merriweather', serif;
+
+}
+
 .optForm input {
-    height: 27px;
-    border-radius: 5px;
-    border-width: 0;
-    padding-left: 3px;
+    height: 1.8rem;
+    border-radius: 2rem;
+    width: 12rem;
+    text-align: center;
+    border: none;
 }
 
 .buttonRegister {
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 2rem;
     border-style: none;
     box-sizing: border-box;
     color: #000000;
     cursor: pointer;
     display: inline-block;
-    font-family: 'Merriweather', serif;
+
     font-style: normal;
-    font-size: 18px;
     font-weight: 600;
     font-weight: 500;
-    height: 40px;
-    width: 120px;
+    height: 2rem;
+    width: 10rem;
     line-height: 20px;
     list-style: none;
     margin: 0;
@@ -78,12 +105,14 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin: 10px auto;
+    margin: 0.2rem auto;
+    transition: 0.3s;
 
 }
 
 .buttonRegister:hover {
-    background-color: rgb(247, 236, 236);
+    background-color: rgb(237, 216, 216);
+    transition: 0.3s;
 }
 
 .buttonRegisterPos {
@@ -98,4 +127,44 @@
     font-style: normal;
     color: white;
     font-size: 22px;
+}
+
+.buttonGoogle {
+    background-color: rgb(255, 255, 255);
+    padding: 0.2rem;
+    border-radius: 1rem;
+
+    font-size: 1.3rem;
+    width: 12rem;
+    position: relative;
+    top: 0.1rem;
+    border: 2px rgb(77, 77, 77);
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.buttonGoogle:hover {
+    background-color: rgb(226, 226, 226);
+    padding: 0.2rem;
+    border-radius: 1rem;
+    transition: 0.3s;
+    font-size: 1.3rem;
+    width: 12rem;
+    position: relative;
+    top: 0.1rem;
+    border: 2px rgb(77, 77, 77);
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.buttonGoogleText {
+    font-size: 0.9rem;
+    position: relative;
+    bottom: 0.2rem;
+}
+
+.Google {
+    position: relative;
+    top: 0.1rem;
 }

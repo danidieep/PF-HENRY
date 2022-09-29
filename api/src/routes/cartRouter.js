@@ -48,11 +48,11 @@ router.post("/delete/:artworkId", async (req, res) => {
     let artwork = await Artwork.findByPk(artworkId);
     let user = await User.findOne({ where: { email } });
     let cart = await Cart.findOne({ where: { id: user.cartId } });
-    let artworkInCart = await Artworkincart.findOne({where:{artworkId}})
+    let artworkInCart = await Artworkincart.findOne({ where: { artworkId } })
     let totalPrice = cart.totalPrice - artwork.price;
     await deleteArtworkInCart(artworkInCart.dataValues.id);
     await updateCart(totalPrice, user.cartId);
-   
+
     res.status(200)
   } catch (err) {
     console.log(err);
@@ -82,7 +82,7 @@ router.get("/", async (req, res) => {
     });
     let detailArt = cart.artworkincarts
     let arr = []
-    detailArt.map(async (e)=>  arr.push(Artwork.findOne({where:{id:e.artworkId}})))
+    detailArt.map(async (e) => arr.push(Artwork.findOne({ where: { id: e.artworkId } })))
     await Promise.all(arr).then((resp) => {
       res.status(200).send(resp);
     })
@@ -99,7 +99,7 @@ router.get("/", async (req, res) => {
 //   try {
 //     let cart = await Cart.findAll();
 //     res.send(cart);
-//   } catch (error) {
+//   } catch (error) {gi
 //     console.log(error);
 //   }
 // });

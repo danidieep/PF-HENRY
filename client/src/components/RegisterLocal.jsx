@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../actions/index";
-import styles from "./ModulesCss/LogIn.module.css";
+import styles from "./ModulesCss/LogIn.module.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -62,6 +64,33 @@ export default function Register() {
         [e.target.name]: e.target.value,
       });
     }
+
+  }
+
+  function alertCompleteData() {
+    toast.warn(`Complete all the info`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
+  function alertWorngEmailFormat() {
+    toast.warn(`Wrong email format`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
   }
 
   function handleSubmit(e) {
@@ -84,110 +113,122 @@ export default function Register() {
           password: "",
           dateBorn: "",
         });
-      } else {
-        alert("complete your data");
+
       }
-    } else if (input.email.length === 0) {
-      alert("complete your data");
-    } else {
-      alert("wrong email format");
+      else if (input.email.length === 0) {
+        alertCompleteData()
+      }
+      else {
+        alertWorngEmailFormat()
+      }
     }
   }
+
   return (
-    <div className={styles.containerRegister}>
-      <div className={styles.formContainer}>
+    <div>
+      <div className={styles.header}>
         <h1 className={styles.logoForm}>Arteck</h1>
+      </div>
 
-        <form>
-          <div className={styles.optForm}>
-            <input
-              name="name"
-              value={input.name}
-              autoComplete="off"
-              placeholder="Name..."
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-            {/* {errors.name && (
+      <div className={styles.containerRegister}>
+
+        <div className={styles.formContainer}>
+          <h2 className={styles.LoginMsg} >Complete your data to register!</h2>
+
+          <ToastContainer />
+
+
+          <form>
+            <div className={styles.optForm}>
+              <input
+                name="name"
+                value={input.name}
+                autoComplete="off"
+                placeholder="Name..."
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-          </div>
+            </div>
 
-          <div className={styles.optForm}>
-            <input
-              name="lastname"
-              value={input.lastname}
-              autoComplete="off"
-              placeholder="LastName..."
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-            {/* {errors.name && (
+            <div className={styles.optForm}>
+              <input
+                name="lastname"
+                value={input.lastname}
+                autoComplete="off"
+                placeholder="LastName..."
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-          </div>
+            </div>
 
-          <div className={styles.optForm}>
-            <input
-              name="email"
-              value={input.email}
-              autoComplete="off"
-              placeholder="Email..."
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-            {/* {errors.name && (
+            <div className={styles.optForm}>
+              <input
+                name="email"
+                value={input.email}
+                autoComplete="off"
+                placeholder="Email..."
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-          </div>
+            </div>
 
-          <div className={styles.optForm}>
-            <input
-              type="password"
-              name="password"
-              value={input.password}
-              autoComplete="off"
-              placeholder="Password..."
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-            {/* {errors.name && (
+            <div className={styles.optForm}>
+              <input
+                type="password"
+                name="password"
+                value={input.password}
+                autoComplete="off"
+                placeholder="Password..."
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {/* {errors.name && (
         <p className={s.errors} >{errors.name}</p>
       )} */}
-          </div>
+            </div>
 
-          <div className={styles.optForm}>
-            <input
-              type="date"
-              name="dateBorn"
-              value={input.dateBorn}
-              autoComplete="off"
-              placeholder="Date of Birth..."
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            ></input>
-            {/* {errors.released && (
+            <div className={styles.optForm}>
+              <input
+                type="date"
+                name="dateBorn"
+                value={input.dateBorn}
+                autoComplete="off"
+                placeholder="Date of Birth..."
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              ></input>
+              {/* {errors.released && (
       <p className={s.errors} >{errors.released}</p>
       )}  */}
-          </div>
-          <div className={styles.buttonRegisterPos}>
-            <button
-              className={styles.buttonRegister}
-              type="submit"
-              onClick={(e) => handleSubmit(e)}
-            >
-              Register
-            </button>
-            <Link to="/MainPage">
-              <button className={styles.buttonRegister}>Home</button>
-            </Link>
-          </div>
-        </form>
+            </div>
+            <div className={styles.buttonRegisterPos}>
+              <button
+                className={styles.buttonRegister}
+                type="submit"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Register
+              </button>
+              <Link to="/MainPage">
+                <button className={styles.buttonRegister}>Home</button>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

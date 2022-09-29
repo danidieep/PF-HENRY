@@ -5,7 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
-import styles from "./ModulesCss/Profile.module.css";
+import styles from "./ModulesCss/Profile.module.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 
 export default function Profile() {
   const data = useAuth0();
@@ -24,7 +29,10 @@ export default function Profile() {
   };
   const onlyCharacters = /^[a-zA-Z\s]+$/;
 
-  const user = JSON.parse(localStorage.getItem("user"));
+
+
+  const user = JSON.parse(localStorage.getItem("user"))
+
 
   const delete_User = () => {
     localStorage.setItem("user", JSON.stringify([]));
@@ -59,10 +67,13 @@ export default function Profile() {
         setTimeout(() => {
           window.location.reload();
         }, 300);
-      } else {
-        alert("wrong email format");
       }
-    } else {
+      else {
+        alertWrongEmailFormat()
+
+      }
+    }
+    else {
       e.preventDefault();
       dispatch(updateUser(input));
       setTimeout(() => {
@@ -75,6 +86,19 @@ export default function Profile() {
     }
   }
 
+  function alertWrongEmailFormat() {
+    toast.warning(`Wrong email format`, {
+      position: "top-center",
+      theme: 'dark',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+  }
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profile}>
@@ -85,10 +109,11 @@ export default function Profile() {
             <hr />
             <br />
             <br />
+            <ToastContainer />
             {data.isAuthenticated ? (
               <img
                 className={styles.imgProfile1}
-                src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                src={user[0].picture}
                 width="120"
                 height="120"
               ></img>

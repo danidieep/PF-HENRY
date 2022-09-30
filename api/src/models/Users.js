@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
@@ -49,13 +49,16 @@ module.exports = (sequelize) => {
         defaultValue: false,
         allowNull: false,
       },
+      ban: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       image: {
         type: DataTypes.TEXT,
-        
       },
-      isSuscribed:{
+      isSuscribed: {
         type: DataTypes.BOOLEAN,
-       
         defaultValue: false,
       },
     },

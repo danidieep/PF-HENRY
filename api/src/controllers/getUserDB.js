@@ -14,6 +14,7 @@ const getUserDB = async () => {
       dateBorn: u.dateBorn,
       password: u.password,
       role: u.role,
+      ban: u.ban
     }
   });
 

@@ -80,7 +80,7 @@ export default function PutArtwork() {
   function handleSubmit(e) {
     e.preventDefault()
 
-    dispatch(putArtwork(input))
+    dispatch(putArtwork(input,user[0].role))
     alertPutArtwork()
 
     setInput({

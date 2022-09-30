@@ -21,6 +21,8 @@ export default function PostArtwork() {
 
   }, [])
 
+  const user=JSON.parse(localStorage.getItem("user"))
+
   const artists = useSelector((state) => state.artistsList)
 
 
@@ -61,13 +63,13 @@ export default function PostArtwork() {
   }
 
 
-  function handleSubmit(e) {
+  function handleSubmit(e,role) {
     e.preventDefault()
     if (Object.keys(errors).length !== 0) {
       alert('Debes llenar el Formulario primero')
 
     } else {
-      dispatch(postArtwork(input))
+      dispatch(postArtwork(input,role))
       alert('obra de arte Creada')
     }
 
@@ -194,7 +196,7 @@ export default function PostArtwork() {
               <br></br>
             </div>
             <br />
-            <button className={styles.buttonRegister} type='submit' onClick={e => handleSubmit(e)} >Crear</button><br />
+            <button className={styles.buttonRegister} type='submit' onClick={e => handleSubmit(e, user[0].role ? user[0].role : null)} >Crear</button><br />
             <Link to='/MainPage'>
               <button className={styles.buttonRegister}>Home</button>
             </Link>

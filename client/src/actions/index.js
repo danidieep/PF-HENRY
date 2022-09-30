@@ -36,7 +36,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post("/artworks/", {
+    let json = await axios.post("artworks", {
       payload: payload,
       role: role,
     });
@@ -293,9 +293,8 @@ export const sendUserInfo = async ({
   });
 };
 
-export function deleteUser(userId) {
-  console.log(userId, "userID");
-  axios.delete(`users/${userId}`);
+export function deleteUser(userId, ban) {
+  axios.post(`users/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {
@@ -312,11 +311,9 @@ export const getProductsFromCarritoDB = (payload) => {
   };
 };
 
-
-
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-
+    
     try {
       let json = await axios.post(`/users/findLocalUser`, payload);
       dispatch({
@@ -351,7 +348,7 @@ export const LogLocal = (payload) => {
 
   };
 
-
+ 
 };
 
 export const vaciarUser = () => {
@@ -393,7 +390,6 @@ export function sendEmail(a) {
 }
 
 export function getUSers(role) {
-  console.log(role);
   return async function (dispatch) {
     let data = await axios.get("/users", {
       headers: {
@@ -413,4 +409,10 @@ export async function postArtists(payload, role) {
     role: role,
   });
   return json;
+}
+
+export async function resetPassword (payload) {
+  await axios.put('users/update/resetpass', {
+    payload
+  })
 }

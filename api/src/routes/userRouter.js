@@ -223,7 +223,7 @@ router.post("/update", async (req, res) => {
 
     const passNoHashed = req.body.password;
     let password = bcypt.hashSync(passNoHashed, 8);
-
+    
     if (email.length) {
       User.update({ email }, { where: { id } });
     }

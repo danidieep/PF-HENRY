@@ -46,7 +46,7 @@ export default function Profile() {
     email: "",
     password: "",
     id: user[0].id,
-    image:""
+    image:''
   });
 
   function handleChange(e) {

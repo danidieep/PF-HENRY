@@ -11,6 +11,7 @@ export default function PostArtwork() {
 
 
   const dispatch = useDispatch()
+  const user = JSON.parse(localStorage.getItem("user"))
 
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
@@ -20,8 +21,6 @@ export default function PostArtwork() {
     dispatch(getArtists())
 
   }, [])
-
-  const user=JSON.parse(localStorage.getItem("user"))
 
   const artists = useSelector((state) => state.artistsList)
 
@@ -63,13 +62,13 @@ export default function PostArtwork() {
   }
 
 
-  function handleSubmit(e,role) {
+  function handleSubmit(e, role) {
     e.preventDefault()
     if (Object.keys(errors).length !== 0) {
       alert('Debes llenar el Formulario primero')
 
     } else {
-      dispatch(postArtwork(input,role))
+      dispatch(postArtwork(input, role))
       alert('obra de arte Creada')
     }
 

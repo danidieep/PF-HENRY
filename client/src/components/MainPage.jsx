@@ -32,6 +32,7 @@ export default function MainPage(props) {
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
+  const [filters, setFilters] = useState('base')
 
 
   React.useEffect(() => {
@@ -88,10 +89,13 @@ export default function MainPage(props) {
   const artistSelector = (name) => {
     dispatch(AddFilters({ type: "artist", name }))
     handleReset()
+
   }
 
   const deleteFilter_ = (name) => {
     dispatch(deletefilter(name))
+
+
   }
 
 
@@ -99,6 +103,8 @@ export default function MainPage(props) {
     dispatch(AddFilters({ type: "medium", name }))
     // dispatch(filterByMedium(type))
     handleReset()
+    console.log(name);
+
   }
 
   const handleSubscribe = (e) => {
@@ -127,40 +133,36 @@ export default function MainPage(props) {
     <div className={styles.container}>
       <div className={styles.content}>
         <header >
-          {/* <div className={styles.content2}> */}
+
           <div className={styles.header}>
             <div className={styles.logoMasSearchbar}>
-              {/* <h2 className={styles.logo}>Artket</h2> */}
-              <div className={styles.SearchBarHome}>
-                <SearchBar handleReset={handleReset} ></SearchBar>
-              </div>
+
+
             </div>
 
-
+            <ToastContainer />
 
             <div className={styles.restoDeItems}>
 
               <div className={styles.filtersDiv}>
                 <button
                   onClick={() => dispatch(showAllProducts())}
-                >Reload artworks</button>
+                ><h2 className={styles.logo}>Artket</h2></button>
                 {/* <p className={styles.filter}>Filters</p> */}
                 <div className={styles.select}>
                   <form>
-                    <label>By price </label>
                     <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">-------</option>
-                      <option value="OrderByMoreExpensive">More expensive</option>
-                      <option value="OrderByLessExpensive">Less expensive</option>
+                      <option disabled={true} value="base">By price</option>
+                      <option className={styles.optFilters} value="OrderByMoreExpensive">More expensive</option>
+                      <option className={styles.optFilters} value="OrderByLessExpensive">Less expensive</option>
                     </select>
                   </form>
                 </div>
 
                 <div className={styles.select}>
                   <form>
-                    <label>By Artist </label>
                     <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">-------</option>
+                      <option disabled={true} value="base">By artist</option>
                       {
                         state.artistsList.map(element => {
 
@@ -174,9 +176,8 @@ export default function MainPage(props) {
                 </div>
                 <div className={styles.select}>
                   <form>
-                    <label>By medium </label>
                     <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">-------</option>
+                      <option disabled={true} value="base">By medium</option>
                       {
                         state.mediums.map(element => {
 
@@ -188,10 +189,11 @@ export default function MainPage(props) {
                     </select>
                   </form>
                 </div>
+                <div className={styles.SearchBarHome}>
+                  <SearchBar handleReset={handleReset} ></SearchBar>
+                </div>
               </div>
               <div className={styles.cartAndProfileAndFav} >
-
-
                 {JSON.parse(localStorage.getItem("user")).length ?
                   <div className={styles.CartAndFav}>
                     <div>
@@ -204,7 +206,7 @@ export default function MainPage(props) {
                     <div>
                       <Link to="/Favourites">
                         <button className={styles.btnCarrito}>
-                          Fav
+                          Favorites
                         </button>
                       </Link>
                     </div>
@@ -226,10 +228,12 @@ export default function MainPage(props) {
           </div>
         </header>
 
-        <Link to="/Favourites">
-          <button className={styles.SearchBarHome}>favourites</button>
-        </Link>
 
+        <div className={styles.btnAddArtworkPos}>
+          <Link to="/PostArtwork">
+            <button className={styles.btnAddArtwork}>Add artwork</button> <br /><br />
+          </Link>
+        </div>
         {/* CARRUSEL */}
 
         {state.productsFiltered.length > 5 ?
@@ -258,7 +262,13 @@ export default function MainPage(props) {
         <AdminPanel />
 
         {/* LIMPIAR FILTROS */}
+        {state.filters.length > 0 ?
+          <div>
+            <h3 className={styles.filtersAplied}>Filters aplied</h3>
+          </div>
+          : false}
         {state.filters.map(element => {
+
           return (
             <div key={1}>
               <span>{element.name}</span>

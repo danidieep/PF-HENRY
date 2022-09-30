@@ -206,7 +206,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/:id", async (req, res) => {
+router.post("/ban/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { ban } = req.body;

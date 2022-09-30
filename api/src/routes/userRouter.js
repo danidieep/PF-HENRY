@@ -196,8 +196,9 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const userById = await User.findOne({ where: { id } });
     if (userById) {
-      const { id, cartId,image, favId, name, lastname, email } = userById.dataValues;
-      res.status(200).json({ id, cartId, image,  favId, name, lastname, email });
+      const { id, cartId, image, favId, name, lastname, email } =
+        userById.dataValues;
+      res.status(200).json({ id, cartId, image, favId, name, lastname, email });
     } else {
       res.send("no se ha encontrado un usuario con ese id");
     }
@@ -223,7 +224,7 @@ router.post("/update", async (req, res) => {
 
     const passNoHashed = req.body.password;
     let password = bcypt.hashSync(passNoHashed, 8);
-    
+
     if (email.length) {
       User.update({ email }, { where: { id } });
     }
@@ -242,6 +243,21 @@ router.post("/update", async (req, res) => {
     res.status(200).send("se actualize paa");
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.put("/update", async (req, res) => {
+  try {
+    const email = req.body.payload.email;
+    const passNoHashed = req.body.payload.password;
+    let password = bcypt.hashSync(passNoHashed, 8);
+
+    if (password) {
+      User.update({ password }, { where: { email } });
+    }
+    res.status(200).send("Password changed");
+  } catch (error) {
+    console.log(error.message);
   }
 });
 

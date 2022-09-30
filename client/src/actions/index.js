@@ -412,7 +412,7 @@ export async function postArtists(payload, role) {
 }
 
 export async function resetPassword (payload) {
-  await axios.put('users/update/resetpass', {
+  await axios.put('users/update', {
     payload
   })
 }

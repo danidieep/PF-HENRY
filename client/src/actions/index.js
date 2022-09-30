@@ -34,9 +34,9 @@ import {
 
 import { toast, ToastContainer } from "react-toastify";
 
-export function postArtwork(payload) {
+export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post("artworks/", {
+    let json = await axios.post("artworks", {
       payload: payload,
       role: role,
     });

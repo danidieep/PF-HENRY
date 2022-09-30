@@ -16,7 +16,7 @@
 }
 
 .header {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255);
     display: grid;
     grid-template-columns: 100%;
     height: 4rem;
@@ -76,8 +76,10 @@
     border-radius: 2rem;
     width: 12rem;
     text-align: center;
-    border: none;
+    border: 0;
+
 }
+
 
 .buttonRegister {
     background-color: rgb(138, 54, 54);
@@ -138,7 +140,7 @@
     position: relative;
     top: 0.1rem;
     border: 2px rgb(77, 77, 77);
-    margin-top: 1rem;
+    margin-top: 0.3rem;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -146,6 +148,7 @@
 .buttonGoogle:hover {
     opacity: 0.7;
     transition: 0.3s;
+
 }
 
 .buttonGoogleText {

@@ -7,6 +7,8 @@ const emailRouter = require("./emailRouter");
 const authAdmins = require("../middlewares/middleware");
 const favsRouter = require('./favouriteRouter')
 // const authRouter = require('./authRouter')
+
+
 const paymentRouter = require('./mercadopagoRouter')
 const router = Router();
 

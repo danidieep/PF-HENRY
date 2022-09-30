@@ -32,6 +32,8 @@ import {
   UPDATE_USER,
 } from "./action-types.js";
 
+import { toast , ToastContainer} from "react-toastify";
+
 export function postArtwork(payload) {
   return async function (dispatch) {
     let json = await axios.post('/artworks/', payload)
@@ -73,13 +75,36 @@ export function getProducts() {
 }
 
 export const RegisterUser = async (payload) => {
-  await axios.post("/users", payload);
-  return async function (dispatch) {
-    return dispatch({
-      type: "REGISTER",
-      payload,
-    });
-  };
+  try {
+    let json = await axios.post("/users", payload);
+    toast.success('Registering...', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+      setTimeout(() => {
+        window.location.href = "/LocalLogin"
+      }, 2000);
+  
+  } catch (error) {
+    toast.error('User allready exist!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+
+  }
+  
+  
+
 };
 
 export const getProductByName = (payload) => {
@@ -284,14 +309,46 @@ export const getProductsFromCarritoDB = (payload) => {
   };
 };
 
+
+
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-    let json = await axios.post(`/users/findLocalUser`, payload);
-    return dispatch({
-      type: LOG_LOCAL,
-      payload: json.data,
-    });
+    
+    try {
+      let json = await axios.post(`/users/findLocalUser`, payload);
+      dispatch({
+        type: LOG_LOCAL,
+        payload: json.data,
+      });
+      toast.success('Logging...', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+        setTimeout(() => {
+          window.location.href = "/MainPage"
+        }, 2000);
+     
+     
+    } catch (error) {
+      toast.error('Wrong credentials', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+
   };
+
+ 
 };
 
 export const vaciarUser = () => {

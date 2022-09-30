@@ -20,6 +20,17 @@ export default function Favoritos() {
   const eliminar = (id) => {
     deleteProductFromFavourites({ artId: id, email },)
 
+    toast.success(`Artwork deleted from favourites!`, {
+      position: "top-center",
+      theme: "light",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+
     setTimeout(() => {
       dispatch(getFavourites(email))
     }, 1000);

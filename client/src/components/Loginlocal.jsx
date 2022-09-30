@@ -6,6 +6,8 @@ import { LogLocal } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
 import { FcGoogle } from "react-icons/fc"
 import { useAuth0 } from "@auth0/auth0-react";
+import { IoChevronBackSharp } from "react-icons/io5"
+import { toast } from "react-toastify"
 
 export default function LoginLocal() {
   const dispatch = useDispatch();
@@ -32,11 +34,6 @@ export default function LoginLocal() {
       password: "",
     });
 
-    setTimeout(() => {
-      window.location.href = "/MainPage"
-
-    }, 600);
-
   }
 
   return (
@@ -49,7 +46,7 @@ export default function LoginLocal() {
 
         <div className={styles.formContainer}>
 
-          <h2 className={styles.LoginMsg} >Welcome!<br /> Use your data to log in</h2>
+          <h2 className={styles.LoginMsg} >Welcome! Use your data to log in</h2>
 
 
           <form>
@@ -89,10 +86,12 @@ export default function LoginLocal() {
 
 
             <button onClick={loginWithRedirect} className={styles.buttonGoogle}><FcGoogle className={styles.Google} /> <span className={styles.buttonGoogleText}>Continue with Google</span></button>
+            <br></br><br></br>
+            <span> You don't have an account? <Link to="/LocalRegister">Sign up here</Link></span>
           </div>
 
         </div>
       </div>
-    </div >
+    </div>
   );
 }

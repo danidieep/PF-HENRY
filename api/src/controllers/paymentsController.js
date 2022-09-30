@@ -1,4 +1,9 @@
 const axios = require('axios')
+require("dotenv").config();
+const PORT = process.env.PORT || 3001;
+const mercadopago = require('mercadopago')
+mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN)
+const express = require('express');
 
 const createPayment = async(cart, user) =>{
     
@@ -17,7 +22,7 @@ const createPayment = async(cart, user) =>{
         }
     })
     // console.log(artworks)
-    const body = {
+    const preference = {
         items: artworks,
         payer: {
             name: user.name,
@@ -48,29 +53,26 @@ const createPayment = async(cart, user) =>{
             ],
             "installments": 12
         },
-        notification_url: "https://www.your-site.com/ipn",
+        notification_url: `https://8433-138-204-158-12.sa.ngrok.io/payments/notifications`,
+        // notification_url:'https://hookb.in/qBLx8dnV2ktEqJGEyLP3',
         statement_descriptor: "ARTKET",
         // expires: true,
         // expiration_date_from: "2016-02-01T12:00:00.000-04:00",
         // expiration_date_to: "2016-02-28T12:00:00.000-04:00"
-    }
-    
-    const payment = await axios.post (url, body ,{
+    } 
+
+
+    const payment = await axios.post (url, preference ,{
         headers:{
         "Content-Type" : "application/json",
         Authorization : `Bearer ${process.env.ACCESS_TOKEN}`
         }
-    }).then((r)=>{
-        res.json(r)
-    })
-    .catch((e)=>{
-        console.log(e)
     })
     return payment.data
 }
 
-const notifications = async (req, res)=>{
-    const data = req.query
-}
+// const notifications = async (req, res)=>{
+//     const data = req.query
+// }
 
-module.exports= createPayment
+module.exports= {createPayment}

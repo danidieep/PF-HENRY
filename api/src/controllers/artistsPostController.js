@@ -2,9 +2,9 @@ const { Artist } = require("../db");
 
 const createArtist = async (data) => {
   try {
-    const {id, name, birthday, hometown} = data.payload
+    const { id, name, birthday, hometown } = data.payload
     const artistCreate = await Artist.findOrCreate({
-      where : {
+      where: {
         name
       },
       defaults: {
@@ -19,3 +19,4 @@ const createArtist = async (data) => {
 };
 
 module.exports = createArtist;
+

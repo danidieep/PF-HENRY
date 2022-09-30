@@ -381,6 +381,7 @@ export const findUserById = (id) => {
 
 export function sendEmail(a) {
   return async function (dispatch) {
+    console.log(a);
     const email = await axios.post("/sendemail", { email: a });
     return dispatch({
       type: SEND_EMAIL,

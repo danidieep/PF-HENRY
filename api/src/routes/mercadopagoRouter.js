@@ -3,7 +3,7 @@ const router = express.Router()
 const {createPayment} = require('../controllers/paymentsController')
 const axios = require("axios");
 const mercadopago = require('mercadopago');
-const { payment } = require('mercadopago');
+// const { payment } = require('mercadopago');
 
 
 router.get('/', async(req, res) =>{

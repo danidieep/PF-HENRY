@@ -35,7 +35,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 
 export const getPay = async (payload, user) => {
-  await axios.post('/payment', { payload: payload,  user: user});
+  axios.post('/payment', {payload,  user});
 
 };
 

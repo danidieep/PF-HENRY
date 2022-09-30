@@ -32,9 +32,9 @@ import {
   UPDATE_USER,
 } from "./action-types.js";
 
-import Toastify from 'toastify-js'
+import { toast, ToastContainer } from "react-toastify";
 
-export function postArtwork(payload, role) {
+export function postArtwork(payload) {
   return async function (dispatch) {
     let json = await axios.post("artworks/", {
       payload: payload,
@@ -80,32 +80,33 @@ export function getProducts() {
 export const RegisterUser = async (payload) => {
   try {
     let json = await axios.post("/users", payload);
-    Toastify({
-  text: "This is a toast",
-  duration: 3000,
-  destination: "https://github.com/apvarun/toastify-js",
-  newWindow: true,
-  close: true,
-  gravity: "top", // `top` or `bottom`
-  position: "left", // `left`, `center` or `right`
-  stopOnFocus: true, // Prevents dismissing of toast on hover
-  style: {
-    background: "linear-gradient(to right, #00b09b, #96c93d)",
-  },
-  onClick: function(){} // Callback after click
-}).showToast();
-  
+    toast.success('Registering...', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(() => {
+      window.location.href = "/LocalLogin"
+    }, 2000);
+
   } catch (error) {
-    Toastify({
-      text: "User created",
-      className: "info",
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      }
-    }).showToast();
+    toast.error('User allready exist!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   }
-  
-  
+
+
 
 };
 
@@ -229,7 +230,7 @@ export const deleteProductFromCarrito = async (payload) => {
 
 export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
-  
+
 };
 
 
@@ -319,15 +320,30 @@ export const LogLocal = (payload) => {
         type: LOG_LOCAL,
         payload: json.data,
       });
-      window.location.href = "/MainPage"
+      toast.success('Logging...', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        window.location.href = "/MainPage"
+      }, 2000);
+
+
     } catch (error) {
-      Toastify({
-        text: "User created",
-        className: "info",
-        style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-      }).showToast();
+      toast.error('Wrong credentials', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
 
   };

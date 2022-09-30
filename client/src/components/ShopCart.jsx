@@ -15,6 +15,8 @@ export default function ShopCart() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
   const email = JSON.parse(localStorage.getItem("user"))[0].email
+
+
   const eliminar = (id) => {
     deleteProductFromCarrito({ artId: id, email },)
 
@@ -39,12 +41,12 @@ export default function ShopCart() {
   }, []);
 
   function alertDeleteFromCarrito() {
-    toast.success(`${product[0].title} has been deleted from your cart`, {
+    toast.success(`Artwork deleted from cart!`, {
       position: "top-center",
-      theme: "dark",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
+      theme: "light",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: false,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,

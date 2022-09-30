@@ -9,6 +9,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import dotenv from "dotenv";
+import {ToastContainer} from "react-toastify"
 dotenv.config();
 const { REACT_AUTH0_DOMAIN, REACT_AUTH0_CLIENT_ID } = process.env;
 
@@ -25,6 +26,7 @@ ReactDOM.render(
     >
       <Provider store={store}>
         <BrowserRouter>
+        <ToastContainer/>
           <App />
         </BrowserRouter>
       </Provider>

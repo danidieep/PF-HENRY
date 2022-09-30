@@ -103,7 +103,7 @@ export default function Register() {
         input.dateBorn.length > 0
       ) {
         RegisterUser(input);
-        
+
         setInput({
           name: "",
           lastname: "",
@@ -111,22 +111,26 @@ export default function Register() {
           password: "",
           dateBorn: "",
         });
-        } else {
-          console.log("a")
-        }}
-      else if(input.email.length === 0) {
-        alertCompleteData()
-      }
-      else {
-        alertWorngEmailFormat()
+      } else {
+        console.log("a")
       }
     }
-  
+    else if (input.email.length === 0) {
+      alertCompleteData()
+    }
+    else {
+      alertWorngEmailFormat()
+    }
+  }
+
 
   return (
     <div>
       <div className={styles.header}>
-        <h1 className={styles.logoForm}>Arteck</h1>
+        <Link to='/MainPage'>
+
+          <h1 className={styles.logoForm}>Arteck</h1>
+        </Link>
       </div>
 
       <div className={styles.containerRegister}>
@@ -222,9 +226,8 @@ export default function Register() {
               >
                 Register
               </button>
-              <Link to="/MainPage">
-                <button className={styles.buttonRegister}>Home</button>
-              </Link>
+              <br />
+              <span> You have an account? <Link to="/LocalLogin">Sign in here</Link></span>
             </div>
           </form>
         </div>
@@ -232,4 +235,4 @@ export default function Register() {
     </div>
   );
 
-    }
+}

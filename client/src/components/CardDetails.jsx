@@ -25,7 +25,8 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function CardDetails(props) {
   const { id } = useParams();
   const { getAccessTokenSilently } = useAuth0();
-
+  const carrito = useSelector((state) => state.carrito)
+  const favoritos = useSelector((state) => state.favoritos)
   const user = JSON.parse(localStorage.getItem("user"))
 
   const dispatch = useDispatch();
@@ -43,19 +44,21 @@ export default function CardDetails(props) {
 
   const estaono = () => {
 
-    const a = state.carrito.filter(e => e.title === product[0].title)
-    if (a.length) setEsta(true)
-    if (!a.length) setEsta(false)
-
+    if (state.carrito.length && product.length) {
+      const a = state.carrito.filter(e => e.title === product[0].title)
+      if (a.length) setEsta(true)
+      if (!a.length) setEsta(false)
+    }
 
   }
 
   const estaonoEnfavoritos = () => {
 
-    const a = state.favoritos.filter(e => e.title === product[0].title)
-    if (a.length) setEstaEnFavoritos(true)
-    if (!a.length) setEstaEnFavoritos(false)
-
+    if (state.favoritos.length && product.length) {
+      const a = state.favoritos.filter(e => e.title === product[0].title)
+      if (a.length) setEstaEnFavoritos(true)
+      if (!a.length) setEstaEnFavoritos(false)
+    }
 
   }
 
@@ -75,7 +78,7 @@ export default function CardDetails(props) {
     const ArtInCuesiton = state.carrito.filter(
       (element) => element.title === product[0].title
     );
-    if (ArtInCuesiton.length) {
+    if (ArtInCuesiton.length && esta) {
       deleteProductFromCarrito({ artId: product[0].id, email },)
       setEsta(false)
       setTimeout(() => {
@@ -83,7 +86,7 @@ export default function CardDetails(props) {
       }, 600);
       alertDeleteFromCarritoAtDetails()
 
-    } else {
+    } else if (!esta) {
       setEsta(true)
       addProductToCarrito({ artId: product[0].id, email },);
       setTimeout(() => {
@@ -102,7 +105,7 @@ export default function CardDetails(props) {
     const ArtInCuesiton1 = state.favoritos.filter(
       (element) => element.title === product[0].title
     );
-    if (ArtInCuesiton1.length) {
+    if (ArtInCuesiton1.length && estaEnfavoritos) {
       deleteProductFromFavourites({ artId: product[0].id, email },)
       setEstaEnFavoritos(false)
       setTimeout(() => {
@@ -111,43 +114,65 @@ export default function CardDetails(props) {
 
 
       console.log("a")
-      alert("Deleted from favs");
-    } else {
+      alertDeleteFromFavouritesAtDetails()
+    } else if (!estaEnfavoritos) {
       setEstaEnFavoritos(true)
       addProductToFavourites({ artId: product[0].id, email },);
       setTimeout(() => {
         dispatch(getFavourites(email))
       }, 1000);
 
-      alertAddToCarrito()
+      alertAddtoFavouritesAtDetails()
     }
   };
 
 
   function alertAddToCarrito() {
-    toast.success(`${product[0].title} has been added to your cart`, {
+    toast.success('Adding to cart!', {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+    });
   }
 
   function alertDeleteFromCarritoAtDetails() {
-    toast.success(`${product[0].title} has been deleted from your cart`, {
+    toast.success('Deleting from cart!', {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+    });
+  }
+
+  function alertAddtoFavouritesAtDetails() {
+    toast.success('Adding to Favourites!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  function alertDeleteFromFavouritesAtDetails() {
+    toast.success('Deleting from Favourites!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
 
   function alertLogInRequired() {
@@ -192,8 +217,20 @@ export default function CardDetails(props) {
             <Link to="/ShopCart">
               <button className={styles.btnCarrito}>
                 <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+                <h4>{carrito.length}</h4>
               </button>
+              
             </Link>
+            <div>
+                      <Link to="/Favourites">
+                        <button className={styles.btnCarrito}>
+                          Favorites
+                          <h4>{favoritos.length}</h4>
+                        </button>
+                        
+                      </Link>
+                    </div> 
+
           </div>
             :
             false
@@ -256,7 +293,7 @@ export default function CardDetails(props) {
                           if (user.length) {
                             addToFavouritosOrDelete();
                           } else {
-                            alert("Login required");
+                            alertLogInRequired();
                           }
                         }}
                       >

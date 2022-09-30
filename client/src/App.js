@@ -16,6 +16,7 @@ import LoginLocal from "./components/Loginlocal";
 import Users from "./components/Users";
 import ArtistsPost from "./components/ArtistsPost";
 import Favoritos from "./components/Favoritos"
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function App() {
     ? localStorage.setItem("user", JSON.stringify([]))
     : console.log("va");
   //si esta autenticado sse subo los datos de auth0 al local storage, caso contrario se convertira en un array vacío
- 
+
   const userData = isAuthenticated
     ? {
       name: user.given_name,
@@ -78,6 +79,7 @@ function App() {
       <Route path="/Users" component={Users} />
       <Route path="/PostArtist" component={ArtistsPost} />
       <Route path="/Favourites" component={Favoritos} />
+      {/* <Route path='/ResetPassword' component={ResetPassword}/> */}
     </div>
   );
 }

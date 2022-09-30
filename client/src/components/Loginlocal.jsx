@@ -6,6 +6,9 @@ import { LogLocal } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
 import {FcGoogle} from "react-icons/fc"
 import { useAuth0 } from "@auth0/auth0-react";
+import { IoChevronBackSharp } from "react-icons/io5"
+import { toast } from "react-toastify"
+import ResetPassword from "./ResetPassword";
 
 export default function LoginLocal() {
   const dispatch = useDispatch();
@@ -31,21 +34,21 @@ export default function LoginLocal() {
       email: "",
       password: "",
     });
-    
+
   }
 
   return (
 
     <div>
-       <div className={styles.header}>
-      <h1 className={styles.logoForm}>Arteck</h1>
+      <div className={styles.header}>
+        <h1 className={styles.logoForm}>Arteck</h1>
       </div>
-    <div className={styles.containerRegister}>
+      <div className={styles.containerRegister}>
 
-      <div className={styles.formContainer}>
+        <div className={styles.formContainer}>
 
-        <h2 className={styles.LoginMsg} >Welcome! use your data to log in</h2>
-      
+          <h2 className={styles.LoginMsg} >Welcome! Use your data to log in</h2>
+
 
         <form>
           <div className={styles.optForm}>
@@ -78,16 +81,19 @@ export default function LoginLocal() {
             <Link to='/MainPage'>
               <button className={styles.buttonRegister}>Home</button>
             </Link>
+            <ResetPassword/>
           </div>
         </form>
         <div>
         
 
-        <button onClick={loginWithRedirect} className={styles.buttonGoogle}><FcGoogle className={styles.Google}/> <span className={styles.buttonGoogleText}>Continue with Google</span></button>
+            <button onClick={loginWithRedirect} className={styles.buttonGoogle}><FcGoogle className={styles.Google} /> <span className={styles.buttonGoogleText}>Continue with Google</span></button>
+            <br></br><br></br>
+            <span> You don't have an account? <Link to="/LocalRegister">Sign up here</Link></span>
+          </div>
+
         </div>
-        
       </div>
-    </div>
     </div>
   );
 }

@@ -38,7 +38,7 @@ export default function Users() {
             <h2>{el.lastname}</h2>
             <h5>{el.email}</h5>
             <h5>{el.dateBorn}</h5>
-            {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario desbanneado</h6>}
+            {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario disponible</h6>}
             <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
               {el.ban === true ? 'Desbanear' : 'Banear'}
             </button>

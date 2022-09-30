@@ -87,7 +87,7 @@ router.post("/", authAdmins1, async (req, res) => {
       medio,
       price
     );
-    res.status(200).send("Artwork created succesfully");
+    res.status(200).send("Artwork created succesful");
   } catch (error) {
     res.status(403).send("You cannot create an artwork");
   }

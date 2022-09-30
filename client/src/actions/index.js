@@ -294,7 +294,7 @@ export const sendUserInfo = async ({
 };
 
 export function deleteUser(userId, ban) {
-  axios.post(`users/${userId}`, { ban });
+  axios.post(`users/ban/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {

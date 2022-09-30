@@ -74,7 +74,7 @@ router.post("/", authAdmins1, async (req, res) => {
     dimensions,
     medio,
     price,
-  } = req.body;
+  } = req.body.payload;
   try {
     const postArtwork = createArtwork(
       id,
@@ -108,7 +108,6 @@ router.put("/:idArtwork", authAdmins1, async (req, res) => {
     },
   } = req.body;
   try {
-    console.log(title);
     if (title.length) {
       Artwork.update({ title }, { where: { id: idArtwork } });
     }

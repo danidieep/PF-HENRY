@@ -183,6 +183,8 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    margin-bottom: 5px;
+
 
 }
 

@@ -7,9 +7,9 @@ import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
 import styles from "./ModulesCss/Profile.module.css";
 import axios from "axios"
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import swal from "sweetalert"
 
 
 
@@ -37,9 +37,7 @@ export default function Profile() {
 
 
   const delete_User = () => {
-    localStorage.setItem("user", JSON.stringify([]));
-    deleteUser(user[0].id);
-    data.logout();
+    alertaDeEliminar()
   };
 
   const [input, setInput] = useState({
@@ -48,6 +46,7 @@ export default function Profile() {
     email: "",
     password: "",
     id: user[0].id,
+    image:''
   });
 
   function handleChange(e) {
@@ -92,24 +91,25 @@ export default function Profile() {
   const uploadImage = async (e) => {
     const files = e.target.files[0]
     const data = new FormData()
-    
+
     data.append('file', files)
     data.append('upload_preset', 'artket')
     data.append("api_key", "194228613445554")
     setLoading(true)
-    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload', 
-         data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" }}
+    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload',
+      data, {
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    }
     ).then(response => {
       const imagen = response.data
-      const fileURL = imagen 
-      setInput({...input,image:fileURL.secure_url})
- 
+      const fileURL = imagen
+      setInput({ ...input, image: fileURL.secure_url })
+
     }).catch(function (error) {
       console.log(error);
-     });
+    });
 
-   }
+  }
 
   function alertWrongEmailFormat() {
     toast.warning(`Wrong email format`, {
@@ -121,6 +121,21 @@ export default function Profile() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
+    })
+  }
+
+  const alertaDeEliminar = () => {
+    swal({
+      title: "Delete",
+      text: "Are you sure you want to delete your profile?",
+      icon: "warning",
+      buttons: ["cancel", "yes"]
+    }).then(respuesta => {
+      if (respuesta) {
+        localStorage.setItem("user", JSON.stringify([]));
+        deleteUser(user[0].id);
+        data.logout();
+      }
     })
   }
 
@@ -143,23 +158,23 @@ export default function Profile() {
                 height="120"
               ></img>
             ) : (
-               user.length && user[0].image !== null ? 
+              user.length && user[0].image !== null ?
                 <img
-                className={styles.imgProfile}
-                // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                src={user[0].image}
-                width="120"
-                height="120"
-              /> : user.length?
-              <img
-                className={styles.imgProfile1}
-                src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                width="120"
-                height="120"
-              ></img> : false
-              
-              
-              
+                  className={styles.imgProfile}
+                  // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                  src={user[0].image}
+                  width="120"
+                  height="120"
+                /> : user.length ?
+                  <img
+                    className={styles.imgProfile1}
+                    src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                    width="120"
+                    height="120"
+                  ></img> : false
+
+
+
             )}
 
             {!edit ? (
@@ -199,7 +214,7 @@ export default function Profile() {
                     name="email"
                   ></input>
                   <h2>Image: {user[0].image}</h2>
-                  <input type='file' name="file" onChange={e => {uploadImage(e)}}/>
+                  <input type='file' name="file" onChange={e => { uploadImage(e) }} />
 
 
                   <h2>Password:</h2>
@@ -216,7 +231,7 @@ export default function Profile() {
                 <br></br>
                 <button
                   style={{ backgroundColor: "red", color: "white" }}
-                  onClick={() => delete_User()}
+                  onClick={() => alertaDeEliminar()}
                 >
                   Delete user
                 </button>

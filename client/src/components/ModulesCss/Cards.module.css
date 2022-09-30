@@ -19,7 +19,10 @@
     margin: 7px auto;
 }
 
-
+.imgCards {
+    max-width: 566px;
+    max-height: 260px;
+}
 
 .card:hover {
     transform: scale(1.1);

@@ -41,7 +41,7 @@ export default function Cards({ data }) {
       <div className={styles.card}>
         <Link to={`/Products/${data.id}`}>
           <h3 className={styles.name}>{data.title}</h3>
-          <img className={styles.img} src={data.image} alt="product_img" />
+          <img className={styles.imgCards} src={data.image} alt="product_img" />
           <div className={styles.types_container}>
             <h3 className={styles.types}>{data.creator}</h3>
             <h3 className={styles.types}>{`$${data.price}`}</h3>

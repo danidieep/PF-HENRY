@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { resetPassword } from "../actions";
 import styles from "./ModulesCss/LogIn.module.css";
 
 export default function ResetPassword() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({
+    email: "",
     password: "",
     confirm_password: "",
   });
@@ -21,14 +23,15 @@ export default function ResetPassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // LogLocal(input)
+    resetPassword(input)
     setInput({
+      email: "",
       password: "",
       confirm_password: "",
     });
     setTimeout(() => {
-        setOpen(!open);
-      }, 1000);
+      setOpen(!open);
+    }, 1000);
   }
 
   return (
@@ -40,6 +43,17 @@ export default function ResetPassword() {
       ) : (
         <div>
           <form>
+            <div>
+              <input
+                name="email"
+                value={input.email}
+                autoComplete="off"
+                placeholder="Email..."
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </div>
             <div>
               <input
                 name="password"

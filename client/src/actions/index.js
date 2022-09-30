@@ -410,3 +410,9 @@ export async function postArtists(payload, role) {
   });
   return json;
 }
+
+export async function resetPassword (payload) {
+  await axios.put('users/update/resetpass', {
+    payload
+  })
+}

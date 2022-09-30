@@ -32,13 +32,16 @@ import {
   UPDATE_USER,
 } from "./action-types.js";
 
-import { toast , ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export function postArtwork(payload) {
   return async function (dispatch) {
-    let json = await axios.post('/artworks/', payload)
-    return json
-  }
+    let json = await axios.post("/artworks/", {
+      payload: payload,
+      role: false,
+    });
+    return json;
+  };
 }
 
 export function deleteArtwork(id, user) {
@@ -85,11 +88,11 @@ export const RegisterUser = async (payload) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
-      setTimeout(() => {
-        window.location.href = "/LocalLogin"
-      }, 2000);
-  
+    });
+    setTimeout(() => {
+      window.location.href = "/LocalLogin"
+    }, 2000);
+
   } catch (error) {
     toast.error('User allready exist!', {
       position: "top-center",
@@ -99,11 +102,11 @@ export const RegisterUser = async (payload) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
+    });
 
   }
-  
-  
+
+
 
 };
 
@@ -227,7 +230,7 @@ export const deleteProductFromCarrito = async (payload) => {
 
 export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
-  
+
 };
 
 
@@ -313,7 +316,7 @@ export const getProductsFromCarritoDB = (payload) => {
 
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-    
+
     try {
       let json = await axios.post(`/users/findLocalUser`, payload);
       dispatch({
@@ -328,12 +331,12 @@ export const LogLocal = (payload) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
-        setTimeout(() => {
-          window.location.href = "/MainPage"
-        }, 2000);
-     
-     
+      });
+      setTimeout(() => {
+        window.location.href = "/MainPage"
+      }, 2000);
+
+
     } catch (error) {
       toast.error('Wrong credentials', {
         position: "top-center",
@@ -343,12 +346,12 @@ export const LogLocal = (payload) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
 
   };
 
- 
+
 };
 
 export const vaciarUser = () => {
@@ -402,4 +405,12 @@ export function getUSers(role) {
       payload: data,
     });
   };
+}
+
+export async function postArtists(payload, role) {
+  let json = await axios.post("/artists", {
+    payload: payload,
+    role: role,
+  });
+  return json;
 }

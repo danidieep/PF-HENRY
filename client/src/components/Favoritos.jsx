@@ -34,7 +34,7 @@ export default function Favoritos() {
     setTimeout(() => {
       dispatch(getFavourites(email))
     }, 1000);
-    alertDeleteFromFavorites()
+
   }
 
 
@@ -42,18 +42,6 @@ export default function Favoritos() {
     dispatch(getFavourites(user[0].email));
   }, []);
 
-  function alertDeleteFromFavorites() {
-    toast.success(`Deleted`, {
-      position: "top-center",
-      theme: "dark",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    })
-  }
   return (
     <div className={styles.containerCarrito}>
 

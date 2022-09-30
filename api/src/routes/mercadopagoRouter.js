@@ -4,10 +4,16 @@ const {createPayment} = require('../controllers/paymentsController')
 const axios = require("axios");
 const mercadopago = require('mercadopago');
 // const { payment } = require('mercadopago');
+mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN)
 
-
-router.get('/', async(req, res) =>{
-    const {cart, user} = req.body // headers? body?
+router.post('/', async(req, res) =>{
+    const {payload, user} = req.body // headers? body?
+    const cart = payload
+    const usuario = user[0]
+    
+    // console.log(payload[0], 'payload')
+    // console.log(user[0], 'user')
+    
     let artworks = cart.map((a) =>{
         return {
             id: a.id,
@@ -17,15 +23,15 @@ router.get('/', async(req, res) =>{
             creator: a.creator,
             category_id: "art",
             quantity: 1,
-            unit_price: a.price
+            unit_price: Number(a.price)
         }
     })
     const preference = {
         items: artworks,
         payer: {
-            name: user.name,
-            surname: user.lastname,
-            email: user.email,
+            name: usuario.name,
+            surname: usuario.lastname,
+            email: usuario.email,
             // address: {
             //     "street_name": "Street",
             //     "street_number": 123,
@@ -46,7 +52,7 @@ router.get('/', async(req, res) =>{
             ],
             "installments": 12
         },
-        notification_url: `https://8433-138-204-158-12.sa.ngrok.io/payments/notifications`,
+        notification_url: `https://a0e5-138-204-158-12.sa.ngrok.io/payments/notifications`,
         statement_descriptor: "ARTKET",
     } 
     try {
@@ -91,4 +97,3 @@ router.post('/notifications', async (req, res) =>{
 })
 
 module.exports = router
-

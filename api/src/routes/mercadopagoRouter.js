@@ -1,12 +1,11 @@
-const express = require('express')
-const router = express.Router()
 const createPayment = require('../controllers/paymentsController')
+const { Router } = require("express");
+const router = Router();
 
-
-router.get('/', async(req, res) =>{
-    const {cart, user} = req.body // headers? body?
+router.post('/', async(req, res) =>{
+    const {payload, user} = req.body // headers? body?
     try {
-        const payment = await createPayment(cart, user)
+        const payment = await createPayment(payload, user)
         res.send(payment.init_point)
     } catch (error) {
         console.log(error)

@@ -6,6 +6,7 @@ import { LogLocal } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
 import {FcGoogle} from "react-icons/fc"
 import { useAuth0 } from "@auth0/auth0-react";
+import ResetPassword from "./ResetPassword";
 
 export default function LoginLocal() {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ export default function LoginLocal() {
             <Link to='/MainPage'>
               <button className={styles.buttonRegister}>Home</button>
             </Link>
+            <ResetPassword/>
           </div>
         </form>
         <div>

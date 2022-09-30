@@ -224,22 +224,24 @@ router.post("/update", async (req, res) => {
     const passNoHashed = req.body.password;
     let password = bcypt.hashSync(passNoHashed, 8);
 
-    if (email.length) {
-      User.update({ email }, { where: { id } });
-    }
-    if (name.length) {
-      User.update({ name }, { where: { id } });
-    }
-    if (lastname.length) {
-      User.update({ lastname }, { where: { id } });
-    }
-    if (image.length) {
-      User.update({ image }, { where: { id } });
-    }
-    if (password.length) {
-      User.update({ password }, { where: { id } });
-    }
-    res.status(200).send("se actualize paa");
+console.log(id, 'id update');
+
+    // if (email.length) {
+    //   User.update({ email }, { where: { id } });
+    // }
+    // if (name.length) {
+    //   User.update({ name }, { where: { id } });
+    // }
+    // if (lastname.length) {
+    //   User.update({ lastname }, { where: { id } });
+    // }
+    // if (image.length) {
+    //   User.update({ image }, { where: { id } });
+    // }
+    // if (password.length) {
+    //   User.update({ password }, { where: { id } });
+    // }
+    // res.status(200).send("se actualize paa");
   } catch (error) {
     console.log(error);
   }

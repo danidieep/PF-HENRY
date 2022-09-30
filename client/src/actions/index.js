@@ -36,7 +36,7 @@ import Toastify from 'toastify-js'
 
 export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post("/artworks/", {
+    let json = await axios.post("artworks/", {
       payload: payload,
       role: role,
     });

@@ -79,6 +79,7 @@ function App() {
       <Route path="/Users" component={Users} />
       <Route path="/PostArtist" component={ArtistsPost} />
       <Route path="/Favourites" component={Favoritos} />
+      <Route path="/ResetPassword" component={ResetPassword} />
       {/* <Route path='/ResetPassword' component={ResetPassword}/> */}
     </div>
   );

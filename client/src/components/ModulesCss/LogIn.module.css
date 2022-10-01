@@ -15,6 +15,17 @@
 
 }
 
+.containerResetPw {
+    background-color: #DCB5B0;
+    align-content: center;
+    height: auto;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 900px;
+}
+
 .header {
     background-color: rgba(255, 255, 255);
     display: grid;

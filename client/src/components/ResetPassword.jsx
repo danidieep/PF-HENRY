@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { resetPassword } from "../actions";
 import styles from "./ModulesCss/LogIn.module.css";
+import { Link } from "react-router-dom";
 
 export default function ResetPassword() {
   const [open, setOpen] = useState(false);
@@ -35,53 +36,59 @@ export default function ResetPassword() {
   }
 
   return (
-    <div>
-      {open === false ? (
-        <button className={styles.buttonRegister} onClick={modalController}>
-          Forgot your password?
-        </button>
-      ) : (
-        <div>
+    <div className={styles.containerAll}>
+      <div className={styles.header}>
+        <h1 className={styles.logoForm}>Arteck</h1>
+      </div>
+      <div className={styles.containerResetPw}>
+
+        <div className={styles.formContainer}>
           <form>
-            <div>
+            <h3>Reset your password</h3>
+            <div className={styles.optForm}>
               <input
                 name="email"
                 value={input.email}
                 autoComplete="off"
-                placeholder="Email..."
+                placeholder="Email"
                 onChange={(e) => {
                   handleChange(e);
                 }}
               />
             </div>
-            <div>
+            <div className={styles.optForm}>
               <input
                 name="password"
                 value={input.password}
                 autoComplete="off"
-                placeholder="New password..."
+                placeholder="New password"
                 onChange={(e) => {
                   handleChange(e);
                 }}
               />
             </div>
-            <div>
+            <div className={styles.optForm}>
               <input
                 name="confirm_password"
                 value={input.confirm_password}
                 autoComplete="off"
-                placeholder="Confirm password..."
+                placeholder="Confirm password"
                 onChange={(e) => {
                   handleChange(e);
                 }}
               />
             </div>
-            <button type="submit" onClick={(e) => handleSubmit(e)}>
+            <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
               Submit
-            </button>
+            </button><br />
+            <Link to='/MainPage'>
+              <button className={styles.buttonRegister}>Home</button>
+            </Link>
+
           </form>
         </div>
-      )}
+
+      </div>
     </div>
   );
 }

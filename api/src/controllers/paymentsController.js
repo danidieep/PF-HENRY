@@ -1,14 +1,10 @@
 const axios = require('axios')
 require("dotenv").config();
-const PORT = process.env.PORT || 3001;
-const mercadopago = require('mercadopago')
-mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN)
-const express = require('express');
+const { ACCESS_TOKEN } = process.env;
 
-const createPayment = async(cart, user) =>{
-    
+const createPayment = async(cart, user1) =>{
+    const user = user1[0]
     const url = "https://api.mercadopago.com/checkout/preferences"
-    // console.log(cart)
     let artworks = cart.map((a) =>{
         return {
             id: a.id,
@@ -65,7 +61,7 @@ const createPayment = async(cart, user) =>{
     const payment = await axios.post (url, preference ,{
         headers:{
         "Content-Type" : "application/json",
-        Authorization : `Bearer ${process.env.ACCESS_TOKEN}`
+        'Authorization' : `Bearer ${process.env.ACCESS_TOKEN}`
         }
     })
     return payment.data

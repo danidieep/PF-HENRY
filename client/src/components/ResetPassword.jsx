@@ -58,6 +58,7 @@ export default function ResetPassword() {
             </div>
             <div className={styles.optForm}>
               <input
+                type='password'
                 name="password"
                 value={input.password}
                 autoComplete="off"
@@ -69,6 +70,7 @@ export default function ResetPassword() {
             </div>
             <div className={styles.optForm}>
               <input
+                type='password'
                 name="confirm_password"
                 value={input.confirm_password}
                 autoComplete="off"

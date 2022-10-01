@@ -142,12 +142,6 @@ export default function MainPage(props) {
         <header >
 
           <div className={styles.header}>
-            <div className={styles.logoMasSearchbar}>
-
-
-            </div>
-
-            <ToastContainer />
 
             <div className={styles.restoDeItems}>
 

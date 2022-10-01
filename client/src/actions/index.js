@@ -30,6 +30,7 @@ import {
   ADD_FILTERS,
   SET_USER,
   UPDATE_USER,
+  GET_HISTORY
 } from "./action-types.js";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -46,16 +47,33 @@ export function postArtwork(payload, role) {
 
 export function deleteArtwork(id, user) {
   // console.log('user data delete artwork');
+
   return async function (dispatch) {
     // console.log('user data delete artwork');
-    let json = await axios.put("artworks/delete/" + id);
+    try {
+      let json = await axios.put("artworks/delete/" + id);
+      toast.info('Arwork deleted', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return dispatch({
+        type: DELETE_ARTWORKS,
+        payload: json.data,
+      });
 
-    return dispatch({
-      type: DELETE_ARTWORKS,
-      payload: json.data,
-    });
+    } catch (error) {
+
+    }
   };
 }
+
+
+
 export function putArtwork(payload, role) {
   return async function (dispatch) {
     let json = await axios.put("/artworks/" + payload.id, {
@@ -294,7 +312,7 @@ export const sendUserInfo = async ({
 };
 
 export function deleteUser(userId, ban) {
-  axios.post(`users/ban/${userId}`, { ban });
+  axios.post(`users/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {
@@ -311,9 +329,24 @@ export const getProductsFromCarritoDB = (payload) => {
   };
 };
 
+
+export const getBuyHistory = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/history", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_HISTORY,
+      payload: json.data,
+    });
+  };
+};
+
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-    
+
     try {
       let json = await axios.post(`/users/findLocalUser`, payload);
       dispatch({
@@ -348,7 +381,7 @@ export const LogLocal = (payload) => {
 
   };
 
- 
+
 };
 
 export const vaciarUser = () => {
@@ -411,7 +444,7 @@ export async function postArtists(payload, role) {
   return json;
 }
 
-export async function resetPassword (payload) {
+export async function resetPassword(payload) {
   await axios.put('users/update/resetpass', {
     payload
   })

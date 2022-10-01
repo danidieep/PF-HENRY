@@ -23,7 +23,8 @@ import {
   GET_PRODUCTS_FROM_CARRITODB,
   SET_USER,
   GET_USERS,
-  GET_FAVOURITES
+  GET_FAVOURITES,
+  GET_HISTORY
 } from "../actions/action-types";
 
 const initialState = {
@@ -36,7 +37,8 @@ const initialState = {
   filters: [],
   carrito: [],
   users: [],
-  favoritos:[]
+  favoritos: [],
+  history: []
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
@@ -70,11 +72,11 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
       };
 
-      case 'POST_ARTWORK':{
-        return{
-            ...state
-        }
-    }  
+    case 'POST_ARTWORK': {
+      return {
+        ...state
+      }
+    }
 
     case DELETE_ARTWORKS:
       return {
@@ -201,10 +203,10 @@ export default function Reducer(state = initialState, { type, payload }) {
       };
     }
 
-    case GET_FAVOURITES:{
-      return{
+    case GET_FAVOURITES: {
+      return {
         ...state,
-        favoritos:payload,
+        favoritos: payload,
       }
     }
 
@@ -233,6 +235,12 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
         payload,
       };
+    }
+    case GET_HISTORY: {
+      return {
+        ...state,
+        history: payload
+      }
     }
 
     default:

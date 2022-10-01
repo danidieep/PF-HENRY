@@ -13,13 +13,18 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px; */
     width: 100%;
-    height: auto;
-    background: #DCB5B0;
+    height: 100%;
+    margin: 0;
+
 }
 
 .header {
-    background-color: rgba(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     width: 100%;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
 }
 
 button {
@@ -33,7 +38,7 @@ button {
     font-size: 3.2rem;
     font-weight: 100;
     border: none;
-    background-color: white;
+    background-color: transparent;
 }
 
 .SearchBarHome {
@@ -41,11 +46,17 @@ button {
     justify-content: center;
     align-items: center;
 
+
 }
 
 .restoDeItems {
     display: grid;
     grid-template-columns: 70% 30%;
+
+    width: 100%;
+    background-color: transparent;
+    z-index: 3;
+
 
 }
 
@@ -116,15 +127,23 @@ button {
 }
 
 .cards {
-    width: 80%;
+    width: 90%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 100%;
     margin: 5rem auto;
+
 }
 
 .cardsContainer {
     height: auto;
-    background-color: red;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 1rem;
+    box-shadow: 0 0 5rem rgb(218, 148, 148);
+    padding-bottom: 0.1rem;
+
+
 }
 
 .carrusel {
@@ -194,13 +213,18 @@ button {
 
 }
 
+.tapaHeader {
+    height: 4rem;
+    margin-bottom: 2rem;
+}
+
 .featured {
     font-family: 'Merriweather', serif;
     font-style: italic;
     font-size: 56px;
     color: #000000;
     margin-right: 40px;
-    margin-top: 40px;
+    margin-top: 100px;
     width: 100%;
 }
 
@@ -208,21 +232,23 @@ button {
     font-family: 'Merriweather', serif;
     font-style: normal;
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 30% 15% 15% 15% 25%;
     justify-content: center;
     align-items: center;
     padding-left: 3rem;
     font-size: 0.8rem;
     height: 4rem;
 
+
 }
 
 .filters {
     cursor: pointer;
-    background-color: rgba(255, 255, 255);
+    background-color: transparent;
     border: none;
     width: 7rem;
-    text-align: right;
+
 
 }
 
@@ -238,7 +264,7 @@ button {
 .cartAndProfileAndFav {
 
     display: grid;
-    grid-template-columns: 40% 30% 30%;
+    grid-template-columns: 50% 5% 5%;
     align-items: center;
 
     justify-content: center;
@@ -257,9 +283,9 @@ button {
 }
 
 .paginado {
-    width: 1220px;
-    display: inline-block;
-    margin: auto;
+
+    margin-top: 2rem;
+    padding-bottom: 40px;
 }
 
 .button31Paginado {
@@ -316,15 +342,31 @@ form .formNewsletterBox {
 .btnCarrito {
     background-color: transparent;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #000000;
     cursor: pointer;
-    font-family: 'Merriweather', serif;
+
+    transition: 0.3s;
+    width: 5rem;
+}
+
+.btnFav {
+    background-color: transparent;
+    border: none;
+    font-size: 1.3rem;
+    color: #000000;
+    cursor: pointer;
+
     transition: 0.3s;
     width: 5rem;
 }
 
 .btnCarrito:hover {
+    color: rgb(141, 93, 93);
+    transition: 0.3s;
+}
+
+.btnFav:hover {
     color: rgb(141, 93, 93);
     transition: 0.3s;
 }
@@ -356,4 +398,118 @@ form .formNewsletterBox {
 .btnSubscribe:disabled {
     opacity: 0.5;
     cursor: auto;
+}
+
+.body {
+    margin-top: 6rem;
+
+
+}
+
+.galeryTitle {
+    background: #f7dedb;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 5rem;
+    color: rgb(81, 70, 70);
+    font-family: 'Euphoria Script', cursive;
+    font-size: 3rem;
+    font-weight: 600;
+
+}
+
+.cantItems {
+    background-color: red;
+    border-radius: 9999px;
+    width: 0.9rem;
+    height: 0.9rem;
+    font-size: 0.75rem;
+    position: relative;
+    bottom: 1rem;
+    left: 1.5rem;
+    color: white;
+}
+
+.iconsHeader {
+    font-size: 2rem;
+}
+
+
+
+.nav {
+    max-width: 900px;
+    margin: auto;
+
+    font-size: 20px;
+    margin-top: 50px;
+    color: #000000;
+}
+
+.menuHor {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+
+    padding: 1rem;
+}
+
+.menuVert>li>button {
+    display: block;
+    z-index: inherit;
+    color: black;
+    text-decoration: none;
+
+
+}
+
+.menuHor>li:hover {}
+
+.menuVert {
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+
+}
+
+.menuHor li:hover .menuVert {
+    display: block;
+    color: #000000;
+}
+
+.menuVert li:hover {}
+
+.menuVert li a {
+    display: block;
+    color: black;
+    padding: 15px 15px 15pxm 20px;
+    text-decoration: none;
+}
+
+
+.buttonsProf {
+    background-color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 6.5rem;
+}
+
+.buttonsProf:hover {
+    background-color: rgb(250, 233, 233);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buttonsProfBase {
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0.1rem;
+
+}
+
+.buttonsProfBase:hover {
+
+    color: rgb(141, 93, 93);
+    margin-top: 0.1rem;
+    cursor: pointer;
 }

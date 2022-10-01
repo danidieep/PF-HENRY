@@ -17,6 +17,9 @@ import Users from "./components/Users";
 import ArtistsPost from "./components/ArtistsPost";
 import Favoritos from "./components/Favoritos"
 import ResetPassword from "./components/ResetPassword";
+import profileEdit from "./components/profileEdit"
+import Security from "./components/Security";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -79,8 +82,9 @@ function App() {
       <Route path="/Users" component={Users} />
       <Route path="/PostArtist" component={ArtistsPost} />
       <Route path="/Favourites" component={Favoritos} />
-      <Route path="/ResetPassword" component={ResetPassword} />
-      {/* <Route path='/ResetPassword' component={ResetPassword}/> */}
+      <Route path="/ProfileEdit" component={profileEdit} />
+      <Route path="/Security/" component={Security} />
+      <Route path='/ResetPassword' component={ResetPassword} />
     </div>
   );
 }

@@ -44,7 +44,7 @@ export default function ResetPassword() {
 
         <div className={styles.formContainer}>
           <form>
-            <h3>Reset your password</h3>
+            <h2 className={styles.LoginMsg}>Reset your password</h2>
             <div className={styles.optForm}>
               <input
                 name="email"

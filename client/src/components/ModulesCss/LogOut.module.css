@@ -36,16 +36,94 @@
 .logins {
     background-color: transparent;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #000000;
     cursor: pointer;
     font-family: 'Merriweather', serif;
     transition: 0.3s;
-    width: 5rem;
+    width: 4rem;
 
 }
 
 .logins:hover {
     color: rgb(141, 93, 93);
     transition: 0.3s;
+}
+
+.nav{
+    max-width: 900px;
+    margin: auto;
+   
+    font-size: 20px;
+    margin-top: 50px;
+    color: #000000;
+}
+
+.menuHor{
+   list-style: none; 
+   display: flex;
+   justify-content: space-around;
+}
+
+.menuVert > li > button {
+display: block;
+padding: 15px 20px;
+color: black;
+text-decoration: none;
+z-index: 3;
+}
+
+.menuHor > li:hover{
+  
+}
+
+.menuVert{
+    position:absolute;
+    display:none;
+    list-style: none;
+    width: 200px;
+   
+}
+
+.menuHor li:hover .menuVert{
+display: block;
+color: #000000;
+}
+
+.menuVert li:hover{
+    
+}
+ 
+.menuVert li a{
+    display: block;
+    color: black;
+    padding: 15px 15px 15pxm 20px;
+    text-decoration: none;
+}
+
+
+.buttonsProf{
+    background-color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 6.5rem;
+}
+
+.buttonsProf:hover{
+    background-color: rgb(250, 233, 233);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buttonsProfBase{
+    font-size: 1.8rem;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0.1rem;
+}
+
+.buttonsProfBase:hover{
+    font-size: 1.8rem;
+    color: rgb(141, 93, 93);
+    margin-top: 0.1rem;
+    cursor: pointer;
 }

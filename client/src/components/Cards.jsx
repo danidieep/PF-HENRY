@@ -19,10 +19,15 @@ export default function Cards({ data }) {
 
   return (
     <div>
-      {user.length ? (
+    
+      <div className={styles.card}>
+        <Link to={`/Products/${data.id}`}>
+          <h3 className={styles.name}>{data.title}</h3>
+          {user.length ? (
         user[0].role ? (
           <div>
             <button
+              className={styles.buttons}
               name={data.id}
               value={data.id}
               onClick={(e) => {
@@ -33,14 +38,13 @@ export default function Cards({ data }) {
             </button>
 
             <Link to={`/PutArtwork/${data.id}`}>
-              <button>Modificar</button>
+              <button
+               className={styles.buttons}
+              >Modificar</button>
             </Link>
           </div>
         ) : null
       ) : null}
-      <div className={styles.card}>
-        <Link to={`/Products/${data.id}`}>
-          <h3 className={styles.name}>{data.title}</h3>
           <img className={styles.img} src={data.image} alt="product_img" />
           <div className={styles.types_container}>
             <h3 className={styles.types}>{data.creator}</h3>

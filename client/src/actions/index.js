@@ -30,6 +30,7 @@ import {
   ADD_FILTERS,
   SET_USER,
   UPDATE_USER,
+  GET_HISTORY
 } from "./action-types.js";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -306,6 +307,21 @@ export const getProductsFromCarritoDB = (payload) => {
     });
     return dispatch({
       type: GET_PRODUCTS_FROM_CARRITODB,
+      payload: json.data,
+    });
+  };
+};
+
+
+export const getBuyHistory = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/history", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_HISTORY,
       payload: json.data,
     });
   };

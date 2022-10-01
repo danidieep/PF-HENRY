@@ -15,6 +15,8 @@ import { User } from "@auth0/auth0-react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminPanel from "./AdminPanel"
+import {BsFillHeartFill} from "react-icons/bs"
+import {BsFillCartFill} from "react-icons/bs"
 
 
 let ProductsPorPage = 6
@@ -129,6 +131,7 @@ export default function MainPage(props) {
     });
 
   }
+const user = JSON.parse(localStorage.getItem("user"))
 
 
   return (
@@ -152,44 +155,63 @@ export default function MainPage(props) {
                 ><h2 className={styles.logo}>Artket</h2></button>
                 {/* <p className={styles.filter}>Filters</p> */}
                 <div className={styles.select}>
-                  <form>
-                    <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">By price</option>
-                      <option className={styles.optFilters} value="OrderByMoreExpensive">More expensive</option>
-                      <option className={styles.optFilters} value="OrderByLessExpensive">Less expensive</option>
-                    </select>
-                  </form>
+                <nav>
+        <ul className={styles.menuHor}>
+          <li><button  className={styles.buttonsProfBase}>Order by price</button>
+          <ul className={styles.menuVert}>
+           <li><button value="OrderByMoreExpensive"  onClick={(e)=>OrderByPriceSelector(e.target.value) } className={styles.buttonsProf} >More expensive</button></li>
+            <li><button value="OrderByLessExpensive" onClick={(e)=>OrderByPriceSelector(e.target.value)} className={styles.buttonsProf} >Less expensive</button></li>
+          </ul>
+          </li>
+        </ul>
+        </nav> 
                 </div>
 
                 <div className={styles.select}>
-                  <form>
-                    <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">By artist</option>
+                <nav>
+                   <ul className={styles.menuHor}>
+                    <li><button  className={styles.buttonsProfBase}>Artists</button>
+                      <ul className={styles.menuVert}>
                       {
                         state.artistsList.map(element => {
 
-                          return (<option value={element.name}>{element.name}</option>)
+                          return (
+                          <li><button value={element.name} onClick={(e)=>artistSelector(e.target.value)} className={styles.buttonsProf}>{element.name}</button></li>
+                          )
                         }
                         )
                       }
+    
+                     </ul>
+                    </li>
+                   </ul>
+                </nav> 
 
-                    </select>
-                  </form>
+
+
+              
+
+
                 </div>
                 <div className={styles.select}>
-                  <form>
-                    <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">By medium</option>
+                  <nav>
+                   <ul className={styles.menuHor}>
+                    <li><button  className={styles.buttonsProfBase}>Mediums</button>
+                      <ul className={styles.menuVert}>
                       {
                         state.mediums.map(element => {
 
-                          return (<option value={element}>{element}</option>)
+                          return (
+                          <li><button value={element} onClick={(e)=>mediumSelector(e.target.value)} className={styles.buttonsProf}>{element}</button></li>
+                          )
                         }
                         )
                       }
-
-                    </select>
-                  </form>
+    
+                     </ul>
+                    </li>
+                   </ul>
+                </nav> 
                 </div>
                 <div className={styles.SearchBarHome}>
                   <SearchBar handleReset={handleReset} ></SearchBar>
@@ -198,20 +220,24 @@ export default function MainPage(props) {
               <div className={styles.cartAndProfileAndFav} >
                 {JSON.parse(localStorage.getItem("user")).length ?
                   <div className={styles.CartAndFav}>
-                    <div>
+
+
+                    <div className={styles.iconsHeader}>
                       <Link to="/ShopCart">
+                        
                         <button className={styles.btnCarrito}>
-                          <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
-                          <h4>{carrito.length}</h4>
+                         <BsFillCartFill/>
+                          <h4 className={styles.cantItems}>{carrito.length}</h4>
                         </button>
                         
+                       
                       </Link>
                     </div>
-                    <div>
+                    <div className={styles.iconsHeader}>
                       <Link to="/Favourites">
-                        <button className={styles.btnCarrito}>
-                          Favorites
-                          <h4>{favoritos.length}</h4>
+                        <button className={styles.btnFav}>
+                          <BsFillHeartFill/>
+                          <h4 className={styles.cantItems}>{favoritos.length}</h4>
                         </button>
                         
                       </Link>
@@ -235,14 +261,11 @@ export default function MainPage(props) {
         </header>
 
 
-        <div className={styles.btnAddArtworkPos}>
-          <Link to="/PostArtwork">
-            <button className={styles.btnAddArtwork}>Add artwork</button> <br /><br />
-          </Link>
-        </div>
+        
         {/* CARRUSEL */}
-
-        {state.productsFiltered.length > 5 ?
+        <div>
+      {user.length ? (
+        !user[0].role && state.productsFiltered.length > 5?
           <carrusel>
             <p className={styles.featured}>Featured</p>
             <div className={styles.carrusel}>
@@ -260,8 +283,25 @@ export default function MainPage(props) {
             </div>
           </carrusel>
           : false
-        }
-        <p className={styles.featured}>Galery</p>
+      )   : 
+        <carrusel>
+          <p className={styles.featured}>Featured</p>
+          <div className={styles.carrusel}>
+            <div>
+              <ul>
+                {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
+                  return (
+                    <li><img src={element.image}></img></li>
+                  )
+                }
+                )
+                }
+              </ul>
+            </div>
+          </div>
+      </carrusel>}
+        
+        </div>
         {/* FILTROS */}
 
 
@@ -284,10 +324,13 @@ export default function MainPage(props) {
         }
         )
         }
-
+       <div className={styles.body}>
+    
+      <div className={styles.cardsContainer}>
+      <p className={styles.galeryTitle}>Galery</p>
         {/* CARDS  */}
         {
-
+          
           // si hay productos filtras y no hay mensaje de error 
           state.productsFiltered.length > 0 ?
 
@@ -310,6 +353,8 @@ export default function MainPage(props) {
                 false
 
         }
+        </div>
+        </div> 
         {/* PAGINADO */}
         <footer className={styles}>
           <div className={styles.paginado}>

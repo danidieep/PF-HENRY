@@ -34,3 +34,26 @@
     max-width: 30rem;
     max-height: 45rem;
 }
+
+.buttons{
+    background-color: rgb(176, 119, 119);
+    border-radius: 5px;
+    
+    
+    color: white;
+    cursor: pointer;
+   
+    font-style: normal;
+    
+    font-weight: 500;
+    height: 2rem;
+    width: 8rem;
+    transition: color 100ms;
+    transition: 0.3s;
+    margin: 1rem;
+}
+
+.buttons:hover{
+    opacity: 0.7;
+    transition: 0.3s;
+}

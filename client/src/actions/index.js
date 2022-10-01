@@ -47,16 +47,33 @@ export function postArtwork(payload, role) {
 
 export function deleteArtwork(id, user) {
   // console.log('user data delete artwork');
+
   return async function (dispatch) {
     // console.log('user data delete artwork');
-    let json = await axios.put("artworks/delete/" + id);
-
-    return dispatch({
-      type: DELETE_ARTWORKS,
-      payload: json.data,
-    });
+    try {
+      let json = await axios.put("artworks/delete/" + id);
+      toast.info('Arwork deleted', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return dispatch({
+        type: DELETE_ARTWORKS,
+        payload: json.data,
+      });
+      
+    } catch (error) {
+      
+    }
   };
 }
+
+
+
 export function putArtwork(payload, role) {
   return async function (dispatch) {
     let json = await axios.put("/artworks/" + payload.id, {

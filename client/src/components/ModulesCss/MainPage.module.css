@@ -33,7 +33,7 @@ button {
     font-size: 3.2rem;
     font-weight: 100;
     border: none;
-    background-color: white;
+    background-color:transparent;
 }
 
 .SearchBarHome {
@@ -118,8 +118,9 @@ button {
 .cards {
     width: 90%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 100%;
     margin: 5rem auto;
+    
 }
 
 .cardsContainer {
@@ -129,6 +130,8 @@ button {
     margin: 0 auto;
     border-radius: 1rem;
     box-shadow: 0 0 5rem rgb(218, 148, 148);
+    padding-bottom: 0.1rem;
+    
     
 }
 
@@ -220,6 +223,7 @@ button {
     padding-left: 3rem;
     font-size: 0.8rem;
     height: 4rem;
+  
 
 }
 
@@ -263,9 +267,8 @@ button {
 }
 
 .paginado {
-    width: 1220px;
-    display: inline-block;
-    margin: auto;
+
+   margin-top: 2rem;
 }
 
 .button31Paginado {
@@ -427,6 +430,8 @@ color: white;
    list-style: none; 
    display: flex;
    justify-content: space-around;
+  
+   padding: 1rem;
 }
 
 .menuVert > li > button {
@@ -434,6 +439,8 @@ display: block;
 z-index: inherit;
 color: black;
 text-decoration: none;
+
+
 }
 
 .menuHor > li:hover{

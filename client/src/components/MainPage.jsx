@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect } from "react"
-import { sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
+import { sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters, getProductsFromCarritoDB } from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -38,11 +38,13 @@ export default function MainPage(props) {
   const [current, setCurrent] = useState(1)
   const [filters, setFilters] = useState('base')
 
+  const user = JSON.parse(localStorage.getItem("user"))
 
   React.useEffect(() => {
     if (state.allProducts.length === 0) dispatch(getProducts())
     if (state.artistsList.length === 0) dispatch(getArtists())
     applyFilter()
+    if(user.length)dispatch(getProductsFromCarritoDB(user[0].email))
   }, [state.filters])
 
 
@@ -131,7 +133,7 @@ export default function MainPage(props) {
     });
 
   }
-const user = JSON.parse(localStorage.getItem("user"))
+
 
 
   return (
@@ -150,7 +152,7 @@ const user = JSON.parse(localStorage.getItem("user"))
             <div className={styles.restoDeItems}>
 
               <div className={styles.filtersDiv}>
-                <button
+                <button className={styles.logo}
                   onClick={() => dispatch(showAllProducts())}
                 ><h2 className={styles.logo}>Artket</h2></button>
                 {/* <p className={styles.filter}>Filters</p> */}

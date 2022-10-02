@@ -24,7 +24,7 @@ export default function PayForm() {
       function handleSubmit(e) {
         e.preventDefault()
     
-        dispatch(formToPay(input))
+        dispatch((input))
         setInput({
             street:'',
             number:'',

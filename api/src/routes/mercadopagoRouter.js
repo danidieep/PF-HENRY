@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
     //     // }
     // },
     back_urls: {
-      success: "https://www.success.com",
+      success: "http://localhost:3000/MainPage",
       failure: "http://www.failure.com",
       pending: "http://www.pending.com",
     },
@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
       ],
       installments: 12,
     },
-    notification_url: `https://f3e0-138-204-158-12.sa.ngrok.io/payment/notifications`,
+    notification_url: `https://ad03-186-19-162-206.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -155,11 +155,11 @@ router.post("/notifications", async (req, res) => {
               response.additional_info.items.forEach(async (e) => {
                 await Artwork.update({ show: false }, { where: { id: e.id } });
                 await resetUserCart(asd[0].payEmail);
-                res.send("pago aceptado");
+                res.status(200)
               });
             } else if (asd[0].paymentStatus == "rejected") {
               await Order.bulkCreate(asd);
-              res.send("pago rechazado");
+              res.status(200)
             }
           } else {
             console.log("no anda culi");

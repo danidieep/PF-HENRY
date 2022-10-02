@@ -36,7 +36,7 @@ const initialState = {
   notFound: [],
   filters: [],
   carrito: [],
-  users: [],
+  users: [{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"}],
   favoritos: [],
   history: []
 };

@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsFromCarritoDB, deleteProductFromCarrito } from "../actions";
+import { getProductsFromCarritoDB, deleteProductFromCarrito, getPay } from "../actions";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { useMemo } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useState } from "react";
 import styles from './ModulesCss/Carrito.module.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -65,6 +64,24 @@ export default function ShopCart() {
       progress: undefined,
     })
   }
+
+  useEffect(() => {
+    precioTotal()
+   }, [carrito]);
+
+  const [estado, setEstado] = useState('');
+  function precioTotal(){
+     let suma = 0
+     carrito.forEach(e => suma = suma + Number(e.price))
+     setEstado(suma) 
+   
+   }
+   function handleSubmit(e){
+     e.preventDefault()
+    getPay(carrito, user)
+
+   } 
+  
   return (
     <div className={styles.containerCarrito}>
 
@@ -85,11 +102,18 @@ export default function ShopCart() {
                 <button className={styles.btnCarrito} onClick={() => eliminar(element.id)}>Delete</button>
               </div>
             </div>
+            
+
+          </div>
+        );
+      })}
+
+          <div>
+               <h2>precio total: {estado}</h2>
+              <button onClick={ e => handleSubmit(e)}>Comprar todo</button>
           </div>
 
 
-        );
-      })}
       <div className={styles.btnHomePos}>
         <Link to='/MainPage'>
           <button className={styles.btnHome}>Home</button>

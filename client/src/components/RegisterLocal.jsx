@@ -20,7 +20,7 @@ export default function Register() {
 
   const validatorEmail = (valor) => {
     if (
-      /^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail)\.(?:|com|es)+$/.test(
+      /^\w+([\.-]?\w+)*@(?:|hotmail|outlook|yahoo|live|gmail|testuser)\.(?:|com|es)+$/.test(
         valor
       )
     ) {

@@ -41,6 +41,12 @@ const initialState = {
 
 export default function Reducer(state = initialState, { type, payload }) {
   switch (type) {
+
+    case 'POST_PAYMENT':{
+      return {
+        ...state
+      }
+    }
     case "POST_CARRITO":
       return {
         ...state,

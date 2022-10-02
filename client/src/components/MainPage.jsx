@@ -147,7 +147,7 @@ export default function MainPage(props) {
             <div className={styles.restoDeItems}>
 
               <div className={styles.filtersDiv}>
-                <button className={styles.logo}
+                <button className={styles.linkMain}
                   onClick={() => dispatch(showAllProducts())}
                 ><h2 className={styles.logo}>Artket</h2></button>
                 {/* <p className={styles.filter}>Filters</p> */}

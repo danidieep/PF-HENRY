@@ -122,4 +122,5 @@
     color: rgb(141, 93, 93);
     margin-top: 0.1rem;
     cursor: pointer;
+    transition: 0.3s;
 }

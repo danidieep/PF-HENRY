@@ -30,39 +30,109 @@ import {
   ADD_FILTERS,
   SET_USER,
   UPDATE_USER,
+  GET_HISTORY,
+  GET_ALL_ORDERS,
+  GET_ORDERS_USER
 } from "./action-types.js";
 
 import { toast, ToastContainer } from "react-toastify";
 
+
+
+export const getOrderByUser = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/payment/orders", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_ORDERS_USER,
+      payload: json.data,
+    });
+  };
+};
+
+export const getAllOrders = () => {
+  return async function (dispatch) {
+    let json = await axios.get('/payment/pagos')
+     
+    return dispatch({
+      type: GET_ALL_ORDERS,
+      payload: json.data
+    })
+  }
+}
 export const getPay = async (payload, user) => {
   let asd = await axios.post('/payment', {payload,  user});
-  window.location.href= asd.data
+  window.location.href = asd.data
    
 
 };
 
+
+
 export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post("artworks", {
-      payload: payload,
-      role: role,
-    });
-    return json;
+
+    try {
+      let json = await axios.post("artworks", {
+        payload: payload,
+        role: role,
+      });
+      toast.success('Artwork created', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      
+    } catch (error) {
+      toast.error('Error', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 }
 
 export function deleteArtwork(id, user) {
   // console.log('user data delete artwork');
+
   return async function (dispatch) {
     // console.log('user data delete artwork');
-    let json = await axios.put("artworks/delete/" + id);
+    try {
+      let json = await axios.put("artworks/delete/" + id);
+      toast.info('Arwork deleted', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return dispatch({
+        type: DELETE_ARTWORKS,
+        payload: json.data,
+      });
 
-    return dispatch({
-      type: DELETE_ARTWORKS,
-      payload: json.data,
-    });
+    } catch (error) {
+
+    }
   };
 }
+
+
+
 export function putArtwork(payload, role) {
   return async function (dispatch) {
     let json = await axios.put("/artworks/" + payload.id, {
@@ -301,7 +371,7 @@ export const sendUserInfo = async ({
 };
 
 export function deleteUser(userId, ban) {
-  axios.post(`users/${userId}`, { ban });
+  axios.post(`users/ban/${userId}`, { ban });
 }
 
 export const getProductsFromCarritoDB = (payload) => {
@@ -318,9 +388,24 @@ export const getProductsFromCarritoDB = (payload) => {
   };
 };
 
+
+export const getBuyHistory = (payload) => {
+  return async function (dispatch) {
+    let json = await axios.get("/history", {
+      headers: {
+        payload: payload,
+      },
+    });
+    return dispatch({
+      type: GET_HISTORY,
+      payload: json.data,
+    });
+  };
+};
+
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-    
+
     try {
       let json = await axios.post(`/users/findLocalUser`, payload);
       dispatch({
@@ -355,7 +440,7 @@ export const LogLocal = (payload) => {
 
   };
 
- 
+
 };
 
 export const vaciarUser = () => {
@@ -411,15 +496,38 @@ export function getUSers(role) {
 }
 
 export async function postArtists(payload, role) {
-  let json = await axios.post("/artists", {
-    payload: payload,
-    role: role,
-  });
-  return json;
+  console.log(payload)
+  try {
+    let json = await axios.post("/artists/", {
+      payload: payload,
+      role: role,
+    });
+
+    toast.success('Artist Added', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    
+  } catch (error) {
+    toast.error('error', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
+
 }
 
-export async function resetPassword (payload) {
-  await axios.put('users/update/resetpass', {
-    payload
-  })
+export async function resetPassword(payload) {
+  await axios.post('users/restorePassword', payload)
 }

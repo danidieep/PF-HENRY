@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect } from "react"
-import { sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters } from "../actions"
+import { sendEmail, filterByMedium, deletefilter, getProducts, OrderByPrice, showAllProducts, getArtists, filterByArtist, AddFilters, getProductsFromCarritoDB } from "../actions"
 import Cards from "./Cards"
 import SearchBar from "./SearchBar"
 import { useState } from "react"
@@ -15,6 +15,8 @@ import { User } from "@auth0/auth0-react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminPanel from "./AdminPanel"
+import { BsFillHeartFill } from "react-icons/bs"
+import { BsFillCartFill } from "react-icons/bs"
 
 
 let ProductsPorPage = 6
@@ -36,11 +38,13 @@ export default function MainPage(props) {
   const [current, setCurrent] = useState(1)
   const [filters, setFilters] = useState('base')
 
+  const user = JSON.parse(localStorage.getItem("user"))
 
   React.useEffect(() => {
     if (state.allProducts.length === 0) dispatch(getProducts())
     if (state.artistsList.length === 0) dispatch(getArtists())
     applyFilter()
+    if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
   }, [state.filters])
 
 
@@ -131,65 +135,80 @@ export default function MainPage(props) {
   }
 
 
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <header >
-
+          <div className={styles.tapaHeader}></div>
           <div className={styles.header}>
-            <div className={styles.logoMasSearchbar}>
 
-
-            </div>
-
-            <ToastContainer />
 
             <div className={styles.restoDeItems}>
 
               <div className={styles.filtersDiv}>
-                <button
+                <button className={styles.logo}
                   onClick={() => dispatch(showAllProducts())}
                 ><h2 className={styles.logo}>Artket</h2></button>
                 {/* <p className={styles.filter}>Filters</p> */}
                 <div className={styles.select}>
-                  <form>
-                    <select className={styles.filters} name="" id="" onChange={(event) => OrderByPriceSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">By price</option>
-                      <option className={styles.optFilters} value="OrderByMoreExpensive">More expensive</option>
-                      <option className={styles.optFilters} value="OrderByLessExpensive">Less expensive</option>
-                    </select>
-                  </form>
+                  <nav>
+                    <ul className={styles.menuHor}>
+                      <li><button className={styles.buttonsProfBase}>Order by price</button>
+                        <ul className={styles.menuVert}>
+                          <li><button value="OrderByMoreExpensive" onClick={(e) => OrderByPriceSelector(e.target.value)} className={styles.buttonsProf} >More expensive</button></li>
+                          <li><button value="OrderByLessExpensive" onClick={(e) => OrderByPriceSelector(e.target.value)} className={styles.buttonsProf} >Less expensive</button></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
 
                 <div className={styles.select}>
-                  <form>
-                    <select className={styles.filters} name="" id="" onChange={(event) => artistSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">By artist</option>
-                      {
-                        state.artistsList.map(element => {
+                  <nav>
+                    <ul className={styles.menuHor}>
+                      <li><button className={styles.buttonsProfBase}>Artists</button>
+                        <ul className={styles.menuVert}>
+                          {
+                            state.artistsList.map(element => {
 
-                          return (<option value={element.name}>{element.name}</option>)
-                        }
-                        )
-                      }
+                              return (
+                                <li><button value={element.name} onClick={(e) => artistSelector(e.target.value)} className={styles.buttonsProf}>{element.name}</button></li>
+                              )
+                            }
+                            )
+                          }
 
-                    </select>
-                  </form>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+
+
+
+
+
+
                 </div>
                 <div className={styles.select}>
-                  <form>
-                    <select className={styles.filters} name="" id="" onChange={(event) => mediumSelector(event.target.value)} defaultValue="base">
-                      <option disabled={true} value="base">By medium</option>
-                      {
-                        state.mediums.map(element => {
+                  <nav>
+                    <ul className={styles.menuHor}>
+                      <li><button className={styles.buttonsProfBase}>Mediums</button>
+                        <ul className={styles.menuVert}>
+                          {
+                            state.mediums.map(element => {
 
-                          return (<option value={element}>{element}</option>)
-                        }
-                        )
-                      }
+                              return (
+                                <li><button value={element} onClick={(e) => mediumSelector(e.target.value)} className={styles.buttonsProf}>{element}</button></li>
+                              )
+                            }
+                            )
+                          }
 
-                    </select>
-                  </form>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
                 <div className={styles.SearchBarHome}>
                   <SearchBar handleReset={handleReset} ></SearchBar>
@@ -198,22 +217,27 @@ export default function MainPage(props) {
               <div className={styles.cartAndProfileAndFav} >
                 {JSON.parse(localStorage.getItem("user")).length ?
                   <div className={styles.CartAndFav}>
-                    <div>
+
+
+                    <div className={styles.iconsHeader}>
                       <Link to="/ShopCart">
+
                         <button className={styles.btnCarrito}>
-                          <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
-                          <h4>{carrito.length}</h4>
+                          <BsFillCartFill />
+                          <h4 className={styles.cantItems}>{carrito.length}</h4>
                         </button>
-                        
+
+
+
                       </Link>
                     </div>
-                    <div>
+                    <div className={styles.iconsHeader}>
                       <Link to="/Favourites">
-                        <button className={styles.btnCarrito}>
-                          Favorites
-                          <h4>{favoritos.length}</h4>
+                        <button className={styles.btnFav}>
+                          <BsFillHeartFill />
+                          <h4 className={styles.cantItems}>{favoritos.length}</h4>
                         </button>
-                        
+
                       </Link>
                     </div>
                   </div>
@@ -235,33 +259,47 @@ export default function MainPage(props) {
         </header>
 
 
-        <div className={styles.btnAddArtworkPos}>
-          <Link to="/PostArtwork">
-            <button className={styles.btnAddArtwork}>Add artwork</button> <br /><br />
-          </Link>
-        </div>
-        {/* CARRUSEL */}
 
-        {state.productsFiltered.length > 5 ?
-          <carrusel>
-            <p className={styles.featured}>Featured</p>
-            <div className={styles.carrusel}>
-              <div>
-                <ul>
-                  {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
-                    return (
-                      <li><img src={element.image}></img></li>
+        {/* CARRUSEL */}
+        <div>
+          {user.length ? (
+            !user[0].role && state.productsFiltered.length > 5 ?
+              <carrusel>
+                <p className={styles.featured}>Featured</p>
+                <div className={styles.carrusel}>
+                  <div>
+                    <ul>
+                      {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
+                        return (
+                          <li><img src={element.image}></img></li>
+                        )
+                      }
+                      )
+                      }
+                    </ul>
+                  </div>
+                </div>
+              </carrusel>
+              : false
+          ) :
+            <carrusel>
+              <p className={styles.featured}>Featured</p>
+              <div className={styles.carrusel}>
+                <div>
+                  <ul>
+                    {state.productsFiltered.slice(num1, num2).slice(0, 5).map(element => {
+                      return (
+                        <li><img src={element.image}></img></li>
+                      )
+                    }
                     )
-                  }
-                  )
-                  }
-                </ul>
+                    }
+                  </ul>
+                </div>
               </div>
-            </div>
-          </carrusel>
-          : false
-        }
-        <p className={styles.featured}>Galery</p>
+            </carrusel>}
+
+        </div>
         {/* FILTROS */}
 
 
@@ -270,7 +308,7 @@ export default function MainPage(props) {
         {/* LIMPIAR FILTROS */}
         {state.filters.length > 0 ?
           <div>
-            <h3 className={styles.filtersAplied}>Filters aplied</h3>
+            <h3 className={styles.filtersAplied}>Filters aplied:</h3>
           </div>
           : false}
         {state.filters.map(element => {
@@ -278,38 +316,47 @@ export default function MainPage(props) {
           return (
             <div key={1}>
               <span>{element.name}</span>
-              <button onClick={() => deleteFilter_(element)}>X</button>
+              <button onClick={() => deleteFilter_(element)}
+              className={styles.buttonsFilter}
+              >X</button>
             </div>
           )
         }
         )
         }
+        <div className={styles.body}>
+          
 
-        {/* CARDS  */}
-        {
+          <div className={styles.cardsContainer}>
+            <p className={styles.galeryTitle}>Galery</p>
+            {/* CARDS  */}
+            
+            {
 
-          // si hay productos filtras y no hay mensaje de error 
-          state.productsFiltered.length > 0 ?
+              // si hay productos filtras y no hay mensaje de error 
+              state.productsFiltered.length > 0 ?
 
-            <div className={styles.cards}>
-              {state.productsFiltered.slice(num1, num2).map(element => (
+                <div className={styles.cards}>
+                  {state.productsFiltered.slice(num1, num2).map(element => (
 
-                <div id="card" ><Cards data={element} key={element.id} /></div>
+                    <div id="card" ><Cards data={element} key={element.id} /></div>
 
-              )
-              )}
-            </div> :
-            !state.allProducts && !state.filters.length ?
-              <div className={styles.contenedorLoading}>
-                <img className="loading" src="https://i.pinimg.com/originals/2e/b8/d0/2eb8d009f410f30866b6a34a374af797.gif" alt="" />
-              </div>
-              : state.allProducts && state.filters.length ?
-                <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
-                </div>
-                :
-                false
+                  )
+                  )}
+                </div> :
+                !state.allProducts && !state.filters.length ?
+                  <div className={styles.contenedorLoading}>
+                    <img className="loading" src="https://i.pinimg.com/originals/2e/b8/d0/2eb8d009f410f30866b6a34a374af797.gif" alt="" />
+                  </div>
+                  : state.allProducts && state.filters.length ?
+                    <div><h1>NO HAY OBRAS CON ESOS FILTROS</h1>
+                    </div>
+                    :
+                    false
 
-        }
+            }
+          </div>
+        </div>
         {/* PAGINADO */}
         <footer className={styles}>
           <div className={styles.paginado}>
@@ -324,7 +371,10 @@ export default function MainPage(props) {
                     setNum2((i + 1) * ProductsPorPage)
                     setCurrent(i + 1)
                   }
-                } className={styles.button31Paginado} >{i + 1}</button>
+                } className={styles.button31Paginado}
+                
+                style={i+1===current?{backgroundColor:"rgb(176, 119, 119)"}:{color:"black"}}
+                >{i + 1}</button>
               )
               )
             }

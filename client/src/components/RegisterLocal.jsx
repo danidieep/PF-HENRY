@@ -6,6 +6,7 @@ import { RegisterUser } from "../actions/index";
 import styles from "./ModulesCss/LogIn.module.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import nodemailer from "nodemailer"
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -122,6 +123,22 @@ export default function Register() {
       alertWorngEmailFormat()
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (

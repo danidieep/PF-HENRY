@@ -23,7 +23,7 @@ export const GET_USER = "GET USER"
 export const LOG_LOCAL = "LOG_LOCAL"
 export const VACIAR_USER = "VACIAR_USER"
 export const SET_USER = "SET_USER"
-export const UPDATE_USER="UPDATE_USER"
+export const UPDATE_USER = "UPDATE_USER"
 export const FIND_USER_BY_ID = "FIND_USER_BY_ID"
 export const SEND_EMAIL = "SEND_EMAIL"
 export const GET_USERS = 'GET_USERS'
@@ -31,3 +31,9 @@ export const GET_USERS = 'GET_USERS'
 export const ADD_PRODUCTO_TO_FAVOURITES = 'ADD_PRODUCTO_TO_FAVOURITES'
 export const DELETE_PRODUCTO_FROM_FAVOURITES = 'DELETE_PRODUCTO_FROM_FAVOURITES'
 export const GET_FAVOURITES = 'GET_FAVOURITES'
+
+export const GET_HISTORY = "GET_HISTORY"
+
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS"
+
+export const GET_ORDERS_USER = "GET_ORDERS_USER"

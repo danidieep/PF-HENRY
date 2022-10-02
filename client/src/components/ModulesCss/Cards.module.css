@@ -3,34 +3,93 @@
     font-family: 'Merriweather', serif;
     font-style: normal;
     text-decoration: none;
-    color: rgb(255, 255, 255);
-    width: 30rem;
+    color: rgb(0, 0, 0);
+
     height: 30rem;
     margin: 1rem auto;
     transition: .3s;
     align-items: center;
     justify-content: center;
+    box-shadow: 0rem 0rem 1rem rgb(0, 0, 0, 0.3);
+    border-radius: 2rem;
 
 }
 
-.name,
+
+
+.name {
+    color: rgb(5, 5, 5);
+    max-width: 30rem;
+    margin: 1rem;
+    font-size: 1.6rem;
+}
+
 .types {
-    color: black;
-    margin: 7px auto;
+    color: rgb(0, 0, 0);
+    max-width: 30rem;
+
+    margin: 0 auto;
+    margin-bottom: 1rem;
+
 }
 
+.card:hover .name {
+    color: white;
+}
 
+.card:hover .types {
+    color: white;
+}
+
+.imgCards {
+    max-width: 566px;
+    max-height: 260px;
+}
 
 .card:hover {
-    transform: scale(1.1);
+    /* transform: scale(1.05); */
+    background-color: rgba(87, 61, 61, 0.6);
 }
 
-.imageCard {
-    max-width: 30rem;
-    max-height: 45rem;
+.img {
+
+    margin: 5rem;
+    transition: 400ms;
+    box-shadow: 0rem 0rem 1rem rgb(0, 0, 0, 0.3);
+    border-radius: 0.2rem;
+    max-width: 60%;
 }
 
-.imageCard:hover {
-    max-width: 30rem;
-    max-height: 45rem;
+.img:hover {
+    transform: scale(1.7);
+    transition: 400ms;
+    box-shadow: 0rem 0rem 0rem rgb(3, 3, 3);
+}
+
+.buttons {
+    background-color: rgb(176, 119, 119);
+    border-radius: 5px;
+
+
+    color: white;
+    cursor: pointer;
+
+    font-style: normal;
+
+    font-weight: 500;
+    height: 2rem;
+    width: 8rem;
+    transition: color 100ms;
+    transition: 0.3s;
+    margin: 1rem;
+    box-shadow: 0rem 0rem 1rem rgb(0, 0, 0, 0.3);
+}
+
+.buttons:hover {
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.allwithoutimage {
+    max-width: 30%;
 }

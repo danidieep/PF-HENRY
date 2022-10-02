@@ -69,8 +69,10 @@ export default function PostArtwork() {
 
     } else {
       dispatch(postArtwork(input, role))
-      alert('obra de arte Creada')
     }
+
+
+    
 
 
     setInput({

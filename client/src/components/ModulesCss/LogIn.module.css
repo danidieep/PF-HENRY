@@ -15,6 +15,17 @@
 
 }
 
+.containerResetPw {
+    background-color: #DCB5B0;
+    align-content: center;
+    height: auto;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 900px;
+}
+
 .header {
     background-color: rgba(255, 255, 255);
     display: grid;
@@ -30,7 +41,8 @@
 .containerRegister {
     background-color: #DCB5B0;
     align-content: center;
-    height: 60rem;
+    min-height: 900px;
+    padding: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,6 +56,7 @@
     border-radius: 5px;
     padding: 20px 0;
     box-shadow: 0 0 30rem rgb(203, 200, 200);
+    margin-top: 40px;
 
 }
 
@@ -61,6 +74,8 @@
     margin: 10px;
 }
 
+
+
 .LoginMsg {
     color: rgb(81, 70, 70);
     font-weight: 100;
@@ -71,6 +86,12 @@
 
 }
 
+label {
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-size: 14px;
+}
+
 .optForm input {
     height: 1.8rem;
     border-radius: 2rem;
@@ -79,6 +100,7 @@
     border: 0;
 
 }
+
 
 
 .buttonRegister {

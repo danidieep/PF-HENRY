@@ -33,9 +33,9 @@ router.post("/delete/:artworkId", async (req, res) => {
     let artwork = await Artwork.findByPk(artworkId);
     let user = await User.findOne({ where: { email } });
     let favs = await Favourite.findOne({ where: { id: user.favId } });
-    let artworkInFav = await Artworkinfav.findOne({where:{artworkId}})
+    let artworkInFav = await Artworkinfav.findOne({ where: { artworkId } })
     await deleteArtworkInFav(artworkInFav.dataValues.id);
-       res.status(200)
+    res.status(200)
   } catch (err) {
     console.log(err);
   }
@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
     });
     let detailArt = favs.artworkinfavs
     let arr = []
-    detailArt.map(async (e)=>  arr.push(Artwork.findOne({where:{id:e.artworkId}})))
+    detailArt.map(async (e) => arr.push(Artwork.findOne({ where: { id: e.artworkId } })))
     await Promise.all(arr).then((resp) => {
       res.status(200).send(resp);
     })
@@ -69,17 +69,17 @@ router.get("/", async (req, res) => {
 router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
-    let user= await User.findByPk(userId);
-    let fav =  await Favourite.findOne({
-        where:{
-            id:user.favId
-        },
-        include: Artworkinfav
+    let user = await User.findByPk(userId);
+    let fav = await Favourite.findOne({
+      where: {
+        id: user.favId
+      },
+      include: Artworkinfav
     })
-      return res.status(200).send({status:"Successfully obtained fav", fav});
+    return res.status(200).send({ status: "Successfully obtained fav", fav });
   } catch (error) {
-      console.log(error.message);
-      return res.status(500).json({error:error.message});
+    console.log(error.message);
+    return res.status(500).json({ error: error.message });
   }
 });
 

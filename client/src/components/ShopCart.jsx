@@ -11,6 +11,7 @@ export default function ShopCart() {
 
   const user = JSON.parse(localStorage.getItem("user"))
   const carrito = useSelector((state) => state.carrito)
+  const payForm = useSelector((state) => state.payForm)
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetails);
   const email = JSON.parse(localStorage.getItem("user"))[0].email
@@ -76,7 +77,7 @@ export default function ShopCart() {
      setEstado(suma) 
    
    }
-   function handleSubmit(e){
+   function handleSubmit (e){
      e.preventDefault()
     getPay(carrito, user)
 

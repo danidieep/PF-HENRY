@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { postArtists } from "../actions/index";
 import { useState } from "react";
+import styles from "./ModulesCss/LogIn.module.css";
+import { Link } from "react-router-dom";
 
 export default function ArtistsPost() {
   const dispatch = useDispatch();
@@ -33,81 +35,82 @@ export default function ArtistsPost() {
       alert("Debes llenar el Formulario primero");
     } else {
       postArtists(input, role)
-      alert("obra de arte Creada");
     }
 
     setInput({
-        name: "",
-        birthday: "",
-        hometown: "",
+      name: "",
+      birthday: "",
+      hometown: "",
     });
   }
 
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <Fragment>
-      <button onClick={() => (window.location.href = "/MainPage")}>back</button>
+    <div className={styles.containerAll}>
+      <div className={styles.header}>
+        <h1 className={styles.logoForm}>Arteck</h1>
+      </div>
+      <div className={styles.containerResetPw}>
 
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <h1>CREAR Artistas:</h1>
-        <br />
-        {/* -------------------------   TITLE       */}
-        <label>name: </label>
-        <input
-          type="input"
-          name="name"
-          value={input.name}
-          placeholder="name..."
-          onChange={(e) => {
-            handleChange(e);
-          }}
-        />
-        {errors.name && <p>{errors.name}</p>}
+        <div className={styles.formContainer}>
+          <form>
+            <h2 className={styles.LoginMsg}>Add artist</h2>
+            <div className={styles.optForm}>
+              <input
+                type="input"
+                name="name"
+                value={input.name}
+                placeholder="Name"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {errors.name && <p>{errors.name}</p>}
+            </div>
+            <br />
 
-        <br />
+            <div className={styles.optForm}>
+              <input
+                type="number"
+                name="birthday"
+                value={input.birthday}
+                autoComplete="off"
+                placeholder="Year of birth"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {errors.birthday && <p>{errors.birthday}</p>}
+            </div>
+            <br />
 
-        {/* -------------------------   date       */}
-        <label>birth: </label>
-        <input
-          type="number"
-          name="birthday"
-          value={input.birthday}
-          autoComplete="off"
-          placeholder="birth..."
-          onChange={(e) => {
-            handleChange(e);
-          }}
-        />
-        {errors.birthday && <p>{errors.birthday}</p>}
-
-        <br />
-
-        {/* -------------------------   collecting_institution       */}
-        <div>
-          <label>hometown: </label>
-          <input
-            type="input"
-            name="hometown"
-            value={input.hometown}
-            autoComplete="off"
-            placeholder="hometown..."
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          {errors.hometown && (
-            <p>{errors.hometown}</p>
-          )}
+            {/* -------------------------   collecting_institution       */}
+            <div className={styles.optForm}>
+              <input
+                type="input"
+                name="hometown"
+                value={input.hometown}
+                autoComplete="off"
+                placeholder="Hometown"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              {errors.hometown && (
+                <p>{errors.hometown}</p>
+              )}
+            </div>
+            <br />
+            <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
+              Add
+            </button><br />
+            <Link to='/MainPage'>
+              <button className={styles.buttonRegister}>Home</button>
+            </Link>
+          </form>
         </div>
-        <br />
-        <button
-          type="submit"
-          onClick={(e) => handleSubmit(e, user[0].role ? user[0].role : null)}
-        >
-          Crear
-        </button>
-      </form>
-    </Fragment>
-  );
+      </div>
+    </div>
+  )
 }

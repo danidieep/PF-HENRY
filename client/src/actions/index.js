@@ -186,6 +186,40 @@ export const RegisterUser = async (payload) => {
 
 
 };
+export const RegisterUserFromAdminPanel = async (payload) => {
+  try {
+    let json = await axios.post("/users", payload);
+    toast.success('Registering...', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+
+  } catch (error) {
+    toast.error('User allready exist!', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  }
+
+
+
+};
+
+
+
+
 
 export const getProductByName = (payload) => {
   return async function (dispatch) {
@@ -530,4 +564,13 @@ export async function postArtists(payload, role) {
 
 export async function resetPassword(payload) {
   await axios.post('users/restorePassword', payload)
+}
+
+
+export const banUser = () =>{
+
+}
+
+export const madeAdminUser = () => {
+
 }

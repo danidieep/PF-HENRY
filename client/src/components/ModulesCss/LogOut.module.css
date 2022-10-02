@@ -24,11 +24,11 @@
 
     display: grid;
     grid-template-columns: 50% 50%;
-
+ 
 }
 
 .buttonsLink {
-    width: 5rem;
+
     margin: 0 1rem;
 
 }

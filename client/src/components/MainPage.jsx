@@ -308,7 +308,7 @@ export default function MainPage(props) {
         {/* LIMPIAR FILTROS */}
         {state.filters.length > 0 ?
           <div>
-            <h3 className={styles.filtersAplied}>Filters aplied</h3>
+            <h3 className={styles.filtersAplied}>Filters aplied:</h3>
           </div>
           : false}
         {state.filters.map(element => {
@@ -316,17 +316,21 @@ export default function MainPage(props) {
           return (
             <div key={1}>
               <span>{element.name}</span>
-              <button onClick={() => deleteFilter_(element)}>X</button>
+              <button onClick={() => deleteFilter_(element)}
+              className={styles.buttonsFilter}
+              >X</button>
             </div>
           )
         }
         )
         }
         <div className={styles.body}>
+          
 
           <div className={styles.cardsContainer}>
             <p className={styles.galeryTitle}>Galery</p>
             {/* CARDS  */}
+            
             {
 
               // si hay productos filtras y no hay mensaje de error 
@@ -367,7 +371,10 @@ export default function MainPage(props) {
                     setNum2((i + 1) * ProductsPorPage)
                     setCurrent(i + 1)
                   }
-                } className={styles.button31Paginado} >{i + 1}</button>
+                } className={styles.button31Paginado}
+                
+                style={i+1===current?{backgroundColor:"rgb(176, 119, 119)"}:{color:"black"}}
+                >{i + 1}</button>
               )
               )
             }

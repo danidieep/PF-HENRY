@@ -35,7 +35,6 @@ export default function ArtistsPost() {
       alert("Debes llenar el Formulario primero");
     } else {
       postArtists(input, role)
-      alert("obra de arte Creada");
     }
 
     setInput({

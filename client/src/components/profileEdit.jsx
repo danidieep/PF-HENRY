@@ -85,11 +85,11 @@ export default function ProfileEdit() {
         dispatch(updateUser(input));
         setTimeout(() => {
           dispatch(findUserById(user[0].id));
-        }, 200);
+        }, 600);
 
         setTimeout(() => {
           window.location.href = "/Profile";
-        }, 300);
+        }, 700);
 
       }
     })

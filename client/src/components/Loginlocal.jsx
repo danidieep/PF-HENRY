@@ -43,7 +43,9 @@ export default function LoginLocal() {
     <div>
 
       <div className={styles.header}>
+        <Link to="MainPage">
         <h1 className={styles.logoForm}>Arteck</h1>
+        </Link>
       </div>
       <div className={styles.containerRegister}>
 

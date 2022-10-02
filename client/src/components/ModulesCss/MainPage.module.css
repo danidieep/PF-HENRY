@@ -18,6 +18,11 @@
 
 }
 
+.filtersAplied{
+
+margin-top: 2rem;
+}
+
 .header {
     background-color: rgb(255, 255, 255);
     width: 100%;
@@ -52,9 +57,9 @@ button {
 .restoDeItems {
     display: grid;
     grid-template-columns: 70% 30%;
-
+    background-color:transparent;
     width: 100%;
-    background-color: transparent;
+   
     z-index: 3;
 
 
@@ -142,6 +147,7 @@ button {
     border-radius: 1rem;
     box-shadow: 0 0 5rem rgb(218, 148, 148);
     padding-bottom: 0.1rem;
+    min-height: 40rem;
 
 
 }
@@ -434,6 +440,18 @@ form .formNewsletterBox {
     font-size: 2rem;
 }
 
+.buttonsFilter{
+    background-color: rgba(234, 60, 60);
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.2rem;
+    margin-left: 0.7rem;
+    cursor: pointer;
+    color: white;
+}
+.buttonsFilter:hover{
+    background-color: rgb(212, 43, 43);
+}
 
 
 .nav {

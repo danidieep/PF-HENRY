@@ -33,6 +33,38 @@ const enviarMail = async (name, email, password) => {
   const info = await transport.sendMail(mensaje);
 };
 
+
+
+
+const restorePass = async (email, password) => {
+  const config = {
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "artketgalery@gmail.com",
+      pass: "vvvicqjzjkocwjtd",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  };
+
+  const mensaje = {
+    from: '"Arket" <artketgalery@gmail.com>',
+    to: email,
+    subject: "Artket",
+    text: `Your new password is ${password}`,
+  };
+
+  const transport = nodemailer.createTransport(config);
+  const info = await transport.sendMail(mensaje);
+};
+
+
+
+
+
 router.post("/findorcreate", async (req, res) => {
   const { email, name, lastname, password, dateBorn, role, idAuth } = req.body;
 
@@ -244,5 +276,53 @@ router.post("/update", async (req, res) => {
     console.log(error);
   }
 });
+
+
+
+
+const alph = "ABCDEFGHIJQLMNOPQRSTUVWXYZabcdefghijqlmnopqrstuvwxyz0123456789"
+
+function passGenerate(length = 10){
+  let result = "";
+  for (let index = 0; index <= length; index++) {
+    result += alph.charAt(Math.floor(Math.random() * alph.length))
+  }
+  return result
+}
+
+
+
+router.post("/restorePassword", async (req, res) => {
+  try {
+    const { email} = req.body;
+
+    if(email.length){
+
+  const user = await User.findOne({where:{email}})
+
+  const newPassword = await passGenerate(10)
+  let password = bcypt.hashSync(newPassword, 8);
+
+
+
+  if(user){
+    await User.update({ password }, { where: { email } });
+    restorePass(email,newPassword)
+      
+    res.status(200).send("se actualize paa");
+ }else{
+  res.status(400).send("el user no existe")
+ }}
+
+  } catch (error) {
+    res.status(400).send("error")
+  }
+});
+
+
+
+
+
+
 
 module.exports = router;

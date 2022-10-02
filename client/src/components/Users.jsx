@@ -5,6 +5,8 @@ import {
   deleteUser,
   getUSers,
 } from "../actions";
+import styles from "./ModulesCss/users.module.css"
+import { Link } from "react-router-dom";
 
 export default function Users() {
   const dispatch = useDispatch();
@@ -24,6 +26,12 @@ export default function Users() {
 
   return (
     <div>
+       <div className={styles.header}>
+        <Link to="/MainPage">
+          <h1 className={styles.logoForm}>Arteck</h1>
+        </Link>
+      </div>
+
       <button
         onClick={() => {
           window.location.href = "/MainPage";

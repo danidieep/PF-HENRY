@@ -37,11 +37,33 @@ import { toast, ToastContainer } from "react-toastify";
 
 export function postArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.post("artworks", {
-      payload: payload,
-      role: role,
-    });
-    return json;
+
+    try {
+      let json = await axios.post("artworks", {
+        payload: payload,
+        role: role,
+      });
+      toast.success('Artwork created', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      
+    } catch (error) {
+      toast.error('Error', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 }
 
@@ -437,15 +459,38 @@ export function getUSers(role) {
 }
 
 export async function postArtists(payload, role) {
-  let json = await axios.post("/artists", {
-    payload: payload,
-    role: role,
-  });
-  return json;
+  console.log(payload)
+  try {
+    let json = await axios.post("/artists/", {
+      payload: payload,
+      role: role,
+    });
+
+    toast.success('Artist Added', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    
+  } catch (error) {
+    toast.error('error', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
+
 }
 
 export async function resetPassword(payload) {
-  await axios.put('users/update/resetpass', {
-    payload
-  })
+  await axios.post('users/restorePassword', payload)
 }

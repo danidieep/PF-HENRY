@@ -3,12 +3,11 @@ import { resetPassword } from "../actions";
 import styles from "./ModulesCss/LogIn.module.css";
 import { Link } from "react-router-dom";
 
+
 export default function ResetPassword() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({
     email: "",
-    password: "",
-    confirm_password: "",
   });
 
   const modalController = () => {
@@ -26,25 +25,36 @@ export default function ResetPassword() {
     e.preventDefault();
     resetPassword(input)
     setInput({
-      email: "",
-      password: "",
-      confirm_password: "",
+      email: ""
     });
     setTimeout(() => {
       setOpen(!open);
     }, 1000);
+
+    setTimeout(() => {
+    window.location.href="/LocalLogin"
+    }, 600);
   }
+
+
+
 
   return (
     <div className={styles.containerAll}>
       <div className={styles.header}>
-        <h1 className={styles.logoForm}>Arteck</h1>
+         <Link to='/MainPage'>
+             <h1 className={styles.logoForm} >Arteck</h1>
+         </Link>
+       
       </div>
       <div className={styles.containerResetPw}>
 
         <div className={styles.formContainer}>
-          <form>
-            <h2 className={styles.LoginMsg}>Reset your password</h2>
+          <form >
+            <h2 className={styles.LoginMsg} style={{padding:"0"}}>Reset your password</h2>
+            <body className={styles.LoginMsg} style={{padding:"0"}}>
+          Enviaremos la nueva contraseña a tu email
+         </body>
             <div className={styles.optForm}>
               <input
                 name="email"
@@ -56,40 +66,16 @@ export default function ResetPassword() {
                 }}
               />
             </div>
-            <div className={styles.optForm}>
-              <input
-                type='password'
-                name="password"
-                value={input.password}
-                autoComplete="off"
-                placeholder="New password"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <div className={styles.optForm}>
-              <input
-                type='password'
-                name="confirm_password"
-                value={input.confirm_password}
-                autoComplete="off"
-                placeholder="Confirm password"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
-              Submit
+
+        <button className={styles.buttonRegister} type="submit" onClick={e=>handleSubmit(e)}>
+              submit
             </button><br />
-            <Link to='/MainPage'>
-              <button className={styles.buttonRegister}>Home</button>
-            </Link>
-
+        <br />
           </form>
+          To Sign in click <Link to="/LocalLogin">
+           here
+          </Link>
         </div>
-
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const createPayment = async(cart, user1) =>{
         }
     })
     // console.log(artworks)
-    const body = {
+    const preference = {
         items: artworks,
         payer: {
             name: user.name,
@@ -49,14 +49,16 @@ const createPayment = async(cart, user1) =>{
             ],
             "installments": 12
         },
-        notification_url: "https://www.your-site.com/ipn",
+        notification_url: `https://8433-138-204-158-12.sa.ngrok.io/payments/notifications`,
+        // notification_url:'https://hookb.in/qBLx8dnV2ktEqJGEyLP3',
         statement_descriptor: "ARTKET",
         // expires: true,
         // expiration_date_from: "2016-02-01T12:00:00.000-04:00",
         // expiration_date_to: "2016-02-28T12:00:00.000-04:00"
-    }
-    
-    const payment = await axios.post (url, body ,{
+    } 
+
+
+    const payment = await axios.post (url, preference ,{
         headers:{
         "Content-Type" : "application/json",
         'Authorization' : `Bearer ${process.env.ACCESS_TOKEN}`
@@ -65,4 +67,8 @@ const createPayment = async(cart, user1) =>{
     return payment.data
 }
 
-module.exports= createPayment
+// const notifications = async (req, res)=>{
+//     const data = req.query
+// }
+
+module.exports= {createPayment}

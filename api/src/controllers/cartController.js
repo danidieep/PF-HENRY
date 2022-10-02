@@ -45,11 +45,11 @@ const updateCart = async(totalPrice, cartId) =>{
 //     }
 // }
 
-const resetUserCart= async (userId)=>
+const resetUserCart= async (payEmail)=>
 {    
     try {
         let newCartId=await Cart.create().then(r=>r.dataValues.id);
-        let user=await User.findByPk(userId);
+        let user=await User.findOne({where:{email:payEmail}});
         await Cart.destroy({
             where:{
                 id:user.cartId
@@ -61,7 +61,7 @@ const resetUserCart= async (userId)=>
             },
             {
             where: {
-                id: userId,
+                email: payEmail,
             },
             }
         );

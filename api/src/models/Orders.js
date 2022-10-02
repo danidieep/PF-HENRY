@@ -28,8 +28,13 @@ module.exports = (sequelize) => {
         type:DataTypes.INTEGER,
         allowNull: false
       },
-      payId : {
-        type: DataTypes.BIGINT
+      payId:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      payEmail:{
+        type: DataTypes.STRING,
+        // allowNull: false
       },
       cancelled:{
         type: DataTypes.BOOLEAN,

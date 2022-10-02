@@ -35,7 +35,9 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 
 export const getPay = async (payload, user) => {
-  axios.post('/payment', {payload,  user});
+  let asd = await axios.post('/payment', {payload,  user});
+  window.location.href= asd.data
+   
 
 };
 

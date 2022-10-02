@@ -12,7 +12,7 @@ router.post('/', async(req, res) =>{
     const usuario = user[0]
     
     // console.log(payload[0], 'payload')
-    // console.log(user[0], 'user')
+    // console.log(user[0], 'user')  necesito init point para redirigir
     
     let artworks = cart.map((a) =>{
         return {
@@ -52,7 +52,7 @@ router.post('/', async(req, res) =>{
             ],
             "installments": 12
         },
-        notification_url: `https://a0e5-138-204-158-12.sa.ngrok.io/payments/notifications`,
+        notification_url: `https://0277-186-19-162-206.sa.ngrok.io/payment/notifications`,
         statement_descriptor: "ARTKET",
     } 
     try {

@@ -40,7 +40,7 @@ function clickItem(order){
 
       const allOrders = useSelector((state) => state.allOrdersFiltered)
       const oneOrder = useSelector((state)=> state.getOneOrder )
-      console.log(allOrders)
+      
   return (
     <div className={styles.container}>
       <Link to="/MainPage">

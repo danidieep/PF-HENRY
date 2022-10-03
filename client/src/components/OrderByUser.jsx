@@ -5,6 +5,7 @@ import { getOrderByUser, getOrderUserDetail } from "../actions";
 import { Link } from "react-router-dom"
 
 export default function OrderByUser() {
+
     const dispatch = useDispatch();
 
     const user = JSON.parse(localStorage.getItem("user"))
@@ -24,6 +25,12 @@ export default function OrderByUser() {
       console.log(ordersUser[0], 'orden')
   return (
     <div>
+
+<Link to="/MainPage">
+      <div className={styles.header}>
+        <h1 className={styles.logoForm}>Artket</h1>
+      </div>
+      </Link>
       
     </div>
   );

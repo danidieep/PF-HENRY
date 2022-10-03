@@ -52,18 +52,18 @@ const initialState = {
   
   orderDetail:[],
  
-  orderUser:[]
+  
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
   switch (type) {
 
-    case GET_ORDER_DETAIL:{
-      return {
-        ...state,
-        orderDetail: payload
-      }
-    }
+    // case GET_ORDER_DETAIL:{
+    //   return {
+    //     ...state,
+    //     orderDetail: payload
+    //   }
+    // }
     case 'POST_PAYMENT':{
       return {
         ...state

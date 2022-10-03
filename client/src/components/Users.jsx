@@ -134,9 +134,9 @@ export default function Profile() {
   function alertCompleteData() {
     toast.warn(`Complete all the info`, {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
+      theme: 'light',
+      autoClose: 1000,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
@@ -147,9 +147,9 @@ export default function Profile() {
   function alertWorngEmailFormat() {
     toast.warn(`Wrong email format`, {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
+      theme: 'light',
+      autoClose: 1000,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,

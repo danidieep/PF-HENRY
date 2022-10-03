@@ -6,20 +6,17 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
 import styles from "./ModulesCss/Profile.module.css";
-import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import swal from "sweetalert"
-import { FaUserCircle } from "react-icons/fa"
-import { BsBagCheck } from "react-icons/bs"
-import { GrFavorite } from "react-icons/gr"
-import { AiOutlineShoppingCart } from "react-icons/ai"
-import { BiUserCircle } from "react-icons/bi"
-import { BiShield } from "react-icons/bi"
-import { AiOutlineDelete } from "react-icons/ai"
-
-
-
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import swal from "sweetalert";
+import { FaUserCircle } from "react-icons/fa";
+import { BsBagCheck } from "react-icons/bs";
+import { GrFavorite } from "react-icons/gr";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BiUserCircle } from "react-icons/bi";
+import { BiShield } from "react-icons/bi";
+import { AiOutlineDelete } from "react-icons/ai";
 
 export default function Profile() {
   const data = useAuth0();
@@ -38,34 +35,28 @@ export default function Profile() {
   };
   const onlyCharacters = /^[a-zA-Z\s]+$/;
 
-
-
-  const user = JSON.parse(localStorage.getItem("user"))
-
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const delete_User = () => {
-    alertaDeEliminar()
+    alertaDeEliminar();
   };
-
-
 
   const alertaDeEliminar = () => {
     swal({
       title: "Delete",
       text: "Are you sure you want to delete your profile?",
       icon: "warning",
-      buttons: ["Cancel", "Accept"]
-    }).then(respuesta => {
+      buttons: ["Cancel", "Accept"],
+    }).then((respuesta) => {
       if (respuesta) {
         localStorage.setItem("user", JSON.stringify([]));
         deleteUser(user[0].id);
         data.logout();
       }
-    })
-  }
+    });
+  };
 
   return (
-
     <div className={styles.profileContainer}>
       <div className={styles.header}>
         <Link to="/MainPage">
@@ -73,27 +64,31 @@ export default function Profile() {
         </Link>
       </div>
       <div className={styles.profile}>
-
-
         <div className={styles.panelLeft}>
-
-          <Link to="/MyBuys"><body><BsBagCheck className={styles.iconsLeft} />  My buys</body></Link>
+          <Link to="/MyBuys">
+            <body>
+              <BsBagCheck className={styles.iconsLeft} /> My buys
+            </body>
+          </Link>
           <hr style={{ width: "12rem", marginLeft: "1rem" }} />
-          <Link to="/ShopCart"><body><AiOutlineShoppingCart className={styles.iconsLeft} />  Cart</body></Link>
+          <Link to="/ShopCart">
+            <body>
+              <AiOutlineShoppingCart className={styles.iconsLeft} /> Cart
+            </body>
+          </Link>
           <hr style={{ width: "12rem", marginLeft: "1rem" }} />
-          <Link to="/Favourites"> <body><GrFavorite className={styles.iconsLeft} />  Favourites</body></Link>
+          <Link to="/Favourites">
+            {" "}
+            <body>
+              <GrFavorite className={styles.iconsLeft} /> Favourites
+            </body>
+          </Link>
           <hr style={{ width: "12rem", marginLeft: "1rem" }} />
         </div>
 
-
-
-
-
         {user.length ? (
           <div className={styles.panelRight}>
-
             <div className={styles.userData}>
-
               {data.isAuthenticated ? (
                 <img
                   className={styles.imgProfile1}
@@ -101,21 +96,25 @@ export default function Profile() {
                   width="120"
                   height="120"
                 ></img>
+              ) : user.length && user[0].image !== null ? (
+                <img
+                  className={styles.imgProfile}
+                  // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                  src={user[0].image}
+                  width="120"
+                  height="120"
+                  style={{
+                    borderRadius: "9999px",
+                    marginLeft: "1rem",
+                    marginTop: "0.25rem",
+                  }}
+                />
+              ) : user.length ? (
+                <h1 className={styles.iconUser}>
+                  <FaUserCircle />
+                </h1>
               ) : (
-                user.length && user[0].image !== null ?
-                  <img
-                    className={styles.imgProfile}
-                    // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                    src={user[0].image}
-                    width="120"
-                    height="120"
-                    style={{ borderRadius: "9999px", marginLeft: "1rem", marginTop: "0.25rem" }}
-                  /> : user.length ?
-                    <h1 className={styles.iconUser}><FaUserCircle /></h1>
-                    : false
-
-
-
+                false
               )}
 
               <div className={styles.nameAndRol}>
@@ -123,15 +122,9 @@ export default function Profile() {
                   <h1>
                     {user[0].name} {user[0].lastname}{" "}
                   </h1>
-
                 </div>
                 <div className={styles.rol}>
-                  {
-                    user[0].role === true ?
-                      <h3>Admin</h3>
-                      :
-                      <h3>User</h3>
-                  }
+                  {user[0].role === true ? <h3>Admin</h3> : <h3>User</h3>}
                 </div>
 
                 {/* {data.isAuthenticated ? (
@@ -139,9 +132,7 @@ export default function Profile() {
                 ) : (
                   <button onClick={() => setEdit(!edit)}>edit</button>
                 )} */}
-
               </div>
-
             </div>
 
             <div className={styles.optionsUser}>
@@ -149,9 +140,13 @@ export default function Profile() {
                 <Link to="/ProfileEdit">
                   <div className={styles.item_data}>
                     <BiUserCircle className={styles.item_data_icon} />
-                    <div className={styles.item_data_titles} >
-                      <body className={styles.item_data_titles_main}>Personal information</body>
-                      <body className={styles.item_data_titles_sub}>Manage your personal data.</body>
+                    <div className={styles.item_data_titles}>
+                      <body className={styles.item_data_titles_main}>
+                        Personal information
+                      </body>
+                      <body className={styles.item_data_titles_sub}>
+                        Manage your personal data.
+                      </body>
                     </div>
                   </div>
                 </Link>
@@ -161,24 +156,48 @@ export default function Profile() {
                 <Link to="Security">
                   <div className={styles.item_data}>
                     <BiShield className={styles.item_data_icon} />
-                    <div className={styles.item_data_titles} >
-                      <body className={styles.item_data_titles_main}> Security</body>
-                      <body className={styles.item_data_titles_sub}>Set up your account security.</body>
+                    <div className={styles.item_data_titles}>
+                      <body className={styles.item_data_titles_main}>
+                        {" "}
+                        Security
+                      </body>
+                      <body className={styles.item_data_titles_sub}>
+                        Set up your account security.
+                      </body>
                     </div>
                   </div>
                 </Link>
               </div>
               <hr />
-              <button style={{ width: "100%", backgroundColor: "transparent", cursor: "pointer" }}>
+              <button
+                style={{
+                  width: "100%",
+                  backgroundColor: "transparent",
+                  cursor: "pointer",
+                }}
+              >
                 <div className={styles.item} onClick={delete_User}>
-
                   <div className={styles.item_data}>
-                    <AiOutlineDelete className={styles.item_data_icon} style={{ color: "red" }} />
-                    <div style={{ color: "red", display: "flex", alignItems: "center" }}>
-                      <body className={styles.item_data_titles_main} style={{ color: "red" }}> Delete my account</body>
+                    <AiOutlineDelete
+                      className={styles.item_data_icon}
+                      style={{ color: "red" }}
+                    />
+                    <div
+                      style={{
+                        color: "red",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <body
+                        className={styles.item_data_titles_main}
+                        style={{ color: "red" }}
+                      >
+                        {" "}
+                        Delete my account
+                      </body>
                     </div>
                   </div>
-
                 </div>
               </button>
             </div>
@@ -247,11 +266,9 @@ export default function Profile() {
             )} */}
             <br />
           </div>
-
         ) : (
           <div>Loading</div>
         )}
-
       </div>
     </div>
   );

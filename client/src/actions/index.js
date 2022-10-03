@@ -8,7 +8,7 @@ import {
   SEND_EMAIL,
   ADD_PRODUCTO_TO_FAVOURITES,
   DELETE_PRODUCTO_FROM_FAVOURITES,
-  GET_FAVOURITES
+  GET_FAVOURITES,
 } from "./action-types.js";
 import {
   GET_USER,
@@ -32,12 +32,10 @@ import {
   UPDATE_USER,
   GET_HISTORY,
   GET_ALL_ORDERS,
-  GET_ORDERS_USER
+  GET_ORDERS_USER,
 } from "./action-types.js";
 
 import { toast, ToastContainer } from "react-toastify";
-
-
 
 export const getOrderByUser = (payload) => {
   return async function (dispatch) {
@@ -55,32 +53,27 @@ export const getOrderByUser = (payload) => {
 
 export const getAllOrders = () => {
   return async function (dispatch) {
-    let json = await axios.get('/payment/pagos')
-     
+    let json = await axios.get("/payment/pagos");
+
     return dispatch({
       type: GET_ALL_ORDERS,
-      payload: json.data
-    })
-  }
-}
-export const getPay = async (payload, user) => {
-  let asd = await axios.post('/payment', {payload,  user});
-  window.location.href = asd.data
-   
-
+      payload: json.data,
+    });
+  };
 };
-
-
+export const getPay = async (payload, user) => {
+  let asd = await axios.post("/payment", { payload, user });
+  window.location.href = asd.data;
+};
 
 export function postArtwork(payload, role) {
   return async function (dispatch) {
-
     try {
       let json = await axios.post("artworks", {
         payload: payload,
         role: role,
       });
-      toast.success('Artwork created', {
+      toast.success("Artwork created", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -89,9 +82,8 @@ export function postArtwork(payload, role) {
         draggable: true,
         progress: undefined,
       });
-      
     } catch (error) {
-      toast.error('Error', {
+      toast.error("Error", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -111,7 +103,7 @@ export function deleteArtwork(id, user) {
     // console.log('user data delete artwork');
     try {
       let json = await axios.put("artworks/delete/" + id);
-      toast.info('Arwork deleted', {
+      toast.info("Arwork deleted", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -124,14 +116,9 @@ export function deleteArtwork(id, user) {
         type: DELETE_ARTWORKS,
         payload: json.data,
       });
-
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 }
-
-
 
 export function putArtwork(payload, role) {
   return async function (dispatch) {
@@ -157,7 +144,7 @@ export function getProducts() {
 export const RegisterUser = async (payload) => {
   try {
     let json = await axios.post("/users", payload);
-    toast.success('Registering...', {
+    toast.success("Registering...", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
@@ -167,11 +154,10 @@ export const RegisterUser = async (payload) => {
       progress: undefined,
     });
     setTimeout(() => {
-      window.location.href = "/LocalLogin"
+      window.location.href = "/LocalLogin";
     }, 2000);
-
   } catch (error) {
-    toast.error('User allready exist!', {
+    toast.error("User allready exist!", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: true,
@@ -180,16 +166,12 @@ export const RegisterUser = async (payload) => {
       draggable: true,
       progress: undefined,
     });
-
   }
-
-
-
 };
 export const RegisterUserFromAdminPanel = async (payload) => {
   try {
     let json = await axios.post("/users", payload);
-    toast.success('Registering...', {
+    toast.success("Registering...", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
@@ -198,10 +180,8 @@ export const RegisterUserFromAdminPanel = async (payload) => {
       draggable: true,
       progress: undefined,
     });
-
-
   } catch (error) {
-    toast.error('User allready exist!', {
+    toast.error("User allready exist!", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: true,
@@ -210,16 +190,8 @@ export const RegisterUserFromAdminPanel = async (payload) => {
       draggable: true,
       progress: undefined,
     });
-
   }
-
-
-
 };
-
-
-
-
 
 export const getProductByName = (payload) => {
   return async function (dispatch) {
@@ -341,11 +313,7 @@ export const deleteProductFromCarrito = async (payload) => {
 
 export const addProductToCarrito = async (payload) => {
   axios.post(`/cart/${payload.artId}`, { email: payload.email });
-
 };
-
-
-
 
 export const deleteProductFromFavourites = async (payload) => {
   axios.post(`/favourites/delete/${payload.artId}`, { email: payload.email });
@@ -354,7 +322,6 @@ export const deleteProductFromFavourites = async (payload) => {
 export const addProductToFavourites = async (payload) => {
   axios.post(`/favourites/${payload.artId}`, { email: payload.email });
 };
-
 
 export const getFavourites = (payload) => {
   return async function (dispatch) {
@@ -369,10 +336,6 @@ export const getFavourites = (payload) => {
     });
   };
 };
-
-
-
-
 
 export const getUser = (data) => {
   return async function (dispatch) {
@@ -422,7 +385,6 @@ export const getProductsFromCarritoDB = (payload) => {
   };
 };
 
-
 export const getBuyHistory = (payload) => {
   return async function (dispatch) {
     let json = await axios.get("/history", {
@@ -439,14 +401,13 @@ export const getBuyHistory = (payload) => {
 
 export const LogLocal = (payload) => {
   return async function (dispatch) {
-
     try {
       let json = await axios.post(`/users/findLocalUser`, payload);
       dispatch({
         type: LOG_LOCAL,
         payload: json.data,
       });
-      toast.success('Logging...', {
+      toast.success("Logging...", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -456,12 +417,10 @@ export const LogLocal = (payload) => {
         progress: undefined,
       });
       setTimeout(() => {
-        window.location.href = "/MainPage"
+        window.location.href = "/MainPage";
       }, 2000);
-
-
     } catch (error) {
-      toast.error('Wrong credentials', {
+      toast.error("Wrong credentials", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -471,10 +430,7 @@ export const LogLocal = (payload) => {
         progress: undefined,
       });
     }
-
   };
-
-
 };
 
 export const vaciarUser = () => {
@@ -530,14 +486,13 @@ export function getUSers(role) {
 }
 
 export async function postArtists(payload, role) {
-  console.log(payload)
   try {
     let json = await axios.post("/artists/", {
       payload: payload,
       role: role,
     });
 
-    toast.success('Artist Added', {
+    toast.success("Artist Added", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: true,
@@ -546,9 +501,8 @@ export async function postArtists(payload, role) {
       draggable: true,
       progress: undefined,
     });
-    
   } catch (error) {
-    toast.error('error', {
+    toast.error("error", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: true,
@@ -557,20 +511,22 @@ export async function postArtists(payload, role) {
       draggable: true,
       progress: undefined,
     });
-  
   }
-
 }
 
 export async function resetPassword(payload) {
-  await axios.post('users/restorePassword', payload)
+  await axios.post("users/restorePassword", payload);
 }
 
+export const banUser = () => {};
 
-export const banUser = () =>{
+export const madeAdminUser = () => {};
 
-}
+export const postAdress = async (payload, email) => {
+  await axios.post("/adresses", { payload, email });
+};
 
-export const madeAdminUser = () => {
-
-}
+export const getAdress = async (email) => {
+  const adress = await axios.get("/adresses", { headers: { email } });
+  return adress;
+};

@@ -66,10 +66,14 @@ function clickItem(order){
             {oneOrder[0].items.map(e =>{
               return (
                 <div className={styles.artworksBox}>
-                  <img style={{width:"15%"}} src={e.picture_url} />
-                <body>Artwork id: {e.id}</body>
-                <body>Title: {e.title}</body>
-                <body>quantity: {e.quantity}</body>
+                  <div className={styles.artworksBox_img}>
+                  <img style={{width:"100%"}} src={e.picture_url} />
+                  </div>
+                  <div className={styles.artwotkBox_data}>
+                    <body>Artwork id: {e.id}</body>
+                    <body>Title: {e.title}</body>
+                    <body>quantity: {e.quantity}</body>
+                  </div>
                 </div>
               )
             })}

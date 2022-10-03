@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { payload, email } = req.body;
+  console.log(req.body, "req.body");
   Adress.findOrCreate({
     where: { email },
     defaults: {
@@ -18,6 +19,19 @@ router.post("/", async (req, res) => {
       postalCode: payload.postalCode,
     },
   });
+  res.status(200).send("Adress");
+});
+
+router.put("/", async (req, res) => {
+  const { payload, email } = req.body;
+  Adress.update(
+    {
+      street: payload.street,
+      number: payload.number,
+      postalCode: payload.postalCode,
+    },
+    { where: { email } }
+  );
   res.status(200).send("Adress");
 });
 

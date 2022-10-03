@@ -526,6 +526,10 @@ export const postAdress = async (payload, email) => {
   await axios.post("/adresses", { payload, email });
 };
 
+export const putAdress = async (payload, email) => {
+  await axios.put("/adresses", { payload, email });
+};
+
 export const getAdress = async (email) => {
   const adress = await axios.get("/adresses", { headers: { email } });
   return adress;

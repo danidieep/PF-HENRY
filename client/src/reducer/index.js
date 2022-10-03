@@ -45,10 +45,11 @@ const initialState = {
   favoritos: [],
   history: [],
   allOrders:[],
-  allAllOrders: [],
-  orderUser:[],
-  orderDetail:[],
   getOneOrder:[],
+  orderUser:[],
+  
+  orderDetail:[],
+ 
   orderUser:[]
 };
 

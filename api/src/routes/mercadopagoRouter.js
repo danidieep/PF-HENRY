@@ -241,7 +241,7 @@ router.get("/orden", async (req, res) => {
 
 router.get("/orden/:id", async (req, res) => {
   const data = req.params;
-   console.log(data)
+   
   try {
     let orden = await axios.get(
       `https://api.mercadopago.com/merchant_orders/${data.id}`,

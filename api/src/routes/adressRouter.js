@@ -24,15 +24,21 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   const { payload, email } = req.body;
-  Adress.update(
-    {
-      street: payload.street,
-      number: payload.number,
-      postalCode: payload.postalCode,
-    },
-    { where: { email } }
-  );
-  res.status(200).send("Adress");
+  if (
+    payload.street.length ||
+    payload.number.length ||
+    payload.postalCode.length
+  ) {
+    Adress.update(
+      {
+        street: payload.street,
+        number: payload.number,
+        postalCode: payload.postalCode,
+      },
+      { where: { email } }
+    );
+    res.status(200).send("Adress");
+  } else return;
 });
 
 module.exports = router;

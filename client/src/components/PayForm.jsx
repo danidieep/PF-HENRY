@@ -120,7 +120,14 @@ export default function PayForm(data) {
                 </button>
               </Link>
             </div>
-          ) : null}
+          ) : (
+            <div>
+              <button type="submit" onClick={(e) => handleSubmit(e)}>
+                Yes
+              </button>
+            </div>
+          )
+          }
         </div>
       ) : (
         <div key={adress.street}>

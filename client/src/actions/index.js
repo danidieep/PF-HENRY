@@ -10,7 +10,8 @@ import {
   DELETE_PRODUCTO_FROM_FAVOURITES,
   GET_FAVOURITES,
   GET_ALL_USERS,
-  CHANGE_PASSWORD
+  CHANGE_PASSWORD,
+  GET_ONE_ORDER
 } from "./action-types.js";
 import {
   GET_USER,
@@ -560,4 +561,10 @@ export const putAdress = async (payload, email) => {
 export const getAdress = async (email) => {
   const adress = await axios.get("/adresses", { headers: { email } });
   return adress;
+}
+
+export const getOneOrder = (orden)=>{
+  return {
+    type : GET_ONE_ORDER, payload:orden 
+  }
 }

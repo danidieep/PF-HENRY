@@ -28,7 +28,8 @@ import {
   GET_HISTORY,
   GET_ALL_ORDERS,
   GET_ORDERS_USER,
-  GET_ORDER_DETAIL
+  GET_ORDER_DETAIL,
+  GET_ONE_ORDER
 } from "../actions/action-types";
 
 const initialState = {
@@ -46,7 +47,9 @@ const initialState = {
   allOrders:[],
   allAllOrders: [],
   orderUser:[],
-  orderDetail:[]
+  orderDetail:[],
+  getOneOrder:[],
+  orderUser:[]
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
@@ -284,6 +287,12 @@ export default function Reducer(state = initialState, { type, payload }) {
       return{
         ...state,
         users:payload
+      }
+    }
+    case GET_ONE_ORDER:{
+      return{
+        ...state,
+        getOneOrder:state.allOrders.filter(e => e.orderId===Number(payload))
       }
     }
 

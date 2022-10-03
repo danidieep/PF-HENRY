@@ -26,10 +26,9 @@ margin-top: 2rem;
 .header {
     background-color: rgb(255, 255, 255);
     width: 100%;
-    position: fixed;
+    
     z-index: 3;
-    top: 0;
-    left: 0;
+   
 }
 
 button {
@@ -42,6 +41,7 @@ button {
     cursor: pointer;
     font-size: 3.2rem;
     font-weight: 100;
+    margin-left: 5rem;
     border: none;
     background-color: transparent;
 }
@@ -61,8 +61,6 @@ button {
     width: 100%;
    
     z-index: 3;
-
-
 }
 
 .Products {
@@ -219,10 +217,12 @@ button {
 
 }
 
-.tapaHeader {
-    height: 4rem;
-    margin-bottom: 2rem;
+.linkMain {
+    background-color: transparent;
+    width: 80px;
 }
+
+
 
 .featured {
     font-family: 'Merriweather', serif;

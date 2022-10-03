@@ -19,6 +19,10 @@ import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BsFillHeartFill } from "react-icons/bs"
+import { BsFillCartFill } from "react-icons/bs"
+import LogOut from "./LogOut"
+import {GiSandsOfTime} from "react-icons/gi"
 
 
 
@@ -30,7 +34,7 @@ export default function CardDetails(props) {
   const user = JSON.parse(localStorage.getItem("user"))
 
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.productDetails);
+  const product = JSON.parse(localStorage.getItem("product"))
   const state = useSelector((state) => state);
   const [esta, setEsta] = useState(false);
   const [estaEnfavoritos, setEstaEnFavoritos] = useState(false);
@@ -49,6 +53,25 @@ export default function CardDetails(props) {
       if (a.length) setEsta(true)
       if (!a.length) setEsta(false)
     }
+
+  }
+
+  const [estado, setEstado] = useState(false)
+  const [estadoFav, setEstadoFav] = useState(false)
+
+  const desactivado = () =>{
+    setEstado(true)
+    setTimeout(() => {
+      setEstado(false)
+    }, 2500);
+
+  }
+
+  const desactivadoFav = () =>{
+    setEstadoFav(true)
+    setTimeout(() => {
+      setEstadoFav(false)
+    }, 2500);
 
   }
 
@@ -80,6 +103,7 @@ export default function CardDetails(props) {
     );
     if (ArtInCuesiton.length && esta) {
       deleteProductFromCarrito({ artId: product[0].id, email },)
+      desactivado()
       setEsta(false)
       setTimeout(() => {
         dispatch(getProductsFromCarritoDB(email))
@@ -87,6 +111,7 @@ export default function CardDetails(props) {
       alertDeleteFromCarritoAtDetails()
 
     } else if (!esta) {
+      desactivado()
       setEsta(true)
       addProductToCarrito({ artId: product[0].id, email },);
       setTimeout(() => {
@@ -106,6 +131,7 @@ export default function CardDetails(props) {
       (element) => element.title === product[0].title
     );
     if (ArtInCuesiton1.length && estaEnfavoritos) {
+      desactivadoFav()
       deleteProductFromFavourites({ artId: product[0].id, email },)
       setEstaEnFavoritos(false)
       setTimeout(() => {
@@ -116,6 +142,7 @@ export default function CardDetails(props) {
       console.log("a")
       alertDeleteFromFavouritesAtDetails()
     } else if (!estaEnfavoritos) {
+      desactivadoFav()
       setEstaEnFavoritos(true)
       addProductToFavourites({ artId: product[0].id, email },);
       setTimeout(() => {
@@ -175,157 +202,155 @@ export default function CardDetails(props) {
     });
   }
 
-  function alertLogInRequired() {
-    toast.warn(`Login required`, {
-      position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    })
-  }
-
-
-
-
   return (
     <div className={styles.containerDetails} key={id}>
-      <header>
-        {/* <div className={styles.content2}> */}
+      <header >
+        <div className={styles.tapaHeader}></div>
         <div className={styles.header}>
-          <div>
-            <Link to="/MainPage">
-              <button className={styles.btnHome}>Home</button>
+          <div className={styles.filtersDiv}>
+            <Link className={styles.link} to='/mainpage'>
+              <button className={styles.logoDetails}
+              ><h2 className={styles.logo}>Artket</h2></button>
             </Link>
-          </div>
-          <div></div>
-          <div>
-            <h1 className={styles.logo}>Artket</h1>
-          </div>
-          <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div className={styles.restoDeItems}>
+              <div className={styles.cartAndProfileAndFav} >
+                {JSON.parse(localStorage.getItem("user")).length ?
+                  <div className={styles.CartAndFav}>
 
-          <ToastContainer />
-          {user.length ? <div>
-            <Link to="/Profile">
-              <button className={styles.btnUser}>
-                <img src="https://i.imgur.com/LtoCkNW.png" alt="" />
-              </button>
-            </Link>
-            <Link to="/ShopCart">
-              <button className={styles.btnCarrito}>
-                <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
-                <h4>{carrito.length}</h4>
-              </button>
-              
-            </Link>
-            <div>
-                      <Link to="/Favourites">
+
+                    <div className={styles.iconsHeader}>
+                      <Link to="/ShopCart">
+
                         <button className={styles.btnCarrito}>
-                          Favorites
-                          <h4>{favoritos.length}</h4>
+                          <BsFillCartFill />
+                          <h4 className={styles.cantItems}>{carrito.length}</h4>
                         </button>
-                        
+
+
+
                       </Link>
-                    </div> 
+                    </div>
+                    <div className={styles.iconsHeader}>
+                      <Link to="/Favourites">
+                        <button className={styles.btnFav}>
+                          <BsFillHeartFill />
+                          <h4 className={styles.cantItems}>{favoritos.length}</h4>
+                        </button>
+
+                      </Link>
+                    </div>
+                    <div className={styles.profileBtn}>
+                      <LogOut></LogOut>
+                    </div>
+                  </div>
+                  : false
+                }
+
+
+
+              </div>
+            </div>
 
           </div>
-            :
-            false
-          }
-
         </div>
       </header>
       <div id="conteinerDetail">
         {product.length > 0 ? (
           <div>
             <div className={styles.data}>
-              <h1 className={styles.artist}>{product[0].creator}</h1>
-              <div className={styles.detailsText}>
+              <div className={styles.dataText}>
+                <h1 className={styles.artist}>{product[0].creator}</h1>
                 <h3 className={styles.detailsTittle}>
-                  {" "}
-                  {product[0].title}, {product[0].date}
-                </h3>
-                <h3 className={styles.detailsH3}>
-                  {" "}
-                  {product[0].collecting_institution}
-                </h3>
-                <h3 className={styles.detailsH3}> {product[0].medio}</h3>
-                <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
-                <h3 className={styles.detailsH3}>$ {product[0].price}</h3>
-                <div className={styles.buttonAddCartPos}>
-                  {/* <button onClick={()=>addCount("-")}>-</button> */}
 
-                  <div>
-                    {user.length && !esta ? (
-                      <button
-                        className={styles.buttonAddCart}
-                        onClick={() => {
-                          if (user.length) {
-                            addToCartOrDelete();
-                          } else {
-                            alertLogInRequired();
-                          }
-                        }}
-                      >
-                        Add to cart
-                      </button>
-                    ) : user.length && esta ?
-                      <button
-                        className={styles.buttonAddCart}
-                        onClick={addToCartOrDelete}
-                      >
-                        Delete from cart
-                      </button>
-                      :
-                      false
-                    }
-                  </div>
-                  {/* <button onClick={()=>addCount("-")}>-</button> */}
+                  {product[0].title}, {product[0].date}</h3>
+                <div className={styles.detailsText}>
+                  <h3 className={styles.detailsPrice}>$ {product[0].price}</h3>
+                  {/* <div>
+                    <h3 className={styles.artworkdetailsH3}>
+                      Artwork details</h3>
+                  </div> */}
+                  <h3 className={styles.detailsH3}>
+                    {product[0].collecting_institution}
+                  </h3>
+                  <h3 className={styles.detailsH3}> {product[0].medio}</h3>
+                  <h3 className={styles.detailsH3}> {product[0].dimensions}</h3>
+                  <div className={styles.buttonAddCartPos}>
 
-                  <div>
-                    {user.length && !estaEnfavoritos ? (
-                      <button
-                        className={styles.buttonAddCart}
-                        onClick={() => {
-                          if (user.length) {
-                            addToFavouritosOrDelete();
-                          } else {
-                            alertLogInRequired();
-                          }
-                        }}
-                      >
-                        Add to Favourites
-                      </button>
-                    ) : user.length && estaEnfavoritos ?
-                      <button
-                        className={styles.buttonAddCart}
-                        onClick={addToFavouritosOrDelete}
-                      >
-                        Delete from Favourites
-                      </button>
-                      :
-                      false
-                    }
+
+                    <div className={styles.btnsDetailsPos}>
+                      {user.length && !esta ? (
+                        <button
+                          disabled={estado}
+                          className={styles.buttonAddCart}
+                          onClick={() => {
+                            if (user.length) {
+                              addToCartOrDelete();
+                            }
+                          }}
+                        >
+                         { !estado?<h4> Add to cart </h4>:<h4><GiSandsOfTime/></h4>}
+                        </button>
+                      ) : user.length && esta ?
+                        <button
+                           disabled={estado}
+                           className={styles.buttonAddCart}
+                          onClick={addToCartOrDelete}
+                        >
+                           { !estado?<h4> Delete from cart </h4>:<h4><GiSandsOfTime/></h4>}
+                         
+                        </button>
+                        :
+                        false
+                      }
+                    </div>
+
+
+                    <div className={styles.btnsDetailsPos}>
+                      {user.length && !estaEnfavoritos ? (
+                        <button
+                        disabled={estadoFav}
+                          className={styles.buttonAddCart}
+                          onClick={() => {
+                            if (user.length) {
+                              addToFavouritosOrDelete();
+                            }
+                          }}
+                        >
+                         { !estadoFav?<h4> Add to favourites </h4>:<h4><GiSandsOfTime/></h4>}
+                        </button>
+                      ) : user.length && estaEnfavoritos ?
+                        <button
+                        disabled={estadoFav}
+                          className={styles.buttonAddCart}
+                          onClick={addToFavouritosOrDelete}
+                        >
+                          { !estadoFav?<h4> Delete from favourites </h4>:<h4><GiSandsOfTime/></h4>}
+                        </button>
+                        :
+                        false
+                      }
+                    </div>
                   </div>
-                  {/* <button onClick={()=>addCount("+")}>+</button> */}
-                  {/* <span>cantidad a comprar: {cantCompr}</span> */}
                 </div>
               </div>
               <div className={styles.imgDetails}>
-                <img
+                <img className={styles.imgDetailsPos}
                   src={
                     product[0].image
                       ? product[0].image
                       : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"
                   }
                   alt="img not found"
-                  width="450px"
-                  height="400px"
+                // max-width="450px"
+                // max-height="400px"
                 />
               </div>
+
+
+
             </div>
           </div>
         ) : (

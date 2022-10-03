@@ -8,7 +8,9 @@ import {
   SEND_EMAIL,
   ADD_PRODUCTO_TO_FAVOURITES,
   DELETE_PRODUCTO_FROM_FAVOURITES,
-  GET_FAVOURITES
+  GET_FAVOURITES,
+  GET_ALL_USERS,
+  CHANGE_PASSWORD
 } from "./action-types.js";
 import {
   GET_USER,
@@ -36,6 +38,7 @@ import {
 } from "./action-types.js";
 
 import { toast, ToastContainer } from "react-toastify";
+import swal from "sweetalert"
 
 
 
@@ -249,6 +252,7 @@ export const getProductById = (id) => {
     });
   };
 };
+
 
 export const cleanProductId = () => {
   return {
@@ -566,6 +570,18 @@ export async function resetPassword(payload) {
   await axios.post('users/restorePassword', payload)
 }
 
+
+export async function changePassword(email) {
+  let json = await axios.post('users/restorePassword', {email})
+  console.log(json)
+
+  swal({
+    title: "",
+    text: `The new password is ${json.data}`,
+    icon: "info",
+    buttons:"Nice"
+  })
+}
 
 export const banUser = () =>{
 

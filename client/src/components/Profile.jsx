@@ -67,6 +67,8 @@ export default function Profile() {
   return (
 
     <div className={styles.profileContainer}>
+    { user.length?  
+    <div>
       <div className={styles.header}>
         <Link to="/MainPage">
           <h1 className={styles.logoForm}>Arteck</h1>
@@ -94,10 +96,11 @@ export default function Profile() {
 
             <div className={styles.userData}>
 
-              {data.isAuthenticated ? (
+              {data.isAuthenticated && user[0].image ===null ? (
                 <img
+                style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
                   className={styles.imgProfile1}
-                  src={user[0].picture}
+                  src={data.user.picture}
                   width="120"
                   height="120"
                 ></img>
@@ -109,7 +112,7 @@ export default function Profile() {
                     src={user[0].image}
                     width="120"
                     height="120"
-                    style={{ borderRadius: "9999px", marginLeft: "1rem", marginTop: "0.25rem" }}
+                    style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
                   /> : user.length ?
                     <h1 className={styles.iconUser}><FaUserCircle /></h1>
                     : false
@@ -143,7 +146,7 @@ export default function Profile() {
               </div>
 
             </div>
-
+           
             <div className={styles.optionsUser}>
               <div className={styles.item}>
                 <Link to="/ProfileEdit">
@@ -173,9 +176,9 @@ export default function Profile() {
                 <div className={styles.item} onClick={delete_User}>
 
                   <div className={styles.item_data}>
-                    <AiOutlineDelete className={styles.item_data_icon} style={{ color: "red" }} />
+                    <BiUserCircle className={styles.item_data_icon} style={{ color: "red" }} />
                     <div style={{ color: "red", display: "flex", alignItems: "center" }}>
-                      <body className={styles.item_data_titles_main} style={{ color: "red" }}> Delete my account</body>
+                      <body className={styles.item_data_titles_main} style={{ color: "red" }}> Disable my account</body>
                     </div>
                   </div>
 
@@ -249,10 +252,10 @@ export default function Profile() {
           </div>
 
         ) : (
-          <div>Loading</div>
+          false
         )}
-
-      </div>
+    </div>
+      </div> : <h1>Your user has been banned or not exist</h1> }
     </div>
   );
 }

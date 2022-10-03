@@ -1,6 +1,7 @@
-.profileContainer {
-  
-  
+.content {
+
+ height: 50rem;
+
 
 }
 
@@ -15,6 +16,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 20% 80%;
+    margin-top: 4rem;
  
 }
 
@@ -28,15 +30,22 @@ box-shadow: 0 0 2rem rgb(5, 5, 5,0.1);
 border-radius: 5px;
 }
 
+.formContainer{
+    
+    width: 100%;
+    
+}
+
 .panelLeft {
 
     background-color: rgba(253, 253, 252, 0.7);
-    width: 90%;
+    width: 100%;
     
     border-radius: 5px;
     padding: 20px 0;
     box-shadow: 0 0 2rem rgb(5, 5, 5,0.1);
     margin: 0 auto;
+    height: 37.5%;
 }
 
 .panelLeft body{
@@ -92,18 +101,20 @@ border-radius: 5px;
 }
 
 .btnHome:hover {
-  background-color: red;
+
 }
 
-.header{
+.header {
     background-color: rgb(255, 255, 255);
-    display: grid;
-    grid-template-columns: 100%;
-    height: 4rem;
-    align-content: center;
-   
     width: 100%;
-    box-shadow: 0 0 2rem rgb(5, 5, 5,0.1);
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logoForm {
@@ -111,6 +122,7 @@ border-radius: 5px;
     text-decoration-color: rgb(0, 0, 0);
     font-weight: 400;
     color: rgb(1, 1, 1);
+   
    
 
 }
@@ -219,9 +231,10 @@ border-radius: 5px;
     color: rgb(81, 70, 70);
     font-weight: 100;
     background-color: transparent;
-    padding: 1rem;
-    margin-bottom: 2rem;
+padding-bottom: 1rem;
     font-family: 'Merriweather', serif;
+    width: 100%;
+  
 
 }
 
@@ -230,7 +243,7 @@ border-radius: 5px;
 .optForm input {
     height: 1.8rem;
     border-radius: 2rem;
-    width: 12rem;
+    width: 100%;
     text-align: center;
     border: 0;
 
@@ -267,6 +280,7 @@ border-radius: 5px;
     transition: 0.3s;
     margin-left: 1rem;
     margin-right: 1rem;
+    margin-top: 1rem;
 
 }
 
@@ -275,3 +289,50 @@ border-radius: 5px;
     transition: 0.3s;
 }
 
+
+.buttonCreateUser{
+   
+    background-color: rgb(138, 54, 54,0.7);
+    border-radius: 5px;
+    border-style: none;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 600;
+    font-weight: 500;
+    height: 15%;
+    width: 50%;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 0.2rem auto;
+    transition: 0.3s;
+    margin-left: 1rem;
+    margin-right: 1rem;
+   margin-top: 1rem;
+   padding: 0.3rem;
+}
+
+.buttonCreateUser:hover{
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+
+.optionsUseritem{
+
+border-top: solid 1px;
+padding: 1rem;
+margin-bottom: 1rem;
+}

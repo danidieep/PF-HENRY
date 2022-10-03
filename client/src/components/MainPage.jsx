@@ -18,6 +18,7 @@ import AdminPanel from "./AdminPanel"
 import { BsFillHeartFill } from "react-icons/bs"
 import { BsFillCartFill } from "react-icons/bs"
 import {BsFillBagCheckFill} from "react-icons/bs"
+import { useAuth0 } from "@auth0/auth0-react"
 
 
 let ProductsPorPage = 6
@@ -41,7 +42,7 @@ export default function MainPage(props) {
   const [current, setCurrent] = useState(1)
   const [filters, setFilters] = useState('base')
 
-  const user = JSON.parse(localStorage.getItem("user"))
+  // const user = JSON.parse(localStorage.getItem("user"))
 
   React.useEffect(() => {
     if (state.allProducts.length === 0) dispatch(getProducts())

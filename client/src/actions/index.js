@@ -8,7 +8,8 @@ import {
   SEND_EMAIL,
   ADD_PRODUCTO_TO_FAVOURITES,
   DELETE_PRODUCTO_FROM_FAVOURITES,
-  GET_FAVOURITES
+  GET_FAVOURITES,
+  GET_ALL_USERS
 } from "./action-types.js";
 import {
   GET_USER,
@@ -249,6 +250,19 @@ export const getProductById = (id) => {
     });
   };
 };
+
+export const getAllUsers = (role) => {
+  return async function (dispatch) {
+    let json = await axios.get("/users",role);
+
+    return dispatch({
+      type: GET_ALL_USERS,
+      payload: json,
+    });
+  };
+};
+
+
 
 export const cleanProductId = () => {
   return {

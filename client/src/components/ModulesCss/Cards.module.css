@@ -46,6 +46,7 @@
     max-height: 260px;
 }
 
+
 .card:hover {
     /* transform: scale(1.05); */
     background-color: rgba(87, 61, 61, 0.6);

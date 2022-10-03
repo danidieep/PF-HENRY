@@ -5,7 +5,7 @@ import { getUser } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {  RegisterUserFromAdminPanel, banUser, madeAdminUser, resetPassword, deleteUser} from "../actions";
+import {  RegisterUserFromAdminPanel, banUser, madeAdminUser, resetPassword, deleteUser,getUSers} from "../actions";
 import styles from "./ModulesCss/users.module.css";
 import axios from "axios"
 import { ToastContainer, toast } from 'react-toastify';
@@ -49,6 +49,9 @@ export default function Profile() {
   };
 
 
+  useEffect(() => {
+    dispatch(getUSers({ role: user[0].role }));
+  }, []);
 
   const alertaDeEliminar = () => {
     swal({
@@ -171,14 +174,14 @@ export default function Profile() {
 
   return (
 
-    <div className={styles.profileContainer}>
-      <Link to="/MainPage">
+    <div className={styles.content}>
+     
       <div className={styles.header}>
-        
+      <Link to="/MainPage">
           <h1 className={styles.logoForm}>Arteck</h1>
-      
-      </div>
       </Link>
+      </div>
+    
       <div className={styles.profile}>
 
 
@@ -262,18 +265,16 @@ export default function Profile() {
           handleChange(e);
         }}
       ></input>
-      {/* {errors.released && (
-<p className={s.errors} >{errors.released}</p>
-)}  */}
-    </div>
-    <div className={styles.buttonRegisterPos}>
-      <button
-        className={styles.buttonRegister}
+ <button
+        className={styles.buttonCreateUser}
         type="submit"
         onClick={(e) => handleSubmit(e)}
       >
         Create user
       </button>
+    </div>
+    <div className={styles.buttonRegisterPos}>
+     
       <br />
      
     </div>
@@ -295,12 +296,38 @@ export default function Profile() {
 
             <div className={styles.optionsUser}>
              
+            {users.map((el) =>
+        el.role === false ? (
+          <div key={el.id}>
+            <h2>{el.name}</h2>
+            <h2>{el.lastname}</h2>
+            <h5>{el.email}</h5>
+            <h5>{el.dateBorn}</h5>
+            {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario disponible</h6>}
+            <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
+              {el.ban === true ? 'Desbanear' : 'Banear'}
+            </button>
+          </div>
+        ) : null
+      )}
+
+
+
+
+
+
+
+
+
+
 
               {state.users.map(e => {
                 return (
+                  
                   <div>
                    <hr />
                     <div className={styles.item}>
+                      
                       <h1>user : {e.email}</h1>
                       <button   className={styles.buttonRegister}>Delete</button>
                       <button   className={styles.buttonRegister}>Made admin</button>
@@ -438,20 +465,20 @@ export default function Profile() {
 //       >
 //         Back
 //       </button>
-//       {users.map((el) =>
-//         el.role === false ? (
-//           <div key={el.id}>
-//             <h2>{el.name}</h2>
-//             <h2>{el.lastname}</h2>
-//             <h5>{el.email}</h5>
-//             <h5>{el.dateBorn}</h5>
-//             {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario disponible</h6>}
-//             <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
-//               {el.ban === true ? 'Desbanear' : 'Banear'}
-//             </button>
-//           </div>
-//         ) : null
-//       )}
+      // {users.map((el) =>
+      //   el.role === false ? (
+      //     <div key={el.id}>
+      //       <h2>{el.name}</h2>
+      //       <h2>{el.lastname}</h2>
+      //       <h5>{el.email}</h5>
+      //       <h5>{el.dateBorn}</h5>
+      //       {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario disponible</h6>}
+      //       <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
+      //         {el.ban === true ? 'Desbanear' : 'Banear'}
+      //       </button>
+      //     </div>
+      //   ) : null
+      // )}
 //     </div>
 //   );
 // }

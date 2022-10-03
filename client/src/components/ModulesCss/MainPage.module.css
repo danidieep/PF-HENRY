@@ -42,6 +42,7 @@ button {
     cursor: pointer;
     font-size: 3.2rem;
     font-weight: 100;
+    margin-left: 5rem;
     border: none;
     background-color: transparent;
 }
@@ -61,8 +62,6 @@ button {
     width: 100%;
    
     z-index: 3;
-
-
 }
 
 .Products {
@@ -217,6 +216,11 @@ button {
         margin-left: -300%;
     }
 
+}
+
+.linkMain {
+    background-color: transparent;
+    width: 80px;
 }
 
 .tapaHeader {

@@ -54,13 +54,14 @@ function send(event) {
             <button className={styles.panelLeft_searchBar_button} type="submit"><AiOutlineSearch/></button>
            </form>
           </div>
-          <div className={styles.orderFound}>
+         { oneOrder.length? 
+         <div className={styles.orderFound}>
             <body>{oneOrder[0].orderId}</body>
             <body>{oneOrder[0].paymentId}</body>
             <body>{oneOrder[0].paymentStatus}</body>
             <body></body>
-         
           </div>
+           : false}
         </div>
         <div className={styles.panelRight} >
         {

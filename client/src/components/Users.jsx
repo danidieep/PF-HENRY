@@ -1,4 +1,3 @@
-
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { getUser } from "../actions";
@@ -7,22 +6,19 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import {  RegisterUserFromAdminPanel, changePassword, resetPassword, deleteUser,getUSers} from "../actions";
 import styles from "./ModulesCss/users.module.css";
-import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import swal from "sweetalert"
-import { FaUserCircle } from "react-icons/fa"
-import { BsBagCheck } from "react-icons/bs"
-import { GrFavorite } from "react-icons/gr"
-import { AiOutlineShoppingCart } from "react-icons/ai"
-import { BiUserCircle } from "react-icons/bi"
-import { BiShield } from "react-icons/bi"
-import { AiOutlineDelete } from "react-icons/ai"
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import swal from "sweetalert";
+import { FaUserCircle } from "react-icons/fa";
+import { BsBagCheck } from "react-icons/bs";
+import { GrFavorite } from "react-icons/gr";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BiUserCircle } from "react-icons/bi";
+import { BiShield } from "react-icons/bi";
+import { AiOutlineDelete } from "react-icons/ai";
 
-
-
-
-export default function Profile() {
+export default function Users() {
   const data = useAuth0();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -81,8 +77,8 @@ export default function Profile() {
      
          
       }
-    })
-  }
+    });
+  };
 
   const [input, setInput] = useState({
     name: "",
@@ -91,7 +87,6 @@ export default function Profile() {
     password: "",
     dateBorn: "",
   });
-
 
   function handleChange(e) {
     if (
@@ -128,33 +123,32 @@ export default function Profile() {
         [e.target.name]: e.target.value,
       });
     }
-
   }
 
   function alertCompleteData() {
     toast.warn(`Complete all the info`, {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
+      theme: 'light',
+      autoClose: 1000,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+    });
   }
 
   function alertWorngEmailFormat() {
     toast.warn(`Wrong email format`, {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
+      theme: 'light',
+      autoClose: 1000,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+    });
   }
 
   function handleSubmit(e) {
@@ -176,7 +170,7 @@ export default function Profile() {
           dateBorn: "",
         });
       } else {
-        console.log("a")
+        console.log("a");
       }
     }
     else if (input.email.length === 0) {
@@ -199,76 +193,72 @@ export default function Profile() {
       </div>
     
       <div className={styles.profile}>
-
-
         <div className={styles.panelLeft}>
-        <div className={styles.containerRegister}>
+          <div className={styles.containerRegister}>
+            <div className={styles.formContainer}>
+              <h2 className={styles.LoginMsg}>Create user!</h2>
 
-<div className={styles.formContainer}>
-  <h2 className={styles.LoginMsg} >Create user!</h2>
-
-
-  <form>
-    <div className={styles.optForm}>
-      <input
-        name="name"
-        value={input.name}
-        autoComplete="off"
-        placeholder="Name..."
-        onChange={(e) => {
-          handleChange(e);
-        }}
-      />
-      {/* {errors.name && (
+              <form>
+                <div className={styles.optForm}>
+                  <input
+                    name="name"
+                    value={input.name}
+                    autoComplete="off"
+                    placeholder="Name..."
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                  {/* {errors.name && (
 <p className={s.errors} >{errors.name}</p>
 )} */}
-    </div>
+                </div>
 
-    <div className={styles.optForm}>
-      <input
-        name="lastname"
-        value={input.lastname}
-        autoComplete="off"
-        placeholder="LastName..."
-        onChange={(e) => {
-          handleChange(e);
-        }}
-      />
-      {/* {errors.name && (
+                <div className={styles.optForm}>
+                  <input
+                    name="lastname"
+                    value={input.lastname}
+                    autoComplete="off"
+                    placeholder="LastName..."
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                  {/* {errors.name && (
 <p className={s.errors} >{errors.name}</p>
 )} */}
-    </div>
+                </div>
 
-    <div className={styles.optForm}>
-      <input
-        name="email"
-        value={input.email}
-        autoComplete="off"
-        placeholder="Email..."
-        onChange={(e) => {
-          handleChange(e);
-        }}
-      />
-      {/* {errors.name && (
+                <div className={styles.optForm}>
+                  <input
+                    name="email"
+                    value={input.email}
+                    autoComplete="off"
+                    placeholder="Email..."
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                  {/* {errors.name && (
 <p className={s.errors} >{errors.name}</p>
 )} */}
-    </div>
+                </div>
 
-    <div className={styles.optForm}>
-      <input
-        type="password"
-        name="password"
-        value={input.password}
-        autoComplete="off"
-        placeholder="Password..."
-        onChange={(e) => {
-          handleChange(e);
-        }}
-      />
-      {/* {errors.name && (
+                <div className={styles.optForm}>
+                  <input
+                    type="password"
+                    name="password"
+                    value={input.password}
+                    autoComplete="off"
+                    placeholder="Password..."
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                  {/* {errors.name && (
 <p className={s.errors} >{errors.name}</p>
 )} */}
-    </div>
+                </div>
 
     <div className={styles.optForm}>
       <input
@@ -331,10 +321,14 @@ export default function Profile() {
                   </div>
                 )
               })}
-   
-              <button style={{ width: "100%", backgroundColor: "transparent", cursor: "pointer" }}>
-           
-              </button>
+
+              <button
+                style={{
+                  width: "100%",
+                  backgroundColor: "transparent",
+                  cursor: "pointer",
+                }}
+              ></button>
             </div>
 
             {/* {!edit ? (
@@ -401,20 +395,13 @@ export default function Profile() {
             )} */}
             <br />
           </div>
-
         ) : (
           <div>Loading</div>
         )}
-
       </div>
     </div>
   );
 }
-
-
-
-
-
 
 // import axios from "axios";
 // import { useEffect } from "react";

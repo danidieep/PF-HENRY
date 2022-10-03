@@ -1,4 +1,3 @@
-
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { getUser } from "../actions";
@@ -7,24 +6,20 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser, findUserById } from "../actions";
 import styles from "./ModulesCss/profileEdit.module.css";
-import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import swal from "sweetalert"
-import { FaUserCircle } from "react-icons/fa"
-import { BsBagCheck } from "react-icons/bs"
-import { GrFavorite } from "react-icons/gr"
-import { AiOutlineShoppingCart } from "react-icons/ai"
-import { BiUserCircle } from "react-icons/bi"
-import { BiShield } from "react-icons/bi"
-import { AiOutlineDelete } from "react-icons/ai"
-
-
-
-
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import swal from "sweetalert";
+import { FaUserCircle } from "react-icons/fa";
+import { BsBagCheck } from "react-icons/bs";
+import { GrFavorite } from "react-icons/gr";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BiUserCircle } from "react-icons/bi";
+import { BiShield } from "react-icons/bi";
+import { AiOutlineDelete } from "react-icons/ai";
+import {GiSandsOfTime} from "react-icons/gi"
 
 export default function ProfileEdit() {
-
   const data = useAuth0();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -40,9 +35,7 @@ export default function ProfileEdit() {
   };
   const onlyCharacters = /^[a-zA-Z\s]+$/;
 
-
-
-  const user = JSON.parse(localStorage.getItem("user"))
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const [input, setInput] = useState({
     name: "",
@@ -50,7 +43,7 @@ export default function ProfileEdit() {
     email: "",
     password: "",
     id: user[0].id,
-    image: ''
+    image: "",
   });
 
   function handleChange(e) {
@@ -60,28 +53,18 @@ export default function ProfileEdit() {
     });
   }
 
-
-
-
-
-
-
-
   const Save_User = () => {
-    alertaDeGuardar()
+    alertaDeGuardar();
   };
-
-
 
   const alertaDeGuardar = (e) => {
     swal({
       title: "Save changes?",
       text: "Are you sure you want to save changes?",
       icon: "info",
-      buttons: ["Cancel", "Accept"]
-    }).then(respuesta => {
+      buttons: ["Cancel", "Accept"],
+    }).then((respuesta) => {
       if (respuesta) {
-
         dispatch(updateUser(input));
         setTimeout(() => {
           dispatch(findUserById(user[0].id));
@@ -90,65 +73,60 @@ export default function ProfileEdit() {
         setTimeout(() => {
           window.location.href = "/Profile";
         }, 700);
-
       }
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
+    });
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
-    alertaDeGuardar()
+    alertaDeGuardar();
   }
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+
+  const load = () =>{
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000);
+  }
+
 
   const uploadImage = async (e) => {
-    const files = e.target.files[0]
-    const data = new FormData()
+    const files = e.target.files[0];
+    const data = new FormData();
 
-    data.append('file', files)
-    data.append('upload_preset', 'artket')
-    data.append("api_key", "194228613445554")
-    setLoading(true)
-    const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload',
-      data, {
-      headers: { "X-Requested-With": "XMLHttpRequest" }
-    }
-    ).then(response => {
-      const imagen = response.data
-      const fileURL = imagen
-      setInput({ ...input, image: fileURL.secure_url })
-
-    }).catch(function (error) {
-      console.log(error);
-    });
-
-  }
+    data.append("file", files);
+    data.append("upload_preset", "artket");
+    data.append("api_key", "194228613445554");
+    load()
+    const res = await axios
+      .post("https://api.cloudinary.com/v1_1/daxy95gra/image/upload", data, {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      })
+      .then((response) => {
+        const imagen = response.data;
+        const fileURL = imagen;
+        setInput({ ...input, image: fileURL.secure_url });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   function alertWrongEmailFormat() {
     toast.warning(`Wrong email format`, {
       position: "top-center",
-      theme: 'dark',
+      theme: "dark",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })
+    });
   }
-
 
   return (
     <div className={styles.container}>
@@ -158,9 +136,13 @@ export default function ProfileEdit() {
         </Link>
       </div>
 
-
       <div className={styles.body}>
-        <button className={styles.volver} onClick={() => window.location.href = "/Profile"}>{"<"}</button>
+        <button
+          className={styles.volver}
+          onClick={() => (window.location.href = "/Profile")}
+        >
+          {"<"}
+        </button>
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className={styles.items}>
@@ -184,9 +166,14 @@ export default function ProfileEdit() {
           <div className={styles.items}>
             <body className={styles.items_title}>Picture</body> <br />
             <div className={styles.selectorDeImagen}>
-              <input className={styles.selectorDeImagenInput} type='file' name="file" onChange={e => { uploadImage(e) }} />
-
-
+              <input
+                className={styles.selectorDeImagenInput}
+                type="file"
+                name="file"
+                onChange={(e) => {
+                  uploadImage(e);
+                }}
+              />
             </div>
           </div>
           {/* <div className={styles.items} >
@@ -200,10 +187,12 @@ export default function ProfileEdit() {
                   </div> */}
           <br></br>
           <br></br>
-          <button type="submit" className={styles.button}>Save changes</button>
+          <button disabled={loading} type="submit" className={styles.button}>
+          {!loading? "Save changes" :<GiSandsOfTime/>}
+          </button>
         </form>
         <br></br>
       </div>
     </div>
-  )
+  );
 }

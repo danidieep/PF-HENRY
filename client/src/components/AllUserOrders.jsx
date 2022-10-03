@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllOrders } from "../actions";
 
 export default function AllUserOrders() {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  //vamos a renderizar
 
-    //vamos a renderizar
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, []);
 
     useEffect(() => {
         dispatch(getAllOrders());
@@ -17,7 +20,7 @@ export default function AllUserOrders() {
       console.log(allOrders)
   return (
     <div>
-        <h1>Todas las ordenes para el admin</h1>
+      <h1>Todas las ordenes para el admin</h1>
 
         {
             allOrders[0]?allOrders.map(e => {

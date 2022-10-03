@@ -11,7 +11,9 @@ import {
   GET_FAVOURITES,
   GET_ALL_USERS,
   CHANGE_PASSWORD,
-  GET_ONE_ORDER
+  GET_ONE_ORDER,
+  FILTER_ORDER_REJECTED,
+  FILTER_ORDER_APROVED
 } from "./action-types.js";
 import {
   GET_USER,
@@ -555,5 +557,18 @@ export const getAdress = async (email) => {
 export const getOneOrder = (orden)=>{
   return {
     type : GET_ONE_ORDER, payload:orden 
+  }
+}
+
+export const filterOrderAproved = () =>{
+  return{
+    type:FILTER_ORDER_APROVED
+  }
+}
+
+
+export const filterOrderRejected= () =>{
+  return{
+    type:FILTER_ORDER_REJECTED
   }
 }

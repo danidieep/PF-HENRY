@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrders, getOneOrder } from "../actions";
+import { filterOrderAproved, filterOrderRejected, getAllOrders, getOneOrder } from "../actions";
 import styles from "./ModulesCss/AllUserOrders.module.css"
 import {Link} from "react-router-dom"
 import {AiOutlineSearch} from "react-icons/ai"
@@ -23,7 +23,10 @@ function send(event) {
       dispatch(getOneOrder(state.order))
       state.order=0
   }
+}
 
+function clickItem(order){
+      dispatch(getOneOrder(order))
   
 }
 
@@ -35,7 +38,7 @@ function send(event) {
         dispatch(getAllOrders());
       }, []);
 
-      const allOrders = useSelector((state) => state.allOrders)
+      const allOrders = useSelector((state) => state.allOrdersFiltered)
       const oneOrder = useSelector((state)=> state.getOneOrder )
       console.log(allOrders)
   return (
@@ -56,26 +59,42 @@ function send(event) {
           </div>
          { oneOrder.length? 
          <div className={styles.orderFound}>
-            <body>{oneOrder[0].orderId}</body>
-            <body>{oneOrder[0].paymentId}</body>
-            <body>{oneOrder[0].paymentStatus}</body>
-            <body></body>
+            <body >Order id: {oneOrder[0].orderId}</body>
+            <body>Payment id: {oneOrder[0].paymentId}</body>
+            <body>Status: {oneOrder[0].paymentStatus}</body>
+            <body>Payment details: {oneOrder[0].paymentDetail}</body>
+            {oneOrder[0].items.map(e =>{
+              return (
+                <div className={styles.artworksBox}>
+                  <img style={{width:"15%"}} src={e.picture_url} />
+                <body>Artwork id: {e.id}</body>
+                <body>Title: {e.title}</body>
+                <body>quantity: {e.quantity}</body>
+                </div>
+              )
+            })}
           </div>
            : false}
         </div>
         <div className={styles.panelRight} >
+          <div className={styles.filter_container}>
+            <button className={styles.filter_button} onClick={()=>dispatch(filterOrderRejected())}>Filter by rejected</button>
+            <button className={styles.filter_button} onClick={()=>dispatch(filterOrderAproved())}>Filter by aproved</button>
+          
+          </div>
         {
             allOrders[0]?allOrders.map(e => {
                 return (
 
                 <div>
 
-                    <div className={styles.item}>
+                    <div >
 
-                    <h3>orden id{e.orderId}</h3>
-                    <h3>estado de pago: {e.paymentStatus}</h3>
-
-                </div>
+                    <div className={styles.item} onClick={()=>clickItem(e.orderId) }>
+                    <h3>Order id: {e.orderId}</h3>
+                    <h3>Status: {e.paymentStatus}</h3>
+                    </div>
+                </div>  
 
 
                 {/* <div>

@@ -6,11 +6,9 @@ import {
   DELETE_FILTER,
   NOT_FOUND,
   SEND_EMAIL,
-  ADD_PRODUCTO_TO_FAVOURITES,
-  DELETE_PRODUCTO_FROM_FAVOURITES,
+  
   GET_FAVOURITES,
-  GET_ALL_USERS,
-  CHANGE_PASSWORD,
+  
   GET_ONE_ORDER,
   FILTER_ORDER_REJECTED,
   FILTER_ORDER_APROVED
@@ -34,26 +32,42 @@ import {
   ORDER_BY_PRICE,
   ADD_FILTERS,
   SET_USER,
-  UPDATE_USER,
+  
   GET_HISTORY,
   GET_ALL_ORDERS,
   GET_ORDERS_USER,
-  GET_ORDER_DETAIL,
+  
+  FILTER_ORDER_REJECTED_USER,
+  FILTER_ORDER_APROVED_USER,
+  GET_ONE_ORDER_USER
 } from "./action-types.js";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import swal from "sweetalert"
 
-export const getOrderUserDetail = (id) => {
-  return async function (dispatch) {
-    let json = await axios.get('/payment/orden/' + id)
 
-    return dispatch({
-      type: GET_ORDER_DETAIL,
-      payload: json.data
-  })
+
+export const filterOrderAprovedUser = () => {
+  return {
+    type:FILTER_ORDER_APROVED_USER
+  }
+
+}
+export const filterOrderRejectedrUser = () => {
+  return {
+    type: FILTER_ORDER_REJECTED_USER
   }
 }
+
+export const getOrderUserDetail = (orderId) => {
+
+
+    return ({
+      type: GET_ONE_ORDER_USER,
+      payload: orderId
+  })
+  }
+
 
 export const getOrderByUser = (payload) => {
   
@@ -63,6 +77,7 @@ export const getOrderByUser = (payload) => {
         payload: payload,
       },
     });
+    
     return dispatch({
       type: GET_ORDERS_USER,
       payload: json.data,

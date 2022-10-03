@@ -245,7 +245,7 @@ export default function MainPage(props) {
                     </div>
 
                     <div className={styles.iconsHeader}>
-                      <Link to="/Favourites">
+                      <Link to="/OrderByUser">
                         <button className={styles.btnFav}>
                           <BsFillBagCheckFill style={{marginBottom:"0.45rem"}} />
                          

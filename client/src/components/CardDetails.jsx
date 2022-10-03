@@ -25,7 +25,8 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function CardDetails(props) {
   const { id } = useParams();
   const { getAccessTokenSilently } = useAuth0();
-
+  const carrito = useSelector((state) => state.carrito)
+  const favoritos = useSelector((state) => state.favoritos)
   const user = JSON.parse(localStorage.getItem("user"))
 
   const dispatch = useDispatch();
@@ -216,8 +217,20 @@ export default function CardDetails(props) {
             <Link to="/ShopCart">
               <button className={styles.btnCarrito}>
                 <img src="https://i.imgur.com/WsQE0Cn.png" alt="" />
+                <h4>{carrito.length}</h4>
               </button>
+              
             </Link>
+            <div>
+                      <Link to="/Favourites">
+                        <button className={styles.btnCarrito}>
+                          Favorites
+                          <h4>{favoritos.length}</h4>
+                        </button>
+                        
+                      </Link>
+                    </div> 
+
           </div>
             :
             false

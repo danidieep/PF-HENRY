@@ -7,6 +7,7 @@ import { sendUserInfo, vaciarUser } from "../actions/index";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
+import { HiUserCircle } from "react-icons/hi"
 
 export default function LogOut() {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
@@ -55,6 +56,8 @@ export default function LogOut() {
   const userLocalStorage = JSON.parse(localStorage.getItem("user"))
 
 
+
+
   const logOut = () => {
     swal({
       title: "Hey!",
@@ -88,23 +91,28 @@ export default function LogOut() {
           <Link className={styles.buttonsLink} to="/LocalLogin"><div><button className={styles.logins}  >Sign in</button></div></Link>
         </div>
       ) : isAuthenticated ? (
-        <div className={styles.content_login} >
-
-          <Link className={styles.buttonsLink} to="/Profile">
-            <button className={styles.logins} >Profile</button>
-          </Link>
-          <div className={styles.buttonsLink}><button onClick={logOut} className={styles.logins} >Log out</button></div>
-
-        </div>
+        <nav>
+          <ul className={styles.menuHor}>
+            <li><button className={styles.buttonsProfBase}><HiUserCircle /></button>
+              <ul className={styles.menuVert}>
+                <li><button onClick={() => window.location.href = "/Profile"} className={styles.buttonsProf} >My profile</button></li>
+                <li><button onClick={logOut} className={styles.buttonsProf} >Log out</button></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
       ) : !isAuthenticated && userLocalStorage.length ? (
 
-        <div className={styles.content_login}>
-          <Link to="/Profile" className={styles.buttonsLink}>
-            <button className={styles.logins} >Profile</button>
-          </Link>
-          <div className={styles.buttonsLink}><button onClick={logOut} className={styles.logins} >Log out</button></div>
-        </div>
-
+        <nav>
+          <ul className={styles.menuHor}>
+            <li><button className={styles.buttonsProfBase}><HiUserCircle /></button>
+              <ul className={styles.menuVert}>
+                <li><button onClick={() => window.location.href = "/Profile"} className={styles.buttonsProf} >My profile</button></li>
+                <li><button onClick={logOut} className={styles.buttonsProf} >Log out</button></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
       ) : (
         <div>
           <div> error</div>

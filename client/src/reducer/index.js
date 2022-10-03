@@ -23,7 +23,10 @@ import {
   GET_PRODUCTS_FROM_CARRITODB,
   SET_USER,
   GET_USERS,
-  GET_FAVOURITES
+  GET_FAVOURITES,
+  GET_HISTORY,
+  GET_ALL_ORDERS,
+  GET_ORDERS_USER
 } from "../actions/action-types";
 
 const initialState = {
@@ -35,17 +38,41 @@ const initialState = {
   notFound: [],
   filters: [],
   carrito: [],
-  users: [],
-  favoritos:[]
+  users: [{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"}],
+  favoritos: [],
+  history: [],
+  allOrders:[],
+  orderUser:[]
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
   switch (type) {
+
+    case 'POST_PAYMENT':{
+      return {
+        ...state
+      }
+    }
     case "POST_CARRITO":
       return {
         ...state,
         carrito: [...state.carrito, payload],
       };
+      
+      case GET_ALL_ORDERS: {
+        return {
+          ...state,
+          orders: payload
+        }
+      }
+
+      case GET_ORDERS_USER: {
+        return{
+          ...state,
+          orderUser: payload
+
+        }
+      }
     case GET_PRODUCTS: {
       return {
         ...state,
@@ -70,11 +97,11 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
       };
 
-      case 'POST_ARTWORK':{
-        return{
-            ...state
-        }
-    }  
+    case 'POST_ARTWORK': {
+      return {
+        ...state
+      }
+    }
 
     case DELETE_ARTWORKS:
       return {
@@ -201,10 +228,10 @@ export default function Reducer(state = initialState, { type, payload }) {
       };
     }
 
-    case GET_FAVOURITES:{
-      return{
+    case GET_FAVOURITES: {
+      return {
         ...state,
-        favoritos:payload,
+        favoritos: payload,
       }
     }
 
@@ -233,6 +260,12 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
         payload,
       };
+    }
+    case GET_HISTORY: {
+      return {
+        ...state,
+        history: payload
+      }
     }
 
     default:

@@ -11,14 +11,13 @@ import styles from "./ModulesCss/MainPage.module.css"
 import { useSelector, useDispatch } from "react-redux"
 import LogIn from "./LogIn"
 import LogOut from "./LogOut"
-import { User } from "@auth0/auth0-react"
+import { useAuth0, User } from "@auth0/auth0-react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminPanel from "./AdminPanel"
 import { BsFillHeartFill } from "react-icons/bs"
 import { BsFillCartFill } from "react-icons/bs"
 import {BsFillBagCheckFill} from "react-icons/bs"
-
 
 let ProductsPorPage = 6
 
@@ -35,13 +34,12 @@ export default function MainPage(props) {
 
   const { user, isAuthenticated } = useAuth0();
 
-
   const [num1, setNum1] = useState(0)
   const [num2, setNum2] = useState(ProductsPorPage)
   const [current, setCurrent] = useState(1)
   const [filters, setFilters] = useState('base')
 
-  const user = JSON.parse(localStorage.getItem("user"))
+  // const user = JSON.parse(localStorage.getItem("user"))
 
   React.useEffect(() => {
     if (state.allProducts.length === 0) dispatch(getProducts())

@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
       ],
       installments: 12,
     },
-    notification_url: `https://bdcd-186-19-162-206.sa.ngrok.io/payment/notifications`,
+    notification_url: `https://b9f7-186-19-162-206.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -183,9 +183,10 @@ router.get("/orden", async (req, res) => {
 
   const { email } = req.body;
   try {
-    let pago = await Order.findAll({ where: { payEmail: email } });
+    if(email){
+    let pago = await Order.findOne({ where: { payEmail: email } });
     let orders = await axios.get(
-      `https://api.mercadopago.com/merchant_orders/search?payer_id${pago.payId}`,
+      `https://api.mercadopago.com/merchant_orders/search?payer_id=${pago.payId}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -194,6 +195,7 @@ router.get("/orden", async (req, res) => {
       }
     );
     let datos = orders.data.elements;
+   
     let response = datos.map((e) => {
       return {
         orderId: e.id,
@@ -206,7 +208,32 @@ router.get("/orden", async (req, res) => {
         order_status: e.order_status,
       };
     });
-    res.send(orders.data.elements);
+    res.send(response);
+  } let orders = await axios.get(
+    `https://api.mercadopago.com/merchant_orders/search`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      },
+    }
+  );
+  let datos = orders.data.elements;
+ 
+  let response = datos.map((e) => {
+    return {
+      orderId: e.id,
+      paymentId: e.payments[0].id,
+      paymentAmount: e.payments[0].total_paid_amount,
+      paymentStatus: e.payments[0].status,
+      paymentDetail: e.payments[0].status_detail,
+      items: e.items,
+      cancelled: e.cancelled,
+      order_status: e.order_status,
+    };
+  });
+  res.send(response);
+
   } catch (error) {
     console.log(error);
   }
@@ -214,7 +241,7 @@ router.get("/orden", async (req, res) => {
 
 router.get("/orden/:id", async (req, res) => {
   const data = req.params;
-  // console.log(data)
+   console.log(data)
   try {
     let orden = await axios.get(
       `https://api.mercadopago.com/merchant_orders/${data.id}`,

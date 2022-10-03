@@ -14,14 +14,35 @@ export default function AllUserOrders() {
       }, []);
 
       const allOrders = useSelector((state) => state.allOrders)
+      console.log(allOrders)
   return (
     <div>
         <h1>Todas las ordenes para el admin</h1>
 
         {
-            allOrders?allOrders.map(e => {
+            allOrders[0]?allOrders.map(e => {
                 return (
-                    <h3>{allOrders[0].id}</h3>
+
+                <div>
+
+                    <div>
+                    <h2>ordenes aceptadas:</h2>
+                    <h3>orden id{e.orderId}</h3>
+                    <h3>estado de pago: {e.paymentStatus}</h3>
+
+                </div>
+
+
+                {/* <div>
+                    <h2>ordenes rechazadas:</h2>
+                    <h3>orden id{e.orderId}</h3>
+                    <h3>estado de pago: {e.paymentStatus}</h3>
+
+                </div>  */}
+
+                </div>
+                    
+                    
                 )
             }):<di>no hay</di>
         }

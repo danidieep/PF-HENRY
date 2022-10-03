@@ -495,7 +495,7 @@ export const setUser = () => {
 
 export const updateUser = (user) => {
   return async function () {
-    await axios.post(`/users/update`, user);
+    await axios.put(`/users/update`, user);
   };
 };
 

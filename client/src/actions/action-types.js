@@ -40,3 +40,4 @@ export const GET_ORDERS_USER = "GET_ORDERS_USER"
 
 
 export const GET_ALL_USERS = "GET_ALL_USERS"
+export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL"

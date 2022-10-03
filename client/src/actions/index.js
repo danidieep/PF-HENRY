@@ -35,14 +35,25 @@ import {
   GET_HISTORY,
   GET_ALL_ORDERS,
   GET_ORDERS_USER,
+  GET_ORDER_DETAIL,
 } from "./action-types.js";
 
 import { toast, ToastContainer } from "react-toastify";
 import swal from "sweetalert"
 
+export const getOrderUserDetail = (id) => {
+  return async function (dispatch) {
+    let json = await axios.get('/payment/orden/' + id)
 
+    return dispatch({
+      type: GET_ORDER_DETAIL,
+      payload: json.data
+  })
+  }
+}
 
 export const getOrderByUser = (payload) => {
+  
   return async function (dispatch) {
     let json = await axios.get("/payment/orden", {
       headers: {

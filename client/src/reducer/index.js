@@ -27,7 +27,8 @@ import {
   GET_FAVOURITES,
   GET_HISTORY,
   GET_ALL_ORDERS,
-  GET_ORDERS_USER
+  GET_ORDERS_USER,
+  GET_ORDER_DETAIL
 } from "../actions/action-types";
 
 const initialState = {
@@ -43,12 +44,20 @@ const initialState = {
   favoritos: [],
   history: [],
   allOrders:[],
-  orderUser:[]
+  allAllOrders: [],
+  orderUser:[],
+  orderDetail:[]
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
   switch (type) {
 
+    case GET_ORDER_DETAIL:{
+      return {
+        ...state,
+        orderDetail: payload
+      }
+    }
     case 'POST_PAYMENT':{
       return {
         ...state

@@ -21,6 +21,7 @@ import profileEdit from "./components/profileEdit"
 import Security from "./components/Security";
 import PayForm from "./components/PayForm";
 import AllUserOrders from "./components/AllUserOrders";
+import OrderByUser from "./components/OrderByUser";
 
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
       <Route path='/ResetPassword' component={ResetPassword} />
       <Route path='/PayForm' component={PayForm} />
       <Route path='/AllUserOrders' component={AllUserOrders} />
+      <Route path='/OrderByUser' component={OrderByUser} />
     </div>
   );
 }

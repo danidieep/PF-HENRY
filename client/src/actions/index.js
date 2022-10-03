@@ -44,7 +44,7 @@ import swal from "sweetalert"
 
 export const getOrderByUser = (payload) => {
   return async function (dispatch) {
-    let json = await axios.get("/payment/orders", {
+    let json = await axios.get("/payment/orden", {
       headers: {
         payload: payload,
       },
@@ -58,8 +58,8 @@ export const getOrderByUser = (payload) => {
 
 export const getAllOrders = () => {
   return async function (dispatch) {
-    let json = await axios.get("/payment/pagos");
-
+    let json = await axios.get('/payment/orden')
+     
     return dispatch({
       type: GET_ALL_ORDERS,
       payload: json.data,
@@ -453,7 +453,7 @@ export const setUser = () => {
 
 export const updateUser = (user) => {
   return async function () {
-    await axios.post(`/users/update`, user);
+    await axios.put(`/users/update`, user);
   };
 };
 

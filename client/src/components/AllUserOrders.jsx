@@ -12,18 +12,44 @@ export default function AllUserOrders() {
     dispatch(getAllOrders());
   }, []);
 
-  const allOrders = useSelector((state) => state.allOrders);
+    useEffect(() => {
+        dispatch(getAllOrders());
+      }, []);
+
+      const allOrders = useSelector((state) => state.allOrders)
+      console.log(allOrders)
   return (
     <div>
       <h1>Todas las ordenes para el admin</h1>
 
-      {allOrders ? (
-        allOrders.map((e) => {
-          return <h3>completar con info a renderizar</h3>;
-        })
-      ) : (
-        <di>no hay</di>
-      )}
+        {
+            allOrders[0]?allOrders.map(e => {
+                return (
+
+                <div>
+
+                    <div>
+                    <h2>ordenes aceptadas:</h2>
+                    <h3>orden id{e.orderId}</h3>
+                    <h3>estado de pago: {e.paymentStatus}</h3>
+
+                </div>
+
+
+                {/* <div>
+                    <h2>ordenes rechazadas:</h2>
+                    <h3>orden id{e.orderId}</h3>
+                    <h3>estado de pago: {e.paymentStatus}</h3>
+
+                </div>  */}
+
+                </div>
+                    
+                    
+                )
+            }):<di>no hay</di>
+        }
+      
     </div>
   );
 }

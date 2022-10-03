@@ -63,7 +63,7 @@ export default function Reducer(state = initialState, { type, payload }) {
       case GET_ALL_ORDERS: {
         return {
           ...state,
-          orders: payload
+          allOrders: payload
         }
       }
 

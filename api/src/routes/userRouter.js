@@ -243,7 +243,7 @@ router.post("/ban/:id", async (req, res) => {
   }
 });
 
-router.post("/update", async (req, res) => {
+router.put("/update", async (req, res) => {
   try {
     const { email, name, image, lastname, id, idAuth } = req.body;
 

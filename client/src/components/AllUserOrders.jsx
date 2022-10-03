@@ -32,6 +32,8 @@ export default function AllUserOrders() {
                     <h2>ordenes aceptadas:</h2>
                     <h3>orden id{e.orderId}</h3>
                     <h3>estado de pago: {e.paymentStatus}</h3>
+                    <br></br>
+                    <hr/>
 
                 </div>
 

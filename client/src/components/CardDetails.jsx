@@ -47,6 +47,9 @@ export default function CardDetails(props) {
     dispatch(getProductById(id));
     if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
     if (user.length) dispatch(getFavourites(user[0].email))
+    return ()=>{
+      localStorage.setItem('product', JSON.stringify([]))
+    }
   }, []);
 
   const estaono = () => {

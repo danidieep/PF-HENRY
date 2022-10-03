@@ -28,8 +28,9 @@ import {
   GET_HISTORY,
   GET_ALL_ORDERS,
   GET_ORDERS_USER,
-  GET_ORDER_DETAIL,
-  GET_ONE_ORDER
+  GET_ONE_ORDER,
+  FILTER_ORDER_REJECTED,
+  FILTER_ORDER_APROVED
 } from "../actions/action-types";
 
 const initialState = {
@@ -45,6 +46,7 @@ const initialState = {
   favoritos: [],
   history: [],
   allOrders:[],
+  allOrdersFiltered:[],
   getOneOrder:[],
   orderUser:[],
   
@@ -76,7 +78,8 @@ export default function Reducer(state = initialState, { type, payload }) {
       case GET_ALL_ORDERS: {
         return {
           ...state,
-          allOrders: payload
+          allOrders: payload,
+          allOrdersFiltered:payload
         }
       }
 
@@ -287,7 +290,7 @@ export default function Reducer(state = initialState, { type, payload }) {
     case GET_ALL_USERS:{
       return{
         ...state,
-        users:payload
+        users:payload,
       }
     }
     case GET_ONE_ORDER:{
@@ -296,7 +299,18 @@ export default function Reducer(state = initialState, { type, payload }) {
         getOneOrder:state.allOrders.filter(e => e.orderId===Number(payload))
       }
     }
-
+    case FILTER_ORDER_REJECTED:{
+      return{
+        ...state,
+        allOrdersFiltered:state.allOrders.filter(e => e.paymentStatus==="rejected")
+      }
+    }
+    case FILTER_ORDER_APROVED:{
+      return{
+        ...state,
+        allOrdersFiltered:state.allOrders.filter(e => e.paymentStatus==="approved")
+      }
+    }
     default:
       return state;
   }

@@ -94,15 +94,17 @@ export default function ShopCart() {
     <div className={styles.containerCarrito}>
       <div className={styles.yourCarrito}>
         <ToastContainer />
-        <h1>Your Cart </h1>
-      </div>
 
+      </div>
       {carrito.map((element) => {
         return (
           <div className={styles.allCarritoContainer}>
             <div className={styles.carrito}>
-              <img className={styles.imgCarrito} src={element.image} alt="" />
+              <Link to={'/Products/' + element.id}>
+                <img className={styles.imgCarrito} src={element.image} alt="" />
+              </Link>
               <h1 className={styles.titleCarrito}>{element.title}</h1>
+              <h5 className={styles.titleBy}>by {element.creator}</h5>
               <h1 className={styles.priceCarrito}> ${element.price}</h1>
               <div className={styles.btnCarritoPos}>
                 <button
@@ -141,21 +143,8 @@ export default function ShopCart() {
         <Link to="/MainPage">
           <button className={styles.btnHome}>Home</button>
         </Link>
-      </div>
+      </div> 
     </div>
   );
 }
 
-// useMemo(()=>{
-
-//     if(state.carrito.length){
-//       localStorage.setItem("cart",JSON.stringify(state.carrito))
-//     }
-//     if(state.carrito.length===0){
-
-//       if( JSON.parse(localStorage.getItem("cart")===null)){ localStorage.setItem("cart",JSON.stringify([]))}
-//       if( JSON.parse(localStorage.getItem("cart").length)){ state.carrito = JSON.parse(localStorage.getItem("cart")) }
-
-//     }
-
-// },[state.carrito])

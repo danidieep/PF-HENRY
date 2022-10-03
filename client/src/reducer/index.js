@@ -8,6 +8,7 @@ import {
   FILTER_BY_ARTIST,
   GET_ARTISTS,
   GET_PRODUCTS,
+  GET_ALL_USERS,
   SHOW_ALL_PRODUCTS,
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
@@ -38,7 +39,7 @@ const initialState = {
   notFound: [],
   filters: [],
   carrito: [],
-  users: [{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"}],
+  users: [],
   favoritos: [],
   history: [],
   allOrders:[],
@@ -62,7 +63,7 @@ export default function Reducer(state = initialState, { type, payload }) {
       case GET_ALL_ORDERS: {
         return {
           ...state,
-          orders: payload
+          allOrders: payload
         }
       }
 
@@ -116,6 +117,8 @@ export default function Reducer(state = initialState, { type, payload }) {
       };
     }
     case GET_PRODUCT_BY_ID: {
+
+      localStorage.setItem("product",JSON.stringify(payload))
       return {
         ...state,
         productDetails: payload,
@@ -265,6 +268,13 @@ export default function Reducer(state = initialState, { type, payload }) {
       return {
         ...state,
         history: payload
+      }
+    }
+
+    case GET_ALL_USERS:{
+      return{
+        ...state,
+        users:payload
       }
     }
 

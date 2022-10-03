@@ -7,7 +7,7 @@ var jwt = require("jsonwebtoken");
 const { authAdmins, authAdmins1 } = require("../middlewares/middleware");
 
 router.get(
-  "/",
+  "/", 
   async (req, res) => {
     const { title } = req.query;
     const artworks = await getArtworks();

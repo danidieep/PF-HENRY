@@ -9,9 +9,21 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { IoChevronBackSharp } from "react-icons/io5"
 import { toast } from "react-toastify"
 import ResetPassword from "./ResetPassword";
+import {GiSandsOfTime} from "react-icons/gi"
 
 export default function LoginLocal() {
   const dispatch = useDispatch();
+
+  const [estado, setEstado] = useState(false)
+
+
+  const desactivado = () =>{
+    setEstado(true)
+    setTimeout(() => {
+      setEstado(false)
+    }, 2500);
+
+  }
 
   const [input, setInput] = useState({
     email: "",
@@ -35,8 +47,12 @@ export default function LoginLocal() {
       email: "",
       password: "",
     });
+    desactivado()
 
   }
+
+
+
 
   return (
 
@@ -80,7 +96,7 @@ export default function LoginLocal() {
             </div>
             <div className={styles.buttonRegisterPos}>
               <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
-                Login
+             {!estado?"Login":<GiSandsOfTime/>}
               </button>
               <Link to='/MainPage'>
                 <button className={styles.buttonRegister}>Home</button>

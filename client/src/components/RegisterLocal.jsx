@@ -7,6 +7,7 @@ import styles from "./ModulesCss/LogIn.module.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import nodemailer from "nodemailer"
+import {GiSandsOfTime} from "react-icons/gi"
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -68,12 +69,23 @@ export default function Register() {
 
   }
 
+  const [estado, setEstado] = useState(false)
+
+
+  const desactivado = () =>{
+    setEstado(true)
+    setTimeout(() => {
+      setEstado(false)
+    }, 2500);
+
+  }
+
   function alertCompleteData() {
     toast.warn(`Complete all the info`, {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
+      theme: 'light',
+      autoClose: 1000,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
@@ -84,9 +96,9 @@ export default function Register() {
   function alertWorngEmailFormat() {
     toast.warn(`Wrong email format`, {
       position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
+      theme: 'light',
+      autoClose: 1000,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
@@ -104,7 +116,7 @@ export default function Register() {
         input.dateBorn.length > 0
       ) {
         RegisterUser(input);
-
+        desactivado()
         setInput({
           name: "",
           lastname: "",
@@ -237,11 +249,12 @@ export default function Register() {
             </div>
             <div className={styles.buttonRegisterPos}>
               <button
+                disabled={estado}
                 className={styles.buttonRegister}
                 type="submit"
                 onClick={(e) => handleSubmit(e)}
               >
-                Register
+               {!estado?"Register":<GiSandsOfTime/>}
               </button>
               <br />
               <span> You have an account? <Link to="/LocalLogin">Sign in here</Link></span>

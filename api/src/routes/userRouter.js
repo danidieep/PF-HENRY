@@ -69,7 +69,7 @@ router.post("/findorcreate", async (req, res) => {
   else if (user) {
     const { name, cartId, favId, id, lastname, email, idAuth } =
       user.dataValues;
-    res.status(200).json({ name, cartId, favId, id, lastname, email, idAuth });
+    res.status(200).json(user.dataValues);
   } else {
     const userCartId = await Cart.create().then(
       ({ dataValues }) => dataValues.id
@@ -243,7 +243,7 @@ router.post("/ban/:id", async (req, res) => {
   }
 });
 
-router.post("/update", async (req, res) => {
+router.put("/update", async (req, res) => {
   try {
     const { email, name, image, lastname, id, idAuth } = req.body;
 
@@ -273,7 +273,11 @@ router.post("/update", async (req, res) => {
 
 const alph = "ABCDEFGHIJQLMNOPQRSTUVWXYZabcdefghijqlmnopqrstuvwxyz0123456789";
 
-function passGenerate(length = 10) {
+
+
+
+
+function passGenerate(length = 10){
   let result = "";
   for (let index = 0; index <= length; index++) {
     result += alph.charAt(Math.floor(Math.random() * alph.length));
@@ -285,21 +289,24 @@ router.post("/restorePassword", async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (email.length) {
-      const user = await User.findOne({ where: { email } });
+    if(email.length){
 
-      const newPassword = await passGenerate(10);
-      let password = bcypt.hashSync(newPassword, 8);
+  const user = await User.findOne({where:{email}})
 
-      if (user) {
-        await User.update({ password }, { where: { email } });
-        restorePass(email, newPassword);
+  const newPassword = await passGenerate(10)
+  let password = bcypt.hashSync(newPassword, 8);
 
-        res.status(200).send("se actualize paa");
-      } else {
-        res.status(400).send("el user no existe");
-      }
-    }
+
+
+  if(user){
+    await User.update({ password }, { where: { email } });
+    restorePass(email,newPassword)
+      
+    res.status(200).json(newPassword);
+ }else{
+  res.status(400).send("el user no existe")
+ }}
+
   } catch (error) {
     res.status(400).send("error");
   }

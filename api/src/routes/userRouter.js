@@ -76,7 +76,7 @@ router.post("/findorcreate", async (req, res) => {
   else if (user) {
     const { name, cartId, favId, id, lastname, email, idAuth } =
       user.dataValues;
-    res.status(200).json({ name, cartId, favId, id, lastname, email, idAuth });
+    res.status(200).json(user.dataValues);
   } else {
     const userCartId = await Cart.create().then(
       ({ dataValues }) => dataValues.id
@@ -309,7 +309,7 @@ router.post("/restorePassword", async (req, res) => {
     await User.update({ password }, { where: { email } });
     restorePass(email,newPassword)
       
-    res.status(200).send("se actualize paa");
+    res.status(200).json(newPassword);
  }else{
   res.status(400).send("el user no existe")
  }}

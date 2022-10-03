@@ -39,7 +39,7 @@ const initialState = {
   notFound: [],
   filters: [],
   carrito: [],
-  users: [{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"},{email:"luca@gmail"}],
+  users: [],
   favoritos: [],
   history: [],
   allOrders:[],

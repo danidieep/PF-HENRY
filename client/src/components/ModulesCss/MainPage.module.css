@@ -26,10 +26,9 @@ margin-top: 2rem;
 .header {
     background-color: rgb(255, 255, 255);
     width: 100%;
-    position: fixed;
+    
     z-index: 3;
-    top: 0;
-    left: 0;
+   
 }
 
 button {
@@ -223,10 +222,7 @@ button {
     width: 80px;
 }
 
-.tapaHeader {
-    height: 4rem;
-    margin-bottom: 2rem;
-}
+
 
 .featured {
     font-family: 'Merriweather', serif;

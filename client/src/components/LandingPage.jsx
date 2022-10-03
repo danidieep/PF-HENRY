@@ -12,7 +12,10 @@ export default function LandingPage() {
   const { isAuthenticated, user } = useAuth0();
   const userLocalStorage = JSON.parse(localStorage.getItem("user"))
 
-  return (
+
+
+
+   return (
     <div className={styles.container}>
 
 

@@ -28,6 +28,7 @@ export default function ArtistsPost() {
     //     [e.target.name] : e.target.value
     //    }))
   }
+  const user = JSON.parse(localStorage.getItem("user"));
 
   function handleSubmit(e, role) {
     e.preventDefault();
@@ -44,7 +45,7 @@ export default function ArtistsPost() {
     });
   }
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  
 
   return (
     <div className={styles.containerAll}>
@@ -102,7 +103,7 @@ export default function ArtistsPost() {
               )}
             </div>
             <br />
-            <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e)}>
+            <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e,user[0].role)}>
               Add
             </button><br />
             <Link to='/MainPage'>

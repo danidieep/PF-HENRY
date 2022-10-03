@@ -67,6 +67,8 @@ export default function Profile() {
   return (
 
     <div className={styles.profileContainer}>
+    { user.length?  
+    <div>
       <div className={styles.header}>
         <Link to="/MainPage">
           <h1 className={styles.logoForm}>Arteck</h1>
@@ -250,10 +252,10 @@ export default function Profile() {
           </div>
 
         ) : (
-          <div>Loading</div>
+          false
         )}
-
-      </div>
+    </div>
+      </div> : <h1>Your user has been banned or not exist</h1> }
     </div>
   );
 }

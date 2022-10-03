@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminPanel from "./AdminPanel"
 import { BsFillHeartFill } from "react-icons/bs"
 import { BsFillCartFill } from "react-icons/bs"
+import {BsFillBagCheckFill} from "react-icons/bs"
 
 
 let ProductsPorPage = 6
@@ -134,6 +135,8 @@ export default function MainPage(props) {
 
   }
 
+  
+  
 
 
   return (
@@ -240,6 +243,16 @@ export default function MainPage(props) {
 
                       </Link>
                     </div>
+
+                    <div className={styles.iconsHeader}>
+                      <Link to="/Favourites">
+                        <button className={styles.btnFav}>
+                          <BsFillBagCheckFill style={{marginBottom:"0.45rem"}} />
+                         
+                        </button>
+
+                      </Link>
+                    </div>
                   </div>
                   : false
                 }
@@ -264,7 +277,7 @@ export default function MainPage(props) {
         <div>
           {user.length ? (
             !user[0].role && state.productsFiltered.length > 5 ?
-              <carrusel>
+              <div>
                 <p className={styles.featured}>Featured</p>
                 <div className={styles.carrusel}>
                   <div>
@@ -279,10 +292,10 @@ export default function MainPage(props) {
                     </ul>
                   </div>
                 </div>
-              </carrusel>
+                </div>
               : false
           ) :
-            <carrusel>
+            <div>
               <p className={styles.featured}>Featured</p>
               <div className={styles.carrusel}>
                 <div>
@@ -297,7 +310,7 @@ export default function MainPage(props) {
                   </ul>
                 </div>
               </div>
-            </carrusel>}
+            </div>}
 
         </div>
         {/* FILTROS */}

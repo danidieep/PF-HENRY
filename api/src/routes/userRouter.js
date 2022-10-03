@@ -33,9 +33,6 @@ const enviarMail = async (name, email, password) => {
   const info = await transport.sendMail(mensaje);
 };
 
-
-
-
 const restorePass = async (email, password) => {
   const config = {
     host: "smtp.gmail.com",
@@ -60,10 +57,6 @@ const restorePass = async (email, password) => {
   const transport = nodemailer.createTransport(config);
   const info = await transport.sendMail(mensaje);
 };
-
-
-
-
 
 router.post("/findorcreate", async (req, res) => {
   const { email, name, lastname, password, dateBorn, role, idAuth } = req.body;
@@ -228,8 +221,9 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const userById = await User.findOne({ where: { id } });
     if (userById) {
-      const { id, cartId,image, favId, name, lastname, email } = userById.dataValues;
-      res.status(200).json({ id, cartId, image,  favId, name, lastname, email });
+      const { id, cartId, image, favId, name, lastname, email } =
+        userById.dataValues;
+      res.status(200).json({ id, cartId, image, favId, name, lastname, email });
     } else {
       res.send("no se ha encontrado un usuario con ese id");
     }
@@ -255,7 +249,7 @@ router.post("/update", async (req, res) => {
 
     const passNoHashed = req.body.password;
     let password = bcypt.hashSync(passNoHashed, 8);
-    
+
     if (email.length) {
       User.update({ email }, { where: { id } });
     }
@@ -277,24 +271,23 @@ router.post("/update", async (req, res) => {
   }
 });
 
+const alph = "ABCDEFGHIJQLMNOPQRSTUVWXYZabcdefghijqlmnopqrstuvwxyz0123456789";
 
 
 
-const alph = "ABCDEFGHIJQLMNOPQRSTUVWXYZabcdefghijqlmnopqrstuvwxyz0123456789"
+
 
 function passGenerate(length = 10){
   let result = "";
   for (let index = 0; index <= length; index++) {
-    result += alph.charAt(Math.floor(Math.random() * alph.length))
+    result += alph.charAt(Math.floor(Math.random() * alph.length));
   }
-  return result
+  return result;
 }
-
-
 
 router.post("/restorePassword", async (req, res) => {
   try {
-    const { email} = req.body;
+    const { email } = req.body;
 
     if(email.length){
 
@@ -315,14 +308,8 @@ router.post("/restorePassword", async (req, res) => {
  }}
 
   } catch (error) {
-    res.status(400).send("error")
+    res.status(400).send("error");
   }
 });
-
-
-
-
-
-
 
 module.exports = router;

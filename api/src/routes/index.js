@@ -6,8 +6,7 @@ const cartRouter = require("./cartRouter");
 const emailRouter = require("./emailRouter");
 const authAdmins = require("../middlewares/middleware");
 const favsRouter = require('./favouriteRouter')
-
-
+const adressRouter = require('./adressRouter')
 const mercadopagoRouter = require('./mercadopagoRouter')
 const router = Router();
 
@@ -21,5 +20,6 @@ router.use("/users", userRouter);
 router.use("/favourites", favsRouter);
 router.use("/cart", cartRouter);
 router.use("/sendemail", emailRouter);
+router.use('/adresses', adressRouter)
 
 module.exports = router;

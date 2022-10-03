@@ -39,8 +39,11 @@ export default function CardDetails(props) {
   const [esta, setEsta] = useState(false);
   const [estaEnfavoritos, setEstaEnFavoritos] = useState(false);
 
+ 
+
   useEffect(() => {
     dispatch(cleanProductId());
+    
     dispatch(getProductById(id));
     if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
     if (user.length) dispatch(getFavourites(user[0].email))

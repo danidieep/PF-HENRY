@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
       ],
       installments: 12,
     },
-    notification_url: `https://ad03-186-19-162-206.sa.ngrok.io/payment/notifications`,
+    notification_url: `https://bdcd-186-19-162-206.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {

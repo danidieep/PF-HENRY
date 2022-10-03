@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
       },
       payEmail:{
         type: DataTypes.STRING,
-        // allowNull: false
+         allowNull: true
       },
       cancelled:{
         type: DataTypes.BOOLEAN,

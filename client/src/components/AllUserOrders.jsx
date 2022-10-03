@@ -21,7 +21,7 @@ export default function AllUserOrders() {
         {
             allOrders?allOrders.map(e => {
                 return (
-                    <h3>completar con info a renderizar</h3>
+                    <h3>{allOrders[0].id}</h3>
                 )
             }):<di>no hay</di>
         }

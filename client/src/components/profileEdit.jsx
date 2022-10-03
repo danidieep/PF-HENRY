@@ -17,6 +17,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { BiShield } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
+import {GiSandsOfTime} from "react-icons/gi"
 
 export default function ProfileEdit() {
   const data = useAuth0();
@@ -83,6 +84,15 @@ export default function ProfileEdit() {
 
   const [loading, setLoading] = useState(false);
 
+
+  const load = () =>{
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000);
+  }
+
+
   const uploadImage = async (e) => {
     const files = e.target.files[0];
     const data = new FormData();
@@ -90,7 +100,7 @@ export default function ProfileEdit() {
     data.append("file", files);
     data.append("upload_preset", "artket");
     data.append("api_key", "194228613445554");
-    setLoading(true);
+    load()
     const res = await axios
       .post("https://api.cloudinary.com/v1_1/daxy95gra/image/upload", data, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -177,8 +187,8 @@ export default function ProfileEdit() {
                   </div> */}
           <br></br>
           <br></br>
-          <button type="submit" className={styles.button}>
-            Save changes
+          <button disabled={loading} type="submit" className={styles.button}>
+          {!loading? "Save changes" :<GiSandsOfTime/>}
           </button>
         </form>
         <br></br>

@@ -18,7 +18,7 @@ router.post("/:artworkId", async (req, res) => {
     favs = await getFav(user.id);
     return res.json({ favs });
   } catch (err) {
-    console.log(err);
+    console.log(err); 
   }
 });
 

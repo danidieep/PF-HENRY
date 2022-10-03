@@ -6,9 +6,12 @@ import {
   DELETE_FILTER,
   NOT_FOUND,
   SEND_EMAIL,
-  ADD_PRODUCTO_TO_FAVOURITES,
-  DELETE_PRODUCTO_FROM_FAVOURITES,
+  
   GET_FAVOURITES,
+  
+  GET_ONE_ORDER,
+  FILTER_ORDER_REJECTED,
+  FILTER_ORDER_APROVED
 } from "./action-types.js";
 import {
   GET_USER,
@@ -29,21 +32,52 @@ import {
   ORDER_BY_PRICE,
   ADD_FILTERS,
   SET_USER,
-  UPDATE_USER,
+  
   GET_HISTORY,
   GET_ALL_ORDERS,
   GET_ORDERS_USER,
+  
+  FILTER_ORDER_REJECTED_USER,
+  FILTER_ORDER_APROVED_USER,
+  GET_ONE_ORDER_USER
 } from "./action-types.js";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import swal from "sweetalert"
+
+
+
+export const filterOrderAprovedUser = () => {
+  return {
+    type:FILTER_ORDER_APROVED_USER
+  }
+
+}
+export const filterOrderRejectedrUser = () => {
+  return {
+    type: FILTER_ORDER_REJECTED_USER
+  }
+}
+
+export const getOrderUserDetail = (orderId) => {
+
+
+    return ({
+      type: GET_ONE_ORDER_USER,
+      payload: orderId
+  })
+  }
+
 
 export const getOrderByUser = (payload) => {
+  
   return async function (dispatch) {
-    let json = await axios.get("/payment/orders", {
+    let json = await axios.get("/payment/orden", {
       headers: {
         payload: payload,
       },
     });
+    
     return dispatch({
       type: GET_ORDERS_USER,
       payload: json.data,
@@ -53,8 +87,8 @@ export const getOrderByUser = (payload) => {
 
 export const getAllOrders = () => {
   return async function (dispatch) {
-    let json = await axios.get("/payment/pagos");
-
+    let json = await axios.get('/payment/orden')
+     
     return dispatch({
       type: GET_ALL_ORDERS,
       payload: json.data,
@@ -221,6 +255,7 @@ export const getProductById = (id) => {
     });
   };
 };
+
 
 export const cleanProductId = () => {
   return {
@@ -447,7 +482,7 @@ export const setUser = () => {
 
 export const updateUser = (user) => {
   return async function () {
-    await axios.post(`/users/update`, user);
+    await axios.put(`/users/update`, user);
   };
 };
 
@@ -518,9 +553,19 @@ export async function resetPassword(payload) {
   await axios.post("users/restorePassword", payload);
 }
 
-export const banUser = () => {};
 
-export const madeAdminUser = () => {};
+export async function changePassword(email) {
+  let json = await axios.post('users/restorePassword', {email})
+  console.log(json)
+
+  swal({
+    title: "",
+    text: `The new password is ${json.data}`,
+    icon: "info",
+    buttons:"Nice"
+  })
+}
+
 
 export const postAdress = async (payload, email) => {
   await axios.post("/adresses", { payload, email });
@@ -533,4 +578,23 @@ export const putAdress = async (payload, email) => {
 export const getAdress = async (email) => {
   const adress = await axios.get("/adresses", { headers: { email } });
   return adress;
-};
+}
+
+export const getOneOrder = (orden)=>{
+  return {
+    type : GET_ONE_ORDER, payload:orden 
+  }
+}
+
+export const filterOrderAproved = () =>{
+  return{
+    type:FILTER_ORDER_APROVED
+  }
+}
+
+
+export const filterOrderRejected= () =>{
+  return{
+    type:FILTER_ORDER_REJECTED
+  }
+}

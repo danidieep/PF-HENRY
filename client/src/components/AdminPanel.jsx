@@ -38,26 +38,17 @@ export default function AdminPanel() {
                 <button className={styles.buttons} >Create artist</button>
               </Link>
             </div>
+            <div>
+              <Link to="/AllUserOrders">
+                <button className={styles.buttons} >All orders</button>
+              </Link>
+            </div>
           </div>
      
 
 
           <div>
         
-
-          <div className={styles.historialDeCompras} >
-
-          {state.history.length?
-          state.history.map(e => {
-            return(
-                <h1></h1>
-            )
-          })
-          :
-          <h1>Empty</h1>
-          }
-
-          </div>
           </div>
 
           </div>

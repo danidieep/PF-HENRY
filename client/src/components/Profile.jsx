@@ -58,6 +58,8 @@ export default function Profile() {
 
   return (
     <div className={styles.profileContainer}>
+    { user.length?  
+    <div>
       <div className={styles.header}>
         <Link to="/MainPage">
           <h1 className={styles.logoForm}>Arteck</h1>
@@ -89,32 +91,30 @@ export default function Profile() {
         {user.length ? (
           <div className={styles.panelRight}>
             <div className={styles.userData}>
-              {data.isAuthenticated ? (
+
+              {data.isAuthenticated && user[0].image === "" ? (
                 <img
+                style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
                   className={styles.imgProfile1}
-                  src={user[0].picture}
+                  src={data.user.picture}
                   width="120"
                   height="120"
                 ></img>
-              ) : user.length && user[0].image !== null ? (
-                <img
-                  className={styles.imgProfile}
-                  // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                  src={user[0].image}
-                  width="120"
-                  height="120"
-                  style={{
-                    borderRadius: "9999px",
-                    marginLeft: "1rem",
-                    marginTop: "0.25rem",
-                  }}
-                />
-              ) : user.length ? (
-                <h1 className={styles.iconUser}>
-                  <FaUserCircle />
-                </h1>
               ) : (
-                false
+                user.length && user[0].image !== null ?
+                  <img
+                    className={styles.imgProfile}
+                    // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                    src={user[0].image}
+                    width="120"
+                    height="120"
+                    style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
+                  /> : user.length ?
+                    <h1 className={styles.iconUser}><FaUserCircle /></h1>
+                    : false
+
+
+
               )}
 
               <div className={styles.nameAndRol}>
@@ -134,7 +134,7 @@ export default function Profile() {
                 )} */}
               </div>
             </div>
-
+           
             <div className={styles.optionsUser}>
               <div className={styles.item}>
                 <Link to="/ProfileEdit">
@@ -178,24 +178,9 @@ export default function Profile() {
               >
                 <div className={styles.item} onClick={delete_User}>
                   <div className={styles.item_data}>
-                    <AiOutlineDelete
-                      className={styles.item_data_icon}
-                      style={{ color: "red" }}
-                    />
-                    <div
-                      style={{
-                        color: "red",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <body
-                        className={styles.item_data_titles_main}
-                        style={{ color: "red" }}
-                      >
-                        {" "}
-                        Delete my account
-                      </body>
+                    <BiUserCircle className={styles.item_data_icon} style={{ color: "red" }} />
+                    <div style={{ color: "red", display: "flex", alignItems: "center" }}>
+                      <body className={styles.item_data_titles_main} style={{ color: "red" }}> Disable my account</body>
                     </div>
                   </div>
                 </div>
@@ -267,9 +252,10 @@ export default function Profile() {
             <br />
           </div>
         ) : (
-          <div>Loading</div>
+          false
         )}
-      </div>
+    </div>
+      </div> : <h1>Your user has been banned or not exist</h1> }
     </div>
   );
 }

@@ -21,6 +21,7 @@ import profileEdit from "./components/profileEdit"
 import Security from "./components/Security";
 import PayForm from "./components/PayForm";
 import AllUserOrders from "./components/AllUserOrders";
+import OrderByUser from "./components/OrderByUser";
 
 
 function App() {
@@ -33,7 +34,9 @@ function App() {
     ? localStorage.setItem("user", JSON.stringify([]))
     : console.log("va");
   //si esta autenticado sse subo los datos de auth0 al local storage, caso contrario se convertira en un array vacío
-
+  !localStorage.getItem("product")
+    ? localStorage.setItem("product", JSON.stringify([]))
+    : console.log("va");
   const userData = isAuthenticated
     ? {
       name: user.given_name,
@@ -89,6 +92,7 @@ function App() {
       <Route path='/ResetPassword' component={ResetPassword} />
       <Route path='/PayForm' component={PayForm} />
       <Route path='/AllUserOrders' component={AllUserOrders} />
+      <Route path='/OrderByUser' component={OrderByUser} />
     </div>
   );
 }

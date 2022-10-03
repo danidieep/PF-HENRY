@@ -37,6 +37,6 @@ export const GET_HISTORY = "GET_HISTORY"
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS"
 
 export const GET_ORDERS_USER = "GET_ORDERS_USER"
-
+export const GET_ONE_ORDER = "GET_ONE_ORDER"
 
 export const GET_ALL_USERS = "GET_ALL_USERS"

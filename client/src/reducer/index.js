@@ -27,7 +27,8 @@ import {
   GET_FAVOURITES,
   GET_HISTORY,
   GET_ALL_ORDERS,
-  GET_ORDERS_USER
+  GET_ORDERS_USER,
+  GET_ONE_ORDER
 } from "../actions/action-types";
 
 const initialState = {
@@ -43,6 +44,7 @@ const initialState = {
   favoritos: [],
   history: [],
   allOrders:[],
+  getOneOrder:[],
   orderUser:[]
 };
 
@@ -275,6 +277,12 @@ export default function Reducer(state = initialState, { type, payload }) {
       return{
         ...state,
         users:payload
+      }
+    }
+    case GET_ONE_ORDER:{
+      return{
+        ...state,
+        getOneOrder:state.allOrders.filter(e => e.orderId===Number(payload))
       }
     }
 

@@ -1,9 +1,11 @@
 const nodemailer = require('nodemailer')
 const { Router } = require('express')
 const router = Router();
+const { User } = require("../db");
 
 router.post('/', async (req, res) => {
     const {email} = req.body
+
 
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -24,7 +26,9 @@ router.post('/', async (req, res) => {
         subject: 'Suscribed to newsletter',
         text: 'Thanks for suscribing to Arket newsletter'
     })
-    console.log('SE MANDO EL EMAIL');
+
+
+    
     res.status(200).send(info)
 })
 

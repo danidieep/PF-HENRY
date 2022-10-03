@@ -469,6 +469,7 @@ export const findUserById = (id) => {
 
 export function sendEmail(a) {
   return async function (dispatch) {
+    console.log(a);
     const email = await axios.post("/sendemail", { email: a });
     return dispatch({
       type: SEND_EMAIL,
@@ -519,7 +520,6 @@ export async function postArtists(payload, role) {
     });
   }
 }
-
 export async function resetPassword(payload) {
   await axios.post("users/restorePassword", payload);
 }

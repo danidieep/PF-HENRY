@@ -25,9 +25,7 @@
     column-count: 2;
 }
 
-.iconsHeader {
-    font-size: 2rem;
-}
+
 
 
 
@@ -87,6 +85,10 @@
     cursor: pointer;
     transition: 0.3s;
     width: 5rem;
+}
+
+.iconsHeader {
+    font-size: 2rem;
 }
 
 .CartAndFav {

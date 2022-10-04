@@ -18,17 +18,17 @@
 
 }
 
-.filtersAplied{
+.filtersAplied {
 
-margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 .header {
     background-color: rgb(255, 255, 255);
     width: 100%;
-    
+
     z-index: 3;
-   
+
 }
 
 button {
@@ -57,9 +57,9 @@ button {
 .restoDeItems {
     display: grid;
     grid-template-columns: 70% 30%;
-    background-color:transparent;
+    background-color: transparent;
     width: 100%;
-   
+
     z-index: 3;
 }
 
@@ -157,13 +157,13 @@ button {
     width: 70%;
     margin-top: 3rem;
     margin-bottom: 3rem;
-    
+
     padding: 2rem;
 
 }
 
 .carrusel ul {
-  
+
     display: flex;
     padding: 0;
     width: 500%;
@@ -416,11 +416,11 @@ form .formNewsletterBox {
 }
 
 .galeryTitle {
-    background: #f7dedb;
+
     width: 100%;
     margin: 0 auto;
     margin-top: 5rem;
-    color: rgb(81, 70, 70);
+    color: rgb(0, 0, 0);
     font-family: 'Euphoria Script', cursive;
     font-size: 3rem;
     font-weight: 600;
@@ -443,7 +443,7 @@ form .formNewsletterBox {
     font-size: 2rem;
 }
 
-.buttonsFilter{
+.buttonsFilter {
     background-color: rgba(234, 60, 60);
     width: 1.5rem;
     height: 1.5rem;
@@ -452,7 +452,8 @@ form .formNewsletterBox {
     cursor: pointer;
     color: white;
 }
-.buttonsFilter:hover{
+
+.buttonsFilter:hover {
     background-color: rgb(212, 43, 43);
 }
 

@@ -1,0 +1,20 @@
+.loader {
+  display: inline-flex;
+  margin-top: 200px;
+  width: 10vh;
+  height: 10vh;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: rgb(5, 4, 4);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.container {
+  height: 95vh;
+}

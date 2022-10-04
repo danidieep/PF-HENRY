@@ -1,7 +1,10 @@
-export default function Loader() {
+import React from "react";
+import style from "./ModulesCss/Loader.module.css";
+
+export const Loader = () => {
   return (
-    <div>
-      <h1>Loading...</h1>
+    <div className={style.container}>
+      <div className={style.loader}></div>
     </div>
   );
-}
+};

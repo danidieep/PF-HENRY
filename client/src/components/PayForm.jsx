@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getAdress, getPay, postAdress, putAdress } from "../actions/index";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function PayForm(data) {
   const [adress, setAdress] = useState({
@@ -11,6 +12,8 @@ export default function PayForm(data) {
     number: "",
     postalCode: "",
   });
+
+  const [error, setError] = useState({});
 
   const [open, setOpen] = useState(false);
   const modalController = () => {
@@ -24,22 +27,48 @@ export default function PayForm(data) {
   });
 
   function handleChange(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
+    setInput(() => {
+      const newState = {
+        ...input,
+        [e.target.name]: e.target.value,
+      };
+      setError(validate(newState));
+      return newState;
     });
   }
 
   function handleSubmit(e) {
+    if (
+      input.street.length === 0 ||
+      input.number.length === 0 ||
+      input.postalCode.length === 0
+    ) {
+      alertCompleteData();
+    } else {
+      e.preventDefault();
+      postAdress(input, data.user[0].email);
+      getPay(data.carrito, data.user);
+    }
+  }
+
+  function handleSubmit1(e) {
     e.preventDefault();
     postAdress(input, data.user[0].email);
     getPay(data.carrito, data.user);
   }
 
   function handleSubmitChanged(e) {
-    e.preventDefault();
-    putAdress(input, data.user[0].email);
-    getPay(data.carrito, data.user);
+    if (
+      input.street.length === 0 ||
+      input.number.length === 0 ||
+      input.postalCode.length === 0
+    ) {
+      alertCompleteData();
+    } else {
+      e.preventDefault();
+      putAdress(input, data.user[0].email);
+      getPay(data.carrito, data.user);
+    }
   }
 
   useEffect(() => {
@@ -52,18 +81,23 @@ export default function PayForm(data) {
     });
   }, []);
 
-  // function handleChangeAdress() {
-  //   setAdress({
-  //     street: "",
-  //     number: "",
-  //     postalCode: "",
-  //   });
-  // }
+  function alertCompleteData() {
+    toast.warn(`Complete all the info`, {
+      position: "top-center",
+      theme: "light",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   return (
     <div>
       {adress.street ? (
-        <div>
+        <div key="4">
           <h4>
             Do you want us to send the package to this address? {adress.street}{" "}
             {adress.number}
@@ -73,7 +107,7 @@ export default function PayForm(data) {
           {open ? (
             <div key={open}>
               {/* -------------------------   STREET       */}
-              <div>
+              <div key="street">
                 <label>Street: </label>
                 <input
                   type="text"
@@ -87,7 +121,7 @@ export default function PayForm(data) {
                 ></input>
               </div>
               {/* -------------------------   NUMBER       */}
-              <div>
+              <div key="number">
                 <label>Number: </label>
                 <input
                   type="number"
@@ -101,7 +135,7 @@ export default function PayForm(data) {
                 ></input>
               </div>
               {/* -------------------------   POSTAL CODE       */}
-              <div>
+              <div key="postalCode">
                 <label>PostalCode: </label>
                 <input
                   type="number"
@@ -114,25 +148,22 @@ export default function PayForm(data) {
                   }}
                 ></input>
               </div>
-              <Link>
-                <button type="submit" onClick={(e) => handleSubmitChanged(e)}>
-                  Ready
-                </button>
-              </Link>
+              <button type="submit" onClick={(e) => handleSubmitChanged(e)}>
+                Ready
+              </button>
             </div>
           ) : (
             <div>
-              <button type="submit" onClick={(e) => handleSubmit(e)}>
+              <button type="submit" onClick={(e) => handleSubmit1(e)}>
                 Yes
               </button>
             </div>
-          )
-          }
+          )}
         </div>
       ) : (
-        <div key={adress.street}>
+        <div key="5">
           {/* -------------------------   STREET       */}
-          <div>
+          <div key="street:">
             <label>Street: </label>
             <input
               type="text"
@@ -146,7 +177,7 @@ export default function PayForm(data) {
             ></input>
           </div>
           {/* -------------------------   NUMBER       */}
-          <div>
+          <div key="number:">
             <label>Number: </label>
             <input
               type="number"
@@ -160,7 +191,7 @@ export default function PayForm(data) {
             ></input>
           </div>
           {/* -------------------------   POSTAL CODE       */}
-          <div>
+          <div key="postalcode:">
             <label>PostalCode: </label>
             <input
               type="number"
@@ -173,13 +204,20 @@ export default function PayForm(data) {
               }}
             ></input>
           </div>
-          <Link>
-            <button type="submit" onClick={(e) => handleSubmit(e)}>
-              Ready
-            </button>
-          </Link>
+          <button type="submit" onClick={(e) => handleSubmit(e)}>
+            Ready
+          </button>
         </div>
       )}
     </div>
   );
+}
+
+function validate(input) {
+  let error = {};
+  if (input.street.length === 0) error.street = "The street is required";
+  if (input.number.length === 0) error.number = "The number is required";
+  if (input.postalCode.length === 0)
+    error.postalCode = "The postal code is required";
+  return error;
 }

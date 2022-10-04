@@ -433,6 +433,7 @@ export default function MainPage(props) {
                   setCurrent(i + 1);
                 }}
                 className={styles.button31Paginado}
+              
               >
                 {i + 1}
               </button>

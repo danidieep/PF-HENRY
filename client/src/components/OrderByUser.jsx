@@ -12,6 +12,8 @@ export default function OrderByUser() {
 
     const user = JSON.parse(localStorage.getItem("user"))
 
+  
+
     
 
     const ordersUser = useSelector((state) => state.orderUserFiltered); //estan llegando todas las ordenes del user
@@ -42,7 +44,7 @@ function send(event) {
 
 function clickItem(order){
       dispatch(getOrderUserDetail(order))
-  
+
 }
       
 
@@ -104,11 +106,15 @@ function clickItem(order){
 
                     <div >
 
-                    <div className={styles.item} onClick={()=>clickItem(e.orderId) }>
+                    <button className={styles.item} 
+                    onClick={()=>clickItem(e.orderId)
+                     }
+                  
+                     >
                     <h3>Order id: {e.orderId}</h3>
                     <h3>Status: {e.paymentStatus}</h3>
                     <h3>Date: {e.date_created}</h3>
-                    </div>
+                    </button>
                 </div>  
 
 

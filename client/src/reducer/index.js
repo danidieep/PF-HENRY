@@ -53,7 +53,9 @@ const initialState = {
   orderUser:[], //todas las ordenes del uruario
   
   orderDetail:[],
- orderUserFiltered:[]
+ orderUserFiltered:[],
+
+ artworksBuyed:[]
   
 };
 
@@ -116,8 +118,9 @@ export default function Reducer(state = initialState, { type, payload }) {
     case GET_PRODUCTS: {
       return {
         ...state,
-        allProducts: payload,
-        productsFiltered: payload,
+        allProducts: payload.filter((e) => e.show),
+        productsFiltered: payload.filter((e) => e.show),
+        artworksBuyed:payload.filter((e) => !e.show),
         mediums: payload
           .map((element) => element.medio)
           .filter(

@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
     //     // }
     // },
     back_urls: {
-      success: "http://localhost:3000/MainPage",
+      success: "http://localhost:3002/MainPage",
       failure: "http://www.failure.com",
       pending: "http://www.pending.com",
     },
@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
       userId: usuario.id,
       email: usuario.email
     },
-    notification_url: `https://c0c1-181-232-255-29.sa.ngrok.io/payment/notifications`,
+    // notification_url: `https://aa21-181-232-255-29.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
 
 router.post("/notifications", async (req, res) => {
   const data = req.query;
-  const topic = data.topic;
+  const topic = data.topic || data.type;
 
   try {
     var merchantOrder;
@@ -115,7 +115,7 @@ router.post("/notifications", async (req, res) => {
       }
 
       // console.log(body, 'ORDEN BODY')
-    //   console.log(response, "pago BODY");
+      console.log(response, "pago BODY");
       if (response) {
         if (response.status == "approved") {
           let idPagador = response.payer.id;
@@ -158,6 +158,7 @@ router.post("/notifications", async (req, res) => {
             if (asd[0].paymentStatus == "approved") {
               await Order.bulkCreate(asd);
               response.additional_info.items.forEach(async (e) => {
+                console.log(e)
                 await Artwork.update({ show: false }, { where: { id: e.id } });
                 await resetUserCart(asd[0].payEmail);
                 res.status(200)
@@ -186,10 +187,12 @@ router.post("/notifications", async (req, res) => {
 router.get("/orden", async (req, res) => {
   //mostrar una orden en particular
 
-  const { email } = req.body;
+  const { payload } = req.headers;
+  console.log(payload)
   try {
-    if(email){
-    let pago = await Order.findOne({ where: { payEmail: email } });
+    if(payload){
+    let pago = await Order.findOne({ where: { payEmail: payload } });
+    console.log(pago.payId)
     let orders = await axios.get(
       `https://api.mercadopago.com/merchant_orders/search?payer_id=${pago.payId}`,
       {
@@ -215,7 +218,8 @@ router.get("/orden", async (req, res) => {
       };
     });
     res.send(response);
-  } let orders = await axios.get(
+  } 
+  let orders = await axios.get(
     `https://api.mercadopago.com/merchant_orders/search`,
     {
       headers: {

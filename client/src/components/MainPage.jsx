@@ -55,8 +55,10 @@ export default function MainPage(props) {
     const userLocal = JSON.parse(localStorage.getItem("user"));
     if (state.allProducts.length === 0) dispatch(getProducts());
     if (state.artistsList.length === 0) dispatch(getArtists());
-    dispatch(getProductsFromCarritoDB(userLocal[0].email ? userLocal[0].email : user.email))
-    dispatch(getFavourites(userLocal[0].email ? userLocal[0].email : user.email))
+    if (userLocal.length) dispatch(getProductsFromCarritoDB(userLocal[0].email))
+    if (userLocal.length) dispatch(getFavourites(userLocal[0].email))
+    if (isAuthenticated) dispatch(getProductsFromCarritoDB(user.email))
+    if (isAuthenticated) dispatch(getFavourites(user.email))
     applyFilter();
   }, [state.filters]);
 

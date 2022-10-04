@@ -90,7 +90,7 @@ function App() {
       <Route path="/AllUserOrders" component={AllUserOrders} />
       <Route path="/OrderByUser" component={OrderByUser} />
       <Route path="/AboutUs" component={AboutUs} />
-      <Route path="/Map" component={Maps} />
+      {/* <Route path="/Map" component={Maps} /> */}
 
     </div>
   );

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { getAdress, getPay, postAdress, putAdress } from "../actions/index";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./ModulesCss/LogIn.module.css"
+import styles from "./ModulesCss/LogIn.module.css";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function PayForm(data) {
@@ -33,7 +33,7 @@ export default function PayForm(data) {
       ...input,
       [e.target.name]: e.target.value,
     });
-  }}
+  }
 
   function handleSubmit(e) {
     if (
@@ -57,7 +57,6 @@ export default function PayForm(data) {
 
   function handleSubmit1(e) {
     e.preventDefault();
-    console.log(input.length);
     postAdress(input, data.user[0].email);
     getPay(data.carrito, data.user);
   }
@@ -84,7 +83,6 @@ export default function PayForm(data) {
         postalCode: res.data.postalCode,
       });
     });
-    console.log(adress);
   }, []);
 
   function alertCompleteData() {
@@ -105,15 +103,21 @@ export default function PayForm(data) {
       {adress.street ? (
         <div key="4">
           <h4>
-            Do you want us to send the package to this adress? <br />{adress.street}{" "}
-            {adress.number}
+            Do you want us to send the package to this adress? <br />
+            {adress.street} {adress.number}
           </h4>
           <div>
-            <button className={styles.btnBuyAll} type="submit" onClick={(e) => handleSubmit(e)}>
+            <button
+              className={styles.btnBuyAll}
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+            >
               Yes
             </button>
 
-            <button className={styles.btnBuyAll} onClick={modalController}>No</button>
+            <button className={styles.btnBuyAll} onClick={modalController}>
+              No
+            </button>
           </div>
           <br></br>
           {open ? (
@@ -161,7 +165,11 @@ export default function PayForm(data) {
                 ></input>
               </div>
               <Link>
-                <button className={styles.btnReadyChangeAdress} type="submit" onClick={(e) => handleSubmitChanged(e)}>
+                <button
+                  className={styles.btnReadyChangeAdress}
+                  type="submit"
+                  onClick={(e) => handleSubmitChanged(e)}
+                >
                   Ready
                 </button>
               </Link>
@@ -221,7 +229,11 @@ export default function PayForm(data) {
             </div>
           </div>
           <Link>
-            <button className={styles.btnReadyChangeAdress} type="submit" onClick={(e) => handleSubmit(e)}>
+            <button
+              className={styles.btnReadyChangeAdress}
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+            >
               Ready
             </button>
           </Link>
@@ -229,7 +241,7 @@ export default function PayForm(data) {
       )}
     </div>
   );
-              }
+}
 
 function validate(input) {
   let error = {};

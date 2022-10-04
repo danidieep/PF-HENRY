@@ -10,10 +10,12 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "dotenv": "^16.0.2",
+    "leaflet": "^1.9.1",
     "nodemailer": "^6.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
+    "react-leaflet": "^4.1.0",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -36,16 +38,9 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
+    "browserslist": [
       ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+     "not dead",
+     "not op_mini all"
+   ]   
 }

@@ -23,6 +23,7 @@ import PayForm from "./components/PayForm";
 import AllUserOrders from "./components/AllUserOrders";
 import OrderByUser from "./components/OrderByUser";
 import AboutUs from "./components/AbouUs";
+import Maps from "./components/Maps";
 
 function App() {
   const dispatch = useDispatch();
@@ -89,6 +90,8 @@ function App() {
       <Route path="/AllUserOrders" component={AllUserOrders} />
       <Route path="/OrderByUser" component={OrderByUser} />
       <Route path="/AboutUs" component={AboutUs} />
+      <Route path="/Map" component={Maps} />
+
     </div>
   );
 }

@@ -10,6 +10,8 @@ import {
 import { Link } from "react-router-dom";
 import styles from "./ModulesCss/AllUserOrders.module.css";
 import { AiOutlineSearch } from "react-icons/ai";
+import { Loader } from "./Loader";
+
 
 export default function OrderByUser() {
   const dispatch = useDispatch();
@@ -143,7 +145,9 @@ export default function OrderByUser() {
               );
             })
           ) : (
-            <div>no hay</div>
+            <div>
+              <Loader />
+            </div>
           )}
         </div>
       </div>

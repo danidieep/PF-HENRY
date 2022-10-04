@@ -26,6 +26,8 @@
     cursor: pointer;
 }
 
+
+
 .logo a {
     width: 5px;
 }
@@ -169,13 +171,13 @@
 }
 
 .titleCarrito {
-    margin-right: 6rem;
+    margin-right: 4rem;
     max-height: 24px;
     font-size: 18px;
 }
 
 .titleBy {
-    margin-right: 6rem;
+    margin-right: 4rem;
 }
 
 .favEmpty {
@@ -211,6 +213,40 @@
 
 .yourCarrito {
     width: 100%;
+}
+
+.btnBuyAll {
+    background-color: transparent;
+    border-style: none;
+    color: rgba(101, 53, 53, 1);
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-size: 14px;
+    height: 40px;
+    width: auto;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px;
+    margin-top: 19px;
+    padding: 12px;
+}
+
+.comprarTodo {
+    border-radius: 3px;
+    background-color: white;
+    margin-top: 15px;
+    padding: 12px;
+    width: 300px;
+    padding-bottom: 15px;
+    margin: auto;
+}
+
+.comprarTodoContainer {
+    width: 100%;
+    margin-top: 15px;
 }
 
 .btnCarrito {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getAdress, getPay, postAdress, putAdress } from "../actions/index";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import styles from "./ModulesCss/LogIn.module.css"
 import { ToastContainer, toast } from "react-toastify";
 
 export default function PayForm(data) {
@@ -27,15 +28,12 @@ export default function PayForm(data) {
   });
 
   function handleChange(e) {
-    setInput(() => {
-      const newState = {
-        ...input,
-        [e.target.name]: e.target.value,
-      };
-      setError(validate(newState));
-      return newState;
+    console.log(input);
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
     });
-  }
+  }}
 
   function handleSubmit(e) {
     if (
@@ -53,6 +51,13 @@ export default function PayForm(data) {
 
   function handleSubmit1(e) {
     e.preventDefault();
+    postAdress(input, data.user[0].email);
+    getPay(data.carrito, data.user);
+  }
+
+  function handleSubmit1(e) {
+    e.preventDefault();
+    console.log(input.length);
     postAdress(input, data.user[0].email);
     getPay(data.carrito, data.user);
   }
@@ -79,6 +84,7 @@ export default function PayForm(data) {
         postalCode: res.data.postalCode,
       });
     });
+    console.log(adress);
   }, []);
 
   function alertCompleteData() {
@@ -99,15 +105,21 @@ export default function PayForm(data) {
       {adress.street ? (
         <div key="4">
           <h4>
-            Do you want us to send the package to this address? {adress.street}{" "}
+            Do you want us to send the package to this adress? <br />{adress.street}{" "}
             {adress.number}
           </h4>
-          <button onClick={modalController}>No</button>
+          <div>
+            <button className={styles.btnBuyAll} type="submit" onClick={(e) => handleSubmit(e)}>
+              Yes
+            </button>
+
+            <button className={styles.btnBuyAll} onClick={modalController}>No</button>
+          </div>
           <br></br>
           {open ? (
-            <div key={open}>
+            <div className={styles.formPay} key={open}>
               {/* -------------------------   STREET       */}
-              <div key="street">
+              <div>
                 <label>Street: </label>
                 <input
                   type="text"
@@ -121,7 +133,7 @@ export default function PayForm(data) {
                 ></input>
               </div>
               {/* -------------------------   NUMBER       */}
-              <div key="number">
+              <div>
                 <label>Number: </label>
                 <input
                   type="number"
@@ -135,7 +147,7 @@ export default function PayForm(data) {
                 ></input>
               </div>
               {/* -------------------------   POSTAL CODE       */}
-              <div key="postalCode">
+              <div>
                 <label>PostalCode: </label>
                 <input
                   type="number"
@@ -148,9 +160,11 @@ export default function PayForm(data) {
                   }}
                 ></input>
               </div>
-              <button type="submit" onClick={(e) => handleSubmitChanged(e)}>
-                Ready
-              </button>
+              <Link>
+                <button className={styles.btnReadyChangeAdress} type="submit" onClick={(e) => handleSubmitChanged(e)}>
+                  Ready
+                </button>
+              </Link>
             </div>
           ) : (
             <div>
@@ -161,57 +175,61 @@ export default function PayForm(data) {
           )}
         </div>
       ) : (
-        <div key="5">
+        <div className={styles.formPay} key={adress.street}>
           {/* -------------------------   STREET       */}
-          <div key="street:">
-            <label>Street: </label>
-            <input
-              type="text"
-              name="street"
-              value={input.street}
-              autoComplete="off"
-              placeholder={"street..."}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            ></input>
+          <div className={styles.formPayContainer}>
+            <div className={styles.optForm}>
+              {/* <label>Street: </label> */}
+              <input
+                type="text"
+                name="street"
+                value={input.street}
+                autoComplete="off"
+                placeholder={"Street"}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              ></input>
+            </div>
+            {/* -------------------------   NUMBER       */}
+            <div className={styles.optForm}>
+              {/* <label>Number: </label> */}
+              <input
+                type="number"
+                name="number"
+                value={input.number}
+                autoComplete="off"
+                placeholder={"Number"}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              ></input>
+            </div>
+            {/* -------------------------   POSTAL CODE       */}
+            <div className={styles.optForm}>
+              {/* <label>PostalCode: </label> */}
+              <input
+                type="number"
+                name="postalCode"
+                value={input.postalCode}
+                autoComplete="off"
+                placeholder={"Postalcode"}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              ></input>
+            </div>
           </div>
-          {/* -------------------------   NUMBER       */}
-          <div key="number:">
-            <label>Number: </label>
-            <input
-              type="number"
-              name="number"
-              value={input.number}
-              autoComplete="off"
-              placeholder={"number..."}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            ></input>
-          </div>
-          {/* -------------------------   POSTAL CODE       */}
-          <div key="postalcode:">
-            <label>PostalCode: </label>
-            <input
-              type="number"
-              name="postalCode"
-              value={input.postalCode}
-              autoComplete="off"
-              placeholder={"postalCode..."}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            ></input>
-          </div>
-          <button type="submit" onClick={(e) => handleSubmit(e)}>
-            Ready
-          </button>
+          <Link>
+            <button className={styles.btnReadyChangeAdress} type="submit" onClick={(e) => handleSubmit(e)}>
+              Ready
+            </button>
+          </Link>
         </div>
       )}
     </div>
   );
-}
+              }
 
 function validate(input) {
   let error = {};

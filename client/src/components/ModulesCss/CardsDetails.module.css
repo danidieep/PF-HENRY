@@ -132,7 +132,7 @@
 .data {
     background-color: white;
     display: flex;
-    width:60%;
+    width: 60%;
     border-radius: 5px;
     /* border-radius: 5px; */
     /* flex-direction: column; */
@@ -188,18 +188,17 @@
 }
 
 .imgDetails {
-   display: flex;
-   width: 100%;
-   height: 100%;
-   justify-content: center;
-    
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+
 }
 
 .imgDetailsPos {
-width: 100%;
-height: 100%;
-
-
+    width: 100%;
+    height: 100%;
+    padding: 12px;
 }
 
 .artist {

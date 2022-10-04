@@ -17,8 +17,7 @@ import {
   LOG_LOCAL,
   VACIAR_USER,
   FIND_USER_BY_ID,
-  DELETE_PRODUCT_FROM_CARRITO,
-  ADD_PRODUCT_TO_CARRITO,
+  
   SEND_EMAIL,
   DELETE_PRODUCT_FROM_CARRITO_BOARD,
   GET_PRODUCTS_FROM_CARRITODB,
@@ -27,7 +26,13 @@ import {
   GET_FAVOURITES,
   GET_HISTORY,
   GET_ALL_ORDERS,
-  GET_ORDERS_USER
+  GET_ORDERS_USER,
+  GET_ONE_ORDER,
+  FILTER_ORDER_REJECTED,
+  FILTER_ORDER_APROVED,
+  FILTER_ORDER_APROVED_USER,
+  FILTER_ORDER_REJECTED_USER,
+  GET_ONE_ORDER_USER
 } from "../actions/action-types";
 
 const initialState = {
@@ -43,12 +48,19 @@ const initialState = {
   favoritos: [],
   history: [],
   allOrders:[],
-  orderUser:[]
+  allOrdersFiltered:[],
+  getOneOrder:[],
+  orderUser:[], //todas las ordenes del uruario
+  
+  orderDetail:[],
+ orderUserFiltered:[]
+  
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
   switch (type) {
 
+    
     case 'POST_PAYMENT':{
       return {
         ...state
@@ -59,18 +71,45 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
         carrito: [...state.carrito, payload],
       };
-      
-      case GET_ALL_ORDERS: {
-        return {
+
+      case GET_ONE_ORDER_USER:{
+        return{
           ...state,
-          allOrders: payload
+          orderDetail:state.orderUser.filter(e => e.orderId===Number(payload))
+        }
+      }
+      
+      case FILTER_ORDER_APROVED_USER: {
+        return {
+         ...state,
+         orderUserFiltered : state.orderUser.filter(e => e.paymentStatus === 'approved') 
+
         }
       }
 
-      case GET_ORDERS_USER: {
+      case FILTER_ORDER_REJECTED_USER: {
+        return {
+          ...state,
+         orderUserFiltered : state.orderUser.filter(e => e.paymentStatus === 'rejected')
+        }
+      }
+
+
+      case GET_ALL_ORDERS: {
+        return {
+          ...state,
+          allOrders: payload,
+          allOrdersFiltered:payload
+        }
+      }
+
+
+      case GET_ORDERS_USER: {   //todas las ordenes del uruario
         return{
           ...state,
-          orderUser: payload
+          orderUser: payload,
+          orderUserFiltered: payload
+
 
         }
       }
@@ -274,10 +313,27 @@ export default function Reducer(state = initialState, { type, payload }) {
     case GET_ALL_USERS:{
       return{
         ...state,
-        users:payload
+        users:payload,
       }
     }
-
+    case GET_ONE_ORDER:{
+      return{
+        ...state,
+        getOneOrder:state.allOrders.filter(e => e.orderId===Number(payload))
+      }
+    }
+    case FILTER_ORDER_REJECTED:{
+      return{
+        ...state,
+        allOrdersFiltered:state.allOrders.filter(e => e.paymentStatus==="rejected")
+      }
+    }
+    case FILTER_ORDER_APROVED:{
+      return{
+        ...state,
+        allOrdersFiltered:state.allOrders.filter(e => e.paymentStatus==="approved")
+      }
+    }
     default:
       return state;
   }

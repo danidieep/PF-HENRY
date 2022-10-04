@@ -206,6 +206,7 @@ router.get("/orden", async (req, res) => {
         items: e.items,
         cancelled: e.cancelled,
         order_status: e.order_status,
+        date_created:e.date_created.split('T', 1)
       };
     });
     res.send(response);
@@ -230,6 +231,7 @@ router.get("/orden", async (req, res) => {
       items: e.items,
       cancelled: e.cancelled,
       order_status: e.order_status,
+      date_created:e.date_created.split('T', 1)
     };
   });
   res.send(response);
@@ -241,7 +243,7 @@ router.get("/orden", async (req, res) => {
 
 router.get("/orden/:id", async (req, res) => {
   const data = req.params;
-   console.log(data)
+   
   try {
     let orden = await axios.get(
       `https://api.mercadopago.com/merchant_orders/${data.id}`,
@@ -264,6 +266,7 @@ router.get("/orden/:id", async (req, res) => {
         items: e.items,
         cancelled: e.cancelled,
         order_status: e.order_status,
+        date_created: e.date_created.split('T', 1)
       };
     });
     res.send(response);
@@ -294,6 +297,7 @@ router.get("/pagos", async (req, res) => {
         paymentDetail: e.payments[0].status_detail,
         cancelled: e.cancelled,
         order_status: e.order_status,
+        date_created:e.date_created.split('T', 1)
       };
     });
     // console.log(pagos.data.elements)

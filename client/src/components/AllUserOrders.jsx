@@ -10,6 +10,7 @@ import {
 import styles from "./ModulesCss/AllUserOrders.module.css";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
+import { Loader } from "./Loader";
 
 export default function AllUserOrders() {
   const dispatch = useDispatch();
@@ -141,7 +142,9 @@ export default function AllUserOrders() {
               );
             })
           ) : (
-            <di>Does not exist</di>
+            <div>
+              <Loader />
+            </div>
           )}
         </div>
       </div>

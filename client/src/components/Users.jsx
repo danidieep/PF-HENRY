@@ -4,7 +4,13 @@ import { getUser } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {  RegisterUserFromAdminPanel, changePassword, resetPassword, deleteUser,getUSers} from "../actions";
+import {
+  RegisterUserFromAdminPanel,
+  changePassword,
+  resetPassword,
+  deleteUser,
+  getUSers,
+} from "../actions";
 import styles from "./ModulesCss/users.module.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,47 +41,38 @@ export default function Users() {
   };
   const onlyCharacters = /^[a-zA-Z\s]+$/;
 
-
-
-  const user = JSON.parse(localStorage.getItem("user"))
-
-
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     dispatch(getUSers({ role: user[0].role }));
   }, []);
 
-  const alertaDeEliminar = (user,ban) => {
+  const alertaDeEliminar = (user, ban) => {
     swal({
       title: "Delete",
       text: "Are you sure you want to delete your profile?",
       icon: "warning",
-      buttons: ["Cancel", "Accept"]
-    }).then(respuesta => {
+      buttons: ["Cancel", "Accept"],
+    }).then((respuesta) => {
       if (respuesta) {
-       
-        deleteUser(user,ban);
-       
+        deleteUser(user, ban);
+
         setTimeout(() => {
           window.location.reload();
         }, 300);
       }
-    })
-  }
-
+    });
+  };
 
   const alertaDeCambioPass = (email) => {
     swal({
       title: "Change password",
       text: "Are you sure you want to change the password?",
       icon: "info",
-      buttons: ["Cancel", "Accept"]
-    }).then(respuesta => {
+      buttons: ["Cancel", "Accept"],
+    }).then((respuesta) => {
       if (respuesta) {
-       
         changePassword(email);
-     
-         
       }
     });
   };
@@ -128,7 +125,7 @@ export default function Users() {
   function alertCompleteData() {
     toast.warn(`Complete all the info`, {
       position: "top-center",
-      theme: 'light',
+      theme: "light",
       autoClose: 1000,
       hideProgressBar: true,
       closeOnClick: true,
@@ -141,7 +138,7 @@ export default function Users() {
   function alertWorngEmailFormat() {
     toast.warn(`Wrong email format`, {
       position: "top-center",
-      theme: 'light',
+      theme: "light",
       autoClose: 1000,
       hideProgressBar: true,
       closeOnClick: true,
@@ -172,26 +169,21 @@ export default function Users() {
       } else {
         console.log("a");
       }
-    }
-    else if (input.email.length === 0) {
-      alertCompleteData()
-    }
-    else {
-      alertWorngEmailFormat()
+    } else if (input.email.length === 0) {
+      alertCompleteData();
+    } else {
+      alertWorngEmailFormat();
     }
   }
 
-
   return (
-
     <div className={styles.content}>
-     
       <div className={styles.header}>
-      <Link to="/MainPage">
+        <Link to="/MainPage">
           <h1 className={styles.logoForm}>Arteck</h1>
-      </Link>
+        </Link>
       </div>
-    
+
       <div className={styles.profile}>
         <div className={styles.panelLeft}>
           <div className={styles.containerRegister}>
@@ -260,66 +252,71 @@ export default function Users() {
 )} */}
                 </div>
 
-    <div className={styles.optForm}>
-      <input
-        type="date"
-        name="dateBorn"
-        value={input.dateBorn}
-        autoComplete="off"
-        placeholder="Date of Birth..."
-        onChange={(e) => {
-          handleChange(e);
-        }}
-      ></input>
- <button
-        className={styles.buttonCreateUser}
-        type="submit"
-        onClick={(e) => handleSubmit(e)}
-      >
-        Create user
-      </button>
-    </div>
-    <div className={styles.buttonRegisterPos}>
-     
-      <br />
-     
-    </div>
-  </form>
-</div>
-</div>
-</div>
-
-
-
-
+                <div className={styles.optForm}>
+                  <input
+                    type="date"
+                    name="dateBorn"
+                    value={input.dateBorn}
+                    autoComplete="off"
+                    placeholder="Date of Birth..."
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  ></input>
+                  <button
+                    className={styles.buttonCreateUser}
+                    type="submit"
+                    onClick={(e) => handleSubmit(e)}
+                  >
+                    Create user
+                  </button>
+                </div>
+                <div className={styles.buttonRegisterPos}>
+                  <br />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
         {state.users.length ? (
           <div className={styles.panelRight}>
             <div className={styles.optionsUser}>
-              {state.users.map(e => {
+              {state.users.map((e) => {
                 return (
-                  
-                  <div  >
-            
-                   { e.role === false ? (
-                    <div className={styles.optionsUseritem} key={e.id}>
-                  
-         
-                    <h2>{e.name} {e.lastname}</h2>
-                
-                   <h2>{e.email}</h2>
-                  <h5>{e.dateBorn}</h5>
-                  {e.ban === true ? <h6>User banned</h6> : <h6>User available</h6>}
-                      
-              
-                      <button   className={styles.buttonRegister} onClick={()=>alertaDeCambioPass(e.email) }>Restore Password</button>
-                      <button className={styles.buttonRegister} 
-                      onClick={()=>alertaDeEliminar(e.id,e.ban)}>{!e.ban?"Ban user":"Unban user"}</button>
+                  <div>
+                    {e.role === false ? (
+                      <div className={styles.optionsUseritem} key={e.id}>
+                        <h2>
+                          {e.name} {e.lastname}
+                        </h2>
 
-                    </div>) : false }
-                  
+                        <h2>{e.email}</h2>
+                        <h5>{e.dateBorn}</h5>
+                        {e.ban === true ? (
+                          <h6>User banned</h6>
+                        ) : (
+                          <h6>User available</h6>
+                        )}
+
+                        <button
+                          className={styles.buttonRegister}
+                          onClick={() => alertaDeCambioPass(e.email)}
+                        >
+                          Restore Password
+                        </button>
+                        <button
+                          className={styles.buttonRegister}
+                          onClick={() => alertaDeEliminar(e.id, e.ban)}
+                        >
+                          {!e.ban ? "Ban user" : "Unban user"}
+                        </button>
+                      </div>
+                    ) : (
+                      false
+                    )}
                   </div>
-                )
+                );
               })}
 
               <button
@@ -444,20 +441,20 @@ export default function Users() {
 //       >
 //         Back
 //       </button>
-      // {users.map((el) =>
-      //   el.role === false ? (
-      //     <div key={el.id}>
-      //       <h2>{el.name}</h2>
-      //       <h2>{el.lastname}</h2>
-      //       <h5>{el.email}</h5>
-      //       <h5>{el.dateBorn}</h5>
-      //       {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario disponible</h6>}
-      //       <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
-      //         {el.ban === true ? 'Desbanear' : 'Banear'}
-      //       </button>
-      //     </div>
-      //   ) : null
-      // )}
+// {users.map((el) =>
+//   el.role === false ? (
+//     <div key={el.id}>
+//       <h2>{el.name}</h2>
+//       <h2>{el.lastname}</h2>
+//       <h5>{el.email}</h5>
+//       <h5>{el.dateBorn}</h5>
+//       {el.ban === true ? <h6>Usuario banneado</h6> : <h6>Usuario disponible</h6>}
+//       <button onClick={(e) => delete_User(e.target, el.ban)} value={el.id}>
+//         {el.ban === true ? 'Desbanear' : 'Banear'}
+//       </button>
+//     </div>
+//   ) : null
+// )}
 //     </div>
 //   );
 // }

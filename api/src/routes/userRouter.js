@@ -147,11 +147,11 @@ router.post("/", async (req, res) => {
           cartId,
           favId
         );
-        try {
-          enviarMail(name, email, passNoHashed);
-        } catch (error) {
-          console.log(error);
-        }
+        // try {
+        //   enviarMail(name, email, passNoHashed);
+        // } catch (error) {
+        //   console.log(error);
+        // }
 
         res.status(200).send("User created succesfully");
       } else {
@@ -178,11 +178,11 @@ router.post("/", async (req, res) => {
           idAuth: headers.user.sub,
         });
         await User.bulkCreate(arr);
-        try {
-          enviarMail(name, email, passNoHashed);
-        } catch (error) {
-          console.log(error);
-        }
+        // try {
+        //   enviarMail(name, email, passNoHashed);
+        // } catch (error) {
+        //   console.log(error);
+        // }
         res.status(200).send("User created succesfully");
       } else {
         res.status(400).send("User allready exists");

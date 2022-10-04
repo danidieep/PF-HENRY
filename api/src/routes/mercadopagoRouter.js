@@ -58,7 +58,11 @@ router.post("/", async (req, res) => {
       ],
       installments: 12,
     },
-    notification_url: `https://b9f7-186-19-162-206.sa.ngrok.io/payment/notifications`,
+    metadata:{
+      userId: usuario.id,
+      email: usuario.email
+    },
+    notification_url: `https://c0c1-181-232-255-29.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -115,7 +119,7 @@ router.post("/notifications", async (req, res) => {
       if (response) {
         if (response.status == "approved") {
           let idPagador = response.payer.id;
-          let emailPagador = response.payer.email;
+          let emailPagador = response.metadata.email;
           let pagoId = response.id;
           let pagoStatus = response.status;
           let montoPago = response.transaction_details.total_paid_amount;
@@ -135,9 +139,10 @@ router.post("/notifications", async (req, res) => {
           let pagoStatus = response.status;
           let montoPago = response.transaction_details.total_paid_amount;
           let ordenID = response.order.id;
+          let emailPagador = response.metadata.email
           asd.push({
             payId: idPagador,
-            payEmail: "-",
+            payEmail: emailPagador,
             paymentID: pagoId,
             paymentStatus: pagoStatus,
             paymentAmount: montoPago,
@@ -221,13 +226,13 @@ router.get("/orden", async (req, res) => {
   );
   let datos = orders.data.elements;
  
-  let response = datos.map((e) => {
+  let response = datos?.map((e) => {
     return {
       orderId: e.id,
-      paymentId: e.payments[0].id,
-      paymentAmount: e.payments[0].total_paid_amount,
-      paymentStatus: e.payments[0].status,
-      paymentDetail: e.payments[0].status_detail,
+      paymentId: e.payments[0]?.id,
+      paymentAmount: e.payments[0]?.total_paid_amount,
+      paymentStatus: e.payments[0]?.status,
+      paymentDetail: e.payments[0]?.status_detail,
       items: e.items,
       cancelled: e.cancelled,
       order_status: e.order_status,
@@ -240,7 +245,7 @@ router.get("/orden", async (req, res) => {
     console.log(error);
   }
 });
-
+ 
 router.get("/orden/:id", async (req, res) => {
   const data = req.params;
    

@@ -11,6 +11,7 @@ import {
   filterByArtist,
   AddFilters,
   getProductsFromCarritoDB,
+  getFavourites,
 } from "../actions";
 import Cards from "./Cards";
 import SearchBar from "./SearchBar";
@@ -48,6 +49,7 @@ export default function MainPage(props) {
   const [num2, setNum2] = useState(ProductsPorPage);
   const [current, setCurrent] = useState(1);
   const [filters, setFilters] = useState("base");
+  const userLocalStorage = JSON.parse(localStorage.getItem("user"))
 
   // const user = JSON.parse(localStorage.getItem("user"))
 
@@ -55,7 +57,9 @@ export default function MainPage(props) {
     if (state.allProducts.length === 0) dispatch(getProducts());
     if (state.artistsList.length === 0) dispatch(getArtists());
     applyFilter();
-    if (user && user.length) dispatch(getProductsFromCarritoDB(user[0].email));
+    // if (user && user.length) dispatch(getProductsFromCarritoDB(user[0].email));
+    if (userLocalStorage && userLocalStorage.length) dispatch(getProductsFromCarritoDB(userLocalStorage[0].email))
+    if (userLocalStorage && userLocalStorage.length) dispatch(getFavourites(userLocalStorage[0].email))
   }, [state.filters]);
 
   const handlerNext = () => {
@@ -309,8 +313,9 @@ export default function MainPage(props) {
 
         {/* CARRUSEL */}
         <div>
-          {user && user.length ? (
-            !user[0].role && state.productsFiltered.length > 5 ? (
+          {console.log(state.filters)}
+          {userLocalStorage && userLocalStorage.length ? (
+          !state.filters.length && !userLocalStorage[0].role && state.productsFiltered.length > 5 ? (
               <div>
                 <p className={styles.featured}>Featured</p>
                 <div className={styles.carrusel}>

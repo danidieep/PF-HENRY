@@ -4,6 +4,7 @@ import { postArtists } from "../actions/index";
 import { useState } from "react";
 import styles from "./ModulesCss/LogIn.module.css";
 import { Link } from "react-router-dom";
+import{ GiSandsOfTime} from "react-icons/gi"
 
 export default function ArtistsPost() {
   const dispatch = useDispatch();
@@ -11,12 +12,20 @@ export default function ArtistsPost() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
+  const [estado, setEstado] = useState(false)
 
   const [input, setInput] = useState({
     name: "",
     birthday: "",
     hometown: "",
   });
+
+  const desactivado = () =>{
+    setEstado(true)
+    setTimeout(() => {
+      setEstado(false)
+    }, 2500);
+  }
 
   function handleChange(e) {
     setInput({
@@ -32,12 +41,9 @@ export default function ArtistsPost() {
 
   function handleSubmit(e, role) {
     e.preventDefault();
-    if (Object.keys(errors).length !== 0) {
-      alert("Debes llenar el Formulario primero");
-    } else {
+   
       postArtists(input, role)
-    }
-
+      desactivado()
     setInput({
       name: "",
       birthday: "",
@@ -50,7 +56,10 @@ export default function ArtistsPost() {
   return (
     <div className={styles.containerAll}>
       <div className={styles.header}>
+      <Link to='/MainPage'>
+          
         <h1 className={styles.logoForm}>Arteck</h1>
+        </Link>
       </div>
       <div className={styles.containerResetPw}>
 
@@ -104,11 +113,9 @@ export default function ArtistsPost() {
             </div>
             <br />
             <button className={styles.buttonRegister} type="submit" onClick={(e) => handleSubmit(e,user[0].role)}>
-              Add
+            {  !estado? "Create" :<GiSandsOfTime/>}  
             </button><br />
-            <Link to='/MainPage'>
-              <button className={styles.buttonRegister}>Home</button>
-            </Link>
+            
           </form>
         </div>
       </div>

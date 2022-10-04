@@ -7,7 +7,7 @@ var jwt = require("jsonwebtoken");
 const { authAdmins, authAdmins1 } = require("../middlewares/middleware");
 
 router.get(
-  "/", 
+  "/",
   async (req, res) => {
     const { title } = req.query;
     const artworks = await getArtworks();
@@ -64,6 +64,8 @@ const ensureToken = (req, res, next) => {
 };
 
 router.post("/", authAdmins1, async (req, res) => {
+  try {
+    console.log(req.body);
   const {
     id,
     title,
@@ -75,7 +77,9 @@ router.post("/", authAdmins1, async (req, res) => {
     medio,
     price,
   } = req.body.payload;
-  try {
+    if (!title || !price || !image.length) {
+      return res.status(400).json({ message: "Complete info" });
+    }
     const postArtwork = createArtwork(
       id,
       title,
@@ -87,9 +91,9 @@ router.post("/", authAdmins1, async (req, res) => {
       medio,
       price
     );
-    res.status(200).send("Artwork created succesful");
+    res.status(200).send('Artworl creadted')
   } catch (error) {
-    res.status(403).send("You cannot create an artwork");
+    res.status(403).send(error.message);
   }
 });
 

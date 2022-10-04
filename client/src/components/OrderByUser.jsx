@@ -69,7 +69,9 @@ function clickItem(order){
             <body >Order id: {oneOrder[0].orderId}</body>
             <body>Payment id: {oneOrder[0].paymentId}</body>
             <body>Status: {oneOrder[0].paymentStatus}</body>
-            <body>Payment details: {oneOrder[0].paymentDetail}</body>
+            <body>Date: {oneOrder[0].date_created}</body>
+            <body>Total amount: {oneOrder[0].paymentAmount}</body>
+            {/* <body>Payment details: {oneOrder[0].paymentDetail}</body> */}
             {oneOrder[0].items.map(e =>{
               return (
                 <div className={styles.artworksBox} key={e.id}>
@@ -80,6 +82,7 @@ function clickItem(order){
                     <body>Artwork id: {e.id}</body>
                     <body>Title: {e.title}</body>
                     <body>quantity: {e.quantity}</body>
+                    <body>price: {e.unit_price}</body>
                   </div>
                 </div>
               )
@@ -104,6 +107,7 @@ function clickItem(order){
                     <div className={styles.item} onClick={()=>clickItem(e.orderId) }>
                     <h3>Order id: {e.orderId}</h3>
                     <h3>Status: {e.paymentStatus}</h3>
+                    <h3>Date: {e.date_created}</h3>
                     </div>
                 </div>  
 

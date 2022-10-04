@@ -19,11 +19,9 @@ module.exports = (sequelize) => {
       },
       date: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       collecting_institution: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       image: {
         type: DataTypes.TEXT,
@@ -31,15 +29,12 @@ module.exports = (sequelize) => {
       },
       creator: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       dimensions: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       medio: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       price: {
         type: DataTypes.STRING,

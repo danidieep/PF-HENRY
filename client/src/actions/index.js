@@ -117,7 +117,7 @@ export function postArtwork(payload, role) {
         progress: undefined,
       });
     } catch (error) {
-      toast.error("Error", {
+      toast.error("Complete the data", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: true,
@@ -538,7 +538,7 @@ export async function postArtists(payload, role) {
       progress: undefined,
     });
   } catch (error) {
-    toast.error("error", {
+    toast.error("Complete the data", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: true,

@@ -48,8 +48,10 @@ router.get("/:idArtist", async (req, res) => {
 
 router.post("/", authAdmins1, async (req, res) => {
   try {
-    // const { id, name, birthday, hometown } = req.body;
-    // console.log(req.body, 'req.body back');
+    const { name, birthday, hometown } = req.body.payload;
+    if (!name || !birthday || !hometown) {
+      return res.status(400).json({ message: "Complete info" });
+    }
     createArtist(req.body);
     res.status(200).send("Artist created succesfully");
   } catch (error) {

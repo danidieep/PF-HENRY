@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./ModulesCss/LogIn.module.css";
 import { Link } from "react-router-dom";
+import {GiSandsOfTime} from "react-icons/gi"
 
 export default function PostArtwork() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function PostArtwork() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
+  const [estado, setEstado] = useState(false)
 
   useEffect(() => {
     dispatch(getArtists());
@@ -31,6 +33,14 @@ export default function PostArtwork() {
     price: "",
   });
 
+
+  const desactivado = () =>{
+    setEstado(true)
+    setTimeout(() => {
+      setEstado(false)
+    }, 2500);
+
+  }
   function handleChange(e) {
     setInput({
       ...input,
@@ -59,6 +69,7 @@ export default function PostArtwork() {
       alert("Debes llenar el Formulario primero");
     } else {
       dispatch(postArtwork(input, role));
+      desactivado()
     }
 
     setInput({
@@ -80,6 +91,7 @@ export default function PostArtwork() {
     data.append("file", files);
     data.append("upload_preset", "artket");
     data.append("api_key", "194228613445554");
+    desactivado()
     setLoading(true);
     const res = await axios
       .post("https://api.cloudinary.com/v1_1/daxy95gra/image/upload", data, {
@@ -98,7 +110,9 @@ export default function PostArtwork() {
   return (
     <div>
       <div className={styles.header}>
+      <Link to="/MainPage">
         <h1 className={styles.logoForm}>Arteck</h1>
+             </Link>
       </div>
       <div className={styles.containerRegister}>
         <div className={styles.formContainer}>
@@ -245,16 +259,15 @@ export default function PostArtwork() {
             <button
               className={styles.buttonRegister}
               type="submit"
+              disabled={estado}
               onClick={(e) =>
                 handleSubmit(e, user[0].role ? user[0].role : null)
               }
             >
-              Crear
+           {  !estado? "Create" :<GiSandsOfTime/>}
             </button>
             <br />
-            <Link to="/MainPage">
-              <button className={styles.buttonRegister}>Home</button>
-            </Link>
+         
           </form>
         </div>
       </div>

@@ -29,6 +29,9 @@ function App() {
   const state = useSelector((state) => state);
   const { isAuthenticated, user } = useAuth0();
 
+
+
+
   //creamos en el local storege un array vacío
   !localStorage.getItem("user")
     ? localStorage.setItem("user", JSON.stringify([]))

@@ -61,7 +61,6 @@ export const filterOrderRejectedrUser = () => {
 
 export const getOrderUserDetail = (orderId) => {
 
-
     return ({
       type: GET_ONE_ORDER_USER,
       payload: orderId
@@ -95,8 +94,8 @@ export const getAllOrders = () => {
     });
   };
 };
-export const getPay = async (payload, user) => {
-  let asd = await axios.post("/payment", { payload, user });
+export const getPay = async (payload, user, adress) => {
+  let asd = await axios.post("/payment", { payload, user, adress });
   window.location.href = asd.data;
 };
 

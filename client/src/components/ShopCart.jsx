@@ -12,16 +12,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PayForm from "./PayForm";
 import LogOut from "./LogOut";
-import { BsFillHeartFill } from "react-icons/bs"
-import { BsFillCartFill } from "react-icons/bs"
+import { BsFillHeartFill } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 
 export default function ShopCart() {
   const user = JSON.parse(localStorage.getItem("user"));
   const carrito = useSelector((state) => state.carrito);
   const payForm = useSelector((state) => state.payForm);
-  const [select, setSelect] = useState(false)
+  const [select, setSelect] = useState(false);
   const dispatch = useDispatch();
-  const favoritos = useSelector((state) => state.favoritos)
+  const favoritos = useSelector((state) => state.favoritos);
   const product = useSelector((state) => state.productDetails);
   const email = JSON.parse(localStorage.getItem("user"))[0].email;
   const [open, setOpen] = useState(false);
@@ -39,11 +39,9 @@ export default function ShopCart() {
     alertDeleteFromCarrito();
   };
 
-
   useEffect(() => {
     dispatch(getProductsFromCarritoDB(user[0].email));
   }, []);
-
 
   function alertDeleteFromCarrito() {
     toast.success(`Artwork deleted from cart!`, {
@@ -84,7 +82,6 @@ export default function ShopCart() {
     let suma = 0;
     carrito.forEach((e) => (suma = suma + Number(e.price)));
     setEstado(suma);
-
   }
   function handleSubmit(e) {
     setOpen(!open);
@@ -92,79 +89,72 @@ export default function ShopCart() {
 
   return (
     <div className={styles.containerCarrito}>
-      <header >
+      <header>
         <div className={styles.tapaHeader}></div>
         <div className={styles.header}>
           <div className={styles.filtersDiv}>
-            <Link className={styles.link} to='/mainpage'>
-              <button className={styles.logoDetails}
-              ><h2 className={styles.logo}>Artket</h2></button>
+            <Link className={styles.link} to="/mainpage">
+              <button className={styles.logoDetails}>
+                <h2 className={styles.logo}>Artket</h2>
+              </button>
             </Link>
             <div></div>
-            <div><h1 className={styles.divTittle}>Your cart</h1></div>
+            <div>
+              <h1 className={styles.divTittle}>Your cart</h1>
+            </div>
             <div></div>
             <div className={styles.restoDeItems}>
-              <div className={styles.cartAndProfileAndFav} >
-                {JSON.parse(localStorage.getItem("user")).length ?
+              <div className={styles.cartAndProfileAndFav}>
+                {JSON.parse(localStorage.getItem("user")).length ? (
                   <div className={styles.CartAndFav}>
-
-
                     <div className={styles.iconsHeader}>
                       <Link to="/ShopCart">
-
                         <button className={styles.btnCarritoNav}>
                           <BsFillCartFill />
                           <h4 className={styles.cantItems}>{carrito.length}</h4>
                         </button>
-
-
-
                       </Link>
                     </div>
                     <div className={styles.iconsHeader}>
                       <Link to="/Favourites">
                         <button className={styles.btnFav}>
                           <BsFillHeartFill />
-                          <h4 className={styles.cantItems}>{favoritos.length}</h4>
+                          <h4 className={styles.cantItems}>
+                            {favoritos.length}
+                          </h4>
                         </button>
-
                       </Link>
                     </div>
                     <div className={styles.profileBtn}>
                       <LogOut></LogOut>
                     </div>
                   </div>
-                  : false
-                }
-
-
-
+                ) : (
+                  false
+                )}
               </div>
             </div>
-
           </div>
         </div>
       </header>
       <div className={styles.yourCarrito}>
         <ToastContainer />
-
       </div>
-      {
-        carrito.length === 0 ?
-          <div className={styles.favEmpty}>
-            <div>
-              <p>You have nothing on your cart</p>
-              <p>Don't know what to buy? Lots of arkwort are waiting for you!</p>
-            </div>
+      {carrito.length === 0 ? (
+        <div className={styles.favEmpty}>
+          <div>
+            <p>You have nothing on your cart</p>
+            <p>Don't know what to buy? Lots of arkwort are waiting for you!</p>
           </div>
-          : false
-      }
+        </div>
+      ) : (
+        false
+      )}
       {carrito.map((element) => {
         return (
           <div className={styles.allCarritoContainer}>
             <div className={styles.carrito}>
-
-              <Link to={'/Products/' + element.id}>
+              <Link to={"/Products/" + element.id}>
                 <img className={styles.imgCarrito} src={element.image} alt="" />
               </Link>
               <h1 className={styles.titleCarrito}>{element.title}</h1>
@@ -187,26 +177,28 @@ export default function ShopCart() {
             </div>
           </div>
         );
-
       })}
-      {carrito.length > 0 ?
+      {carrito.length > 0 ? (
         <div className={styles.comprarTodoContainer}>
           <div className={styles.comprarTodo}>
             <h2>Total price: {estado}</h2>
             {open === false ? (
               <div>
-                <button className={styles.btnBuyAll} onClick={(e) => handleSubmit(e)}>Buy all</button>
+                <button
+                  className={styles.btnBuyAll}
+                  onClick={(e) => handleSubmit(e)}
+                >
+                  Buy all
+                </button>
               </div>
             ) : (
-              <PayForm
-                carrito={carrito}
-                user={user}
-              ></PayForm>
+              <PayForm carrito={carrito} user={user}></PayForm>
             )}
           </div>
         </div>
-        : false}
+      ) : (
+        false
+      )}
     </div>
   );
 }
-

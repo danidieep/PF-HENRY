@@ -25,7 +25,6 @@ export default function PayForm(data) {
   });
 
   function handleChange(e) {
-    console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -34,17 +33,16 @@ export default function PayForm(data) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(input.length);
     postAdress(input, data.user[0].email);
-    getPay(data.carrito, data.user);
+    getPay(data.carrito, data.user, input.street.length && input.number.length && input.postalCode.length ? input : adress);
   }
 
   function handleSubmitChanged(e) {
     e.preventDefault();
     putAdress(input, data.user[0].email);
-    getPay(data.carrito, data.user);
-
+    getPay(data.carrito, data.user, input.street.length && input.number.length && input.postalCode.length ? input : adress);
   }
+
   useEffect(() => {
     getAdress(data.user[0].email).then((res) => {
       setAdress({
@@ -53,7 +51,6 @@ export default function PayForm(data) {
         postalCode: res.data.postalCode,
       });
     });
-    console.log(adress);
   }, []);
 
   // function handleChangeAdress() {

@@ -82,6 +82,7 @@ export default function AllUserOrders() {
               <body>Status: {oneOrder[0].paymentStatus}</body>
               <body>Date: {oneOrder[0].date_created}</body>
               <body>Total amount: {oneOrder[0].paymentAmount}</body>
+              <body>Order: {oneOrder[0].adress}</body>
               {oneOrder[0].items.map((e) => {
                 return (
                   <div className={styles.artworksBox} key={e.id}>

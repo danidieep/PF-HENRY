@@ -15,14 +15,14 @@ export default function LandingPage() {
 
 
 
-   return (
+  return (
     <div className={styles.container}>
 
 
 
 
       <div className={styles.header}>
-        <Link><div><button className={styles.aboutus}>About us</button></div></Link>
+        <div></div>
         <LogOut></LogOut>
 
 

@@ -11,6 +11,7 @@ import {
   filterByArtist,
   AddFilters,
   getProductsFromCarritoDB,
+  getFavourites,
 } from "../actions";
 import Cards from "./Cards";
 import SearchBar from "./SearchBar";
@@ -49,79 +50,70 @@ export default function MainPage(props) {
   const [current, setCurrent] = useState(1);
   const [filters, setFilters] = useState("base");
 
-  // const user = JSON.parse(localStorage.getItem("user"))
 
   React.useEffect(() => {
+    const userLocal = JSON.parse(localStorage.getItem("user"));
     if (state.allProducts.length === 0) dispatch(getProducts());
     if (state.artistsList.length === 0) dispatch(getArtists());
+    dispatch(getProductsFromCarritoDB(userLocal[0].email ? userLocal[0].email : user.email))
+    dispatch(getFavourites(userLocal[0].email ? userLocal[0].email : user.email))
     applyFilter();
-    if (user && user.length) dispatch(getProductsFromCarritoDB(user[0].email));
   }, [state.filters]);
 
   const handlerNext = () => {
     if (current < CountOf) {
-      setNum1(num1 + ProductsPorPage)
-      setNum2(num2 + ProductsPorPage)
-      setCurrent(current + 1)
+      setNum1(num1 + ProductsPorPage);
+      setNum2(num2 + ProductsPorPage);
+      setCurrent(current + 1);
     }
-  }
+  };
 
   const handlerPrev = () => {
     if (current >= 2) {
-      setNum1(num1 - ProductsPorPage)
-      setNum2(num2 - ProductsPorPage)
-      setCurrent(current - 1)
+      setNum1(num1 - ProductsPorPage);
+      setNum2(num2 - ProductsPorPage);
+      setCurrent(current - 1);
     }
-  }
+  };
 
   const handleReset = () => {
-    setNum1(0)
-    setNum2(ProductsPorPage)
-    setCurrent(1)
-  }
+    setNum1(0);
+    setNum2(ProductsPorPage);
+    setCurrent(1);
+  };
 
   const applyFilter = (e) => {
-
-    state.filters.forEach(element => {
-
+    state.filters.forEach((element) => {
       if (element.type === "artist") {
-        dispatch(filterByArtist(element.name))
+        dispatch(filterByArtist(element.name));
       }
-
 
       if (element.type === "medium") {
-        dispatch(filterByMedium(element.name))
+        dispatch(filterByMedium(element.name));
       }
     });
-
-  }
+  };
 
   const OrderByPriceSelector = (name) => {
     // dispatch(OrderByPrice(type))
-    dispatch(OrderByPrice(name))
-
-  }
+    dispatch(OrderByPrice(name));
+  };
 
   const artistSelector = (name) => {
-    dispatch(AddFilters({ type: "artist", name }))
-    handleReset()
-
-  }
+    dispatch(AddFilters({ type: "artist", name }));
+    handleReset();
+  };
 
   const deleteFilter_ = (name) => {
-    dispatch(deletefilter(name))
-
-
-  }
-
+    dispatch(deletefilter(name));
+  };
 
   const mediumSelector = (name) => {
-    dispatch(AddFilters({ type: "medium", name }))
+    dispatch(AddFilters({ type: "medium", name }));
     // dispatch(filterByMedium(type))
-    handleReset()
+    handleReset();
     console.log(name);
-
-  }
+  };
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -131,9 +123,9 @@ export default function MainPage(props) {
   };
 
   function alertNewslatter() {
-    toast.info('You have been suscribed to our newsletter!', {
+    toast.info("You have been suscribed to our newsletter!", {
       position: "top-center",
-      theme: 'dark',
+      theme: "dark",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -141,7 +133,6 @@ export default function MainPage(props) {
       draggable: true,
       progress: undefined,
     });
-
   }
 
   return (
@@ -151,7 +142,6 @@ export default function MainPage(props) {
           <div className={styles.tapaHeader}></div>
           <div className={styles.header}>
             <div className={styles.restoDeItems}>
-
               <div className={styles.filtersDiv}>
                 <button
                   className={styles.linkMain}
@@ -253,11 +243,11 @@ export default function MainPage(props) {
                   </nav>
                 </div>
                 <div className={styles.SearchBarHome}>
-                  <SearchBar handleReset={handleReset} ></SearchBar>
+                  <SearchBar handleReset={handleReset}></SearchBar>
                 </div>
               </div>
-              <div className={styles.cartAndProfileAndFav} >
-                {JSON.parse(localStorage.getItem("user")).length ?
+              <div className={styles.cartAndProfileAndFav}>
+                {JSON.parse(localStorage.getItem("user")) ? (
                   <div className={styles.CartAndFav}>
                     <div className={styles.iconsHeader}>
                       <Link to="/ShopCart">
@@ -288,24 +278,19 @@ export default function MainPage(props) {
                       </Link>
                     </div>
                   </div>
-                  : false
-                }
+                ) : (
+                  false
+                )}
 
-                <div>
-
-                </div>
+                <div></div>
 
                 <div>
                   <LogOut></LogOut>
                 </div>
-
               </div>
             </div>
-
           </div>
         </header>
-
-
 
         {/* CARRUSEL */}
         <div>
@@ -316,7 +301,7 @@ export default function MainPage(props) {
                 <div className={styles.carrusel}>
                   <div>
                     <ul>
-                      {state.productsFiltered
+                      {state.allProducts
                         .slice(num1, num2)
                         .slice(0, 5)
                         .map((element) => {
@@ -357,17 +342,17 @@ export default function MainPage(props) {
         </div>
         {/* FILTROS */}
 
-
         <AdminPanel />
 
         {/* LIMPIAR FILTROS */}
-        {state.filters.length > 0 ?
+        {state.filters.length > 0 ? (
           <div>
             <h3 className={styles.filtersAplied}>Filters aplied:</h3>
           </div>
-          : false}
-        {state.filters.map(element => {
-
+        ) : (
+          false
+        )}
+        {state.filters.map((element) => {
           return (
             <div key={1}>
               <span>{element.name}</span>
@@ -443,29 +428,27 @@ export default function MainPage(props) {
             >{`>`}</button>
           </div>
           <div className={styles.footer_info}>
-
-            {JSON.parse(localStorage.getItem("user")).length ?
+            {JSON.parse(localStorage.getItem("user")).length ? (
               <div>
                 <p className={styles.newsletter}>
-                  Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
+                  Wana recive info about our lastest sales? Register to our
+                  newsleter to be updated at every time
                 </p>
                 <div className={styles.formNewsletter}>
-                  <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
+                  <button
+                    className={styles.btnSubscribe}
+                    onClick={handleSubscribe}
+                  >
+                    Subscribe to Newsletter
+                  </button>
                 </div>
-
-
               </div>
-
-              : false
-
-            }
-
+            ) : (
+              false
+            )}
           </div>
-
         </footer>
-
       </div>
     </div>
-  )
+  );
 }
-

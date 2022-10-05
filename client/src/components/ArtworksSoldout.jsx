@@ -26,10 +26,12 @@ export default function ArtworksSoldout() {
         <div className={style.arts_box}>
           {artworksSolds.map((e) => {
             return (
-              <div className={style.arts_data}>
-                <h6>{e.title}</h6>
-                <h6>{e.date}</h6>
-                <img className={style.image} src={e.image}></img>
+              <div className={style.arts_dataContainer}>
+                <div className={style.arts_data}>
+                  <h6>{e.title}</h6>
+                  <h6>{e.date}</h6>
+                  <img className={style.image} src={e.image}></img>
+                </div>
               </div>
             );
           })}

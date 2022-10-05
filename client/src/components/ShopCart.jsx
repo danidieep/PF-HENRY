@@ -99,7 +99,7 @@ export default function ShopCart() {
               </button>
             </Link>
           </div>
-          <div><h1 className={styles.divTittle}>Your cart</h1></div>
+          <h1 className={styles.divTittle}>Your cart</h1>
           <div className={styles.cartAndProfileAndFav} >
             {JSON.parse(localStorage.getItem("user")).length ?
               <div className={styles.CartAndFav}>

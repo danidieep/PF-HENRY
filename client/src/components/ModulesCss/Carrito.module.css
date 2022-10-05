@@ -15,8 +15,19 @@
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
-    height: 4rem;
-    margin-bottom: 120px;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 414px) {
+    .header {
+        width: 100%;
+        height: auto;
+        flex-flow: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
 }
 
 .filtersDiv {
@@ -26,6 +37,8 @@
     align-items: center;
 
 }
+
+
 
 .link {
     width: 60px;
@@ -48,6 +61,13 @@
     border: none;
     background-color: transparent;
     margin-left: 100px;
+}
+
+@media (max-width: 414px) {
+    .logo {
+        margin: auto;
+        margin-left: -1.8rem;
+    }
 }
 
 .logoDetails {
@@ -76,6 +96,12 @@
 
 }
 
+@media (max-width: 414px) {
+    .cartAndProfileAndFav {
+        margin-right: 0rem;
+    }
+}
+
 .CartAndFav {
     display: flex;
     flex-flow: row wrap;
@@ -84,7 +110,13 @@
     align-items: center;
 }
 
+@media (max-width: 414px) {
+    .CartAndFav {
+        width: 100%;
+        margin: auto;
 
+    }
+}
 
 .cantItems {
     background-color: red;
@@ -119,6 +151,11 @@
 
 }
 
+.btnCarrito:hover {
+    color: rgb(141, 93, 93);
+    transition: 0.3s;
+}
+
 .btnFav {
     background-color: transparent;
     border: none;
@@ -150,6 +187,14 @@
     /* margin-top: 120px; */
 }
 
+@media (max-width: 414px) {
+    .allCarritoContainer {
+        width: 90%;
+        margin: auto;
+
+    }
+}
+
 .carrito {
     width: 70%;
     height: 100px;
@@ -174,8 +219,24 @@
     font-size: 18px;
 }
 
+@media (max-width: 414px) {
+    .titleCarrito {
+        margin-right: 1rem;
+        font-size: 12px;
+    }
+}
+
+
 .titleBy {
     margin-right: 4rem;
+}
+
+@media (max-width: 414px) {
+    .titleBy {
+        margin-right: 1rem;
+        font-size: 10px;
+        margin-bottom: 0.3rem;
+    }
 }
 
 .favEmpty {
@@ -203,6 +264,14 @@
     font-size: 42px;
     color: black;
     position: relative;
+}
+
+@media (max-width: 414px) {
+    .divTittle {
+        margin-left: 0px;
+        font-size: 24px;
+        margin-bottom: 0.3rem;
+    }
 }
 
 .priceCarrito {

@@ -64,7 +64,7 @@ button {
 @media (max-width: 414px) {
     .logo {
         margin: auto;
-        padding-right: 1rem;
+        margin-left: -1.8rem;
     }
 }
 

@@ -17,7 +17,7 @@ import Users from "./components/Users";
 import ArtistsPost from "./components/ArtistsPost";
 import Favoritos from "./components/Favoritos";
 import ResetPassword from "./components/ResetPassword";
-import profileEdit from "./components/profileEdit";
+import ProfileEdit from "./components/ProfileEdit";
 import Security from "./components/Security";
 import PayForm from "./components/PayForm";
 import AllUserOrders from "./components/AllUserOrders";
@@ -111,8 +111,8 @@ function App() {
       <Route path="/Favourites" component={Favoritos} >
       {isAuthenticated && !uls.length?<UserBanned/> : <Favoritos/>}
       </Route>
-      <Route path="/ProfileEdit" component={profileEdit} >
-      {isAuthenticated && !uls.length?<UserBanned/> : <profileEdit/>}
+      <Route path="/ProfileEdit" component={ProfileEdit} >
+      {isAuthenticated && !uls.length?<UserBanned/> : <ProfileEdit/>}
       </Route>
       <Route path="/Security/" component={Security} >
       {isAuthenticated && !uls.length?<UserBanned/> : <Security/>}

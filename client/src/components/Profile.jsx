@@ -67,7 +67,7 @@ export default function Profile() {
           </div>
           <div className={styles.profile}>
             <div className={styles.panelLeft}>
-              <Link to="/MyBuys">
+              <Link to="/OrderByUser">
                 <body>
                   <BsBagCheck className={styles.iconsLeft} /> My buys
                 </body>

@@ -1,4 +1,4 @@
-.containerCarrito {
+/* .containerCarrito {
     width: 100%;
     min-height: 938px;
     display: flex;
@@ -6,19 +6,25 @@
     align-content: center;
     color: rgb(0, 0, 0);
     padding-bottom: 20px;
+} */
+
+.header {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    margin-bottom: 120px;
 }
 
 .filtersDiv {
-    font-family: 'Merriweather', serif;
-    font-style: normal;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 30% 15% 15% 15% 25%;
-    justify-content: center;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
     align-items: center;
-    padding-left: 3rem;
-    font-size: 0.8rem;
-    height: 4rem;
+
 }
 
 .link {
@@ -41,6 +47,7 @@
     margin-left: 5rem;
     border: none;
     background-color: transparent;
+    margin-left: 100px;
 }
 
 .logoDetails {
@@ -61,10 +68,12 @@
 }
 
 .cartAndProfileAndFav {
-    float: right;
-    display: grid;
+    display: flex;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: center;
+    margin-right: 100px;
+
 }
 
 .CartAndFav {
@@ -89,19 +98,6 @@
     color: white;
 }
 
-.header {
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-    position: fixed;
-    z-index: 3;
-    top: 0;
-    left: 0;
-}
-
-.tapaHeader {
-    height: 4rem;
-    margin-bottom: 2rem;
-}
 
 .profileBtn {
     margin-bottom: 0.1rem;
@@ -112,7 +108,7 @@
     font-size: 2rem;
 }
 
-.btnCarritoNav {
+.btnCarrito {
     background-color: transparent;
     border: none;
     font-size: 1.5rem;
@@ -120,6 +116,7 @@
     cursor: pointer;
     transition: 0.3s;
     width: 5rem;
+
 }
 
 .btnFav {
@@ -150,6 +147,7 @@
     display: flex;
     flex-direction: row;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 30%);
+    /* margin-top: 120px; */
 }
 
 .carrito {
@@ -181,6 +179,7 @@
 }
 
 .favEmpty {
+
     width: 70%;
     border-radius: 3px;
     background-color: white;
@@ -198,6 +197,7 @@
 }
 
 .divTittle {
+    margin-left: 450px;
     font-family: 'Merriweather', serif;
     font-style: normal;
     font-size: 42px;
@@ -223,14 +223,14 @@
     display: inline-block;
     font-family: 'Merriweather', serif;
     font-style: normal;
-    font-size: 14px;
+    font-size: 18px;
     height: 40px;
     width: auto;
     outline: none;
     text-align: center;
     text-decoration: none;
     margin: 5px;
-    margin-top: 19px;
+    margin-top: 15px;
     padding: 12px;
 }
 
@@ -247,27 +247,9 @@
 .comprarTodoContainer {
     width: 100%;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-.btnCarrito {
-    background-color: transparent;
-    border-style: none;
-    color: rgba(101, 53, 53, 1);
-    cursor: pointer;
-    display: inline-block;
-    font-family: 'Merriweather', serif;
-    font-style: normal;
-    font-size: 14px;
-    height: 40px;
-    width: auto;
-    outline: none;
-    text-align: center;
-    text-decoration: none;
-    margin: 5px;
-    margin-top: 19px;
-    padding: 12px;
-
-}
 
 .btnCarritoPos {
     padding-top: 12px;

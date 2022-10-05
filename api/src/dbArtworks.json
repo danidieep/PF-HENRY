@@ -130,7 +130,7 @@
         "price": "1670"
     },
     {
-        "title": "La Liberté guidant le peuple (Liberty Leading the People)",
+        "title": "La Liberté guidant le peuple",
         "date": "1830",
         "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/dJCFrPhuikHpcjELtngBRA/medium.jpg",
@@ -200,7 +200,7 @@
         "price": "350"
     },
     {
-        "title": "Le debarquement de Marie de Médicis au port de Marseille le 3 November 1600 (Maria Medici arrives in Marseille, Nov. 3 1600)",
+        "title": "Le debarquement de Marie de Médicis",
         "date": "ca. 1622-1625",
         "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/nivmR8d4gTT7TtkoLwqFiA/medium.jpg",
@@ -240,7 +240,7 @@
         "price": "570"
     },
     {
-        "title": "Dance at Le Moulin de la Galette (Bal du moulin de la galette)",
+        "title": "Dance at Le Moulin de la Galette",
         "date": "1876",
         "collecting_institution": "Musée d'Orsay, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/eRWu6KaVL0uH2MD9y8ZFhw/medium.jpg",
@@ -252,7 +252,7 @@
     {
         "title": "A Buddha",
         "date": "1890",
-        "collecting_institution": false,
+        "collecting_institution": "Musée d'Orsay, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/ZTrcPcyWDz0U3hng4yZM9w/medium.jpg",
         "artist": "unknown",
         "medio": "Copper alloy inlaid with crystal and obsidian",
@@ -272,7 +272,7 @@
     {
         "title": "A Norman Milkmaid at Gréville",
         "date": "1871",
-        "collecting_institution": false,
+        "collecting_institution": "Museum of Fine Art, Vienna",
         "image": "https://d32dm0rphc51dk.cloudfront.net/pvkrk6CX9REDaktWb-3VGg/medium.jpg",
         "artist": "Jean-François Millet",
         "medio": "Oil on cardboard",
@@ -280,9 +280,9 @@
         "price": "330"
     },
     {
-        "title": "A Court Scene, Folio from a Manuscript of Sadi's Gulistan (Rose Garden) ",
+        "title": "A Court Scene",
         "date": "1596",
-        "collecting_institution": false,
+        "collecting_institution": "Museum of Fine Art, Vienna",
         "image": "https://d32dm0rphc51dk.cloudfront.net/cK3QmARkRi9Yba7rCDzCVg/medium.jpg",
         "artist": "Basawan",
         "medio": "Opaque watercolor, gold, and ink on paper",
@@ -290,7 +290,7 @@
         "price": "220"
     },
     {
-        "title": "L'Embarquement pour Cythère (The Embarkation for Cythera)",
+        "title": "The Embarkation for Cythera",
         "date": "1717",
         "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/Ux_L_UKjxgR-gJ6XZYVgVg/medium.jpg",
@@ -302,7 +302,7 @@
     {
         "title": "Acrobat ",
         "date": "200 BCE -CE 500",
-        "collecting_institution": false,
+        "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/OuQRXLZ0YCb3mLVtvBFFKA/medium.jpg",
         "artist": "unknown",
         "medio": "Slip-painted ceramic",
@@ -312,7 +312,7 @@
     {
         "title": "A Scene from the Life of St. Martin",
         "date": "ca. 1737",
-        "collecting_institution": false,
+        "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/yISVWv-NOtYHBNmaDWNDHw/medium.jpg",
         "artist": "Louis Galloche",
         "medio": "Oil on canvas",
@@ -322,7 +322,7 @@
     {
         "title": "Aux Ambassadeurs",
         "date": "1879-1880",
-        "collecting_institution": false,
+        "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/r_Z0oC3yT1wrnYCCBONOlw/medium.jpg",
         "artist": "Edgar Degas",
         "medio": "Etching",
@@ -332,7 +332,7 @@
     {
         "title": "Allegory of Navigation with a Cross-Staff: Averroës",
         "date": "1557",
-        "collecting_institution": false,
+        "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/Go5RsteUJGDcNVFyeuPEjQ/medium.jpg",
         "artist": "Paolo Veronese",
         "medio": "Oil on canvas",
@@ -342,7 +342,7 @@
     {
         "title": "Allegory of Navigation with an Astrolabe: Ptolemy",
         "date": "1557",
-        "collecting_institution": false,
+        "collecting_institution": "Musée d'Orsay, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/Ou8elzcyEpGSGmd1q-1JzQ/medium.jpg",
         "artist": "Paolo Veronese",
         "medio": "Oil on canvas",
@@ -352,7 +352,7 @@
     {
         "title": "Articles of Porcelain",
         "date": "ca. 1844",
-        "collecting_institution": false,
+        "collecting_institution": "Musée d'Orsay, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/UjYqzgr_kucaEo6RQ3gt2A/medium.jpg",
         "artist": "William Henry Fox Talbot",
         "medio": "Calotype",
@@ -362,7 +362,7 @@
     {
         "title": "Altar Attendant (Tongja) Holding a Turtle",
         "date": "Joseon dynasty (1392-1910); 18th century",
-        "collecting_institution": false,
+        "collecting_institution": "Musée d'Orsay, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/UvlNTfq13MeqvLjjbiqTqA/medium.jpg",
         "artist": "unknown",
         "medio": "Carved wood with pigments",
@@ -372,7 +372,7 @@
     {
         "title": "Buddha Shakyamuni",
         "date": "2nd -3rd century",
-        "collecting_institution": false,
+        "collecting_institution": "Musée d'Orsay, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/4yDPdt05qr6APLkSVfqWTQ/medium.jpg",
         "artist": "unknown",
         "medio": "Stone, gray schist",
@@ -382,7 +382,7 @@
     {
         "title": "Cheekpiece from a Horse Bit",
         "date": "1000-650 B.C.",
-        "collecting_institution": false,
+        "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/iA0HGhmJGgnOpdWXGriW3Q/medium.jpg",
         "artist": "unknown",
         "medio": "Bronze",
@@ -392,7 +392,7 @@
     {
         "title": "Christ in Limbo",
         "date": "ca. 1655",
-        "collecting_institution": false,
+        "collecting_institution": "Musée du Louvre, Paris",
         "image": "https://d32dm0rphc51dk.cloudfront.net/26F-uNFsxVhqnw9xD9PmYQ/medium.jpg",
         "artist": "Alonso Cano",
         "medio": "Oil on canvas",

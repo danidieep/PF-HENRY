@@ -1,10 +1,10 @@
 .LoginMsg {
-    color: rgb(81, 70, 70);
-    font-weight: 100;
-    background-color: transparent;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    font-family: 'Merriweather', serif;
+  color: rgb(81, 70, 70);
+  font-weight: 100;
+  background-color: transparent;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  font-family: 'Merriweather', serif;
 }
 
 .container {
@@ -32,10 +32,14 @@
 }
 
 .logoForm {
-  font-family: "Euphoria Script", cursive;
-  text-decoration-color: rgb(0, 0, 0);
-  font-weight: 400;
-  color: rgb(1, 1, 1);
+  font-family: 'Euphoria Script', cursive;
+  color: black;
+  cursor: pointer;
+  font-size: 3.2rem;
+  font-weight: 100;
+  border: none;
+  background-color: transparent;
+
 }
 
 .box {

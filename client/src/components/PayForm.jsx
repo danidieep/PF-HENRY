@@ -47,17 +47,15 @@ export default function PayForm(data) {
       ...input,
       [e.target.name]: e.target.value,
     });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
+    setErrors(validate({
+      ...input,
+      [e.target.name]: e.target.value
+    }))
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (input.street === "" || input.number === "" || input.postalCode === "") {
+    if (input.street === '' || input.number === '' || input.postalCode === '') {
       toast.error("Complete de data", {
         position: "top-center",
         theme: "light",
@@ -124,9 +122,12 @@ export default function PayForm(data) {
         postalCode: res.data.postalCode,
       });
     });
+
   }, []);
 
-  function alertPutArtwork() {}
+  function alertPutArtwork() {
+
+  }
 
   // function handleChangeAdress() {
   //   setAdress({

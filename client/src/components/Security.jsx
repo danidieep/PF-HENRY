@@ -17,6 +17,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 import { BiUserCircle } from "react-icons/bi"
 import { BiShield } from "react-icons/bi"
 import { AiOutlineDelete } from "react-icons/ai"
+import { AiOutlineArrowLeft } from "react-icons/ai"
 
 
 
@@ -125,7 +126,7 @@ export default function Security() {
 
 
       <div className={styles.body}>
-        <button className={styles.volver} onClick={() => window.location.href = "/Profile"}>{"<"}</button>
+        <button className={styles.volver} onClick={() => window.location.href = "/Profile"}><AiOutlineArrowLeft /></button>
 
         <form onSubmit={(e) => handleSubmit(e)}>
 

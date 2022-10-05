@@ -12,8 +12,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PayForm from "./PayForm";
 import LogOut from "./LogOut";
-import { BsFillHeartFill } from "react-icons/bs";
-import { BsFillCartFill } from "react-icons/bs";
+import { BsFillHeartFill } from "react-icons/bs"
+import { BsFillCartFill } from "react-icons/bs"
+import { BsFillBagCheckFill } from "react-icons/bs";
 
 export default function ShopCart() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -89,8 +90,7 @@ export default function ShopCart() {
 
   return (
     <div className={styles.containerCarrito}>
-      <header>
-        <div className={styles.tapaHeader}></div>
+      <header >
         <div className={styles.header}>
           <div className={styles.filtersDiv}>
             <Link className={styles.link} to="/mainpage">
@@ -98,43 +98,56 @@ export default function ShopCart() {
                 <h2 className={styles.logo}>Artket</h2>
               </button>
             </Link>
-            <div></div>
-            <div>
-              <h1 className={styles.divTittle}>Your cart</h1>
-            </div>
-            <div></div>
-            <div className={styles.restoDeItems}>
-              <div className={styles.cartAndProfileAndFav}>
-                {JSON.parse(localStorage.getItem("user")).length ? (
-                  <div className={styles.CartAndFav}>
-                    <div className={styles.iconsHeader}>
-                      <Link to="/ShopCart">
-                        <button className={styles.btnCarritoNav}>
-                          <BsFillCartFill />
-                          <h4 className={styles.cantItems}>{carrito.length}</h4>
-                        </button>
-                      </Link>
-                    </div>
-                    <div className={styles.iconsHeader}>
-                      <Link to="/Favourites">
-                        <button className={styles.btnFav}>
-                          <BsFillHeartFill />
-                          <h4 className={styles.cantItems}>
-                            {favoritos.length}
-                          </h4>
-                        </button>
-                      </Link>
-                    </div>
-                    <div className={styles.profileBtn}>
-                      <LogOut></LogOut>
-                    </div>
-                  </div>
-                ) : (
-                  false
-                )}
-              </div>
-            </div>
           </div>
+          <div><h1 className={styles.divTittle}>Your cart</h1></div>
+          <div className={styles.cartAndProfileAndFav} >
+            {JSON.parse(localStorage.getItem("user")).length ?
+              <div className={styles.CartAndFav}>
+
+
+                <div className={styles.iconsHeader}>
+                  <Link to="/ShopCart">
+
+                    <button className={styles.btnCarrito}>
+                      <BsFillCartFill />
+                      <h4 className={styles.cantItems}>{carrito.length}</h4>
+                    </button>
+
+
+
+                  </Link>
+                </div>
+                <div className={styles.iconsHeader}>
+                  <Link to="/Favourites">
+                    <button className={styles.btnFav}>
+                      <BsFillHeartFill />
+                      <h4 className={styles.cantItems}>{favoritos.length}</h4>
+                    </button>
+
+                  </Link>
+                </div>
+                <div className={styles.iconsHeader}>
+                  <Link to="/OrderByUser">
+                    <button className={styles.btnFav}>
+                      <BsFillBagCheckFill
+                        style={{ marginBottom: "0.45rem" }}
+                      />
+                    </button>
+                  </Link>
+                </div>
+                <div className={styles.profileBtn}>
+                  <LogOut></LogOut>
+                </div>
+              </div>
+              : false
+            }
+
+
+
+
+          </div>
+
+
         </div>
       </header>
       <div className={styles.yourCarrito}>
@@ -168,7 +181,7 @@ export default function ShopCart() {
                   Buy Now!
                 </button> */}
                 <button
-                  className={styles.btnCarrito}
+                  className={styles.btnBuyAll}
                   onClick={() => eliminar(element.id)}
                 >
                   Delete

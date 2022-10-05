@@ -16,12 +16,15 @@ import Message from "./Message";
 import styles from "./ModulesCss/CardsDetails.module.css";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { BsFillHeartFill } from "react-icons/bs";
-import { BsFillCartFill } from "react-icons/bs";
-import LogOut from "./LogOut";
-import { GiSandsOfTime } from "react-icons/gi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BsFillHeartFill } from "react-icons/bs"
+import { BsFillCartFill } from "react-icons/bs"
+import LogOut from "./LogOut"
+import { GiSandsOfTime } from "react-icons/gi"
+import { BsFillBagCheckFill } from "react-icons/bs"
+
+
 
 export default function CardDetails(props) {
   const { id } = useParams();
@@ -36,15 +39,17 @@ export default function CardDetails(props) {
   const [esta, setEsta] = useState(false);
   const [estaEnfavoritos, setEstaEnFavoritos] = useState(false);
 
+
+
   useEffect(() => {
     dispatch(cleanProductId());
 
     dispatch(getProductById(id));
-    if (user.length) dispatch(getProductsFromCarritoDB(user[0].email));
-    if (user.length) dispatch(getFavourites(user[0].email));
+    if (user.length) dispatch(getProductsFromCarritoDB(user[0].email))
+    if (user.length) dispatch(getFavourites(user[0].email))
     return () => {
-      localStorage.setItem("product", JSON.stringify([]));
-    };
+      localStorage.setItem('product', JSON.stringify([]))
+    }
   }, []);
 
   const estaono = () => {
@@ -55,18 +60,21 @@ export default function CardDetails(props) {
     }
   };
 
-  const [estado, setEstado] = useState(false);
-  const [estadoFav, setEstadoFav] = useState(false);
+
+  const [estado, setEstado] = useState(false)
+  const [estadoFav, setEstadoFav] = useState(false)
 
   const desactivado = () => {
-    setEstado(true);
+    setEstado(true)
     setTimeout(() => {
       setEstado(false);
     }, 2500);
   };
 
+
+
   const desactivadoFav = () => {
-    setEstadoFav(true);
+    setEstadoFav(true)
     setTimeout(() => {
       setEstadoFav(false);
     }, 2500);
@@ -190,8 +198,7 @@ export default function CardDetails(props) {
 
   return (
     <div className={styles.containerDetails} key={id}>
-      <header>
-        <div className={styles.tapaHeader}></div>
+      <header >
         <div className={styles.header}>
           <div className={styles.filtersDiv}>
             <Link className={styles.link} to="/mainpage">
@@ -199,46 +206,60 @@ export default function CardDetails(props) {
                 <h2 className={styles.logo}>Artket</h2>
               </button>
             </Link>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div className={styles.restoDeItems}>
-              <div className={styles.cartAndProfileAndFav}>
-                {JSON.parse(localStorage.getItem("user")).length ? (
-                  <div className={styles.CartAndFav}>
-                    <div className={styles.iconsHeader}>
-                      <Link to="/ShopCart">
-                        <button className={styles.btnCarrito}>
-                          <BsFillCartFill />
-                          <h4 className={styles.cantItems}>{carrito.length}</h4>
-                        </button>
-                      </Link>
-                    </div>
-                    <div className={styles.iconsHeader}>
-                      <Link to="/Favourites">
-                        <button className={styles.btnFav}>
-                          <BsFillHeartFill />
-                          <h4 className={styles.cantItems}>
-                            {favoritos.length}
-                          </h4>
-                        </button>
-                      </Link>
-                    </div>
-                    <div className={styles.profileBtn}>
-                      <LogOut></LogOut>
-                    </div>
-                  </div>
-                ) : (
-                  false
-                )}
-              </div>
-            </div>
           </div>
+          <div className={styles.cartAndProfileAndFav} >
+            {JSON.parse(localStorage.getItem("user")).length ?
+              <div className={styles.CartAndFav}>
+
+
+                <div className={styles.iconsHeader}>
+                  <Link to="/ShopCart">
+
+                    <button className={styles.btnCarrito}>
+                      <BsFillCartFill />
+                      <h4 className={styles.cantItems}>{carrito.length}</h4>
+                    </button>
+
+
+
+                  </Link>
+                </div>
+                <div className={styles.iconsHeader}>
+                  <Link to="/Favourites">
+                    <button className={styles.btnFav}>
+                      <BsFillHeartFill />
+                      <h4 className={styles.cantItems}>{favoritos.length}</h4>
+                    </button>
+
+                  </Link>
+                </div>
+                <div className={styles.iconsHeader}>
+                  <Link to="/OrderByUser">
+                    <button className={styles.btnFav}>
+                      <BsFillBagCheckFill
+                        style={{ marginBottom: "0.45rem" }}
+                      />
+                    </button>
+                  </Link>
+                </div>
+                <div className={styles.profileBtn}>
+                  <LogOut></LogOut>
+                </div>
+              </div>
+              : false
+            }
+
+
+
+
+          </div>
+
+
         </div>
       </header>
       <div id="conteinerDetail">
         {product.length > 0 ? (
-          <div>
+          <div className={styles.containerDetailsAll}>
             <div className={styles.data}>
               <div className={styles.dataText}>
                 <h1 className={styles.artist}>{product[0].creator}</h1>
@@ -268,13 +289,7 @@ export default function CardDetails(props) {
                             }
                           }}
                         >
-                          {!estado ? (
-                            <h4> Add to cart </h4>
-                          ) : (
-                            <h4>
-                              <GiSandsOfTime />
-                            </h4>
-                          )}
+                          {!estado ? <h4> Add to cart </h4> : <h4><GiSandsOfTime /></h4>}
                         </button>
                       ) : user.length && esta ? (
                         <button
@@ -282,13 +297,8 @@ export default function CardDetails(props) {
                           className={styles.buttonAddCart}
                           onClick={addToCartOrDelete}
                         >
-                          {!estado ? (
-                            <h4> Delete from cart </h4>
-                          ) : (
-                            <h4>
-                              <GiSandsOfTime />
-                            </h4>
-                          )}
+                          {!estado ? <h4> Delete from cart </h4> : <h4><GiSandsOfTime /></h4>}
+
                         </button>
                       ) : (
                         false
@@ -306,13 +316,7 @@ export default function CardDetails(props) {
                             }
                           }}
                         >
-                          {!estadoFav ? (
-                            <h4> Add to favourites </h4>
-                          ) : (
-                            <h4>
-                              <GiSandsOfTime />
-                            </h4>
-                          )}
+                          {!estadoFav ? <h4> Add to favourites </h4> : <h4><GiSandsOfTime /></h4>}
                         </button>
                       ) : user.length && estaEnfavoritos ? (
                         <button
@@ -320,13 +324,7 @@ export default function CardDetails(props) {
                           className={styles.buttonAddCart}
                           onClick={addToFavouritosOrDelete}
                         >
-                          {!estadoFav ? (
-                            <h4> Delete from favourites </h4>
-                          ) : (
-                            <h4>
-                              <GiSandsOfTime />
-                            </h4>
-                          )}
+                          {!estadoFav ? <h4> Delete from favourites </h4> : <h4><GiSandsOfTime /></h4>}
                         </button>
                       ) : (
                         false
@@ -344,8 +342,8 @@ export default function CardDetails(props) {
                       : "https://www.elsoldemexico.com.mx/doble-via/zcq7d4-perro.jpg/alternates/LANDSCAPE_768/perro.jpg"
                   }
                   alt="img not found"
-                  // max-width="450px"
-                  // max-height="400px"
+                // max-width="450px"
+                // max-height="400px"
                 />
               </div>
             </div>

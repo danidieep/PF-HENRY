@@ -1,15 +1,15 @@
 .profileContainer {
-  
+
     height: 45rem;
     background: #DCB5B0;
-    display:grid;
+    display: grid;
     grid-template-rows: 10% 90%;
-   
+
 
 }
 
 .profile {
-   
+
     /* background-color: rgba(253, 253, 252, 0.7); */
     height: 30rem;
     width: 90%;
@@ -21,28 +21,28 @@
     grid-template-columns: 20% 80%;
 }
 
-.userData{
+.userData {
 
-display: grid;
-grid-template-columns: 20% 80%;
-height: 8.2rem;
-background-color: rgba(253, 253, 252, 0.7);
-box-shadow: 0 0 2rem rgb(5, 5, 5,0.1);
-border-radius: 5px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 8.2rem;
+    background-color: rgba(253, 253, 252, 0.7);
+    box-shadow: 0 0 2rem rgb(5, 5, 5, 0.1);
+    border-radius: 5px;
 }
 
 .panelLeft {
 
     background-color: rgba(253, 253, 252, 0.7);
     width: 90%;
-    
+
     border-radius: 5px;
     padding: 20px 0;
-    box-shadow: 0 0 2rem rgb(5, 5, 5,0.1);
+    box-shadow: 0 0 2rem rgb(5, 5, 5, 0.1);
     margin: 0 auto;
 }
 
-.panelLeft body{
+.panelLeft body {
     padding: 1rem;
     display: flex;
     align-items: flex-start;
@@ -53,12 +53,12 @@ border-radius: 5px;
 
 
 
-.panelRight{
-   
+.panelRight {
+
     width: 90%;
     border-radius: 5px;
-   
-   background-color: transparent;
+
+    background-color: transparent;
     margin: 0 auto;
     display: grid;
     grid-template-rows: 18% 82%;
@@ -99,55 +99,56 @@ border-radius: 5px;
     background-color: rgb(247, 236, 236);
 }
 
-.header{
+.header {
     background-color: rgba(255, 255, 255);
     display: grid;
     grid-template-columns: 100%;
     height: 4rem;
     align-content: center;
-   
+
     width: 100%;
-    box-shadow: 0 0 2rem rgb(5, 5, 5,0.1);
+    box-shadow: 0 0 2rem rgb(5, 5, 5, 0.1);
 }
 
 .logoForm {
     font-family: 'Euphoria Script', cursive;
-    text-decoration-color: rgb(0, 0, 0);
-
-    font-weight: 400;
-    color: rgb(1, 1, 1);
+    color: black;
+    cursor: pointer;
+    font-size: 3.2rem;
+    font-weight: 100;
+    border: none;
     background-color: transparent;
 
 }
 
-.iconUser{
+.iconUser {
     font-size: 7rem;
 }
 
-.iconsLeft{
+.iconsLeft {
     font-size: 1.3rem;
     padding-right: 0.6rem;
 }
 
-.nameAndRol{
+.nameAndRol {
     display: grid;
     grid-template-rows: 52% 10%;
     height: 8.2rem;
 }
 
-.name{
+.name {
     display: flex;
-    align-items:flex-end;
- 
+    align-items: flex-end;
+
 }
 
-.rol{
+.rol {
     display: flex;
     padding-left: 0.2rem;
-  
+
 }
 
-.optionsUser{
+.optionsUser {
     margin-top: 4rem;
     padding: 2rem;
     width: 100%;
@@ -156,48 +157,48 @@ border-radius: 5px;
     border-radius: 0.2rem;
 }
 
-.item{
+.item {
     margin: 1rem;
-   
+
 }
 
 
-.item_data{
+.item_data {
     display: grid;
     grid-template-columns: 10% 90%;
-  
-    
+
+
 }
 
-.item_data_icon{
+.item_data_icon {
     font-size: 4rem;
     color: #000000;
     position: relative;
     bottom: 0.1rem;
 }
-.item_data_titles{
+
+.item_data_titles {
     display: grid;
-  
+
     padding-left: 0.5rem;
     background-color: transparent;
-    
+
 }
 
-.item_data_titles_main{
+.item_data_titles_main {
     display: flex;
-    align-items:flex-end;
+    align-items: flex-end;
     color: black;
     font-size: 1.5rem;
     font-weight: 600;
     background-color: transparent;
- 
+
 }
 
-.item_data_titles_sub{
+.item_data_titles_sub {
     display: flex;
     padding-left: 0.2rem;
     color: black;
     background-color: transparent;
-  
-}
 
+}

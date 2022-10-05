@@ -17,7 +17,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { BiShield } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
-import {GiSandsOfTime} from "react-icons/gi"
+import { GiSandsOfTime } from "react-icons/gi"
+import { AiOutlineArrowLeft } from "react-icons/ai"
 
 export default function ProfileEdit() {
   const data = useAuth0();
@@ -85,7 +86,7 @@ export default function ProfileEdit() {
   const [loading, setLoading] = useState(false);
 
 
-  const load = () =>{
+  const load = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false)
@@ -141,7 +142,7 @@ export default function ProfileEdit() {
           className={styles.volver}
           onClick={() => (window.location.href = "/Profile")}
         >
-          {"<"}
+          <AiOutlineArrowLeft />
         </button>
 
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -188,7 +189,7 @@ export default function ProfileEdit() {
           <br></br>
           <br></br>
           <button disabled={loading} type="submit" className={styles.button}>
-          {!loading? "Save changes" :<GiSandsOfTime/>}
+            {!loading ? "Save changes" : <GiSandsOfTime />}
           </button>
         </form>
         <br></br>

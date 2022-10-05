@@ -62,10 +62,11 @@
 
 .logoForm {
     font-family: 'Euphoria Script', cursive;
-    text-decoration-color: rgb(0, 0, 0);
-
-    font-weight: 400;
-    color: rgb(1, 1, 1);
+    color: black;
+    cursor: pointer;
+    font-size: 3.2rem;
+    font-weight: 100;
+    border: none;
     background-color: transparent;
 
 }
@@ -205,6 +206,7 @@ label {
     font-family: 'Merriweather', serif;
     font-style: normal;
     border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 3px;
 }
 
 .btnBuyAll {

@@ -17,7 +17,6 @@ import {
   LOG_LOCAL,
   VACIAR_USER,
   FIND_USER_BY_ID,
-  
   SEND_EMAIL,
   DELETE_PRODUCT_FROM_CARRITO_BOARD,
   GET_PRODUCTS_FROM_CARRITODB,
@@ -32,7 +31,7 @@ import {
   FILTER_ORDER_APROVED,
   FILTER_ORDER_APROVED_USER,
   FILTER_ORDER_REJECTED_USER,
-  GET_ONE_ORDER_USER
+  GET_ONE_ORDER_USER,
 } from "../actions/action-types";
 
 const initialState = {
@@ -47,26 +46,22 @@ const initialState = {
   users: [],
   favoritos: [],
   history: [],
-  allOrders:[],
-  allOrdersFiltered:[],
-  getOneOrder:[],
-  orderUser:[], //todas las ordenes del uruario
-  
-  orderDetail:[],
- orderUserFiltered:[],
-
- artworksBuyed:[]
-  
+  allOrders: [],
+  allOrdersFiltered: [],
+  getOneOrder: [],
+  orderUser: [], //todas las ordenes del uruario
+  orderDetail: [],
+  orderUserFiltered: [],
+  artworksBuyed: [],
+  loading: true,
 };
 
 export default function Reducer(state = initialState, { type, payload }) {
   switch (type) {
-
-    
-    case 'POST_PAYMENT':{
+    case "POST_PAYMENT": {
       return {
-        ...state
-      }
+        ...state,
+      };
     }
     case "POST_CARRITO":
       return {
@@ -74,53 +69,56 @@ export default function Reducer(state = initialState, { type, payload }) {
         carrito: [...state.carrito, payload],
       };
 
-      case GET_ONE_ORDER_USER:{
-        return{
-          ...state,
-          orderDetail:state.orderUser.filter(e => e.orderId===Number(payload))
-        }
-      }
-      
-      case FILTER_ORDER_APROVED_USER: {
-        return {
-         ...state,
-         orderUserFiltered : state.orderUser.filter(e => e.paymentStatus === 'approved') 
+    case GET_ONE_ORDER_USER: {
+      return {
+        ...state,
+        orderDetail: state.orderUser.filter(
+          (e) => e.orderId === Number(payload)
+        ),
+      };
+    }
 
-        }
-      }
+    case FILTER_ORDER_APROVED_USER: {
+      return {
+        ...state,
+        orderUserFiltered: state.orderUser.filter(
+          (e) => e.paymentStatus === "approved"
+        ),
+      };
+    }
 
-      case FILTER_ORDER_REJECTED_USER: {
-        return {
-          ...state,
-         orderUserFiltered : state.orderUser.filter(e => e.paymentStatus === 'rejected')
-        }
-      }
+    case FILTER_ORDER_REJECTED_USER: {
+      return {
+        ...state,
+        orderUserFiltered: state.orderUser.filter(
+          (e) => e.paymentStatus === "rejected"
+        ),
+      };
+    }
 
+    case GET_ALL_ORDERS: {
+      return {
+        ...state,
+        allOrders: payload,
+        allOrdersFiltered: payload,
+      };
+    }
 
-      case GET_ALL_ORDERS: {
-        return {
-          ...state,
-          allOrders: payload,
-          allOrdersFiltered:payload
-        }
-      }
-
-
-      case GET_ORDERS_USER: {   //todas las ordenes del uruario
-        return{
-          ...state,
-          orderUser: payload,
-          orderUserFiltered: payload
-
-
-        }
-      }
+    case GET_ORDERS_USER: {
+      //todas las ordenes del uruario
+      return {
+        ...state,
+        orderUser: payload,
+        orderUserFiltered: payload,
+      };
+    }
     case GET_PRODUCTS: {
       return {
         ...state,
         allProducts: payload.filter((e) => e.show),
         productsFiltered: payload.filter((e) => e.show),
-        artworksBuyed:payload.filter((e) => !e.show),
+        artworksBuyed: payload.filter((e) => !e.show),
+        loading: false,
         mediums: payload
           .map((element) => element.medio)
           .filter(
@@ -140,10 +138,10 @@ export default function Reducer(state = initialState, { type, payload }) {
         ...state,
       };
 
-    case 'POST_ARTWORK': {
+    case "POST_ARTWORK": {
       return {
-        ...state
-      }
+        ...state,
+      };
     }
 
     case DELETE_ARTWORKS:
@@ -159,8 +157,7 @@ export default function Reducer(state = initialState, { type, payload }) {
       };
     }
     case GET_PRODUCT_BY_ID: {
-
-      localStorage.setItem("product",JSON.stringify(payload))
+      localStorage.setItem("product", JSON.stringify(payload));
       return {
         ...state,
         productDetails: payload,
@@ -277,7 +274,7 @@ export default function Reducer(state = initialState, { type, payload }) {
       return {
         ...state,
         favoritos: payload,
-      }
+      };
     }
 
     case LOG_LOCAL: {
@@ -309,33 +306,39 @@ export default function Reducer(state = initialState, { type, payload }) {
     case GET_HISTORY: {
       return {
         ...state,
-        history: payload
-      }
+        history: payload,
+      };
     }
 
-    case GET_ALL_USERS:{
-      return{
+    case GET_ALL_USERS: {
+      return {
         ...state,
-        users:payload,
-      }
+        users: payload,
+      };
     }
-    case GET_ONE_ORDER:{
-      return{
+    case GET_ONE_ORDER: {
+      return {
         ...state,
-        getOneOrder:state.allOrders.filter(e => e.orderId===Number(payload))
-      }
+        getOneOrder: state.allOrders.filter(
+          (e) => e.orderId === Number(payload)
+        ),
+      };
     }
-    case FILTER_ORDER_REJECTED:{
-      return{
+    case FILTER_ORDER_REJECTED: {
+      return {
         ...state,
-        allOrdersFiltered:state.allOrders.filter(e => e.paymentStatus==="rejected")
-      }
+        allOrdersFiltered: state.allOrders.filter(
+          (e) => e.paymentStatus === "rejected"
+        ),
+      };
     }
-    case FILTER_ORDER_APROVED:{
-      return{
+    case FILTER_ORDER_APROVED: {
+      return {
         ...state,
-        allOrdersFiltered:state.allOrders.filter(e => e.paymentStatus==="approved")
-      }
+        allOrdersFiltered: state.allOrders.filter(
+          (e) => e.paymentStatus === "approved"
+        ),
+      };
     }
     default:
       return state;

@@ -5,16 +5,16 @@ const axios = require("axios");
 const mercadopago = require("mercadopago");
 // const { payment } = require('mercadopago');
 mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN);
-const { Order, Artwork } = require("../db");
+const { Order, Artwork, Addresses } = require("../db");
 const { Router } = require("express");
 const { resetUserCart } = require("../controllers/cartController");
 
 router.post("/", async (req, res) => {
-  const { payload, user } = req.body; // headers? body?
+  const { payload, user, adress } = req.body; // headers? body?
   const cart = payload;
   const usuario = user[0];
 
-  // console.log(payload[0], 'payload')
+  // console.log(req.body, 'payload')
   // console.log(user[0], 'user')
 
   let artworks = cart.map((a) => {
@@ -31,7 +31,6 @@ router.post("/", async (req, res) => {
     };
   });
   // artworks.push({email:usuario.email})
-  console.log(usuario);
   const preference = {
     items: artworks,
     payer: { email: usuario.email },
@@ -58,11 +57,18 @@ router.post("/", async (req, res) => {
       ],
       installments: 12,
     },
+    shipments:{
+      envio: `Your order has been dispatched and will be shipped to ${adress.street} ${adress.number}`
+    },
     metadata:{
       userId: usuario.id,
-      email: usuario.email
+      email: usuario.email,
+      
     },
-    // notification_url: `https://aa21-181-232-255-29.sa.ngrok.io/payment/notifications`,
+    additional_info:
+       `The order has been dispatched and will be shipped to ${adress.street} ${adress.number}`
+    ,
+    notification_url: `https://c4fc-181-232-255-29.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -70,7 +76,7 @@ router.post("/", async (req, res) => {
       .create(preference)
       .then(function (preference) {
         const linkMP = preference.response.init_point;
-        console.log(linkMP);
+        // console.log(linkMP);
         return res.status(200).send(linkMP);
       })
       .catch(function (error) {
@@ -97,7 +103,6 @@ router.post("/notifications", async (req, res) => {
       switch (topic) {
         case "payment":
           const paymentId = data.id || data["data.id"];
-          console.log(topic, "getting payment", paymentId);
           var { response } = await mercadopago.payment.findById(paymentId);
           // console.log(pagos.body, "pagos body")
           // console.log(pagos.response, "PAGOS RESPONSE")
@@ -115,7 +120,6 @@ router.post("/notifications", async (req, res) => {
       }
 
       // console.log(body, 'ORDEN BODY')
-      console.log(response, "pago BODY");
       if (response) {
         if (response.status == "approved") {
           let idPagador = response.payer.id;
@@ -124,6 +128,7 @@ router.post("/notifications", async (req, res) => {
           let pagoStatus = response.status;
           let montoPago = response.transaction_details.total_paid_amount;
           let ordenID = response.order.id;
+          let envio = response.metadata.envio
           asd.push({
             payId: idPagador,
             payEmail: emailPagador,
@@ -131,8 +136,8 @@ router.post("/notifications", async (req, res) => {
             paymentStatus: pagoStatus,
             paymentAmount: montoPago,
             orderid: ordenID,
+            adress: envio
           });
-          // console.log(response, 'ID DE PAYMENT')
         } else if (response.status != "approved") {
           let idPagador = response.payer.id;
           let pagoId = response.id;
@@ -140,6 +145,7 @@ router.post("/notifications", async (req, res) => {
           let montoPago = response.transaction_details.total_paid_amount;
           let ordenID = response.order.id;
           let emailPagador = response.metadata.email
+          // let envio = response.metadata.envio
           asd.push({
             payId: idPagador,
             payEmail: emailPagador,
@@ -147,6 +153,7 @@ router.post("/notifications", async (req, res) => {
             paymentStatus: pagoStatus,
             paymentAmount: montoPago,
             orderid: ordenID,
+            // adress: envio
           });
         }
         const payment = Order.findOne({
@@ -158,13 +165,14 @@ router.post("/notifications", async (req, res) => {
             if (asd[0].paymentStatus == "approved") {
               await Order.bulkCreate(asd);
               response.additional_info.items.forEach(async (e) => {
-                console.log(e)
+                // console.log(e)
                 await Artwork.update({ show: false }, { where: { id: e.id } });
                 await resetUserCart(asd[0].payEmail);
                 res.status(200)
               });
             } else if (asd[0].paymentStatus == "rejected") {
-              await Order.bulkCreate(asd);
+              await Order.bulkCreate(asd)
+              // await Addresses.setOrder(response.order.id)
               res.status(200)
             }
           } else {
@@ -188,11 +196,9 @@ router.get("/orden", async (req, res) => {
   //mostrar una orden en particular
 
   const { payload } = req.headers;
-  console.log(payload)
   try {
     if(payload){
     let pago = await Order.findOne({ where: { payEmail: payload } });
-    console.log(pago.payId)
     let orders = await axios.get(
       `https://api.mercadopago.com/merchant_orders/search?payer_id=${pago.payId}`,
       {
@@ -202,6 +208,7 @@ router.get("/orden", async (req, res) => {
         },
       }
     );
+    // console.log(orders.data.elements)
     let datos = orders.data.elements;
    
     let response = datos.map((e) => {
@@ -214,7 +221,8 @@ router.get("/orden", async (req, res) => {
         items: e.items,
         cancelled: e.cancelled,
         order_status: e.order_status,
-        date_created:e.date_created.split('T', 1)
+        date_created:e.date_created.split('T', 1),
+        adress: e.additional_info
       };
     });
     res.send(response);
@@ -228,6 +236,7 @@ router.get("/orden", async (req, res) => {
       },
     }
   );
+  console.log(orders.data.elements)
   let datos = orders.data.elements;
  
   let response = datos?.map((e) => {
@@ -240,7 +249,8 @@ router.get("/orden", async (req, res) => {
       items: e.items,
       cancelled: e.cancelled,
       order_status: e.order_status,
-      date_created:e.date_created.split('T', 1)
+      date_created:e.date_created.split('T', 1),
+      adress: e.additional_info
     };
   });
   res.send(response);
@@ -275,7 +285,8 @@ router.get("/orden/:id", async (req, res) => {
         items: e.items,
         cancelled: e.cancelled,
         order_status: e.order_status,
-        date_created: e.date_created.split('T', 1)
+        date_created: e.date_created.split('T', 1),
+        adress: e.additional_info
       };
     });
     res.send(response);
@@ -306,7 +317,8 @@ router.get("/pagos", async (req, res) => {
         paymentDetail: e.payments[0].status_detail,
         cancelled: e.cancelled,
         order_status: e.order_status,
-        date_created:e.date_created.split('T', 1)
+        date_created:e.date_created.split('T', 1),
+        adress: e.additional_info
       };
     });
     // console.log(pagos.data.elements)

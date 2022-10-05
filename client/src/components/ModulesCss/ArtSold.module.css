@@ -1,0 +1,67 @@
+.LoginMsg {
+    color: rgb(81, 70, 70);
+    font-weight: 100;
+    background-color: transparent;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-family: 'Merriweather', serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panelLeft_title {
+  background-color: rgba(253, 253, 252, 0.7);
+  padding: 1rem;
+}
+
+.logoForm {
+  font-family: "Euphoria Script", cursive;
+  text-decoration-color: rgb(0, 0, 0);
+  font-weight: 400;
+  color: rgb(1, 1, 1);
+}
+
+.box {
+  margin-top: 5rem;
+  background-color: rgba(253, 253, 252, 0.7);
+  width: 50rem;
+  height: fit-content;
+  min-height: 30rem;
+}
+
+.arts_box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.image {
+  width: 10rem;
+  max-height: 10rem;
+}
+
+.arts_data {
+  display: table;
+  width: 5rem;
+  height: 15rem;
+  margin: 3rem;
+  border-radius: 10%;
+}

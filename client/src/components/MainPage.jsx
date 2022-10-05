@@ -18,7 +18,6 @@ import SearchBar from "./SearchBar";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Message from "./Message";
-import Loader from "./Loader";
 import styles from "./ModulesCss/MainPage.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import LogIn from "./LogIn";
@@ -31,6 +30,7 @@ import { BsFillHeartFill } from "react-icons/bs";
 import { BsFillCartFill } from "react-icons/bs";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io"
+import { Loader } from "./Loader";
 
 let ProductsPorPage = 6;
 
@@ -38,6 +38,7 @@ export default function MainPage(props) {
   const carrito = useSelector((state) => state.carrito);
   const favoritos = useSelector((state) => state.favoritos);
   const state = useSelector((state) => state);
+  const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
 
   let CountOf = Math.ceil(state.productsFiltered.length / ProductsPorPage);
@@ -50,7 +51,7 @@ export default function MainPage(props) {
   const [num2, setNum2] = useState(ProductsPorPage);
   const [current, setCurrent] = useState(1);
   const [filters, setFilters] = useState("base");
-  const userLocalStorage = JSON.parse(localStorage.getItem("user"))
+  const userLocalStorage = JSON.parse(localStorage.getItem("user"));
 
   // const user = JSON.parse(localStorage.getItem("user"))
 
@@ -59,75 +60,73 @@ export default function MainPage(props) {
     if (state.artistsList.length === 0) dispatch(getArtists());
     applyFilter();
     // if (user && user.length) dispatch(getProductsFromCarritoDB(user[0].email));
-    if (userLocalStorage && userLocalStorage.length) dispatch(getProductsFromCarritoDB(userLocalStorage[0].email))
-    if (userLocalStorage && userLocalStorage.length) dispatch(getFavourites(userLocalStorage[0].email))
+    if (userLocalStorage && userLocalStorage.length)
+      dispatch(getProductsFromCarritoDB(userLocalStorage[0].email));
+    if (userLocalStorage && userLocalStorage.length)
+      dispatch(getFavourites(userLocalStorage[0].email));
     console.log('proband', userLocalStorage[0].isSuscribed);
   }, [state.filters]);
 
+  React.useEffect(() => {
+    return () => {
+      state.allProducts = [];
+    };
+  });
+
   const handlerNext = () => {
     if (current < CountOf) {
-      setNum1(num1 + ProductsPorPage)
-      setNum2(num2 + ProductsPorPage)
-      setCurrent(current + 1)
+      setNum1(num1 + ProductsPorPage);
+      setNum2(num2 + ProductsPorPage);
+      setCurrent(current + 1);
     }
-  }
+  };
 
   const handlerPrev = () => {
     if (current >= 2) {
-      setNum1(num1 - ProductsPorPage)
-      setNum2(num2 - ProductsPorPage)
-      setCurrent(current - 1)
+      setNum1(num1 - ProductsPorPage);
+      setNum2(num2 - ProductsPorPage);
+      setCurrent(current - 1);
     }
-  }
+  };
 
   const handleReset = () => {
-    setNum1(0)
-    setNum2(ProductsPorPage)
-    setCurrent(1)
-  }
+    setNum1(0);
+    setNum2(ProductsPorPage);
+    setCurrent(1);
+  };
 
   const applyFilter = (e) => {
-
-    state.filters.forEach(element => {
-
+    state.filters.forEach((element) => {
       if (element.type === "artist") {
-        dispatch(filterByArtist(element.name))
+        dispatch(filterByArtist(element.name));
       }
-
 
       if (element.type === "medium") {
-        dispatch(filterByMedium(element.name))
+        dispatch(filterByMedium(element.name));
       }
     });
-
-  }
+  };
 
   const OrderByPriceSelector = (name) => {
     // dispatch(OrderByPrice(type))
-    dispatch(OrderByPrice(name))
-
-  }
+    dispatch(OrderByPrice(name));
+  };
 
   const artistSelector = (name) => {
-    dispatch(AddFilters({ type: "artist", name }))
-    handleReset()
-
-  }
+    dispatch(AddFilters({ type: "artist", name }));
+    handleReset();
+  };
 
   const deleteFilter_ = (name) => {
-    dispatch(deletefilter(name))
-
-
-  }
-
+    dispatch(deletefilter(name));
+  };
 
   const mediumSelector = (name) => {
-    dispatch(AddFilters({ type: "medium", name }))
+    dispatch(AddFilters({ type: "medium", name }));
     // dispatch(filterByMedium(type))
-    handleReset()
+    handleReset();
     console.log(name);
-
-  }
+  };
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -139,9 +138,9 @@ export default function MainPage(props) {
   };
 
   function alertNewslatter() {
-    toast.info('You have been suscribed to our newsletter!', {
+    toast.info("You have been suscribed to our newsletter!", {
       position: "top-center",
-      theme: 'dark',
+      theme: "dark",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -482,4 +481,3 @@ export default function MainPage(props) {
     </div>
   )
 }
-

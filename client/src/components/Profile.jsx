@@ -58,7 +58,7 @@ export default function Profile() {
 
   return (
     <div className={styles.profileContainer}>
-      {user.length ?
+      {user.length ? (
         <div>
           <div className={styles.header}>
             <Link to="/MainPage">
@@ -67,7 +67,7 @@ export default function Profile() {
           </div>
           <div className={styles.profile}>
             <div className={styles.panelLeft}>
-              <Link to="/OrderByUser">
+              <Link to="/MyBuys">
                 <body>
                   <BsBagCheck className={styles.iconsLeft} /> My buys
                 </body>
@@ -91,30 +91,37 @@ export default function Profile() {
             {user.length ? (
               <div className={styles.panelRight}>
                 <div className={styles.userData}>
-
                   {data.isAuthenticated && user[0].image === "" ? (
                     <img
-                      style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
+                      style={{
+                        borderRadius: "9999px",
+                        marginLeft: "2rem",
+                        marginTop: "0.25rem",
+                      }}
                       className={styles.imgProfile1}
                       src={data.user.picture}
                       width="120"
                       height="120"
                     ></img>
+                  ) : user.length && user[0].image !== null ? (
+                    <img
+                      className={styles.imgProfile}
+                      // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                      src={user[0].image}
+                      width="120"
+                      height="120"
+                      style={{
+                        borderRadius: "9999px",
+                        marginLeft: "2rem",
+                        marginTop: "0.25rem",
+                      }}
+                    />
+                  ) : user.length ? (
+                    <h1 className={styles.iconUser}>
+                      <FaUserCircle />
+                    </h1>
                   ) : (
-                    user.length && user[0].image !== null ?
-                      <img
-                        className={styles.imgProfile}
-                        // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                        src={user[0].image}
-                        width="120"
-                        height="120"
-                        style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
-                      /> : user.length ?
-                        <h1 className={styles.iconUser}><FaUserCircle /></h1>
-                        : false
-
-
-
+                    false
                   )}
 
                   <div className={styles.nameAndRol}>
@@ -178,9 +185,24 @@ export default function Profile() {
                   >
                     <div className={styles.item} onClick={delete_User}>
                       <div className={styles.item_data}>
-                        <BiUserCircle className={styles.item_data_icon} style={{ color: "red" }} />
-                        <div style={{ color: "red", display: "flex", alignItems: "center" }}>
-                          <body className={styles.item_data_titles_main} style={{ color: "red" }}> Disable my account</body>
+                        <BiUserCircle
+                          className={styles.item_data_icon}
+                          style={{ color: "red" }}
+                        />
+                        <div
+                          style={{
+                            color: "red",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <body
+                            className={styles.item_data_titles_main}
+                            style={{ color: "red" }}
+                          >
+                            {" "}
+                            Disable my account
+                          </body>
                         </div>
                       </div>
                     </div>
@@ -255,7 +277,39 @@ export default function Profile() {
               false
             )}
           </div>
-        </div> : <h1>Your user has been banned or not exist</h1>}
+        </div>
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            height: "47rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              width: "40rem",
+              height: "20rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "1rem",
+            }}
+          >
+            <div>
+              <h1 style={{ color: "red" }}>Your user has been banned</h1>
+              <br />
+              <br />
+              <Link to="/">
+                <h4 style={{ color: "black" }}>Click here to return</h4>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

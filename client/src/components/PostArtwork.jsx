@@ -117,7 +117,7 @@ export default function PostArtwork() {
       <div className={styles.containerRegister}>
         <div className={styles.formContainer}>
           <form onSubmit={(e) => handleSubmit(e)}>
-            <h1>Add artwork:</h1>
+            <h1 className={styles.LoginMsg} >Add artwork:</h1>
             <br />
             {/* -------------------------   TITLE       */}
             <div className={styles.optForm}>

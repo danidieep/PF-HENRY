@@ -41,6 +41,9 @@ module.exports = (sequelize) => {
       },
       order_status:{
         type: DataTypes.STRING,
+      },
+      adress:{
+        type:DataTypes.STRING
       }
     },
     { timestamps: false, createdAt: false, updatedAt: false }

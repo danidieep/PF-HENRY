@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
     additional_info:
       `The order has been dispatched and will be shipped to ${adress.street} ${adress.number}`
     ,
-    notification_url: `https://1c70-181-232-255-29.sa.ngrok.io/payment/notifications`,
+    notification_url: `https://4fb3-190-189-64-20.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -197,10 +197,38 @@ router.get("/orden", async (req, res) => {
 
   const { payload } = req.headers;
   try {
-    if(payload){
-    let pago = await Order.findOne({ where: { payEmail: payload } });
+    if (payload) {
+      let pago = await Order.findOne({ where: { payEmail: payload } });
+      let orders = await axios.get(
+        `https://api.mercadopago.com/merchant_orders/search?payer_id=${pago.payId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+          },
+        }
+      );
+      // console.log(orders.data.elements)
+      let datos = orders.data.elements;
+
+      let response = datos.map((e) => {
+        return {
+          orderId: e.id,
+          paymentId: e.payments[0].id,
+          paymentAmount: e.payments[0].total_paid_amount,
+          paymentStatus: e.payments[0].status,
+          paymentDetail: e.payments[0].status_detail,
+          items: e.items,
+          cancelled: e.cancelled,
+          order_status: e.order_status,
+          date_created: e.date_created.split('T', 1),
+          adress: e.additional_info
+        };
+      });
+      res.send(response);
+    }
     let orders = await axios.get(
-      `https://api.mercadopago.com/merchant_orders/search?payer_id=${pago.payId}`,
+      `https://api.mercadopago.com/merchant_orders/search`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -208,51 +236,23 @@ router.get("/orden", async (req, res) => {
         },
       }
     );
-    // console.log(orders.data.elements)
     let datos = orders.data.elements;
-   
-    let response = datos.map((e) => {
+
+    let response = datos?.map((e) => {
       return {
         orderId: e.id,
-        paymentId: e.payments[0].id,
-        paymentAmount: e.payments[0].total_paid_amount,
-        paymentStatus: e.payments[0].status,
-        paymentDetail: e.payments[0].status_detail,
+        paymentId: e.payments[0]?.id,
+        paymentAmount: e.payments[0]?.total_paid_amount,
+        paymentStatus: e.payments[0]?.status,
+        paymentDetail: e.payments[0]?.status_detail,
         items: e.items,
         cancelled: e.cancelled,
         order_status: e.order_status,
-        date_created:e.date_created.split('T', 1),
+        date_created: e.date_created.split('T', 1),
         adress: e.additional_info
       };
     });
     res.send(response);
-  } 
-  let orders = await axios.get(
-    `https://api.mercadopago.com/merchant_orders/search`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
-      },
-    }
-  );
-  let datos = orders.data.elements;
- 
-  let response = datos?.map((e) => {
-    return {
-      orderId: e.id,
-      paymentId: e.payments[0]?.id,
-      paymentAmount: e.payments[0]?.total_paid_amount,
-      paymentStatus: e.payments[0]?.status,
-      paymentDetail: e.payments[0]?.status_detail,
-      items: e.items,
-      cancelled: e.cancelled,
-      order_status: e.order_status,
-      date_created:e.date_created.split('T', 1),
-      adress: e.additional_info
-    };
-  });
-  res.send(response);
 
   } catch (error) {
     console.log(error);

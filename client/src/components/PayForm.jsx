@@ -4,28 +4,27 @@ import { useState } from "react";
 import { getAdress, getPay, postAdress, putAdress } from "../actions/index";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import styles from "./ModulesCss/LogIn.module.css"
+import styles from "./ModulesCss/LogIn.module.css";
 import { toast } from "react-toastify";
 
 export default function PayForm(data) {
-
-  function validate(input){
-    let errors = {}
-    if(!input.street){
-      errors.street = 'street required'
+  function validate(input) {
+    let errors = {};
+    if (!input.street) {
+      errors.street = "street required";
     } else if (!/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/.test(input.street)) {
-      errors.street = "Invalid street"
-    } 
-    if(!input.number) {
-      errors.number = 'number required'
+      errors.street = "Invalid street";
     }
-     if(!input.postalCode) {
-      errors.postalCode = 'postalCode required'
+    if (!input.number) {
+      errors.number = "number required";
     }
-     
-    return errors
+    if (!input.postalCode) {
+      errors.postalCode = "postalCode required";
+    }
+
+    return errors;
   }
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
   const [adress, setAdress] = useState({
     street: "",
     number: "",
@@ -48,51 +47,73 @@ export default function PayForm(data) {
       ...input,
       [e.target.name]: e.target.value,
     });
-    setErrors(validate({
-      ...input,
-      [e.target.name] : e.target.value
-     }))
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if(input.street === '' || input.number  === ''|| input.postalCode === ''){
+    if (input.street === "" || input.number === "" || input.postalCode === "") {
       toast.error("Complete de data", {
         position: "top-center",
-        theme: 'light',
+        theme: "light",
         autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
-    
+      });
     } else {
-    putAdress(input, data.user[0].email);
-    getPay(data.carrito, data.user, input.street.length && input.number.length && input.postalCode.length ? input : adress);
+      postAdress(input, data.user[0].email);
+      getPay(
+        data.carrito,
+        data.user,
+        input.street.length && input.number.length && input.postalCode.length
+          ? input
+          : adress
+      );
     }
   }
 
   function handleSubmitChanged(e) {
     e.preventDefault();
-    if(input.street === '' || input.number  === ''|| input.postalCode === ''){
+    if (input.street === "" || input.number === "" || input.postalCode === "") {
       toast.error("Complete de data", {
         position: "top-center",
-        theme: 'light',
+        theme: "light",
         autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
-    
+      });
     } else {
-    putAdress(input, data.user[0].email);
-    getPay(data.carrito, data.user, input.street.length && input.number.length && input.postalCode.length ? input : adress);
+      putAdress(input, data.user[0].email);
+      getPay(
+        data.carrito,
+        data.user,
+        input.street.length && input.number.length && input.postalCode.length
+          ? input
+          : adress
+      );
     }
-    
+  }
+
+  function handleSubmit2(e) {
+    e.preventDefault();
+    getPay(
+      data.carrito,
+      data.user,
+      input.street.length && input.number.length && input.postalCode.length
+        ? input
+        : adress
+    );
   }
 
   useEffect(() => {
@@ -105,9 +126,7 @@ export default function PayForm(data) {
     });
   }, []);
 
-  function alertPutArtwork() {
-    
-  }
+  function alertPutArtwork() {}
 
   // function handleChangeAdress() {
   //   setAdress({
@@ -122,18 +141,24 @@ export default function PayForm(data) {
       {adress.street ? (
         <div>
           <h4>
-            Do you want us to send the package to this adress? <br />{adress.street}{" "}
-            {adress.number}
+            Do you want us to send the package to this adress? <br />
+            {adress.street} {adress.number}
           </h4>
           <div>
-            <button className={styles.btnBuyAll} type="submit" onClick={(e) => handleSubmit(e)}>
+            <button
+              className={styles.btnBuyAll}
+              type="submit"
+              onClick={(e) => handleSubmit2(e)}
+            >
               Yes
             </button>
 
-            <button className={styles.btnBuyAll} onClick={modalController}>No</button>
+            <button className={styles.btnBuyAll} onClick={modalController}>
+              No
+            </button>
           </div>
           <br></br>
-          {open ? (
+          {open === true ? (
             <div className={styles.formPay} key={open}>
               {/* -------------------------   STREET       */}
               <h1>Change your adress</h1>
@@ -150,7 +175,7 @@ export default function PayForm(data) {
                       handleChange(e);
                     }}
                   ></input>
-                  {errors.input.street && ( <p>{errors.input.street}</p> )} 
+                  {errors.street && <p>{errors.street}</p>}
                 </div>
                 {/* -------------------------   NUMBER       */}
                 <div className={styles.optForm}>
@@ -165,7 +190,7 @@ export default function PayForm(data) {
                       handleChange(e);
                     }}
                   ></input>
-                  {errors.number && ( <p>{errors.number}</p> )} 
+                  {errors.number && <p>{errors.number}</p>}
                 </div>
                 {/* -------------------------   POSTAL CODE       */}
                 <div className={styles.optForm}>
@@ -180,19 +205,20 @@ export default function PayForm(data) {
                       handleChange(e);
                     }}
                   ></input>
-                  {errors.postalCode && ( <p>{errors.postalCode}</p> )} 
+                  {errors.postalCode && <p>{errors.postalCode}</p>}
                 </div>
               </div>
               <Link>
-                <button className={styles.btnReadyChangeAdress} type="submit" onClick={(e) => handleSubmitChanged(e)}>
+                <button
+                  className={styles.btnReadyChangeAdress}
+                  type="submit"
+                  onClick={(e) => handleSubmitChanged(e)}
+                >
                   Ready
                 </button>
               </Link>
             </div>
-          ) : false
-
-
-          }
+          ) : null}
         </div>
       ) : (
         <div className={styles.formPay} key={adress.street}>
@@ -241,7 +267,11 @@ export default function PayForm(data) {
             </div>
           </div>
           <Link>
-            <button className={styles.btnReadyChangeAdress} type="submit" onClick={(e) => handleSubmit(e)}>
+            <button
+              className={styles.btnReadyChangeAdress}
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+            >
               Ready
             </button>
           </Link>

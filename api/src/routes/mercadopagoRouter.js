@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
     //     // }
     // },
     back_urls: {
-      success: "http://localhost:3002/MainPage",
+      success: "http://localhost:3000/MainPage",
       failure: "http://www.failure.com",
       pending: "http://www.pending.com",
     },
@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
     additional_info:
        `The order has been dispatched and will be shipped to ${adress.street} ${adress.number}`
     ,
-    notification_url: `https://c4fc-181-232-255-29.sa.ngrok.io/payment/notifications`,
+    notification_url: `https://1c70-181-232-255-29.sa.ngrok.io/payment/notifications`,
     statement_descriptor: "ARTKET",
   };
   try {
@@ -236,7 +236,6 @@ router.get("/orden", async (req, res) => {
       },
     }
   );
-  console.log(orders.data.elements)
   let datos = orders.data.elements;
  
   let response = datos?.map((e) => {

@@ -8,6 +8,7 @@
     background-repeat: no-repeat;
     position: absolute;
     margin: auto;
+
 }
 
 #contenedorDetail {
@@ -23,9 +24,12 @@
     height: auto;
     margin-top: 80px;
     column-count: 2;
+
 }
 
-
+.containerDetailsAll {
+    padding-bottom: 4rem;
+}
 
 
 
@@ -34,26 +38,25 @@
     display: grid;
     align-items: center;
     justify-content: center;
+    margin-right: 100px;
+}
+
+@media (max-width: 414px) {
+    .cartAndProfileAndFav {
+        margin-right: 0rem;
+    }
 }
 
 .filtersDiv {
-    font-family: 'Merriweather', serif;
-    font-style: normal;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 30% 15% 15% 15% 25%;
-    justify-content: center;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
     align-items: center;
-    padding-left: 3rem;
-    font-size: 0.8rem;
-    height: 4rem;
-
 
 }
 
 .profileBtn {
     margin-bottom: 0.1rem;
-    padding-left: 18px;
 }
 
 .btnCarrito {
@@ -75,6 +78,14 @@
     margin-left: 5rem;
     border: none;
     background-color: transparent;
+    margin-left: 100px;
+}
+
+@media (max-width: 414px) {
+    .logo {
+        margin: auto;
+        padding-right: 1rem;
+    }
 }
 
 .btnFav {
@@ -97,6 +108,14 @@
     justify-content: space-around;
     margin-left: 3rem;
     align-items: center;
+}
+
+@media (max-width: 414px) {
+    .CartAndFav {
+        width: 100%;
+        margin: auto;
+
+    }
 }
 
 .btnCarrito:hover {
@@ -142,6 +161,13 @@
     padding: 30px;
     align-items: center;
     justify-content: center;
+    margin-top: 100px;
+}
+
+@media (max-width: 414px) {
+    .data {
+        flex-direction: column;
+    }
 }
 
 .artworkdetailsH3 {
@@ -165,6 +191,12 @@
     margin: auto;
 }
 
+@media (max-width: 414px) {
+    .dataText {
+        width: 13rem;
+    }
+}
+
 .detailsPrice {
     font-size: 30px;
     margin-bottom: 15px;
@@ -178,10 +210,6 @@
     margin-bottom: 1rem;
 
 }
-
-.btnsDetailsPos {}
-
-
 
 .detailsH3 {
     font-size: 18px;
@@ -201,6 +229,13 @@
     padding: 12px;
 }
 
+@media (max-width: 414px) {
+    .imgDetailsPos {
+        max-height: 14rem;
+    }
+}
+
+
 .artist {
     margin-top: 28px;
     font-family: 'Merriweather', serif;
@@ -214,12 +249,24 @@
 }
 
 .header {
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     width: 100%;
-    position: fixed;
-    z-index: 3;
-    top: 0;
-    left: 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+}
+
+@media (max-width: 414px) {
+    .header {
+        width: 100%;
+        height: auto;
+        flex-flow: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
 }
 
 .logoDetails {
@@ -238,11 +285,6 @@
 
 .logo a {
     width: 5px;
-}
-
-.tapaHeader {
-    height: 4rem;
-    margin-bottom: 2rem;
 }
 
 .btnUser {

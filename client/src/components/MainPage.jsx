@@ -30,6 +30,7 @@ import AdminPanel from "./AdminPanel";
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsFillCartFill } from "react-icons/bs";
 import { BsFillBagCheckFill } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io"
 
 let ProductsPorPage = 6;
 
@@ -60,6 +61,7 @@ export default function MainPage(props) {
     // if (user && user.length) dispatch(getProductsFromCarritoDB(user[0].email));
     if (userLocalStorage && userLocalStorage.length) dispatch(getProductsFromCarritoDB(userLocalStorage[0].email))
     if (userLocalStorage && userLocalStorage.length) dispatch(getFavourites(userLocalStorage[0].email))
+    console.log('proband', userLocalStorage[0].isSuscribed);
   }, [state.filters]);
 
   const handlerNext = () => {
@@ -130,8 +132,10 @@ export default function MainPage(props) {
   const handleSubscribe = (e) => {
     e.preventDefault();
     const userLocal = JSON.parse(localStorage.getItem("user"));
-    dispatch(sendEmail((userLocal.email = user.email)));
+    // dispatch(sendEmail((userLocal.email = user.email)));
     alertNewslatter();
+    userLocalStorage[0].isSuscribed = true
+
   };
 
   function alertNewslatter() {
@@ -152,170 +156,78 @@ export default function MainPage(props) {
     <div className={styles.container}>
       <div className={styles.content}>
         <header>
-          <div className={styles.tapaHeader}></div>
           <div className={styles.header}>
-            <div className={styles.restoDeItems}>
+            {/* <div className={styles.restoDeItems}> */}
 
-              <div className={styles.filtersDiv}>
-                <button
-                  className={styles.linkMain}
-                  onClick={() => dispatch(showAllProducts())}
-                >
-                  <h2 className={styles.logo}>Artket</h2>
-                </button>
-                {/* <p className={styles.filter}>Filters</p> */}
-                <div className={styles.select}>
-                  <nav>
-                    <ul className={styles.menuHor}>
-                      <li>
-                        <button className={styles.buttonsProfBase}>
-                          Order by price
-                        </button>
-                        <ul className={styles.menuVert}>
-                          <li>
-                            <button
-                              value="OrderByMoreExpensive"
-                              onClick={(e) =>
-                                OrderByPriceSelector(e.target.value)
-                              }
-                              className={styles.buttonsProf}
-                            >
-                              More expensive
-                            </button>
-                          </li>
-                          <li>
-                            <button
-                              value="OrderByLessExpensive"
-                              onClick={(e) =>
-                                OrderByPriceSelector(e.target.value)
-                              }
-                              className={styles.buttonsProf}
-                            >
-                              Less expensive
-                            </button>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-
-                <div className={styles.select}>
-                  <nav>
-                    <ul className={styles.menuHor}>
-                      <li>
-                        <button className={styles.buttonsProfBase}>
-                          Artists
-                        </button>
-                        <ul className={styles.menuVert}>
-                          {state.artistsList.map((element) => {
-                            return (
-                              <li>
-                                <button
-                                  value={element.name}
-                                  onClick={(e) =>
-                                    artistSelector(e.target.value)
-                                  }
-                                  className={styles.buttonsProf}
-                                >
-                                  {element.name}
-                                </button>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-                <div className={styles.select}>
-                  <nav>
-                    <ul className={styles.menuHor}>
-                      <li>
-                        <button className={styles.buttonsProfBase}>
-                          Mediums
-                        </button>
-                        <ul className={styles.menuVert}>
-                          {state.mediums.map((element) => {
-                            return (
-                              <li>
-                                <button
-                                  value={element}
-                                  onClick={(e) =>
-                                    mediumSelector(e.target.value)
-                                  }
-                                  className={styles.buttonsProf}
-                                >
-                                  {element}
-                                </button>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-                <div className={styles.SearchBarHome}>
-                  <SearchBar handleReset={handleReset} ></SearchBar>
-                </div>
-              </div>
-              <div className={styles.cartAndProfileAndFav} >
-                {JSON.parse(localStorage.getItem("user")).length ?
-                  <div className={styles.CartAndFav}>
-                    <div className={styles.iconsHeader}>
-                      <Link to="/ShopCart">
-                        <button className={styles.btnCarrito}>
-                          <BsFillCartFill />
-                          <h4 className={styles.cantItems}>{carrito.length}</h4>
-                        </button>
-                      </Link>
-                    </div>
-                    <div className={styles.iconsHeader}>
-                      <Link to="/Favourites">
-                        <button className={styles.btnFav}>
-                          <BsFillHeartFill />
-                          <h4 className={styles.cantItems}>
-                            {favoritos.length}
-                          </h4>
-                        </button>
-                      </Link>
-                    </div>
-
-                    <div className={styles.iconsHeader}>
-                      <Link to="/OrderByUser">
-                        <button className={styles.btnFav}>
-                          <BsFillBagCheckFill
-                            style={{ marginBottom: "0.45rem" }}
-                          />
-                        </button>
-                      </Link>
-                    </div>
+            <div className={styles.filtersDiv}>
+              <button
+                className={styles.linkMain}
+                onClick={() => dispatch(showAllProducts())}
+              >
+                <h2 className={styles.logo}>Artket</h2>
+              </button>
+              {/* <p className={styles.filter}>Filters</p> */}
+            </div>
+            <div className={styles.SearchBarHome}>
+              <SearchBar handleReset={handleReset} ></SearchBar>
+            </div>
+            <div className={styles.cartAndProfileAndFav} >
+              {JSON.parse(localStorage.getItem("user")).length ?
+                <div className={styles.CartAndFav}>
+                  <div className={styles.iconsHeader}>
+                    <Link to="/ShopCart">
+                      <button className={styles.btnCarrito}>
+                        <BsFillCartFill />
+                        <h4 className={styles.cantItems}>{carrito.length}</h4>
+                      </button>
+                    </Link>
                   </div>
-                  : false
-                }
+                  <div className={styles.iconsHeader}>
+                    <Link to="/Favourites">
+                      <button className={styles.btnFav}>
+                        <BsFillHeartFill />
+                        <h4 className={styles.cantItems}>
+                          {favoritos.length}
+                        </h4>
+                      </button>
+                    </Link>
+                  </div>
 
-                <div>
-
+                  <div className={styles.iconsHeader}>
+                    <Link to="/OrderByUser">
+                      <button className={styles.btnFav}>
+                        <BsFillBagCheckFill
+                          style={{ marginBottom: "0.45rem" }}
+                        />
+                      </button>
+                    </Link>
+                  </div>
+                  <div>
+                    <LogOut></LogOut>
+                  </div>
                 </div>
-
-                <div>
+                : <div>
                   <LogOut></LogOut>
                 </div>
+              }
 
-              </div>
+
+
+
+
+
+
+              {/* </div> */}
             </div>
 
           </div>
         </header>
 
-
-
         {/* CARRUSEL */}
         <div>
           {console.log(state.filters)}
           {userLocalStorage && userLocalStorage.length ? (
-          !state.filters.length && !userLocalStorage[0].role && state.productsFiltered.length > 5 ? (
+            !state.filters.length && !userLocalStorage[0].role && state.productsFiltered.length > 5 ? (
               <div>
                 <p className={styles.featured}>Featured</p>
                 <div className={styles.carrusel}>
@@ -365,31 +277,128 @@ export default function MainPage(props) {
 
         <AdminPanel />
 
-        {/* LIMPIAR FILTROS */}
-        {state.filters.length > 0 ?
-          <div>
-            <h3 className={styles.filtersAplied}>Filters aplied:</h3>
-          </div>
-          : false}
-        {state.filters.map(element => {
-
-          return (
-            <div key={1}>
-              <span>{element.name}</span>
-              <button
-                onClick={() => deleteFilter_(element)}
-                className={styles.buttonsFilter}
-              >
-                X
-              </button>
-            </div>
-          );
-        })}
         <div className={styles.body}>
           <div className={styles.cardsContainer}>
             <p className={styles.galeryTitle}>Galery</p>
             {/* CARDS  */}
+            <div className={styles.divFiltersContainer1}>
+              <div className={styles.divFilters}>
+                <div className={styles.select}>
+                  <nav>
+                    <ul className={styles.menuHor}>
+                      <li>
+                        <button className={styles.buttonsProfBase}>
+                          Order by price<IoIosArrowDown />
+                        </button>
+                        <div className={styles.optContainer}>
+                          <ul className={styles.menuVert}>
+                            <li className={styles.test}>
+                              <button
+                                value="OrderByMoreExpensive"
+                                onClick={(e) =>
+                                  OrderByPriceSelector(e.target.value)
+                                }
+                                className={styles.buttonsProf}
+                              >
+                                More expensive
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                value="OrderByLessExpensive"
+                                onClick={(e) =>
+                                  OrderByPriceSelector(e.target.value)
+                                }
+                                className={styles.buttonsProf}
+                              >
+                                Less expensive
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
 
+                <div className={styles.select}>
+                  <nav>
+                    <ul className={styles.menuHor}>
+                      <li>
+                        <button className={styles.buttonsProfBase}>
+                          Artists<IoIosArrowDown />
+                        </button>
+                        <ul className={styles.menuVert}>
+                          {state.artistsList.map((element) => {
+                            return (
+                              <li>
+                                <button
+                                  value={element.name}
+                                  onClick={(e) =>
+                                    artistSelector(e.target.value)
+                                  }
+                                  className={styles.buttonsProf}
+                                >
+                                  {element.name}
+                                </button>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div className={styles.select}>
+                  <nav>
+                    <ul className={styles.menuHor}>
+                      <li>
+                        <button className={styles.buttonsProfBase}>
+                          Mediums<IoIosArrowDown />
+                        </button>
+                        <ul className={styles.menuVert}>
+                          {state.mediums.map((element) => {
+                            return (
+                              <li>
+                                <button
+                                  value={element}
+                                  onClick={(e) =>
+                                    mediumSelector(e.target.value)
+                                  }
+                                  className={styles.buttonsProf}
+                                >
+                                  {element}
+                                </button>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            {/* LIMPIAR FILTROS */}
+            {state.filters.length > 0 ?
+              <div>
+                <h3 className={styles.filtersAplied}>Filters aplied:</h3>
+              </div>
+              : false}
+            {state.filters.map(element => {
+
+              return (
+                <div key={1}>
+                  <span>{element.name}</span>
+                  <button
+                    onClick={() => deleteFilter_(element)}
+                    className={styles.buttonsFilter}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+            })}
             {
               // si hay productos filtras y no hay mensaje de error
               state.productsFiltered.length > 0 ? (
@@ -409,61 +418,65 @@ export default function MainPage(props) {
                   />
                 </div>
               ) : state.allProducts && state.filters.length ? (
-                <div>
-                  <h1>NO HAY OBRAS CON ESOS FILTROS</h1>
+                <div className={styles.favEmpty}>
+                  <div>
+                    <p>There are not atworks with that combination of filters.</p>
+                    <p>Remember that not all artist use the every tecnique.</p>
+                  </div>
                 </div>
               ) : (
                 false
               )
             }
+            <footer className={styles}>
+              <div className={styles.paginado}>
+                <button
+                  onClick={handlerPrev}
+                  className={styles.button31Paginado}
+                >{`<`}</button>
+                {arrCountOf.map((e, i) => (
+                  <button
+                    onClick={() => {
+                      setNum1((i + 1) * ProductsPorPage - ProductsPorPage);
+                      setNum2((i + 1) * ProductsPorPage);
+                      setCurrent(i + 1);
+                    }}
+                    className={styles.button31Paginado}
+
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button
+                  className={styles.button31Paginado}
+                  onClick={handlerNext}
+                >{`>`}</button>
+              </div>
+
+            </footer>
           </div>
         </div>
         {/* PAGINADO */}
-        <footer className={styles}>
-          <div className={styles.paginado}>
-            <button
-              onClick={handlerPrev}
-              className={styles.button31Paginado}
-            >{`<`}</button>
-            {arrCountOf.map((e, i) => (
-              <button
-                onClick={() => {
-                  setNum1((i + 1) * ProductsPorPage - ProductsPorPage);
-                  setNum2((i + 1) * ProductsPorPage);
-                  setCurrent(i + 1);
-                }}
-                className={styles.button31Paginado}
-              
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button
-              className={styles.button31Paginado}
-              onClick={handlerNext}
-            >{`>`}</button>
-          </div>
-          <div className={styles.footer_info}>
-
-            {JSON.parse(localStorage.getItem("user")).length ?
-              <div>
-                <p className={styles.newsletter}>
-                  Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
-                </p>
-                <div className={styles.formNewsletter}>
-                  <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
-                </div>
 
 
-              </div>
+      </div>
+      <div className={styles.footer_info}>
 
-              : false
+        {JSON.parse(localStorage.getItem("user")).length && !userLocalStorage[0].isSuscribed ?
+          <div>
+            <p className={styles.newsletter}>
+              Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
+            </p>
+            <div className={styles.formNewsletter}>
+              <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
+            </div>
 
-            }
 
           </div>
 
-        </footer>
+          : false
+
+        }
 
       </div>
     </div>

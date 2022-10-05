@@ -29,7 +29,7 @@ import AdminPanel from "./AdminPanel";
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsFillCartFill } from "react-icons/bs";
 import { BsFillBagCheckFill } from "react-icons/bs";
-import { IoIosArrowDown } from "react-icons/io"
+import { IoIosArrowDown } from "react-icons/io";
 import { Loader } from "./Loader";
 
 let ProductsPorPage = 6;
@@ -132,8 +132,7 @@ export default function MainPage(props) {
     const userLocal = JSON.parse(localStorage.getItem("user"));
     // dispatch(sendEmail((userLocal.email = user.email)));
     alertNewslatter();
-    userLocalStorage[0].isSuscribed = true
-
+    userLocalStorage[0].isSuscribed = true;
   };
 
   function alertNewslatter() {
@@ -147,7 +146,6 @@ export default function MainPage(props) {
       draggable: true,
       progress: undefined,
     });
-
   }
 
   return (
@@ -167,10 +165,10 @@ export default function MainPage(props) {
               {/* <p className={styles.filter}>Filters</p> */}
             </div>
             <div className={styles.SearchBarHome}>
-              <SearchBar handleReset={handleReset} ></SearchBar>
+              <SearchBar handleReset={handleReset}></SearchBar>
             </div>
-            <div className={styles.cartAndProfileAndFav} >
-              {JSON.parse(localStorage.getItem("user")).length ?
+            <div className={styles.cartAndProfileAndFav}>
+              {JSON.parse(localStorage.getItem("user")).length ? (
                 <div className={styles.CartAndFav}>
                   <div className={styles.iconsHeader}>
                     <Link to="/ShopCart">
@@ -184,9 +182,7 @@ export default function MainPage(props) {
                     <Link to="/Favourites">
                       <button className={styles.btnFav}>
                         <BsFillHeartFill />
-                        <h4 className={styles.cantItems}>
-                          {favoritos.length}
-                        </h4>
+                        <h4 className={styles.cantItems}>{favoritos.length}</h4>
                       </button>
                     </Link>
                   </div>
@@ -204,41 +200,40 @@ export default function MainPage(props) {
                     <LogOut></LogOut>
                   </div>
                 </div>
-                : <div>
+              ) : (
+                <div>
                   <LogOut></LogOut>
                 </div>
-              }
-
-
-
-
-
-
+              )}
 
               {/* </div> */}
             </div>
-
           </div>
         </header>
 
         {/* CARRUSEL */}
         <div>
-          {console.log(state.filters)}
           {userLocalStorage && userLocalStorage.length ? (
-            !state.filters.length && !userLocalStorage[0].role && state.productsFiltered.length > 5 ? (
+            !state.filters.length &&
+            !userLocalStorage[0].role &&
+            state.productsFiltered.length > 5 ? (
               <div>
                 <p className={styles.featured}>Featured</p>
                 <div className={styles.carrusel}>
                   <div>
                     <ul>
                       {state.productsFiltered
-                        .slice(num1, num2)
-                        .slice(0, 5)
+                        // .slice(num1, num2)
+                        // .slice(0, 5)
                         .map((element) => {
                           return (
+                            <div className={styles.imagenCarrusel}>
+                              <Link to={`/Products/${element.id}`}>
                             <li>
                               <img src={element.image}></img>
                             </li>
+                            </Link>
+                            </div>
                           );
                         })}
                     </ul>
@@ -272,7 +267,6 @@ export default function MainPage(props) {
         </div>
         {/* FILTROS */}
 
-
         <AdminPanel />
 
         <div className={styles.body}>
@@ -286,7 +280,8 @@ export default function MainPage(props) {
                     <ul className={styles.menuHor}>
                       <li>
                         <button className={styles.buttonsProfBase}>
-                          Order by price<IoIosArrowDown />
+                          Order by price
+                          <IoIosArrowDown />
                         </button>
                         <div className={styles.optContainer}>
                           <ul className={styles.menuVert}>
@@ -324,7 +319,8 @@ export default function MainPage(props) {
                     <ul className={styles.menuHor}>
                       <li>
                         <button className={styles.buttonsProfBase}>
-                          Artists<IoIosArrowDown />
+                          Artists
+                          <IoIosArrowDown />
                         </button>
                         <ul className={styles.menuVert}>
                           {state.artistsList.map((element) => {
@@ -352,7 +348,8 @@ export default function MainPage(props) {
                     <ul className={styles.menuHor}>
                       <li>
                         <button className={styles.buttonsProfBase}>
-                          Mediums<IoIosArrowDown />
+                          Mediums
+                          <IoIosArrowDown />
                         </button>
                         <ul className={styles.menuVert}>
                           {state.mediums.map((element) => {
@@ -378,13 +375,14 @@ export default function MainPage(props) {
               </div>
             </div>
             {/* LIMPIAR FILTROS */}
-            {state.filters.length > 0 ?
+            {state.filters.length > 0 ? (
               <div>
                 <h3 className={styles.filtersAplied}>Filters aplied:</h3>
               </div>
-              : false}
-            {state.filters.map(element => {
-
+            ) : (
+              false
+            )}
+            {state.filters.map((element) => {
               return (
                 <div key={1}>
                   <span>{element.name}</span>
@@ -418,12 +416,16 @@ export default function MainPage(props) {
               ) : state.allProducts && state.filters.length ? (
                 <div className={styles.favEmpty}>
                   <div>
-                    <p>There are not atworks with that combination of filters.</p>
+                    <p>
+                      There are not atworks with that combination of filters.
+                    </p>
                     <p>Remember that not all artist use the every tecnique.</p>
                   </div>
                 </div>
               ) : (
-                false
+                <div>
+                  <Loader />
+                </div>
               )
             }
             <footer className={styles}>
@@ -440,7 +442,7 @@ export default function MainPage(props) {
                       setCurrent(i + 1);
                     }}
                     className={styles.button31Paginado}
-
+                    style={i+1===current?{backgroundColor:"white",color:"black"}:{backgroundColor:"black"}}
                   >
                     {i + 1}
                   </button>
@@ -450,33 +452,29 @@ export default function MainPage(props) {
                   onClick={handlerNext}
                 >{`>`}</button>
               </div>
-
             </footer>
           </div>
         </div>
         {/* PAGINADO */}
-
-
       </div>
       <div className={styles.footer_info}>
-
-        {JSON.parse(localStorage.getItem("user")).length && !userLocalStorage[0].isSuscribed ?
+        {JSON.parse(localStorage.getItem("user")).length &&
+        !userLocalStorage[0].isSuscribed ? (
           <div>
             <p className={styles.newsletter}>
-              Wana recive info about our lastest sales? Register to our newsleter to be updated at every time
+              Wana recive info about our lastest sales? Register to our
+              newsleter to be updated at every time
             </p>
             <div className={styles.formNewsletter}>
-              <button className={styles.btnSubscribe} onClick={handleSubscribe}>Subscribe to Newsletter</button>
+              <button className={styles.btnSubscribe} onClick={handleSubscribe}>
+                Subscribe to Newsletter
+              </button>
             </div>
-
-
           </div>
-
-          : false
-
-        }
-
+        ) : (
+          false
+        )}
       </div>
     </div>
-  )
+  );
 }

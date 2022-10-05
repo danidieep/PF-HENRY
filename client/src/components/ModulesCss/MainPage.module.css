@@ -207,8 +207,10 @@ button {
     width: 70%;
     margin-top: 3rem;
     margin-bottom: 3rem;
-
-    padding: 2rem;
+    background-color: rgb(255, 255, 255);
+    padding: 3rem;
+    border-radius: 1rem;
+    border: solid 1px;
 
 }
 
@@ -217,7 +219,7 @@ button {
     display: flex;
     padding: 0;
     width: 500%;
-    animation: cambio 20s infinite;
+    animation: cambio 220s infinite;
     animation-timing-function: ease;
     align-items: center;
 
@@ -237,36 +239,55 @@ button {
 
 @keyframes cambio {
     0% {
-        margin-left: 0;
+        margin-left: -10%;
+    }
+    50%{
+        margin-left: -850%;
+    }
+
+    100%{
+        margin-left: -10%;
+    }
+
+    /* 10% {
+        margin-left: -10%;
     }
 
     20% {
-        margin-left: 0;
+        margin-left: -20%;
     }
 
-    25% {
-        margin-left: -100%;
+    30% {
+        margin-left: -30%;
     }
 
-    45% {
-        margin-left: -100%;
+    40% {
+        margin-left: -40%;
     }
 
     50% {
-        margin-left: -200%;
+        margin-left: -50%;
+    }
+
+    60% {
+        margin-left: -60%;
     }
 
     70% {
-        margin-left: -200%;
+        margin-left:-70%;
     }
 
-    75% {
-        margin-left: -300%;
+    80% {
+        margin-left: -80%;
+    }
+
+    90% {
+        margin-left: -90%;
     }
 
     100% {
-        margin-left: -300%;
-    }
+        margin-left: -100%;
+    } */
 
 }
 
@@ -392,9 +413,8 @@ button {
 
 }
 
-.button31Paginado:hover,
-.button31Paginado:focus {
-    background-color: rgb(226, 204, 204);
+.button31Paginado:hover{
+    background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
 
@@ -651,4 +671,24 @@ form .formNewsletterBox {
     font-family: 'Merriweather', serif;
     font-style: normal;
     font-size: 30px;
+}
+
+.imagenCarrusel{
+    margin: 0.6rem;
+    padding: 1rem;
+    background-color: #e9d3d0;
+    border-radius: 1rem;
+    width: 70rem;
+transition: 0.3s;
+cursor: pointer;
+border: solid 1px;
+   
+}
+.imagenCarrusel:hover{
+    margin: 0.6rem;
+    padding: 1rem;
+       border-radius: 1rem;
+    width: 70rem;
+    scale: 1.2;
+    transition: 0.3s;
 }

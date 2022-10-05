@@ -112,7 +112,7 @@ function App() {
         {isAuthenticated && !uls.length ? <UserBanned /> : <Favoritos />}
       </Route>
       <Route path="/ProfileEdit" component={ProfileEdit} >
-        {isAuthenticated && !uls.length ? <UserBanned /> : <ProfileEdit />}
+      {isAuthenticated && !uls.length?<UserBanned/> : <ProfileEdit/>}
       </Route>
       <Route path="/Security/" component={Security} >
         {isAuthenticated && !uls.length ? <UserBanned /> : <Security />}

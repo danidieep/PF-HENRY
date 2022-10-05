@@ -64,7 +64,6 @@ export default function MainPage(props) {
       dispatch(getProductsFromCarritoDB(userLocalStorage[0].email));
     if (userLocalStorage && userLocalStorage.length)
       dispatch(getFavourites(userLocalStorage[0].email));
-    console.log('proband', userLocalStorage[0].isSuscribed);
   }, [state.filters]);
 
   React.useEffect(() => {

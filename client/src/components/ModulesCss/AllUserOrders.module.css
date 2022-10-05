@@ -1,5 +1,4 @@
-.container {
-}
+.container {}
 
 .header {
   background-color: rgba(255, 255, 255);
@@ -10,13 +9,17 @@
   width: 100%;
   box-shadow: 0 0 2rem rgb(5, 5, 5, 0.1);
 }
-.logoForm {
-  font-family: "Euphoria Script", cursive;
-  text-decoration-color: rgb(0, 0, 0);
 
-  font-weight: 400;
-  color: rgb(1, 1, 1);
+.logoForm {
+  font-family: 'Euphoria Script', cursive;
+  color: black;
+  cursor: pointer;
+  font-size: 3.2rem;
+  font-weight: 100;
+  border: none;
   background-color: transparent;
+
+
 }
 
 .item {
@@ -25,6 +28,7 @@
   border-bottom: solid 1px;
   margin: 0 auto;
 }
+
 .item:focus {
   background-color: rgb(168, 131, 131, 0.6);
   color: rgb(255, 255, 255);
@@ -62,6 +66,7 @@
   border-radius: 2rem;
   padding: 0.7rem;
 }
+
 .panelLeft_searchBar_button {
   background-color: transparent;
   font-size: 1.7rem;
@@ -92,6 +97,7 @@
   border: solid 0.5px;
   border-radius: 1rem;
 }
+
 .artworksBox body {
   margin: 1rem;
 }

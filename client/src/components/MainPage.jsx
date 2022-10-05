@@ -65,6 +65,12 @@ export default function MainPage(props) {
       dispatch(getFavourites(userLocalStorage[0].email));
   }, [state.filters]);
 
+  React.useEffect(() => {
+    return () => {
+      state.allProducts = [];
+    };
+  });
+
   const handlerNext = () => {
     if (current < CountOf) {
       setNum1(num1 + ProductsPorPage);

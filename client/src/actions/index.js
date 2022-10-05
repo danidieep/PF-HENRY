@@ -6,12 +6,10 @@ import {
   DELETE_FILTER,
   NOT_FOUND,
   SEND_EMAIL,
-  
   GET_FAVOURITES,
-  
   GET_ONE_ORDER,
   FILTER_ORDER_REJECTED,
-  FILTER_ORDER_APROVED
+  FILTER_ORDER_APROVED,
 } from "./action-types.js";
 import {
   GET_USER,
@@ -32,51 +30,43 @@ import {
   ORDER_BY_PRICE,
   ADD_FILTERS,
   SET_USER,
-  
   GET_HISTORY,
   GET_ALL_ORDERS,
   GET_ORDERS_USER,
-  
   FILTER_ORDER_REJECTED_USER,
   FILTER_ORDER_APROVED_USER,
-  GET_ONE_ORDER_USER
+  GET_ONE_ORDER_USER,
 } from "./action-types.js";
 
 import { toast } from "react-toastify";
-import swal from "sweetalert"
-
-
+import swal from "sweetalert";
 
 export const filterOrderAprovedUser = () => {
   return {
-    type:FILTER_ORDER_APROVED_USER
-  }
-
-}
+    type: FILTER_ORDER_APROVED_USER,
+  };
+};
 export const filterOrderRejectedrUser = () => {
   return {
-    type: FILTER_ORDER_REJECTED_USER
-  }
-}
+    type: FILTER_ORDER_REJECTED_USER,
+  };
+};
 
 export const getOrderUserDetail = (orderId) => {
-
-    return ({
-      type: GET_ONE_ORDER_USER,
-      payload: orderId
-  })
-  }
-
+  return {
+    type: GET_ONE_ORDER_USER,
+    payload: orderId,
+  };
+};
 
 export const getOrderByUser = (payload) => {
-  
   return async function (dispatch) {
     let json = await axios.get("/payment/orden", {
       headers: {
         payload: payload,
       },
     });
-    
+
     return dispatch({
       type: GET_ORDERS_USER,
       payload: json.data,
@@ -86,8 +76,8 @@ export const getOrderByUser = (payload) => {
 
 export const getAllOrders = () => {
   return async function (dispatch) {
-    let json = await axios.get('/payment/orden')
-     
+    let json = await axios.get("/payment/orden");
+
     return dispatch({
       type: GET_ALL_ORDERS,
       payload: json.data,
@@ -155,11 +145,34 @@ export function deleteArtwork(id, user) {
 
 export function putArtwork(payload, role) {
   return async function (dispatch) {
-    let json = await axios.put("/artworks/" + payload.id, {
-      payload: payload,
-      role: role,
-    });
-    return json;
+    try {
+      let json = await axios.put("/artworks/" + payload.id, 
+      {
+        payload: payload,
+        role: role,
+      });
+      toast.success(`Artwork modified`, {
+        position: "top-center",
+        theme: "light",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (error) {
+      toast.success(`Error`, {
+        position: "top-center",
+        theme: "light",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 }
 
@@ -254,7 +267,6 @@ export const getProductById = (id) => {
     });
   };
 };
-
 
 export const cleanProductId = () => {
   return {
@@ -552,19 +564,17 @@ export async function resetPassword(payload) {
   await axios.post("users/restorePassword", payload);
 }
 
-
 export async function changePassword(email) {
-  let json = await axios.post('users/restorePassword', {email})
-  console.log(json)
+  let json = await axios.post("users/restorePassword", { email });
+  console.log(json);
 
   swal({
     title: "",
     text: `The new password is ${json.data}`,
     icon: "info",
-    buttons:"Nice"
-  })
+    buttons: "Nice",
+  });
 }
-
 
 export const postAdress = async (payload, email) => {
   await axios.post("/adresses", { payload, email });
@@ -577,23 +587,23 @@ export const putAdress = async (payload, email) => {
 export const getAdress = async (email) => {
   const adress = await axios.get("/adresses", { headers: { email } });
   return adress;
-}
+};
 
-export const getOneOrder = (orden)=>{
+export const getOneOrder = (orden) => {
   return {
-    type : GET_ONE_ORDER, payload:orden 
-  }
-}
+    type: GET_ONE_ORDER,
+    payload: orden,
+  };
+};
 
-export const filterOrderAproved = () =>{
-  return{
-    type:FILTER_ORDER_APROVED
-  }
-}
+export const filterOrderAproved = () => {
+  return {
+    type: FILTER_ORDER_APROVED,
+  };
+};
 
-
-export const filterOrderRejected= () =>{
-  return{
-    type:FILTER_ORDER_REJECTED
-  }
-}
+export const filterOrderRejected = () => {
+  return {
+    type: FILTER_ORDER_REJECTED,
+  };
+};

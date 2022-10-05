@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { putArtwork, cleanProductId, getProductById } from '../actions/index'
+import { putArtwork, cleanProductId, getProductById,getProducts } from '../actions/index'
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,11 +8,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 import styles from "./ModulesCss/LogIn.module.css"
 import { Link } from "react-router-dom"
+import {GiSandsOfTime} from "react-icons/gi"
 
 
 export default function PutArtwork() {
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const [estado, setEstado] = useState(false);
+
+
+  const load = () =>{
+    setEstado(true);
+    setTimeout(() => {
+      setEstado(false)
+    }, 2500);
+  }
 
   const dispatch = useDispatch()
   const product = useSelector((state) => state.productDetails)
@@ -20,7 +31,6 @@ export default function PutArtwork() {
   useEffect(() => {
     dispatch(getProductById(id))
     dispatch(cleanProductId())
-    console.log(product[0]);
   }, [])
 
 
@@ -43,18 +53,7 @@ export default function PutArtwork() {
       [e.target.name]: e.target.value
     })
   }
-  function alertPutArtwork() {
-    toast.success(`${product[0].title} has been edited`, {
-      position: "top-center",
-      theme: 'dark',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    })
-  }
+  
   const [loading, setLoading] = useState(false)
 
   const uploadImage = async (e) => {
@@ -65,6 +64,7 @@ export default function PutArtwork() {
     data.append('upload_preset', 'artket')
     data.append("api_key", "194228613445554")
     setLoading(true)
+    load()
     const res = await axios.post('https://api.cloudinary.com/v1_1/daxy95gra/image/upload',
       data, {
       headers: { "X-Requested-With": "XMLHttpRequest" }
@@ -84,9 +84,22 @@ export default function PutArtwork() {
   function handleSubmit(e) {
     e.preventDefault()
 
+    if(input.title==="" && input.date==="" && input.collecting_institution===""
+    && input.image==="" &&input.dimensions==="" && input.creator==="" && 
+    input.medio==="" && input.price===""){
+      toast.error(`Complete the data`, {
+        position: "top-center",
+        theme: 'light',
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    }
+    else{
     dispatch(putArtwork(input, user[0].role, user[0].role))
-    alertPutArtwork()
-
     setInput({
       title: '',
       date: '',
@@ -96,7 +109,15 @@ export default function PutArtwork() {
       dimensions: '',
       medio: '',
       price: ''
+
+   
     })
+  
+    // setTimeout(() => {
+    //   dispatch(getProducts())
+    // }, 3000);
+   
+  }
   }
 
 
@@ -106,7 +127,10 @@ export default function PutArtwork() {
 
       <div className={styles.containerAll}>
         <div className={styles.header}>
-          <h1 className={styles.logoForm}>Arteck</h1>
+        <Link to='/MainPage'>
+        <h1 className={styles.logoForm}>Arteck</h1>
+              </Link>
+         
         </div>
         <div className={styles.containerRegister}>
 
@@ -225,11 +249,10 @@ export default function PutArtwork() {
               <br />
 
 
-              <button className={styles.buttonRegister} type='submit' onClick={e => handleSubmit(e)}>Save edit</button> <br />
+              <button  disabled={estado} className={styles.buttonRegister} type='submit' onClick={e => handleSubmit(e)}>
+              {!estado? "Save changes" :<GiSandsOfTime/>}</button> <br />
 
-              <Link to='/MainPage'>
-                <button className={styles.buttonRegister}>Home</button>
-              </Link>
+              
             </form>
 
           </div>

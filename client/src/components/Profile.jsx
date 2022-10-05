@@ -58,136 +58,136 @@ export default function Profile() {
 
   return (
     <div className={styles.profileContainer}>
-    { user.length?  
-    <div>
-      <div className={styles.header}>
-        <Link to="/MainPage">
-          <h1 className={styles.logoForm}>Arteck</h1>
-        </Link>
-      </div>
-      <div className={styles.profile}>
-        <div className={styles.panelLeft}>
-          <Link to="/MyBuys">
-            <body>
-              <BsBagCheck className={styles.iconsLeft} /> My buys
-            </body>
-          </Link>
-          <hr style={{ width: "12rem", marginLeft: "1rem" }} />
-          <Link to="/ShopCart">
-            <body>
-              <AiOutlineShoppingCart className={styles.iconsLeft} /> Cart
-            </body>
-          </Link>
-          <hr style={{ width: "12rem", marginLeft: "1rem" }} />
-          <Link to="/Favourites">
-            {" "}
-            <body>
-              <GrFavorite className={styles.iconsLeft} /> Favourites
-            </body>
-          </Link>
-          <hr style={{ width: "12rem", marginLeft: "1rem" }} />
-        </div>
+      {user.length ?
+        <div>
+          <div className={styles.header}>
+            <Link to="/MainPage">
+              <h1 className={styles.logoForm}>Arteck</h1>
+            </Link>
+          </div>
+          <div className={styles.profile}>
+            <div className={styles.panelLeft}>
+              <Link to="/OrderByUser">
+                <body>
+                  <BsBagCheck className={styles.iconsLeft} /> My buys
+                </body>
+              </Link>
+              <hr style={{ width: "12rem", marginLeft: "1rem" }} />
+              <Link to="/ShopCart">
+                <body>
+                  <AiOutlineShoppingCart className={styles.iconsLeft} /> Cart
+                </body>
+              </Link>
+              <hr style={{ width: "12rem", marginLeft: "1rem" }} />
+              <Link to="/Favourites">
+                {" "}
+                <body>
+                  <GrFavorite className={styles.iconsLeft} /> Favourites
+                </body>
+              </Link>
+              <hr style={{ width: "12rem", marginLeft: "1rem" }} />
+            </div>
 
-        {user.length ? (
-          <div className={styles.panelRight}>
-            <div className={styles.userData}>
+            {user.length ? (
+              <div className={styles.panelRight}>
+                <div className={styles.userData}>
 
-              {data.isAuthenticated && user[0].image === "" ? (
-                <img
-                style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
-                  className={styles.imgProfile1}
-                  src={data.user.picture}
-                  width="120"
-                  height="120"
-                ></img>
-              ) : (
-                user.length && user[0].image !== null ?
-                  <img
-                    className={styles.imgProfile}
-                    // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
-                    src={user[0].image}
-                    width="120"
-                    height="120"
-                    style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
-                  /> : user.length ?
-                    <h1 className={styles.iconUser}><FaUserCircle /></h1>
-                    : false
+                  {data.isAuthenticated && user[0].image === "" ? (
+                    <img
+                      style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
+                      className={styles.imgProfile1}
+                      src={data.user.picture}
+                      width="120"
+                      height="120"
+                    ></img>
+                  ) : (
+                    user.length && user[0].image !== null ?
+                      <img
+                        className={styles.imgProfile}
+                        // src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                        src={user[0].image}
+                        width="120"
+                        height="120"
+                        style={{ borderRadius: "9999px", marginLeft: "2rem", marginTop: "0.25rem" }}
+                      /> : user.length ?
+                        <h1 className={styles.iconUser}><FaUserCircle /></h1>
+                        : false
 
 
 
-              )}
+                  )}
 
-              <div className={styles.nameAndRol}>
-                <div className={styles.name}>
-                  <h1>
-                    {user[0].name} {user[0].lastname}{" "}
-                  </h1>
-                </div>
-                <div className={styles.rol}>
-                  {user[0].role === true ? <h3>Admin</h3> : <h3>User</h3>}
-                </div>
+                  <div className={styles.nameAndRol}>
+                    <div className={styles.name}>
+                      <h1>
+                        {user[0].name} {user[0].lastname}{" "}
+                      </h1>
+                    </div>
+                    <div className={styles.rol}>
+                      {user[0].role === true ? <h3>Admin</h3> : <h3>User</h3>}
+                    </div>
 
-                {/* {data.isAuthenticated ? (
+                    {/* {data.isAuthenticated ? (
                   <div></div>
                 ) : (
                   <button onClick={() => setEdit(!edit)}>edit</button>
                 )} */}
-              </div>
-            </div>
-           
-            <div className={styles.optionsUser}>
-              <div className={styles.item}>
-                <Link to="/ProfileEdit">
-                  <div className={styles.item_data}>
-                    <BiUserCircle className={styles.item_data_icon} />
-                    <div className={styles.item_data_titles}>
-                      <body className={styles.item_data_titles_main}>
-                        Personal information
-                      </body>
-                      <body className={styles.item_data_titles_sub}>
-                        Manage your personal data.
-                      </body>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-              <hr />
-              <div className={styles.item}>
-                <Link to="Security">
-                  <div className={styles.item_data}>
-                    <BiShield className={styles.item_data_icon} />
-                    <div className={styles.item_data_titles}>
-                      <body className={styles.item_data_titles_main}>
-                        {" "}
-                        Security
-                      </body>
-                      <body className={styles.item_data_titles_sub}>
-                        Set up your account security.
-                      </body>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-              <hr />
-              <button
-                style={{
-                  width: "100%",
-                  backgroundColor: "transparent",
-                  cursor: "pointer",
-                }}
-              >
-                <div className={styles.item} onClick={delete_User}>
-                  <div className={styles.item_data}>
-                    <BiUserCircle className={styles.item_data_icon} style={{ color: "red" }} />
-                    <div style={{ color: "red", display: "flex", alignItems: "center" }}>
-                      <body className={styles.item_data_titles_main} style={{ color: "red" }}> Disable my account</body>
-                    </div>
                   </div>
                 </div>
-              </button>
-            </div>
 
-            {/* {!edit ? (
+                <div className={styles.optionsUser}>
+                  <div className={styles.item}>
+                    <Link to="/ProfileEdit">
+                      <div className={styles.item_data}>
+                        <BiUserCircle className={styles.item_data_icon} />
+                        <div className={styles.item_data_titles}>
+                          <body className={styles.item_data_titles_main}>
+                            Personal information
+                          </body>
+                          <body className={styles.item_data_titles_sub}>
+                            Manage your personal data.
+                          </body>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                  <hr />
+                  <div className={styles.item}>
+                    <Link to="Security">
+                      <div className={styles.item_data}>
+                        <BiShield className={styles.item_data_icon} />
+                        <div className={styles.item_data_titles}>
+                          <body className={styles.item_data_titles_main}>
+                            {" "}
+                            Security
+                          </body>
+                          <body className={styles.item_data_titles_sub}>
+                            Set up your account security.
+                          </body>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                  <hr />
+                  <button
+                    style={{
+                      width: "100%",
+                      backgroundColor: "transparent",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <div className={styles.item} onClick={delete_User}>
+                      <div className={styles.item_data}>
+                        <BiUserCircle className={styles.item_data_icon} style={{ color: "red" }} />
+                        <div style={{ color: "red", display: "flex", alignItems: "center" }}>
+                          <body className={styles.item_data_titles_main} style={{ color: "red" }}> Disable my account</body>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                {/* {!edit ? (
               <div>
                 <h2>
                   {user[0].name} {user[0].lastname}{" "}
@@ -249,13 +249,13 @@ export default function Profile() {
                 <button onClick={() => setEdit(!edit)}>cancel</button>
               </div>
             )} */}
-            <br />
+                <br />
+              </div>
+            ) : (
+              false
+            )}
           </div>
-        ) : (
-          false
-        )}
-    </div>
-      </div> : <h1>Your user has been banned or not exist</h1> }
+        </div> : <h1>Your user has been banned or not exist</h1>}
     </div>
   );
 }

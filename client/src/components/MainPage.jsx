@@ -213,7 +213,6 @@ export default function MainPage(props) {
 
         {/* CARRUSEL */}
         <div>
-          {console.log(state.filters)}
           {userLocalStorage && userLocalStorage.length ? (
             !state.filters.length &&
             !userLocalStorage[0].role &&
@@ -224,13 +223,17 @@ export default function MainPage(props) {
                   <div>
                     <ul>
                       {state.productsFiltered
-                        .slice(num1, num2)
-                        .slice(0, 5)
+                        // .slice(num1, num2)
+                        // .slice(0, 5)
                         .map((element) => {
                           return (
+                            <div className={styles.imagenCarrusel}>
+                              <Link to={`/Products/${element.id}`}>
                             <li>
                               <img src={element.image}></img>
                             </li>
+                            </Link>
+                            </div>
                           );
                         })}
                     </ul>
@@ -439,6 +442,7 @@ export default function MainPage(props) {
                       setCurrent(i + 1);
                     }}
                     className={styles.button31Paginado}
+                    style={i+1===current?{backgroundColor:"white",color:"black"}:{backgroundColor:"black"}}
                   >
                     {i + 1}
                   </button>
